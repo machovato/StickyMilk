@@ -1,0 +1,154 @@
+{
+  "slug": "maple-cinnamon-latte",
+  "name": "Maple-Cinnamon Latte",
+  "format": "hot",
+  "flavor_notes": "Maple sweetness, warm cinnamon, and chocolate-toned coffee.",
+  "status": "draft",
+  "tags": [
+    "cozy",
+    "fall",
+    "brunch",
+    "quick-fix"
+  ],
+  "sweetness_level": "subtle",
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "tested_with": "Equator Mocha Java",
+      "capsule_count": 1,
+      "caffeine_level": "half",
+      "caffeine_mg": 90,
+      "servings": 1,
+      "yield_unit": "drink",
+      "equipment": [
+        "milk frother"
+      ],
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer",
+          "notes": "half-caf capsule"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "whole milk"
+        },
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "item": "maple syrup",
+          "item_id": "maple_syrup"
+        },
+        {
+          "amount": 1,
+          "unit": "pinch",
+          "item": "ground cinnamon"
+        }
+      ],
+      "steps": [
+        "Melt the Cometeer capsule.",
+        "Stir in the maple syrup and cinnamon.",
+        "Heat and froth the milk until steaming and smooth.",
+        "Pour the milk over the coffee and stir once.",
+        "Finish with a light dusting of cinnamon."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5
+    },
+    {
+      "channel": "nespresso",
+      "caffeine_level": "half",
+      "servings": 1,
+      "yield_unit": "drink",
+      "equipment": [
+        "milk frother"
+      ],
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 40,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo pod, brewed as a single shot",
+          "item_id": "nespresso_pod"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "whole milk"
+        },
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "item": "maple syrup",
+          "item_id": "maple_syrup"
+        },
+        {
+          "amount": 1,
+          "unit": "pinch",
+          "item": "ground cinnamon"
+        }
+      ],
+      "steps": [
+        "Pull a 40 ml espresso.",
+        "Stir in the maple syrup and cinnamon.",
+        "Heat and froth the milk until steaming and smooth.",
+        "Pour the milk over the espresso and stir once.",
+        "Finish with a light dusting of cinnamon."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5
+    },
+    {
+      "channel": "instant",
+      "caffeine_level": "half",
+      "servings": 1,
+      "yield_unit": "drink",
+      "equipment": [
+        "milk frother"
+      ],
+      "ingredients": [
+        {
+          "amount": 1.5,
+          "unit": "tsp",
+          "item": "freeze-dried instant coffee"
+        },
+        {
+          "amount": 1.5,
+          "unit": "oz",
+          "item": "hot water",
+          "item_id": "hot_water"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "whole milk"
+        },
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "item": "maple syrup",
+          "item_id": "maple_syrup"
+        },
+        {
+          "amount": 1,
+          "unit": "pinch",
+          "item": "ground cinnamon"
+        }
+      ],
+      "steps": [
+        "Dissolve the instant coffee completely in the hot water.",
+        "Stir in the maple syrup and cinnamon.",
+        "Heat and froth the milk until steaming and smooth.",
+        "Pour the milk over the coffee and stir once.",
+        "Finish with a light dusting of cinnamon."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5
+    }
+  ]
+}

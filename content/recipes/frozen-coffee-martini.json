@@ -1,0 +1,79 @@
+{
+  "slug": "frozen-coffee-martini",
+  "name": "Frozen Coffee Martini",
+  "format": "cocktail",
+  "flavor_notes": "A frozen, dessert-like riff on an espresso martini — cold, boozy, and coffee-forward.",
+  "status": "draft",
+  "tags": [
+    "cocktail-hour",
+    "date-night",
+    "after-dinner"
+  ],
+  "sweetness_level": "subtle",
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "tested_with": "Intelligentsia Decaf Black Cat Espresso",
+      "capsule_count": 1,
+      "caffeine_level": "decaf",
+      "caffeine_mg": 9,
+      "servings": 1,
+      "equipment": [
+        "cocktail shaker (or lidded jar)"
+      ],
+      "dietary": [
+        "contains-alcohol",
+        "dairy-free"
+      ],
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer Decaf Black Cat Espresso capsule, melted",
+          "item_id": "cometeer_decaf_capsule"
+        },
+        {
+          "amount": 20,
+          "unit": "g",
+          "item": "boiling water",
+          "item_id": "boiling_water"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "item": "vodka",
+          "item_id": "vodka"
+        },
+        {
+          "amount": 1,
+          "unit": "oz",
+          "item": "coffee liqueur",
+          "item_id": "coffee_liqueur"
+        },
+        {
+          "amount": 0.5,
+          "unit": "oz",
+          "item": "simple syrup",
+          "item_id": "simple_syrup"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        }
+      ],
+      "steps": [
+        "Stir the hot water into the melted coffee.",
+        "Let it cool for a few minutes.",
+        "Add the coffee, vodka, coffee liqueur, syrup, and ice to a jar or shaker.",
+        "Shake hard until very cold and slightly frothy.",
+        "Strain into a chilled cocktail glass."
+      ],
+      "difficulty": "medium",
+      "prep_time_minutes": 8
+    }
+  ]
+}

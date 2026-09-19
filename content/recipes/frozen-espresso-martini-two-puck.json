@@ -1,0 +1,77 @@
+{
+  "slug": "frozen-espresso-martini-two-puck",
+  "name": "Frozen Espresso Martini (Two-Puck)",
+  "format": "cocktail",
+  "flavor_notes": "A frozen espresso martini for two — vodka, coffee liqueur, and blended ice.",
+  "status": "draft",
+  "tags": [
+    "cocktail-hour",
+    "date-night",
+    "serves-two"
+  ],
+  "sweetness_level": "subtle",
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "tested_with": "Black & White The Classic Half Caff",
+      "capsule_count": 2,
+      "caffeine_level": "half",
+      "caffeine_mg": 180,
+      "servings": 2,
+      "equipment": [
+        "blender"
+      ],
+      "dietary": [
+        "contains-alcohol",
+        "dairy-free"
+      ],
+      "ingredients": [
+        {
+          "amount": 2,
+          "unit": "capsule",
+          "secondary_amount": 52,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsules, still frozen (Half Caff)",
+          "item_id": "cometeer_capsule",
+          "notes": "two half-caf pucks"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "item": "vodka",
+          "item_id": "vodka"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "item": "coffee liqueur",
+          "item_id": "coffee_liqueur"
+        },
+        {
+          "amount": 0.5,
+          "unit": "oz",
+          "item": "simple syrup",
+          "item_id": "simple_syrup"
+        },
+        {
+          "amount": 2.5,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        },
+        {
+          "item": "Pinch of salt",
+          "item_id": "pinch_of_salt"
+        }
+      ],
+      "steps": [
+        "Run the sealed capsules under water just long enough to pop the pucks out frozen.",
+        "Blend frozen pucks, vodka, coffee liqueur, simple syrup, salt, and ice until thick.",
+        "Split between 2 glasses (about 90 mg caffeine each).",
+        "Do not swap in two full-caf capsules for this blender volume."
+      ],
+      "difficulty": "medium",
+      "prep_time_minutes": 8
+    }
+  ]
+}

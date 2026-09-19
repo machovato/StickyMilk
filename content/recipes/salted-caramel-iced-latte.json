@@ -1,0 +1,180 @@
+{
+  "slug": "salted-caramel-iced-latte",
+  "name": "Salted Caramel Iced Latte",
+  "format": "iced",
+  "flavor_notes": "Silky cold milk and sweet salted caramel balanced by bold, toasted espresso with a buttery caramel finish.",
+  "barista_note": "Pantry shortcut: 2.5 oz Chobani Caramel Macchiato or Sweet Cream creamer can replace both the milk and caramel syrup. Add a tiny pinch of flaky sea salt on top to cut through the sweetness.",
+  "status": "needs_testing",
+  "tags": [
+    "iced",
+    "caramel",
+    "sweet-treat",
+    "quick-fix"
+  ],
+  "sweetness_level": "rich_sweet",
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "tested_with": "Equator Mocha Java",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced medium roast with caramel and toasted nut notes that complement salted caramel syrup.",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, fully melted and chilled",
+          "item_id": "cometeer_capsule"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        },
+        {
+          "amount": 3,
+          "unit": "oz",
+          "item": "cold whole milk",
+          "item_id": "milk"
+        },
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "item": "salted caramel syrup",
+          "item_id": "salted_caramel_syrup"
+        },
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "item": "caramel drizzle",
+          "item_id": "caramel_sauce",
+          "optional": true
+        }
+      ],
+      "steps": [
+        "Melt the Cometeer capsule completely and chill before pouring.",
+        "In a glass, combine the cold milk and salted caramel syrup; stir until blended.",
+        "Fill the glass with ice.",
+        "Pour the chilled Cometeer extract over the ice to layer, then drizzle with caramel sauce."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 4
+    },
+    {
+      "channel": "nespresso",
+      "tested_with": "Nespresso Double Espresso Chiaro (Vertuo 80ml)",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced medium roast with toasted biscuit and caramel notes that complement salted caramel syrup.",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 80,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Double Espresso pod (Chiaro or Scuro)",
+          "item_id": "nespresso_double_pod"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "item": "cold whole milk",
+          "item_id": "milk"
+        },
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "item": "salted caramel syrup",
+          "item_id": "salted_caramel_syrup"
+        },
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "item": "caramel drizzle",
+          "item_id": "caramel_sauce",
+          "optional": true
+        }
+      ],
+      "steps": [
+        "Add ice and salted caramel syrup to a tall glass.",
+        "Brew Double Espresso Chiaro (or two single shots) directly over the ice to rapidly chill.",
+        "Pour cold milk over the espresso and stir gently.",
+        "Finish with a drizzle of caramel sauce over the crema foam."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 3
+    },
+    {
+      "channel": "instant",
+      "tested_with": "Nescafé Gold Espresso or Medaglia d'Oro",
+      "roast_recommendation": "medium",
+      "roast_note": "A smooth, balanced instant espresso that dissolves cleanly without harsh bitter edges.",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1.5,
+          "unit": "tsp",
+          "item": "instant coffee",
+          "item_id": "instant_coffee"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "secondary_amount": 60,
+          "secondary_unit": "ml",
+          "item": "hot water",
+          "item_id": "hot_water"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        },
+        {
+          "amount": 3,
+          "unit": "oz",
+          "item": "cold whole milk",
+          "item_id": "milk"
+        },
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "item": "salted caramel syrup",
+          "item_id": "salted_caramel_syrup"
+        },
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "item": "caramel drizzle",
+          "item_id": "caramel_sauce",
+          "optional": true
+        }
+      ],
+      "steps": [
+        "In a small cup, dissolve the instant coffee and salted caramel syrup into 2 oz of hot water.",
+        "Fill a serving glass with ice and add the cold milk.",
+        "Pour the hot caramel-espresso concentrate over the iced milk.",
+        "Drizzle caramel sauce over the top and stir."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 4
+    }
+  ]
+}

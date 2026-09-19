@@ -1,0 +1,68 @@
+{
+  "slug": "coffee-dirty-soda",
+  "name": "Coffee Dirty Soda",
+  "format": "mocktail",
+  "flavor_notes": "A coffee dirty soda — cola or lemon-lime soda with sweet cream and a coffee pour.",
+  "status": "draft",
+  "tags": [
+    "summer",
+    "trendy",
+    "quick-fix"
+  ],
+  "sweetness_level": "rich_sweet",
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "tested_with": "Onyx Southern Weather",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "caffeine_mg": 180,
+      "servings": 1,
+      "dietary": [
+        "decaf-friendly"
+      ],
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, fully melted and chilled",
+          "item_id": "cometeer_capsule",
+          "notes": "the coffee swap for viral dirty soda that uses only creamer"
+        },
+        {
+          "amount": 8,
+          "unit": "oz",
+          "item": "cola or lemon-lime soda"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "sweet cream or half-and-half"
+        },
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "item": "vanilla syrup or honey"
+        },
+        {
+          "item": "Ice",
+          "item_id": "ice"
+        },
+        {
+          "item": "Lime wedge",
+          "item_id": "lime_wedge"
+        }
+      ],
+      "steps": [
+        "Melt and chill the capsule.",
+        "Fill a tall glass with ice, soda, vanilla, and cream.",
+        "Pour in the melted coffee and stir once.",
+        "Finish with lime; skip a second capsule — the soda is the volume, the puck is the coffee."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5
+    }
+  ]
+}

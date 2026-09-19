@@ -1,0 +1,66 @@
+{
+  "slug": "black-cat-affogato",
+  "name": "Black Cat Affogato",
+  "format": "affogato",
+  "flavor_notes": "Classic affogato character — intensely flavored hot coffee poured fast over cold vanilla gelato.",
+  "status": "draft",
+  "tags": [
+    "after-dinner",
+    "dessert",
+    "quick-fix"
+  ],
+  "sweetness_level": "dessert",
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "dark",
+      "roast_note": "Needs a bold, intense coffee to read through the cold gelato — a lighter roast gets lost.",
+      "tested_with": "Intelligentsia Decaf Black Cat Espresso",
+      "capsule_count": 1,
+      "caffeine_level": "decaf",
+      "caffeine_mg": 9,
+      "servings": 1,
+      "equipment": [
+        "small serving bowl or glass"
+      ],
+      "dietary": [
+        "vegan-adaptable"
+      ],
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer Decaf Black Cat Espresso, melted",
+          "item_id": "cometeer_decaf_capsule"
+        },
+        {
+          "amount": 20,
+          "unit": "g",
+          "item": "boiling water",
+          "item_id": "boiling_water"
+        },
+        {
+          "amount": 2,
+          "unit": "scoop",
+          "item": "vanilla gelato or ice cream"
+        },
+        {
+          "item": "Shaved dark chocolate",
+          "item_id": "shaved_dark_chocolate",
+          "notes": "optional"
+        }
+      ],
+      "steps": [
+        "Stir the boiling water into the melted coffee.",
+        "Place the gelato in a small serving bowl or glass.",
+        "Pour the hot coffee over the gelato.",
+        "Add dark chocolate, if using.",
+        "Serve immediately."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 4
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "slug": "ca-phe-sua-nong-phin-style-no-phin",
+  "name": "Cà Phê Sữa Nóng (Phin-Style, No Phin)",
+  "format": "hot",
+  "flavor_notes": "Hot Vietnamese-style coffee — condensed milk stirred into strong, dark coffee, served warm.",
+  "status": "draft",
+  "tags": [
+    "cozy",
+    "quick-fix",
+    "vietnamese-style"
+  ],
+  "sweetness_level": "rich_sweet",
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "dark",
+      "roast_note": "Same condensed-milk pairing as the other Vietnamese-style recipes — dark avoids a sour clash.",
+      "tested_with": "Intelligentsia French Roast",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "caffeine_mg": 180,
+      "servings": 1,
+      "dietary": [
+        "decaf-friendly"
+      ],
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule",
+          "item_id": "cometeer_capsule",
+          "notes": "replaces a phin loaded with ~18–20 g dark roast, not an espresso shot"
+        },
+        {
+          "amount": 3,
+          "unit": "oz",
+          "item": "just-off-boil water",
+          "item_id": "just_off_boil_water"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "sweetened condensed milk",
+          "item_id": "sweetened_condensed_milk"
+        }
+      ],
+      "steps": [
+        "Spoon the condensed milk into a heatproof glass.",
+        "Drop in the frozen puck and pour 3 oz hot water over it (about 90 ml — phin yield, not the usual 6–8 oz cup).",
+        "Stir until the puck melts and the drink turns caramel-brown.",
+        "Taste; add 1 tsp more condensed milk if you want street-cart sweetness."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 4
+    }
+  ]
+}

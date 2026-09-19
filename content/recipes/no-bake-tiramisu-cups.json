@@ -1,0 +1,96 @@
+{
+  "slug": "no-bake-tiramisu-cups",
+  "name": "No-Bake Tiramisu Cups",
+  "format": "baking",
+  "flavor_notes": "Individual no-bake tiramisu cups — coffee-soaked ladyfingers layered with sweetened mascarpone cream.",
+  "status": "draft",
+  "tags": [
+    "make-ahead",
+    "individual-servings",
+    "dessert"
+  ],
+  "sweetness_level": "dessert",
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "dark",
+      "roast_note": "Same as the baked tiramisu — needs boldness to stand up to the sweet mascarpone cream.",
+      "tested_with": "Intelligentsia Black Cat Classic Espresso",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "caffeine_mg": 180,
+      "servings": 4,
+      "equipment": [
+        "mixing bowl",
+        "hand mixer or whisk",
+        "4 small cups or jars"
+      ],
+      "dietary": [
+        "decaf-friendly"
+      ],
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, fully melted",
+          "item_id": "cometeer_capsule",
+          "notes": "replaces instant espresso powder or a small espresso soak"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "item": "water",
+          "item_id": "water"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "sugar",
+          "item_id": "sugar"
+        },
+        {
+          "amount": 10,
+          "item": "ladyfingers or graham crackers",
+          "notes": "8–12"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "heavy cream",
+          "item_id": "heavy_cream"
+        },
+        {
+          "amount": 4,
+          "unit": "oz",
+          "item": "mascarpone or cream cheese, softened"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "powdered sugar",
+          "item_id": "powdered_sugar"
+        },
+        {
+          "amount": 0.5,
+          "unit": "tsp",
+          "item": "vanilla extract",
+          "item_id": "vanilla_extract"
+        },
+        {
+          "item": "Cocoa powder",
+          "item_id": "cocoa_powder"
+        }
+      ],
+      "steps": [
+        "Stir melted capsule with water and sugar; this soak is stronger than drip coffee, so dip fast.",
+        "Whip cream, mascarpone, powdered sugar, and vanilla until thick.",
+        "Dip ladyfingers 1–2 seconds only, then layer with cream in 4 cups.",
+        "Chill 20 minutes and dust with cocoa."
+      ],
+      "difficulty": "medium",
+      "prep_time_minutes": 25
+    }
+  ]
+}

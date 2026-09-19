@@ -1,0 +1,74 @@
+{
+  "slug": "grapefruit-coffee-tonic",
+  "name": "Grapefruit Coffee Tonic",
+  "format": "mocktail",
+  "flavor_notes": "Bitter-bright espresso-tonic energy, with a fruity coffee doing the work instead of pulled espresso.",
+  "status": "draft",
+  "tags": [
+    "summer",
+    "afternoon-pick-me-up",
+    "low-effort"
+  ],
+  "sweetness_level": "subtle",
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "light",
+      "roast_note": "A fruity, bright roast complements the grapefruit and tonic instead of muddying them.",
+      "tested_with": "Go Get Em Tiger Chelbesa",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "caffeine_mg": 180,
+      "servings": 1,
+      "dietary": [
+        "dairy-free",
+        "decaf-friendly"
+      ],
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, melted",
+          "item_id": "cometeer_capsule"
+        },
+        {
+          "amount": 20,
+          "unit": "g",
+          "item": "boiling water",
+          "item_id": "boiling_water"
+        },
+        {
+          "amount": 4,
+          "unit": "oz",
+          "item": "chilled tonic water",
+          "item_id": "tonic_water"
+        },
+        {
+          "amount": 1,
+          "unit": "oz",
+          "item": "grapefruit juice",
+          "item_id": "grapefruit_juice"
+        },
+        {
+          "item": "Ice",
+          "item_id": "ice"
+        },
+        {
+          "item": "Grapefruit wedge",
+          "item_id": "grapefruit_wedge"
+        }
+      ],
+      "steps": [
+        "Stir the boiling water into the melted capsule.",
+        "Fill a tall glass with ice.",
+        "Add the grapefruit juice and tonic.",
+        "Slowly pour the coffee over the top.",
+        "Garnish with grapefruit."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5
+    }
+  ]
+}

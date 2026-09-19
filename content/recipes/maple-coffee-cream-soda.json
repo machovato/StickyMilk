@@ -1,0 +1,71 @@
+{
+  "slug": "maple-coffee-cream-soda",
+  "name": "Maple Coffee Cream Soda",
+  "format": "iced",
+  "flavor_notes": "A pantry-simple coffee soda — maple sweetness, a fizzy lift, and a touch of cream.",
+  "status": "draft",
+  "tags": [
+    "summer",
+    "kid-friendly",
+    "quick-fix"
+  ],
+  "sweetness_level": "rich_sweet",
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "tested_with": "Proud Mary Humbler",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "caffeine_mg": 180,
+      "servings": 1,
+      "dietary": [
+        "decaf-friendly"
+      ],
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, melted and chilled",
+          "item_id": "cometeer_capsule"
+        },
+        {
+          "amount": 4,
+          "unit": "oz",
+          "item": "sparkling water",
+          "item_id": "sparkling_water"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "maple syrup",
+          "item_id": "maple_syrup"
+        },
+        {
+          "amount": 1,
+          "unit": "oz",
+          "item": "half-and-half",
+          "item_id": "half_and_half"
+        },
+        {
+          "item": "Ice",
+          "item_id": "ice"
+        },
+        {
+          "item": "Pinch of salt",
+          "item_id": "pinch_of_salt"
+        }
+      ],
+      "steps": [
+        "Stir the maple syrup and pinch of salt into the chilled coffee.",
+        "Fill a glass with ice.",
+        "Add the sparkling water.",
+        "Pour in the coffee.",
+        "Top with half-and-half and stir once."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "slug": "salted-mocha-cometeer-shake",
+  "name": "Salted Mocha Cometeer Shake",
+  "format": "iced",
+  "flavor_notes": "A frozen mocha milkshake — chocolate, vanilla, and a pinch of salt to round out the coffee.",
+  "status": "draft",
+  "tags": [
+    "summer",
+    "dessert",
+    "quick-fix"
+  ],
+  "sweetness_level": "dessert",
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "tested_with": "Onyx Southern Weather",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "caffeine_mg": 180,
+      "servings": 1,
+      "equipment": [
+        "blender"
+      ],
+      "dietary": [
+        "vegan-adaptable",
+        "decaf-friendly"
+      ],
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "frozen Cometeer capsule",
+          "item_id": "cometeer_capsule"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "milk",
+          "item_id": "milk"
+        },
+        {
+          "amount": 2,
+          "unit": "scoop",
+          "item": "vanilla ice cream",
+          "item_id": "vanilla_ice_cream"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "chocolate syrup",
+          "item_id": "chocolate_syrup"
+        },
+        {
+          "item": "Pinch of flaky salt",
+          "item_id": "flaky_salt"
+        }
+      ],
+      "steps": [
+        "Add the frozen coffee puck, milk, ice cream, chocolate syrup, and salt to a blender.",
+        "Blend until smooth.",
+        "Pour into a chilled glass.",
+        "Add a tiny pinch of flaky salt on top."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+// StickyMilk relational layer — only what actually needs relational queries.
+//
+// Recipes, preparations, and promos are curated editorial content and live
+// as JSON files in content/recipes/, NOT here. See lib/recipes.ts.
+//
+// Kept intentionally simple so this can move to Postgres later with zero
+// code changes: field types (String/Int/Float/Boolean/DateTime, cuid ids)
+// are all Postgres-compatible, so the only change needed at that point is
+// datasource.provider ("sqlite" -> "postgresql") and DATABASE_URL.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Prisma 7: connection URLs no longer live in the schema. The actual
+// DATABASE_URL is supplied to the CLI via prisma.config.ts (datasource.url)
+// and to the app at runtime via the driver adapter in lib/prisma.ts.
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id              String   @id @default(cuid())
+  createdAt       DateTime @default(now())
+  /// One of: "cometeer" | "nespresso" | "instant". Mirrors the anonymous
+  /// visitor's localStorage default (lib/channel-context.tsx), but
+  /// persisted server-side so it follows a registered user across devices.
+  default_channel String   @default("cometeer")
+
+  ratings Rating[]
+}
+
+model Rating {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  /// References a Recipe.slug from content/recipes/*.json — recipes are
+  /// not in this database, so this is a soft reference, not a foreign key.
+  recipeId String
+  score    Int
+  review   String?
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@index([recipeId])
+}

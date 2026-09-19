@@ -1,0 +1,490 @@
+[
+  {
+    "id": "cometeer_decaf_capsule",
+    "name": "Cometeer Decaf Black Cat Espresso capsule",
+    "category": "coffee",
+    "allergens": [],
+    "aliases": [
+      "Cometeer Decaf Black Cat Espresso capsule, melted",
+      "Cometeer Decaf Black Cat Espresso, melted"
+    ],
+    "default_unit": "capsule"
+  },
+  {
+    "id": "cometeer_capsule",
+    "name": "Cometeer capsule",
+    "category": "coffee",
+    "allergens": [],
+    "aliases": [
+      "Cometeer capsule, fully melted",
+      "Cometeer capsule, fully melted and chilled",
+      "Cometeer capsule, fully melted and cooled",
+      "Cometeer capsule, melted",
+      "Cometeer capsule, melted and chilled",
+      "Cometeer capsules, still frozen (Half Caff)",
+      "frozen Cometeer capsule"
+    ],
+    "default_unit": "capsule"
+  },
+  {
+    "id": "instant_coffee",
+    "name": "Instant coffee",
+    "category": "coffee",
+    "allergens": [],
+    "aliases": [
+      "instant coffee"
+    ],
+    "default_unit": "tsp"
+  },
+  {
+    "id": "nespresso_pod",
+    "name": "Nespresso Vertuo pod, brewed as a single shot",
+    "category": "coffee",
+    "allergens": [],
+    "aliases": [
+      "Nespresso Original espresso",
+      "Nespresso Original pod, brewed as a normal shot"
+    ],
+    "default_unit": "pod"
+  },
+  {
+    "id": "nespresso_double_pod",
+    "name": "Nespresso Vertuo Double Espresso pod",
+    "category": "coffee",
+    "allergens": [],
+    "aliases": [
+      "Double Espresso pod",
+      "Nespresso Double Espresso pod",
+      "Nespresso Vertuo Double Espresso pod (Chiaro or Scuro)",
+      "Nespresso Vertuo Double Espresso pod"
+    ],
+    "default_unit": "pod"
+  },
+  {
+    "id": "butter",
+    "name": "Butter",
+    "category": "dairy",
+    "allergens": [
+      "dairy"
+    ],
+    "aliases": [
+      "butter, melted"
+    ],
+    "default_unit": "tbsp"
+  },
+  {
+    "id": "half_and_half",
+    "name": "Half-and-half",
+    "category": "dairy",
+    "allergens": [
+      "dairy"
+    ],
+    "aliases": [
+      "half-and-half"
+    ],
+    "default_unit": "oz"
+  },
+  {
+    "id": "heavy_cream",
+    "name": "Heavy cream",
+    "category": "dairy",
+    "allergens": [
+      "dairy"
+    ],
+    "aliases": [
+      "heavy cream"
+    ],
+    "default_unit": "cup"
+  },
+  {
+    "id": "mascarpone",
+    "name": "Mascarpone",
+    "category": "dairy",
+    "allergens": [
+      "dairy"
+    ],
+    "aliases": [
+      "mascarpone"
+    ],
+    "default_unit": "oz"
+  },
+  {
+    "id": "milk",
+    "name": "Whole milk",
+    "category": "dairy",
+    "allergens": [
+      "dairy"
+    ],
+    "aliases": [
+      "milk",
+      "cold milk",
+      "whole milk",
+      "cold whole milk"
+    ],
+    "default_unit": "oz"
+  },
+  {
+    "id": "sweetened_condensed_milk",
+    "name": "Sweetened condensed milk",
+    "category": "dairy",
+    "allergens": [
+      "dairy"
+    ],
+    "aliases": [
+      "sweetened condensed milk"
+    ],
+    "default_unit": "tbsp"
+  },
+  {
+    "id": "vanilla_ice_cream",
+    "name": "Vanilla ice cream",
+    "category": "dairy",
+    "allergens": [
+      "dairy"
+    ],
+    "aliases": [
+      "vanilla ice cream"
+    ],
+    "default_unit": "scoop"
+  },
+  {
+    "id": "oat_milk",
+    "name": "Oat milk",
+    "category": "milk-alternative",
+    "allergens": [],
+    "aliases": [
+      "oat milk"
+    ],
+    "default_unit": "oz"
+  },
+  {
+    "id": "brown_sugar",
+    "name": "Brown sugar",
+    "category": "sweetener",
+    "allergens": [],
+    "aliases": [
+      "brown sugar"
+    ],
+    "default_unit": "cup"
+  },
+  {
+    "id": "maple_syrup",
+    "name": "Maple syrup",
+    "category": "sweetener",
+    "allergens": [],
+    "aliases": [
+      "maple syrup"
+    ],
+    "default_unit": "tbsp"
+  },
+  {
+    "id": "powdered_sugar",
+    "name": "Powdered sugar",
+    "category": "sweetener",
+    "allergens": [],
+    "aliases": [
+      "powdered sugar"
+    ],
+    "default_unit": "tbsp"
+  },
+  {
+    "id": "simple_syrup",
+    "name": "Simple syrup",
+    "category": "sweetener",
+    "allergens": [],
+    "aliases": [
+      "simple syrup"
+    ],
+    "default_unit": "oz"
+  },
+  {
+    "id": "sugar",
+    "name": "Sugar",
+    "category": "sweetener",
+    "allergens": [],
+    "aliases": [
+      "sugar"
+    ],
+    "default_unit": "tbsp"
+  },
+  {
+    "id": "chocolate_chips",
+    "name": "Chocolate chips",
+    "category": "flavoring",
+    "allergens": [],
+    "aliases": [
+      "chocolate chips"
+    ],
+    "default_unit": "cup"
+  },
+  {
+    "id": "chocolate_syrup",
+    "name": "Chocolate syrup",
+    "category": "flavoring",
+    "allergens": [],
+    "aliases": [
+      "chocolate syrup"
+    ],
+    "default_unit": "tbsp"
+  },
+  {
+    "id": "cocoa_powder",
+    "name": "Cocoa powder",
+    "category": "flavoring",
+    "allergens": [],
+    "aliases": [
+      "Unsweetened cocoa powder",
+      "cocoa powder"
+    ],
+    "default_unit": "tbsp"
+  },
+  {
+    "id": "vanilla",
+    "name": "Vanilla",
+    "category": "flavoring",
+    "allergens": [],
+    "aliases": [
+      "vanilla"
+    ],
+    "default_unit": "tsp"
+  },
+  {
+    "id": "vanilla_extract",
+    "name": "Vanilla extract",
+    "category": "flavoring",
+    "allergens": [],
+    "aliases": [
+      "vanilla extract"
+    ],
+    "default_unit": "tsp"
+  },
+  {
+    "id": "vanilla_syrup",
+    "name": "Vanilla syrup",
+    "category": "flavoring",
+    "allergens": [],
+    "aliases": [
+      "vanilla syrup"
+    ],
+    "default_unit": "tbsp"
+  },
+  {
+    "id": "coffee_liqueur",
+    "name": "Coffee liqueur",
+    "category": "alcohol",
+    "allergens": [],
+    "aliases": [
+      "coffee liqueur"
+    ],
+    "default_unit": "oz"
+  },
+  {
+    "id": "vodka",
+    "name": "Vodka",
+    "category": "alcohol",
+    "allergens": [],
+    "aliases": [
+      "vodka"
+    ],
+    "default_unit": "oz"
+  },
+  {
+    "id": "grapefruit_juice",
+    "name": "Grapefruit juice",
+    "category": "produce",
+    "allergens": [],
+    "aliases": [
+      "grapefruit juice"
+    ],
+    "default_unit": "oz"
+  },
+  {
+    "id": "grapefruit_wedge",
+    "name": "Grapefruit wedge",
+    "category": "produce",
+    "allergens": [],
+    "aliases": []
+  },
+  {
+    "id": "lemon_peel",
+    "name": "Lemon peel",
+    "category": "produce",
+    "allergens": [],
+    "aliases": []
+  },
+  {
+    "id": "lime_wedge",
+    "name": "Lime wedge",
+    "category": "produce",
+    "allergens": [],
+    "aliases": []
+  },
+  {
+    "id": "all_purpose_flour",
+    "name": "All-purpose flour",
+    "category": "baking",
+    "allergens": [
+      "gluten"
+    ],
+    "aliases": [
+      "all-purpose flour"
+    ],
+    "default_unit": "cup"
+  },
+  {
+    "id": "baking_soda",
+    "name": "Baking soda",
+    "category": "baking",
+    "allergens": [],
+    "aliases": [
+      "baking soda"
+    ],
+    "default_unit": "tsp"
+  },
+  {
+    "id": "egg_yolk",
+    "name": "Egg yolk",
+    "category": "baking",
+    "allergens": [
+      "egg"
+    ],
+    "aliases": [
+      "egg yolk"
+    ]
+  },
+  {
+    "id": "ladyfingers",
+    "name": "Ladyfingers",
+    "category": "baking",
+    "allergens": [
+      "gluten",
+      "egg"
+    ],
+    "aliases": [
+      "small ladyfingers"
+    ]
+  },
+  {
+    "id": "flaky_salt",
+    "name": "Flaky salt",
+    "category": "pantry",
+    "allergens": [],
+    "aliases": [
+      "Pinch of flaky salt"
+    ]
+  },
+  {
+    "id": "pinch_of_cinnamon",
+    "name": "Pinch of cinnamon",
+    "category": "pantry",
+    "allergens": [],
+    "aliases": []
+  },
+  {
+    "id": "pinch_of_salt",
+    "name": "Pinch of salt",
+    "category": "pantry",
+    "allergens": [],
+    "aliases": []
+  },
+  {
+    "id": "boiling_water",
+    "name": "Boiling water",
+    "category": "water",
+    "allergens": [],
+    "aliases": [
+      "boiling water"
+    ],
+    "default_unit": "g"
+  },
+  {
+    "id": "tonic_water",
+    "name": "Chilled tonic water",
+    "category": "water",
+    "allergens": [],
+    "aliases": [
+      "chilled tonic water"
+    ],
+    "default_unit": "oz"
+  },
+  {
+    "id": "hot_water",
+    "name": "Hot water",
+    "category": "water",
+    "allergens": [],
+    "aliases": [
+      "hot water"
+    ],
+    "default_unit": "oz"
+  },
+  {
+    "id": "just_off_boil_water",
+    "name": "Just-off-boil water",
+    "category": "water",
+    "allergens": [],
+    "aliases": [
+      "just-off-boil water"
+    ],
+    "default_unit": "oz"
+  },
+  {
+    "id": "sparkling_water",
+    "name": "Sparkling water",
+    "category": "water",
+    "allergens": [],
+    "aliases": [
+      "sparkling water"
+    ],
+    "default_unit": "oz"
+  },
+  {
+    "id": "water",
+    "name": "Water",
+    "category": "water",
+    "allergens": [],
+    "aliases": [
+      "water"
+    ],
+    "default_unit": "oz"
+  },
+  {
+    "id": "shaved_dark_chocolate",
+    "name": "Shaved dark chocolate",
+    "category": "topping",
+    "allergens": [],
+    "aliases": []
+  },
+  {
+    "id": "ice",
+    "name": "Ice",
+    "category": "other",
+    "allergens": [],
+    "aliases": [
+      "ice"
+    ]
+  },
+  {
+    "id": "salted_caramel_syrup",
+    "name": "Salted caramel syrup",
+    "category": "flavoring",
+    "allergens": [],
+    "aliases": [
+      "caramel syrup",
+      "salted caramel syrup"
+    ],
+    "default_unit": "tsp"
+  },
+  {
+    "id": "caramel_sauce",
+    "name": "Caramel sauce",
+    "category": "topping",
+    "allergens": [
+      "dairy"
+    ],
+    "aliases": [
+      "caramel drizzle",
+      "caramel sauce"
+    ],
+    "default_unit": "tsp"
+  }
+]

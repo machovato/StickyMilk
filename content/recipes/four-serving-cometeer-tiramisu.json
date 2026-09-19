@@ -1,0 +1,97 @@
+{
+  "slug": "four-serving-cometeer-tiramisu",
+  "name": "Four-Serving Cometeer Tiramisu",
+  "format": "baking",
+  "flavor_notes": "Classic tiramisu flavor — coffee-soaked ladyfingers layered with sweet mascarpone cream and cocoa.",
+  "status": "draft",
+  "tags": [
+    "make-ahead",
+    "dinner-party",
+    "baking"
+  ],
+  "sweetness_level": "dessert",
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "dark",
+      "roast_note": "Traditional tiramisu needs a bold, bitter coffee to stand up to the sweet mascarpone cream.",
+      "tested_with": "Intelligentsia Decaf Black Cat Espresso",
+      "capsule_count": 1,
+      "caffeine_level": "decaf",
+      "caffeine_mg": 9,
+      "servings": 4,
+      "equipment": [
+        "mixing bowl",
+        "hand mixer or whisk"
+      ],
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer Decaf Black Cat Espresso capsule, melted",
+          "item_id": "cometeer_decaf_capsule"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "secondary_amount": 60,
+          "secondary_unit": "g",
+          "item": "hot water",
+          "item_id": "hot_water"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "sugar",
+          "item_id": "sugar"
+        },
+        {
+          "amount": 12,
+          "item": "small ladyfingers",
+          "item_id": "ladyfingers"
+        },
+        {
+          "amount": 8,
+          "unit": "oz",
+          "item": "mascarpone",
+          "item_id": "mascarpone"
+        },
+        {
+          "amount": 0.5,
+          "unit": "cup",
+          "item": "heavy cream",
+          "item_id": "heavy_cream"
+        },
+        {
+          "amount": 3,
+          "unit": "tbsp",
+          "item": "powdered sugar",
+          "item_id": "powdered_sugar"
+        },
+        {
+          "amount": 0.5,
+          "unit": "tsp",
+          "item": "vanilla",
+          "item_id": "vanilla"
+        },
+        {
+          "item": "Unsweetened cocoa powder",
+          "item_id": "cocoa_powder"
+        }
+      ],
+      "steps": [
+        "Stir the melted coffee, hot water, and sugar together; cool.",
+        "Whip the cream, powdered sugar, and vanilla until softly firm.",
+        "Fold the whipped cream into the mascarpone.",
+        "Dip each ladyfinger briefly into the coffee mixture.",
+        "Layer the soaked ladyfingers with the mascarpone mixture.",
+        "Chill until set.",
+        "Dust with cocoa before serving."
+      ],
+      "difficulty": "medium",
+      "prep_time_minutes": 30
+    }
+  ]
+}

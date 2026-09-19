@@ -1,0 +1,95 @@
+{
+  "slug": "one-bowl-mocha-skillet-cookie",
+  "name": "One-Bowl Mocha Skillet Cookie",
+  "format": "baking",
+  "flavor_notes": "A one-bowl mocha skillet cookie — chocolate and coffee baked into a warm, gooey dessert.",
+  "status": "draft",
+  "tags": [
+    "baking",
+    "dessert",
+    "shareable"
+  ],
+  "sweetness_level": "dessert",
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "tested_with": "Birch Coffee Half Day Dark Half Caff",
+      "capsule_count": 1,
+      "caffeine_level": "half",
+      "caffeine_mg": 90,
+      "servings": 2,
+      "equipment": [
+        "small oven-safe skillet",
+        "oven"
+      ],
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "item": "Cometeer capsule, fully melted",
+          "item_id": "cometeer_capsule",
+          "notes": "Birch Coffee Half Day Dark Half Caff is the half-caf pick here; Equator is the full-caf alternative"
+        },
+        {
+          "amount": 4,
+          "unit": "tbsp",
+          "item": "butter, melted",
+          "item_id": "butter"
+        },
+        {
+          "amount": 0.333,
+          "unit": "cup",
+          "item": "brown sugar",
+          "item_id": "brown_sugar"
+        },
+        {
+          "amount": 1,
+          "item": "egg yolk",
+          "item_id": "egg_yolk"
+        },
+        {
+          "amount": 0.5,
+          "unit": "tsp",
+          "item": "vanilla extract",
+          "item_id": "vanilla_extract"
+        },
+        {
+          "amount": 0.5,
+          "unit": "cup",
+          "item": "all-purpose flour",
+          "item_id": "all_purpose_flour"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "cocoa powder",
+          "item_id": "cocoa_powder"
+        },
+        {
+          "amount": 0.25,
+          "unit": "tsp",
+          "item": "baking soda",
+          "item_id": "baking_soda"
+        },
+        {
+          "item": "Pinch of salt",
+          "item_id": "pinch_of_salt"
+        },
+        {
+          "amount": 0.333,
+          "unit": "cup",
+          "item": "chocolate chips",
+          "item_id": "chocolate_chips"
+        }
+      ],
+      "steps": [
+        "Heat oven to 350°F. Melt the capsule so you add liquid extract, not a frozen puck.",
+        "Stir butter, brown sugar, egg yolk, vanilla, and melted coffee until smooth.",
+        "Fold in flour, cocoa, baking soda, salt, and chocolate chips.",
+        "Spread in a small oven-safe skillet and bake 12–14 minutes, until the edges set."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 25
+    }
+  ]
+}

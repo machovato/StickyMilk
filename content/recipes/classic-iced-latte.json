@@ -1,0 +1,126 @@
+{
+  "slug": "classic-iced-latte",
+  "name": "Classic Iced Latte",
+  "format": "iced",
+  "flavor_notes": "Cold, creamy milk with a bright, caramel-toned coffee finish.",
+  "status": "draft",
+  "tags": [
+    "iced",
+    "summer",
+    "everyday",
+    "quick-fix"
+  ],
+  "sweetness_level": "none",
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "tested_with": "Onyx Southern Weather",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "caffeine_mg": 180,
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "cold milk"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        }
+      ],
+      "steps": [
+        "Melt the Cometeer capsule and chill the coffee.",
+        "Fill a glass with ice.",
+        "Add the cold milk.",
+        "Pour the chilled coffee over the milk and stir."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 6
+    },
+    {
+      "channel": "nespresso",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 40,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo pod, brewed as a single shot",
+          "item_id": "nespresso_pod"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "cold milk"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        }
+      ],
+      "steps": [
+        "Pull a 40 ml espresso and let it cool briefly.",
+        "Fill a glass with ice.",
+        "Add the cold milk.",
+        "Pour the espresso over the milk and stir."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5
+    },
+    {
+      "channel": "instant",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1.5,
+          "unit": "tsp",
+          "item": "freeze-dried instant coffee"
+        },
+        {
+          "amount": 1.5,
+          "unit": "oz",
+          "item": "hot water",
+          "item_id": "hot_water"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "cold milk"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        }
+      ],
+      "steps": [
+        "Dissolve the instant coffee completely in the hot water and let it cool briefly.",
+        "Fill a glass with ice.",
+        "Add the cold milk.",
+        "Pour the cooled coffee over the milk and stir."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 6
+    }
+  ]
+}

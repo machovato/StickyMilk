@@ -1,0 +1,146 @@
+{
+  "slug": "sticky-latte",
+  "name": "Sticky Latte",
+  "format": "iced",
+  "flavor_notes": "Glossy condensed milk, rich coffee, and creamy milk with a Vietnamese-inspired sweetness.",
+  "status": "draft",
+  "tags": [
+    "signature",
+    "iced",
+    "sweet",
+    "condensed-milk"
+  ],
+  "sweetness_level": "rich_sweet",
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "dark",
+      "roast_note": "Same condensed-milk pairing as the other Vietnamese-style recipes — dark avoids a sour clash.",
+      "tested_with": "Intelligentsia French Roast",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "caffeine_mg": 180,
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer"
+        },
+        {
+          "amount": 5,
+          "unit": "oz",
+          "item": "cold milk"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "sweetened condensed milk",
+          "item_id": "sweetened_condensed_milk"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        }
+      ],
+      "steps": [
+        "Melt the Cometeer capsule.",
+        "Stir the condensed milk into the coffee until glossy and smooth.",
+        "Fill a glass with ice and add the cold milk.",
+        "Pour the coffee mixture over the milk and stir."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5
+    },
+    {
+      "channel": "nespresso",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 40,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo pod, brewed as a single shot",
+          "item_id": "nespresso_pod"
+        },
+        {
+          "amount": 5,
+          "unit": "oz",
+          "item": "cold milk"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "sweetened condensed milk",
+          "item_id": "sweetened_condensed_milk"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        }
+      ],
+      "steps": [
+        "Pull a 40 ml espresso.",
+        "Stir the condensed milk into the espresso until smooth.",
+        "Fill a glass with ice and add the cold milk.",
+        "Pour the coffee mixture over the milk and stir."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5
+    },
+    {
+      "channel": "instant",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1.5,
+          "unit": "tsp",
+          "item": "freeze-dried instant coffee"
+        },
+        {
+          "amount": 1.5,
+          "unit": "oz",
+          "item": "hot water",
+          "item_id": "hot_water"
+        },
+        {
+          "amount": 5,
+          "unit": "oz",
+          "item": "cold milk"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "sweetened condensed milk",
+          "item_id": "sweetened_condensed_milk"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        }
+      ],
+      "steps": [
+        "Dissolve the instant coffee completely in the hot water.",
+        "Stir the condensed milk into the coffee until smooth.",
+        "Fill a glass with ice and add the cold milk.",
+        "Pour the coffee mixture over the milk and stir."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5
+    }
+  ]
+}
