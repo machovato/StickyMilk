@@ -384,6 +384,21 @@ export function PreparationEditor({
                 placeholder="e.g. handheld frother, cocktail shaker"
               />
             </div>
+
+            {/* Channel Barista Note */}
+            <div className="flex flex-col gap-1">
+              <label className="font-mono text-xs font-bold uppercase text-[#1a130e]">
+                Channel Barista Note{" "}
+                <span className="font-normal text-[#7f756f]">(optional technique tip or hardware note)</span>
+              </label>
+              <input
+                type="text"
+                value={prep.barista_note}
+                onChange={(e) => onChange({ barista_note: e.target.value })}
+                placeholder="e.g. Rapidly chill by brewing directly over dense ice to preserve crema"
+                className="bg-[#f8f2ee] p-2.5 font-mono text-xs text-[#1a130e] border border-[#1a130e]/20 focus:border-[#001ec0] focus:bg-white focus:outline-none"
+              />
+            </div>
           </div>
 
           {/* Ingredients Section */}

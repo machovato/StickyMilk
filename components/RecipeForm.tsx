@@ -20,6 +20,7 @@ import { validateRecipeCandidate } from "@/lib/recipe-schema";
 import type { IngredientTaxonomyEntry } from "@/lib/taxonomy";
 import { slugify } from "@/lib/slugify";
 import { createRecipeAction } from "@/lib/actions/create-recipe";
+import { updateRecipeAction } from "@/lib/actions/update-recipe";
 import { initialCreateRecipeState } from "@/lib/create-recipe-state";
 import { TagInput } from "@/components/TagInput";
 import { PreparationEditor } from "@/components/recipe-form/PreparationEditor";
@@ -37,21 +38,30 @@ function FieldErrorText({ message }: { message?: string }) {
 export function RecipeForm({
   existingSlugs,
   ingredientTaxonomy,
+  initialDraft,
+  mode = "create",
+  originalSlug,
 }: {
   existingSlugs: string[];
   ingredientTaxonomy: IngredientTaxonomyEntry[];
+  initialDraft?: RecipeDraft;
+  mode?: "create" | "edit";
+  originalSlug?: string;
 }) {
-  const [draft, setDraft] = useState<RecipeDraft>(emptyRecipeDraft());
+  const [draft, setDraft] = useState<RecipeDraft>(initialDraft ?? emptyRecipeDraft());
   const [collapsed, setCollapsed] = useState<Record<Channel, boolean>>({
     cometeer: false,
-    nespresso: true,
-    instant: true,
+    nespresso: initialDraft ? !initialDraft.preparations.nespresso : true,
+    instant: initialDraft ? !initialDraft.preparations.instant : true,
   });
   const [showPreview, setShowPreview] = useState(false);
   const [state, formAction, pending] = useActionState(
     async (_prevState: typeof initialCreateRecipeState) => {
       const formData = new FormData();
       formData.set("recipe", JSON.stringify(draftToCandidate(draft)));
+      if (mode === "edit" && originalSlug) {
+        return updateRecipeAction(originalSlug, _prevState, formData);
+      }
       return createRecipeAction(_prevState, formData);
     },
     initialCreateRecipeState
@@ -63,7 +73,10 @@ export function RecipeForm({
   const slug = draft.slug.trim();
   const slugFormatValid =
     slug === "" || /^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug);
-  const slugTaken = slug !== "" && existingSlugs.includes(slug);
+  const slugTaken =
+    slug !== "" &&
+    (mode === "edit" ? slug !== originalSlug : true) &&
+    existingSlugs.includes(slug);
 
   const previewRecipe = useMemo<Recipe | null>(() => {
     const candidate = draftToCandidate(draft);
@@ -156,7 +169,7 @@ export function RecipeForm({
                 : "bg-[#dfe0ff] text-[#000a63]"
             }`}
           >
-            {readyToSave ? "Ready to Register" : "In Progress"}
+            {readyToSave ? (mode === "edit" ? "Ready to Update" : "Ready to Register") : "In Progress"}
           </span>
         </div>
 
@@ -345,6 +358,25 @@ export function RecipeForm({
 
         <div className="flex flex-col gap-1">
           <label className="font-mono text-xs font-bold uppercase text-[#1a130e]">
+            Universal Barista Technique Note{" "}
+            <span className="font-normal text-[#7f756f]">(optional, applies across all channels)</span>
+          </label>
+          <textarea
+            rows={2}
+            value={draft.barista_note}
+            onChange={(e) =>
+              setDraft((d) => ({ ...d, barista_note: e.target.value }))
+            }
+            placeholder="e.g. Always whip the egg yolks until ribbon stage before pouring over hot espresso..."
+            className="bg-[#f8f2ee] p-2.5 font-body text-xs text-[#1a130e] border border-[#1a130e]/20 focus:border-[#001ec0] focus:bg-white focus:outline-none leading-relaxed"
+          />
+          <p className="font-mono text-[10px] text-[#7f756f]">
+            Universal formulation techniques or hack advice. Specific channel notes can also be placed inside each preparation below.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <label className="font-mono text-xs font-bold uppercase text-[#1a130e]">
             Discovery Mood Tags
           </label>
           <TagInput
@@ -465,7 +497,13 @@ export function RecipeForm({
           disabled={pending || !readyToSave || slugTaken || !slugFormatValid}
           className="px-6 py-3 bg-[#001ec0] hover:bg-[#1a130e] text-white font-mono text-xs uppercase font-bold tracking-wider transition-all shadow-[0_2px_0_#1A130E] active:translate-y-0.5 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
         >
-          {pending ? "Registering Protocol…" : "Register Recipe Protocol →"}
+          {pending
+            ? mode === "edit"
+              ? "Updating Protocol…"
+              : "Registering Protocol…"
+            : mode === "edit"
+              ? "Update Recipe Protocol →"
+              : "Register Recipe Protocol →"}
         </button>
         <p className="font-mono text-xs text-[#7f756f]">
           Writes directly to <code className="text-[#1a130e] font-bold">content/recipes/{slug || "…"}.json</code> on disk.

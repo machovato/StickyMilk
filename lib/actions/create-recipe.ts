@@ -8,15 +8,13 @@ import { asValidatedRecipe, validateRecipeCandidate } from "@/lib/recipe-schema"
 import { invalidateRecipeCache, recipeSlugExists } from "@/lib/recipes";
 import { ingredientTaxonomyIds } from "@/lib/taxonomy";
 import { toRecipeFileContents } from "@/lib/write-recipe";
+import { isAdminAuthenticated } from "@/lib/auth";
 import type { CreateRecipeState } from "@/lib/create-recipe-state";
 
 const CONTENT_DIR = path.join(process.cwd(), "content", "recipes");
 
 /**
- * Writes a new file to `content/recipes/`. This is a local-authoring-only
- * action — gated independently of the `/recipes/new` page itself, so it
- * refuses even if something calls it directly rather than through that
- * page's form.
+ * Writes a new file to `content/recipes/`. Gated by admin authentication.
  *
  * The incoming `recipe` field is one serialized JSON blob built client-side
  * from the form's draft state. That makes it untrusted input as far as
@@ -30,8 +28,9 @@ export async function createRecipeAction(
   _prevState: CreateRecipeState,
   formData: FormData
 ): Promise<CreateRecipeState> {
-  if (process.env.NODE_ENV === "production") {
-    return { errors: [{ path: "", message: "Recipe authoring is disabled in production." }] };
+  const isAuth = await isAdminAuthenticated();
+  if (!isAuth) {
+    return { errors: [{ path: "", message: "Unauthorized: Admin authorization key required." }] };
   }
 
   const raw = formData.get("recipe");

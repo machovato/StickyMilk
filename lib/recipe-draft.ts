@@ -4,6 +4,7 @@ import type {
   DietaryTag,
   Difficulty,
   IngredientScaling,
+  Recipe,
   RecipeFormat,
   RecipeStatus,
   RoastRecommendation,
@@ -70,6 +71,7 @@ export interface PreparationDraft {
   yield_unit: string;
   equipment: string[];
   dietary: DietaryTag[];
+  barista_note: string;
   ingredients: IngredientDraft[];
   steps: StepDraft[];
 }
@@ -83,6 +85,7 @@ export interface RecipeDraft {
   image: string;
   format: RecipeFormat | "";
   flavor_notes: string;
+  barista_note: string;
   status: RecipeStatus;
   tags: string[];
   sweetness_level: SweetnessLevel | "";
@@ -124,6 +127,7 @@ export function emptyPreparationDraft(): PreparationDraft {
     yield_unit: "",
     equipment: [],
     dietary: [],
+    barista_note: "",
     ingredients: [emptyIngredientDraft()],
     steps: [emptyStepDraft()],
   };
@@ -136,6 +140,7 @@ export function clonePreparationDraft(p: PreparationDraft): PreparationDraft {
     ...p,
     equipment: [...p.equipment],
     dietary: [...p.dietary],
+    barista_note: p.barista_note,
     ingredients: p.ingredients.map((ing) => ({ ...ing, localId: newLocalId() })),
     steps: p.steps.map((s) => ({ ...s, localId: newLocalId() })),
   };
@@ -149,6 +154,7 @@ export function emptyRecipeDraft(): RecipeDraft {
     image: "",
     format: "",
     flavor_notes: "",
+    barista_note: "",
     status: "draft",
     tags: [],
     sweetness_level: "",
@@ -203,6 +209,7 @@ function preparationToCandidate(channel: Channel, prep: PreparationDraft) {
     yield_unit: undefinedIfBlank(prep.yield_unit),
     equipment: prep.equipment.length > 0 ? prep.equipment : undefined,
     dietary: prep.dietary.length > 0 ? prep.dietary : undefined,
+    barista_note: undefinedIfBlank(prep.barista_note),
     ingredients: prep.ingredients
       .filter((ing) => ing.item.trim() !== "")
       .map(ingredientToCandidate),
@@ -225,9 +232,69 @@ export function draftToCandidate(draft: RecipeDraft): unknown {
     image: undefinedIfBlank(draft.image),
     format: draft.format === "" ? undefined : draft.format,
     flavor_notes: draft.flavor_notes.trim(),
+    barista_note: undefinedIfBlank(draft.barista_note),
     status: draft.status,
     tags: draft.tags,
     sweetness_level: draft.sweetness_level === "" ? undefined : draft.sweetness_level,
+    preparations,
+  };
+}
+
+/** Converts an existing stored Recipe into a full RecipeDraft for editing. */
+export function recipeToDraft(recipe: Recipe): RecipeDraft {
+  const preparations: Record<Channel, PreparationDraft | null> = {
+    cometeer: null,
+    nespresso: null,
+    instant: null,
+  };
+
+  for (const prep of recipe.preparations) {
+    preparations[prep.channel] = {
+      roast_recommendation: prep.roast_recommendation ?? "",
+      roast_note: prep.roast_note ?? "",
+      tested_with: prep.tested_with ?? "",
+      capsule_count: prep.capsule_count != null ? String(prep.capsule_count) : "",
+      caffeine_level: prep.caffeine_level,
+      caffeine_mg: prep.caffeine_mg != null ? String(prep.caffeine_mg) : "",
+      difficulty: prep.difficulty,
+      prep_time_minutes: String(prep.prep_time_minutes),
+      servings: String(prep.servings),
+      yield_unit: prep.yield_unit ?? "",
+      equipment: prep.equipment ? [...prep.equipment] : [],
+      dietary: prep.dietary ? [...prep.dietary] : [],
+      barista_note: prep.barista_note ?? "",
+      ingredients: prep.ingredients.map((ing) => ({
+        localId: newLocalId(),
+        amount: ing.amount != null ? String(ing.amount) : "",
+        unit: ing.unit ?? "",
+        secondary_amount: ing.secondary_amount != null ? String(ing.secondary_amount) : "",
+        secondary_unit: ing.secondary_unit ?? "",
+        item: ing.item,
+        item_id: ing.item_id ?? "",
+        notes: ing.notes ?? "",
+        display: ing.display ?? "",
+        scaling: ing.scaling ?? "",
+        optional: Boolean(ing.optional),
+        group: ing.group ?? "",
+      })),
+      steps: prep.steps.map((s) => ({
+        localId: newLocalId(),
+        text: s,
+      })),
+    };
+  }
+
+  return {
+    name: recipe.name,
+    slug: recipe.slug,
+    slugTouched: true,
+    image: recipe.image ?? "",
+    format: recipe.format,
+    flavor_notes: recipe.flavor_notes,
+    barista_note: recipe.barista_note ?? "",
+    status: recipe.status,
+    tags: [...recipe.tags],
+    sweetness_level: recipe.sweetness_level,
     preparations,
   };
 }

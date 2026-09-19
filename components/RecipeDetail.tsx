@@ -23,7 +23,13 @@ import { formatAmount } from "@/lib/format-amount";
 
 const SCALE_OPTIONS = [1, 2, 4];
 
-export function RecipeDetail({ recipe }: { recipe: Recipe }) {
+export function RecipeDetail({
+  recipe,
+  isAdmin = false,
+}: {
+  recipe: Recipe;
+  isAdmin?: boolean;
+}) {
   const { defaultChannel, setDefaultChannel } = useChannel();
   const channel = defaultChannel;
 
@@ -101,6 +107,14 @@ export function RecipeDetail({ recipe }: { recipe: Recipe }) {
         </div>
 
         <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+          {isAdmin && (
+            <Link
+              href={`/recipes/${recipe.slug}/edit`}
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#b8f600] hover:bg-[#001ec0] hover:text-white text-[#141f00] font-mono text-xs uppercase font-bold transition-colors cursor-pointer border border-[#1a130e]/20"
+            >
+              <span>Edit Protocol ✎</span>
+            </Link>
+          )}
           <StatusBadge status={recipe.status} />
           <button
             type="button"

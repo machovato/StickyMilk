@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { CHANNEL_LABELS } from "@/lib/types";
+import { isAdminAuthenticated } from "@/lib/auth";
+import { logoutAction } from "@/lib/actions/admin-auth";
 
 const CHANNEL_ORDER = ["cometeer", "nespresso", "instant"] as const;
 
-export function Footer() {
+export async function Footer() {
   const year = new Date().getFullYear();
+  const isAuth = await isAdminAuthenticated();
 
   return (
     <footer className="w-full bg-[#f8f2ee] mt-16 border-t border-[#1a130e]/10 text-left">
@@ -64,12 +67,29 @@ export function Footer() {
               >
                 Recipe Archive
               </Link>
-              {process.env.NODE_ENV !== "production" && (
+              {isAuth ? (
+                <>
+                  <Link
+                    href="/recipes/new"
+                    className="text-[#001ec0] font-bold hover:text-[#1a130e] transition-colors"
+                  >
+                    + New Recipe
+                  </Link>
+                  <form action={logoutAction}>
+                    <button
+                      type="submit"
+                      className="text-[#ba1a1a] hover:underline font-mono text-xs text-left cursor-pointer"
+                    >
+                      Lock Admin Session
+                    </button>
+                  </form>
+                </>
+              ) : (
                 <Link
-                  href="/recipes/new"
-                  className="text-[#001ec0] font-bold hover:text-[#1a130e] transition-colors"
+                  href="/admin/login"
+                  className="text-[#7f756f] hover:text-[#1d1b19] transition-colors"
                 >
-                  + New Recipe
+                  Lab Staff Login
                 </Link>
               )}
               <p className="text-[#7f756f] text-[11px] pt-1">
