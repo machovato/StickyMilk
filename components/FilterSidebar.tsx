@@ -253,33 +253,18 @@ export function FilterSidebar({
         </div>
       )}
 
-      {/* Real Condensed Chemistry Insight Box */}
+      {/* Channel Translation Tip Box */}
       <div className="p-3.5 bg-[#1a130e] text-white flex flex-col gap-2 mt-1 border border-[#1a130e]">
         <div className="flex items-center justify-between">
           <span className="font-mono text-[11px] font-bold text-[#b8f600] tracking-wider uppercase">
-            LAB SENSORY DYNAMICS
+            CHANNEL SWAPPING
           </span>
-          <Flask size={16} weight="bold" className="text-[#b8f600]" />
         </div>
-        <div className="flex items-center justify-between font-mono text-xs">
-          <span className="text-[#d1c4bd]">Milk Sucrose Emulsion</span>
-          <span className="text-[#b8f600] font-bold">~55% Sugar</span>
-        </div>
-        <div className="w-full bg-[#221a15] h-1.5 flex overflow-hidden">
-          <div className="bg-[#b8f600] h-full w-[55%]" />
-        </div>
-
-        <div className="flex items-center justify-between font-mono text-xs pt-0.5">
-          <span className="text-[#d1c4bd]">Phin Lag Elimination</span>
-          <span className="text-[#dfe0ff] font-bold">00:00 Lag</span>
-        </div>
-        <div className="w-full bg-[#221a15] h-1.5 flex overflow-hidden">
-          <div className="bg-[#022cff] h-full w-[100%]" />
-        </div>
-
-        <p className="text-[11px] text-[#d1c4bd] font-body leading-tight pt-1">
-          Heavy sugar content stabilizes dairy proteins against coffee acidity.
-          Zero phin drip waiting.
+        <p className="text-xs font-syne font-bold text-white leading-snug">
+          Got Cometeer, Nespresso, or Instant?
+        </p>
+        <p className="text-[11px] text-[#d1c4bd] font-body leading-relaxed">
+          Toggle the header channel anytime. StickyMilk translates the steps and measurements so you can brew with what you have on hand.
         </p>
       </div>
     </aside>

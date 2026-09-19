@@ -242,10 +242,10 @@ export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
             <div className="flex items-center gap-3 flex-wrap">
               <span className="w-3 h-3 bg-[#b8f600] inline-block border border-[#1a130e]/30" />
               <span className="font-syne font-bold text-lg text-[#1a130e] uppercase tracking-tight">
-                AVAILABLE PROTOCOLS:
+                AVAILABLE RECIPES:
               </span>
               <span className="font-mono text-xs font-bold text-[#001ec0] bg-[#dfe0ff] px-2.5 py-0.5">
-                {filteredRecipes.length} of {recipes.length} READY
+                {filteredRecipes.length} of {recipes.length} AVAILABLE
               </span>
             </div>
 
@@ -296,11 +296,10 @@ export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
             <div className="p-12 bg-white border border-[#1a130e]/10 text-center flex flex-col items-center justify-center gap-4">
               <Coffee size={56} weight="bold" className="text-[#d1c4bd]" />
               <h3 className="font-syne text-xl font-bold text-[#1a130e]">
-                No matching extraction protocols found
+                No matching recipes found
               </h3>
               <p className="font-body text-sm text-[#4d4540] max-w-md">
-                Try resetting your sweetness, extraction channel, or caffeine
-                profile criteria to explore the complete laboratory archive.
+                Try resetting your filters or search terms to see all recipes.
               </p>
               <button
                 type="button"

@@ -159,7 +159,7 @@ export function RecipeForm({
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 bg-[#b8f600] border border-[#1a130e]/20" />
             <h2 className="font-syne text-sm font-bold uppercase tracking-wider text-[#1a130e]">
-              Protocol Readiness Matrix
+              Recipe Readiness
             </h2>
           </div>
           <span
@@ -169,7 +169,7 @@ export function RecipeForm({
                 : "bg-[#dfe0ff] text-[#000a63]"
             }`}
           >
-            {readyToSave ? (mode === "edit" ? "Ready to Update" : "Ready to Register") : "In Progress"}
+            {readyToSave ? (mode === "edit" ? "Ready to Save" : "Ready to Create") : "In Progress"}
           </span>
         </div>
 
@@ -210,7 +210,7 @@ export function RecipeForm({
         <div className="flex items-center gap-2 pb-2 border-b border-[#1a130e]/10">
           <span className="w-2.5 h-2.5 bg-[#001ec0]" />
           <h2 className="font-syne text-base font-bold uppercase tracking-wider text-[#1a130e]">
-            Core Formulation Identity
+            Recipe Details
           </h2>
         </div>
 
@@ -287,7 +287,7 @@ export function RecipeForm({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="flex flex-col gap-1">
             <label className="font-mono text-xs font-bold uppercase text-[#1a130e]">
-              Format Category *
+              Category *
             </label>
             <select
               required
@@ -300,7 +300,7 @@ export function RecipeForm({
               }
               className="bg-[#f8f2ee] p-2.5 font-mono text-xs text-[#1a130e] border border-[#1a130e]/20 focus:border-[#001ec0] focus:bg-white focus:outline-none"
             >
-              <option value="">Select Format…</option>
+              <option value="">Select Category…</option>
               {Object.entries(FORMAT_LABELS).map(([value, label]) => (
                 <option key={value} value={value}>
                   {label}
@@ -312,7 +312,7 @@ export function RecipeForm({
 
           <div className="flex flex-col gap-1">
             <label className="font-mono text-xs font-bold uppercase text-[#1a130e]">
-              Condensed Sweetness Profile *
+              Sweetness Level *
             </label>
             <select
               required
@@ -341,7 +341,7 @@ export function RecipeForm({
 
         <div className="flex flex-col gap-1">
           <label className="font-mono text-xs font-bold uppercase text-[#1a130e]">
-            Flavor Notes &amp; Sensory Description *
+            Description &amp; Flavor Notes *
           </label>
           <textarea
             required
@@ -358,7 +358,7 @@ export function RecipeForm({
 
         <div className="flex flex-col gap-1">
           <label className="font-mono text-xs font-bold uppercase text-[#1a130e]">
-            Universal Barista Technique Note{" "}
+            Barista Tip / Notes{" "}
             <span className="font-normal text-[#7f756f]">(optional, applies across all channels)</span>
           </label>
           <textarea
@@ -371,7 +371,7 @@ export function RecipeForm({
             className="bg-[#f8f2ee] p-2.5 font-body text-xs text-[#1a130e] border border-[#1a130e]/20 focus:border-[#001ec0] focus:bg-white focus:outline-none leading-relaxed"
           />
           <p className="font-mono text-[10px] text-[#7f756f]">
-            Universal formulation techniques or hack advice. Specific channel notes can also be placed inside each preparation below.
+            Helpful tips or hack advice. Specific channel notes can also be placed inside each channel preparation below.
           </p>
         </div>
 
@@ -393,7 +393,7 @@ export function RecipeForm({
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 bg-[#001ec0]" />
             <h2 className="font-syne text-base font-bold uppercase tracking-wider text-[#1a130e]">
-              Extraction Preparations
+              Channel Variations
             </h2>
           </div>
           <span className="font-mono text-xs text-[#7f756f]">
@@ -476,14 +476,14 @@ export function RecipeForm({
 
         {!previewRecipe && (
           <p className="font-mono text-xs text-[#7f756f]">
-            Live preview unlocks as soon as the basic formulation validates cleanly.
+            Live preview unlocks as soon as the recipe details validate cleanly.
           </p>
         )}
 
         {showPreview && previewRecipe && (
           <div className="border-2 border-dashed border-[#001ec0] p-4 bg-[#f8f2ee]">
             <div className="mb-4 inline-block bg-[#001ec0] text-white px-3 py-1 font-mono text-xs font-bold uppercase">
-              LIVE PREVIEW — NOT YET REGISTERED
+              LIVE PREVIEW — NOT YET SAVED
             </div>
             <RecipeDetail recipe={previewRecipe} />
           </div>
@@ -499,14 +499,14 @@ export function RecipeForm({
         >
           {pending
             ? mode === "edit"
-              ? "Updating Protocol…"
-              : "Registering Protocol…"
+              ? "Saving Changes…"
+              : "Creating Recipe…"
             : mode === "edit"
-              ? "Update Recipe Protocol →"
-              : "Register Recipe Protocol →"}
+              ? "Save Changes →"
+              : "Create Recipe →"}
         </button>
         <p className="font-mono text-xs text-[#7f756f]">
-          Writes directly to <code className="text-[#1a130e] font-bold">content/recipes/{slug || "…"}.json</code> on disk.
+          Saves directly to <code className="text-[#1a130e] font-bold">content/recipes/{slug || "…"}.json</code> on disk.
         </p>
       </section>
     </form>

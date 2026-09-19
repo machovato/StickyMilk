@@ -10,11 +10,11 @@ export function BaristaDiff({ channel }: { channel: Channel }) {
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 bg-[#b8f600] border border-[#1a130e]/20" />
           <h2 className="font-syne text-sm font-bold uppercase tracking-wider text-[#1a130e]">
-            Method Mechanics // {CHANNEL_LABELS[channel].toUpperCase()}
+            How It Translates // {CHANNEL_LABELS[channel].toUpperCase()}
           </h2>
         </div>
         <span className="font-mono text-[10px] uppercase font-bold text-[#001ec0] bg-[#dfe0ff] px-2 py-0.5">
-          Brew Translation
+          Channel Guide
         </span>
       </div>
 

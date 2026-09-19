@@ -39,19 +39,19 @@ export default async function EditRecipePage(props: {
         </Link>
         <span className="text-[#d1c4bd]">|</span>
         <span className="font-mono text-[11px] font-bold px-2 py-0.5 bg-[#b8f600] text-[#141f00] uppercase">
-          ADMIN AUTHORING
+          ADMIN
         </span>
         <span className="font-mono text-xs text-[#7f756f]">
-          EDIT PROTOCOL // {recipe.slug.toUpperCase()}
+          EDIT RECIPE // {recipe.slug.toUpperCase()}
         </span>
       </div>
 
       <div className="flex flex-col gap-2 mb-8">
         <h1 className="font-syne text-3xl sm:text-4xl font-bold tracking-tight text-[#1a130e]">
-          Edit Protocol: {recipe.name}
+          Edit Recipe: {recipe.name}
         </h1>
         <p className="font-body text-sm text-[#4d4540]">
-          Updates <code className="font-mono text-xs bg-[#f3ede9] px-1.5 py-0.5 text-[#1a130e]">content/recipes/{recipe.slug}.json</code> directly on disk.
+          Updates <code className="font-mono text-xs bg-[#f3ede9] px-1.5 py-0.5 text-[#1a130e]">content/recipes/{recipe.slug}.json</code>.
         </p>
       </div>
 

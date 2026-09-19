@@ -15,7 +15,7 @@ export function AdminLoginForm({ next = "/" }: { next?: string }) {
           <div className="flex items-center gap-2">
             <Lock size={20} weight="bold" className="text-[#001ec0]" />
             <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#1a130e]">
-              LAB ADMIN TERMINAL
+              ADMIN LOGIN
             </span>
           </div>
           <Link
@@ -29,10 +29,10 @@ export function AdminLoginForm({ next = "/" }: { next?: string }) {
 
         <div>
           <h1 className="font-syne text-2xl font-bold text-[#1a130e]">
-            Restricted Access
+            Admin Access
           </h1>
           <p className="font-body text-xs sm:text-sm text-[#4d4540] mt-1 leading-relaxed">
-            Enter the lab authorization key to unlock protocol creation, editing, and curation controls.
+            Enter your admin authorization key to create and edit recipes.
           </p>
         </div>
 
@@ -68,7 +68,7 @@ export function AdminLoginForm({ next = "/" }: { next?: string }) {
             disabled={pending}
             className="w-full py-3 bg-[#1a130e] hover:bg-[#001ec0] text-white font-mono text-xs uppercase font-bold tracking-wider transition-colors disabled:opacity-50 cursor-pointer shadow-[0_2px_0_#1a130e]"
           >
-            {pending ? "Verifying..." : "Authenticate Terminal →"}
+            {pending ? "Verifying..." : "Sign In →"}
           </button>
         </form>
       </div>

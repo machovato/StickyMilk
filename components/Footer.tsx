@@ -27,9 +27,7 @@ export async function Footer() {
             </div>
 
             <p className="font-body text-xs sm:text-sm text-[#4d4540] max-w-md leading-relaxed">
-              Modern editorial brutalism applied to Vietnamese condensed milk brew
-              chemistry, cold extractions, hyper-concentrates, and zero-phin
-              workflow.
+              Modern coffee recipe directory designed for Cometeer, Nespresso, and specialty instant coffee drinkers. Adapt any drink to whatever you have on your counter.
             </p>
 
             <div className="flex items-center gap-3 pt-1">
@@ -37,7 +35,7 @@ export async function Footer() {
                 v2.4 Live
               </span>
               <span className="font-mono text-[11px] uppercase text-[#4d4540]">
-                Open Sensory Framework
+                Multi-Channel Coffee Hub
               </span>
             </div>
           </div>
@@ -51,7 +49,7 @@ export async function Footer() {
               <li>Cometeer Hyper-Melt</li>
               <li>Nespresso High-Bar</li>
               <li>Soluble Instant Concentrate</li>
-              <li className="text-[#7f756f]">Zero Phin Latency</li>
+              <li className="text-[#7f756f]">Any Counter Setup</li>
             </ul>
           </div>
 
@@ -89,7 +87,7 @@ export async function Footer() {
                   href="/admin/login"
                   className="text-[#7f756f] hover:text-[#1d1b19] transition-colors"
                 >
-                  Lab Staff Login
+                  Admin Login
                 </Link>
               )}
               <p className="text-[#7f756f] text-[11px] pt-1">
@@ -102,11 +100,10 @@ export async function Footer() {
         {/* Bottom copyright ribbon */}
         <div className="mt-12 pt-6 border-t border-[#1a130e]/10 flex flex-col md:flex-row items-center justify-between gap-4">
           <span className="font-mono text-[11px] text-[#4d4540] text-center md:text-left">
-            © {year} STICKYMILK RESEARCH LAB. ALL RECIPES BENCHMARKED FOR CONDENSED
-            MILK COMPATIBILITY.
+            © {year} STICKYMILK. ADAPTING TRENDING COFFEE DRINKS ACROSS COMETEER, NESPRESSO &amp; INSTANT.
           </span>
           <span className="font-mono text-xs text-[#001ec0] font-bold tracking-wider">
-            CAFFEINE // SUCROSE // EXTRACTION
+            COMETEER // NESPRESSO // INSTANT
           </span>
         </div>
       </div>

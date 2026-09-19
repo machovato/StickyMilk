@@ -27,7 +27,7 @@ export function BuildYourBar() {
         </h2>
       </div>
       <p className="mt-1 font-mono text-xs text-[#7f756f]">
-        Lab equipment &amp; pantry staples calibrated for this drink
+        Recommended gear &amp; pantry essentials for this drink
       </p>
       <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
         {CATEGORIES.map((cat) => (

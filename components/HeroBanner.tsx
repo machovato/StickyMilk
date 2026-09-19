@@ -58,23 +58,23 @@ export function HeroBanner({
       </div>
 
       <div className="relative z-10 max-w-4xl flex flex-col gap-5">
-        {/* Protocol tag line */}
+        {/* Badge tag line */}
         <div className="flex items-center gap-3 flex-wrap">
           <span className="font-mono text-[11px] font-bold uppercase tracking-widest px-2 py-1 bg-[#b8f600] text-[#141f00]">
-            PROTOCOL S-01
+            MULTI-CHANNEL
           </span>
           <span className="font-mono text-xs uppercase tracking-wider text-[#d1c4bd]">
-            EXTRACTION MATRIX // CONDENSED DYNAMICS
+            COMETEER // NESPRESSO // INSTANT
           </span>
         </div>
 
         {/* Hero title & text */}
         <div className="flex flex-col gap-2">
           <h1 className="font-syne text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white max-w-3xl leading-[1.1]">
-            Slow drip, silky swirl, cold velvet.
+            Make any drink with the coffee you actually have.
           </h1>
           <p className="font-body text-base sm:text-lg text-[#d2c4bb] max-w-2xl leading-relaxed">
-            Vietnamese &amp; condensed milk formulas re-engineered across three accelerated methods. Precise density ratios, zero phin waiting times, hyper-viscous mouthfeel.
+            Trending coffee recipes adapted for Cometeer, Nespresso, and specialty instant. Swap channels in one click to match your counter setup.
           </p>
         </div>
 
@@ -82,25 +82,25 @@ export function HeroBanner({
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 max-w-2xl">
           <div className="flex flex-col p-3 bg-[#221a15] border border-white/5">
             <span className="font-mono text-[11px] text-[#d1c4bd] uppercase tracking-wider">
-              Archive Index
+              Recipe Index
             </span>
             <span className="font-syne text-2xl font-bold text-white mt-0.5">
-              {totalCount} Formats
+              {totalCount} Recipes
             </span>
           </div>
 
           <div className="flex flex-col p-3 bg-[#221a15] border border-white/5">
             <span className="font-mono text-[11px] text-[#d1c4bd] uppercase tracking-wider">
-              Hardware
+              Channels
             </span>
             <span className="font-syne text-2xl font-bold text-[#b8f600] mt-0.5">
-              Zero Phin
+              3 Systems
             </span>
           </div>
 
           <div className="flex flex-col p-3 bg-[#221a15] border border-white/5">
             <span className="font-mono text-[11px] text-[#d1c4bd] uppercase tracking-wider">
-              Avg Duration
+              Avg Time
             </span>
             <span className="font-syne text-2xl font-bold text-white mt-0.5">
               {avgDuration}
@@ -109,10 +109,10 @@ export function HeroBanner({
 
           <div className="flex flex-col p-3 bg-[#221a15] border border-white/5">
             <span className="font-mono text-[11px] text-[#d1c4bd] uppercase tracking-wider">
-              Condensed Ratio
+              Channel Swap
             </span>
             <span className="font-syne text-2xl font-bold text-[#dfe0ff] mt-0.5">
-              {condensedRatio}
+              Instant
             </span>
           </div>
         </div>

@@ -73,7 +73,7 @@ export function RecipeDetail({
       })
       .join("\n");
 
-    const text = `STICKYMILK LAB SPECIFICATION // ${recipe.name.toUpperCase()}\nChannel: ${CHANNEL_LABELS[channel]}\nSweetness: ${SWEETNESS_LABELS[recipe.sweetness_level]}\nBatch: ${scale}x (${formatAmount(prep.servings * scale)} servings)\n\nINGREDIENTS:\n${ingredientsText}\n\nSTEPS:\n${prep.steps.map((s, i) => `${i + 1}. ${s}`).join("\n")}`;
+    const text = `STICKYMILK RECIPE // ${recipe.name.toUpperCase()}\nChannel: ${CHANNEL_LABELS[channel]}\nSweetness: ${SWEETNESS_LABELS[recipe.sweetness_level]}\nBatch: ${scale}x (${formatAmount(prep.servings * scale)} servings)\n\nINGREDIENTS:\n${ingredientsText}\n\nSTEPS:\n${prep.steps.map((s, i) => `${i + 1}. ${s}`).join("\n")}`;
 
     navigator.clipboard?.writeText(text);
     setCopied(true);
@@ -87,7 +87,7 @@ export function RecipeDetail({
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 flex flex-col gap-8 text-left">
-      {/* Top Lab Navigation & Action Bar */}
+      {/* Top Navigation & Action Bar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 bg-white border border-[#1a130e]/15 shadow-sm">
         <div className="flex items-center gap-3 flex-wrap">
           <Link
@@ -95,11 +95,11 @@ export function RecipeDetail({
             className="flex items-center gap-1 font-mono text-xs uppercase font-bold text-[#001ec0] hover:text-[#1a130e] transition-colors"
           >
             <ArrowLeft size={16} weight="bold" />
-            <span>Back to Archive</span>
+            <span>Back to Recipes</span>
           </Link>
           <span className="text-[#d1c4bd]">|</span>
           <span className="font-mono text-[11px] font-bold px-2 py-0.5 bg-[#b8f600] text-[#141f00] uppercase">
-            LAB PROTOCOL
+            RECIPE SPEC
           </span>
           <span className="font-mono text-xs text-[#7f756f]">
             ID: {recipe.slug.toUpperCase()}
@@ -112,7 +112,7 @@ export function RecipeDetail({
               href={`/recipes/${recipe.slug}/edit`}
               className="flex items-center gap-1.5 px-3 py-1.5 bg-[#b8f600] hover:bg-[#001ec0] hover:text-white text-[#141f00] font-mono text-xs uppercase font-bold transition-colors cursor-pointer border border-[#1a130e]/20"
             >
-              <span>Edit Protocol ✎</span>
+              <span>Edit Recipe ✎</span>
             </Link>
           )}
           <StatusBadge status={recipe.status} />
@@ -126,7 +126,7 @@ export function RecipeDetail({
             ) : (
               <Copy size={16} weight="bold" />
             )}
-            <span>{copied ? "Copied" : "Share Formula"}</span>
+            <span>{copied ? "Copied" : "Share Recipe"}</span>
           </button>
         </div>
       </div>
@@ -192,18 +192,17 @@ export function RecipeDetail({
             ))}
           </div>
 
-          {/* Lab Heritage & Extraction Note */}
-          <div className="p-4 bg-[#f8f2ee] border-l-4 border-[#001ec0] flex flex-col gap-1 text-xs">
-            <strong className="font-mono text-[#001ec0] uppercase tracking-wider font-bold">
-              LAB HERITAGE &amp; EXTRACTION NOTE:
-            </strong>
-            <p className="font-body text-xs sm:text-sm text-[#4d4540] leading-relaxed">
-              Engineered specifically for condensed milk compatibility. The
-              thick sucrose foundation cushions the palate against high-roast
-              bitterness, creating a hyper-viscous velvet emulsion without
-              requiring an espresso machine steam wand or a 15-minute phin drip.
-            </p>
-          </div>
+          {/* Barista Tip if provided */}
+          {recipe.barista_note && (
+            <div className="p-4 bg-[#f8f2ee] border-l-4 border-[#001ec0] flex flex-col gap-1 text-xs">
+              <strong className="font-mono text-[#001ec0] uppercase tracking-wider font-bold">
+                BARISTA TIP:
+              </strong>
+              <p className="font-body text-xs sm:text-sm text-[#4d4540] leading-relaxed">
+                {recipe.barista_note}
+              </p>
+            </div>
+          )}
 
           {/* Data flagged issues if any */}
           {recipe.data_issues && recipe.data_issues.length > 0 && (
@@ -222,13 +221,13 @@ export function RecipeDetail({
 
       {prep ? (
         <>
-          {/* Active Extraction Scaler Band */}
+          {/* Serving Scaler Band */}
           <div className="bg-[#f8f2ee] p-5 sm:p-6 border border-[#1a130e]/15 flex flex-col gap-4">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#1a130e]/10 pb-3">
               <div className="flex items-center gap-2">
                 <Scales size={20} weight="bold" className="text-[#001ec0]" />
                 <span className="font-syne text-base font-bold uppercase text-[#1a130e]">
-                  Active Extraction Scaler
+                  Serving Scaler
                 </span>
               </div>
 

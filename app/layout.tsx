@@ -26,9 +26,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "StickyMilk Lab // Archive",
+  title: "StickyMilk // Multi-Channel Coffee Recipes",
   description:
-    "Vietnamese specialty coffee laboratory & extraction matrix for condensed milk formulas, cold extractions, and accelerated brew dynamics.",
+    "The modern coffee recipe hub for Cometeer, Nespresso, and specialty instant coffee. Adapt any drink to whatever hardware is on your counter.",
 };
 
 export default function RootLayout({
@@ -58,7 +58,7 @@ export default function RootLayout({
                       STICKYMILK
                     </span>
                     <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#001ec0]">
-                      LAB // ARCHIVE
+                      RECIPES
                     </span>
                   </div>
                 </Link>
@@ -76,7 +76,7 @@ export default function RootLayout({
                     v2.4
                   </span>
                   <span className="font-mono text-[11px] uppercase tracking-wider text-[#4d4540]">
-                    Zero Phin Formulations
+                    Multi-Channel Coffee
                   </span>
                 </div>
                 <AdminHeaderControls />

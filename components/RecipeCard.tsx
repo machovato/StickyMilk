@@ -114,7 +114,7 @@ export function RecipeCard({ recipe, channel }: RecipeCardProps) {
           </div>
 
           <div className="w-full py-2.5 bg-[#1a130e] text-white group-hover:bg-[#001ec0] font-mono text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors shadow-[0_2px_0_#1A130E] active:translate-y-0.5">
-            <span>View Formula</span>
+            <span>View Recipe</span>
             <ArrowRight size={16} weight="bold" />
           </div>
         </div>

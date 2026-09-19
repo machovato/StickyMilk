@@ -24,11 +24,11 @@ export function EmptyPreparationState({
       <div className="flex items-center gap-2">
         <Flask size={20} weight="bold" className="text-[#7f756f]" />
         <h3 className="font-syne text-base font-bold text-[#1a130e] uppercase tracking-wide">
-          {CHANNEL_LABELS[channel]} Protocol in Draft
+          {CHANNEL_LABELS[channel]} Version Not Available Yet
         </h3>
       </div>
       <p className="font-body text-sm text-[#4d4540]">
-        This formulation has not yet been benchmarked for {CHANNEL_FOUNDATION[channel]}.
+        This recipe hasn&apos;t been adapted for {CHANNEL_FOUNDATION[channel]} yet.
       </p>
       {available.length > 0 && (
         <div className="mt-2 flex flex-wrap items-center gap-2">
