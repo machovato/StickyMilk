@@ -360,6 +360,67 @@ export function validateRecipeCandidate(
       });
     }
   }
+  if (candidate.featured !== undefined && typeof candidate.featured !== "boolean") {
+    errors.push({ path: "featured", message: "must be a boolean when present" });
+  }
+  if (candidate.promoter_tag !== undefined) {
+    const validPromoterTags = ["TRENDING", "TONY'S PICK", "CREATOR SPOTLIGHT", "TEST KITCHEN TOP 10"];
+    if (!validPromoterTags.includes(candidate.promoter_tag as string)) {
+      errors.push({
+        path: "promoter_tag",
+        message: `invalid promoter_tag (got ${JSON.stringify(candidate.promoter_tag)})`,
+      });
+    }
+  }
+  if (candidate.review !== undefined) {
+    if (!isRecord(candidate.review)) {
+      errors.push({ path: "review", message: "must be an object when present" });
+    } else {
+      if (
+        typeof candidate.review.score !== "number" ||
+        candidate.review.score < 0 ||
+        candidate.review.score > 10
+      ) {
+        errors.push({
+          path: "review.score",
+          message: "must be a number between 0 and 10",
+        });
+      }
+      if (
+        typeof candidate.review.verdict !== "string" ||
+        candidate.review.verdict.trim() === ""
+      ) {
+        errors.push({
+          path: "review.verdict",
+          message: "verdict is required when review is present",
+        });
+      }
+      if (
+        candidate.review.notes !== undefined &&
+        typeof candidate.review.notes !== "string"
+      ) {
+        errors.push({ path: "review.notes", message: "notes must be a string when present" });
+      }
+      if (
+        candidate.review.tested_date !== undefined &&
+        typeof candidate.review.tested_date !== "string"
+      ) {
+        errors.push({ path: "review.tested_date", message: "tested_date must be a string when present" });
+      }
+      if (
+        candidate.review.tester !== undefined &&
+        typeof candidate.review.tester !== "string"
+      ) {
+        errors.push({ path: "review.tester", message: "tester must be a string when present" });
+      }
+      if (candidate.review.channel_scores !== undefined && !isRecord(candidate.review.channel_scores)) {
+        errors.push({ path: "review.channel_scores", message: "must be an object when present" });
+      }
+      if (candidate.review.channel_verdicts !== undefined && !isRecord(candidate.review.channel_verdicts)) {
+        errors.push({ path: "review.channel_verdicts", message: "must be an object when present" });
+      }
+    }
+  }
   if (!VALID_STATUS.includes(candidate.status as RecipeStatus)) {
     errors.push({ path: "status", message: `missing or invalid status (got ${JSON.stringify(candidate.status)})` });
   }

@@ -4,7 +4,25 @@
   "format": "iced",
   "flavor_notes": "Silky cold milk and sweet salted caramel balanced by bold, toasted espresso with a buttery caramel finish.",
   "barista_note": "Pantry shortcut: 2.5 oz Chobani Caramel Macchiato or Sweet Cream creamer can replace both the milk and caramel syrup. Add a tiny pinch of flaky sea salt on top to cut through the sweetness.",
-  "status": "needs_testing",
+  "status": "verified",
+  "featured": true,
+  "promoter_tag": "TEST KITCHEN TOP 10",
+  "review": {
+    "score": 9.0,
+    "verdict": "The pinch of flaky sea salt is mandatory — it cuts through the rich caramel and highlights the chocolate undertones of the espresso.",
+    "tested_date": "2026-09-17",
+    "tester": "Tony Melendez",
+    "channel_scores": {
+      "cometeer": 9.2,
+      "nespresso": 8.9,
+      "instant": 8.4
+    },
+    "channel_verdicts": {
+      "cometeer": "Medium roast extract brings out natural hazelnut and toasted sugar notes.",
+      "nespresso": "Vertuo single Altissio or Chiaro provides ideal roast density.",
+      "instant": "Instant coffee crystals dissolve cleanly into the caramel drizzle with 2 oz hot water."
+    }
+  },
   "tags": [
     "iced",
     "caramel",

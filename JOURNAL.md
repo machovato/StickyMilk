@@ -779,6 +779,24 @@ instead of a number.
    `item_id` gracefully without breaking UI; Sprint 4 will co-locate nutritional
    benchmarks in taxonomy and apply category-level macro baselines for novel items.
 
+5.21. **The 10-Point Test Kitchen Review System & Coffee-Assigned Promoter Shelf.**
+   Addressed the catalog discovery and recommendation challenge (moving beyond alphabetical sorting):
+   - **10-Point Unvarnished Review System:** Implemented `TestKitchenReview` on `Recipe`
+     (`score`, `verdict`, `notes`, `channel_scores`, `channel_verdicts`, `tested_date`, `tester`).
+     Rejects inflated 5-star fluff in favor of culturally resonant 10-point scoring
+     paired with blunt, honest craft verdicts (e.g. *"This was too sweet for my liking. I'd recommend half the SCM"*).
+   - **Hardware Translation Fidelity Matrix:** Enabled channel-specific scores and verdicts
+     (e.g., Cometeer 10.0 vs. Instant 8.5) on `components/TestKitchenReviewCard.tsx`,
+     providing radical transparency on how well a recipe translates to each hardware setup.
+   - **Coffee-Assigned Promoter Shelf (`components/PromoterShelf.tsx`):** Built a
+     Netflix-style horizontal scroll shelf above the library grid. Honors the active
+     coffee foundation: when Instant is chosen, the shelf adapts to Instant-compatible drinks
+     and displays Instant prep times and scores. When no coffee is active, it spotlights
+     viral hits and test kitchen favorites across all three channels.
+   - **`★ Top Rated` Library Sorting:** Integrated 10-point score sorting in
+     `components/RecipeLibrary.tsx` (`[ ★ TOP RATED | TRENDING | FASTEST BREW | A TO Z ]`).
+     Cards display an instant `★ [SCORE]` pill in `components/RecipeCard.tsx`.
+
 ---
 
 ## 6. Known constraints / workarounds worth remembering

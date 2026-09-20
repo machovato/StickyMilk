@@ -202,6 +202,28 @@ export interface RecipeVariation {
   thumbnail: string;
 }
 
+/**
+ * Editorial test-kitchen tasting notes and 10-point scoring.
+ * Authored when a recipe is kitchen-tested (SM TESTED).
+ */
+export interface TestKitchenReview {
+  score: number; // 1.0 to 10.0 scale (e.g. 8.5)
+  verdict: string; // The unvarnished 1-sentence verdict
+  notes?: string; // Extended craft notes / tasting commentary
+  tested_date?: string; // ISO date, e.g. "2026-09-20"
+  tester?: string; // Default: "Tony Melendez"
+  /** Channel-specific 10-point ratings reflecting hardware translation fidelity */
+  channel_scores?: Partial<Record<Channel, number>>;
+  /** Channel-specific guidance and warnings (e.g. "Use Medaglia d'Oro for instant") */
+  channel_verdicts?: Partial<Record<Channel, string>>;
+}
+
+export type PromoterTag =
+  | "TRENDING"
+  | "TONY'S PICK"
+  | "CREATOR SPOTLIGHT"
+  | "TEST KITCHEN TOP 10";
+
 export interface Recipe {
   slug: string;
   name: string;
@@ -217,6 +239,12 @@ export interface Recipe {
   source?: RecipeSource;
   /** Alternative creator variations or takes on this viral drink. */
   variations?: RecipeVariation[];
+  /** Featured flag to showcase in the top Promoter Shelf */
+  featured?: boolean;
+  /** Editorial pill displayed on the Promoter card */
+  promoter_tag?: PromoterTag;
+  /** StickyMilk Test Kitchen Review (10-point scale + honest tasting verdict) */
+  review?: TestKitchenReview;
   /** Mood/context/occasion facets for discovery, e.g. "summer", "date-night", "quick-fix". Freeform, editor-curated — not a fixed enum. */
   tags: string[];
   sweetness_level: SweetnessLevel;

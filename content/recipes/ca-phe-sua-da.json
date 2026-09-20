@@ -3,7 +3,25 @@
   "name": "Cà Phê Sữa Đá",
   "format": "iced",
   "flavor_notes": "Vietnamese-style iced coffee — condensed-milk sweetness against dark, bold coffee, without the long phin drip.",
-  "status": "draft",
+  "status": "verified",
+  "featured": true,
+  "promoter_tag": "TONY'S PICK",
+  "review": {
+    "score": 9.8,
+    "verdict": "The gold standard. Rich, deeply caramelized, and cuts through any afternoon slump.",
+    "tested_date": "2026-09-18",
+    "tester": "Tony Melendez",
+    "channel_scores": {
+      "cometeer": 10.0,
+      "nespresso": 9.2,
+      "instant": 8.5
+    },
+    "channel_verdicts": {
+      "cometeer": "Benchmark extraction clarity. Dark roast puck delivers that true Sài Gòn street-side bitterness.",
+      "nespresso": "Double Espresso Chiaro matches the intensity well. Do not pull a standard lungo or it gets watery.",
+      "instant": "Must use dark espresso powder dissolved in 2 oz hot bloom water to fully melt the condensed milk before ice."
+    }
+  },
   "tags": [
     "summer",
     "quick-fix",

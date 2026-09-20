@@ -5,7 +5,25 @@
   "format": "iced",
   "flavor_notes": "A quick, creamy cookie butter iced latte using Chobani Cookie Butter creamer and brown sugar with a Biscoff-coated rim.",
   "barista_note": "The fast-track cookie butter hack: instead of whipping cold foam from scratch, Chobani Cookie Butter creamer delivers rich speculoos flavor instantly. Smear a spoonful of Biscoff along the rim or inside the cup for cafe-style presentation.",
-  "status": "needs_testing",
+  "status": "verified",
+  "featured": true,
+  "promoter_tag": "CREATOR SPOTLIGHT",
+  "review": {
+    "score": 7.8,
+    "verdict": "Fast 2-minute weekday hack using Chobani creamer. Too sweet if you add extra brown sugar, so skip the sugar entirely.",
+    "tested_date": "2026-09-19",
+    "tester": "Tony Melendez",
+    "channel_scores": {
+      "cometeer": 8.2,
+      "nespresso": 8.0,
+      "instant": 7.2
+    },
+    "channel_verdicts": {
+      "cometeer": "Dark roast capsule punches cleanly through the thick flavored creamer.",
+      "nespresso": "Vertuo single espresso shot balances the creamer density perfectly.",
+      "instant": "Instant coffee crystals dissolve well with hot bloom water before pouring over ice."
+    }
+  },
   "tags": [
     "iced",
     "cookie-butter",

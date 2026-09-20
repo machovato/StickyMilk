@@ -22,6 +22,7 @@ import { EmptyPreparationState } from "./EmptyPreparationState";
 import { BuildYourBar } from "./BuildYourBar";
 import { NutritionBreakdown } from "./NutritionBreakdown";
 import { RecipeVariations } from "./RecipeVariations";
+import { TestKitchenReviewCard } from "./TestKitchenReviewCard";
 import { formatAmount } from "@/lib/format-amount";
 
 const SCALE_OPTIONS = [1, 2, 4];
@@ -241,6 +242,11 @@ export function RecipeDetail({
 
         </div>
       </div>
+
+      {/* StickyMilk Test Kitchen Review & 10-Point Score */}
+      {recipe.review && (
+        <TestKitchenReviewCard review={recipe.review} activeChannel={channel} />
+      )}
 
       {/* Hardware System Switcher:
           Only displayed when global MY COFFEE is blank (null).

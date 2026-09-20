@@ -58,13 +58,26 @@ export function RecipeCard({ recipe, channel }: RecipeCardProps) {
 
         {/* Top category & provenance HUD */}
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-1 z-10">
-          <span
-            className={`px-2 py-0.5 font-mono text-[11px] uppercase tracking-wider ${getBadgeClass(
-              recipe.format
-            )}`}
-          >
-            {FORMAT_LABELS[recipe.format]}
-          </span>
+          <div className="flex items-center gap-1.5">
+            <span
+              className={`px-2 py-0.5 font-mono text-[11px] uppercase tracking-wider ${getBadgeClass(
+                recipe.format
+              )}`}
+            >
+              {FORMAT_LABELS[recipe.format]}
+            </span>
+            {recipe.review != null && (
+              <span className="px-2 py-0.5 font-mono text-[11px] font-bold bg-[#1a130e] text-[#b8f600] border border-white/20 shadow-xs flex items-center gap-1">
+                <span>★</span>
+                <span>
+                  {(channel && recipe.review.channel_scores?.[channel]
+                    ? recipe.review.channel_scores[channel]
+                    : recipe.review.score
+                  ).toFixed(1)}
+                </span>
+              </span>
+            )}
+          </div>
           {prep && (
             <ProvenanceBadge provenance={prep.provenance ?? (recipe.source?.type === "vendor" ? "original" : "adapted")} size="xs" />
           )}

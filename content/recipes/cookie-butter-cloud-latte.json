@@ -5,7 +5,26 @@
   "format": "iced",
   "flavor_notes": "Velvety spiced speculoos cookie butter cold foam layered over chilled espresso and sweet vanilla iced milk.",
   "barista_note": "Cookie butter is dense at room temp. Microwave it for 8–10 seconds before adding the heavy cream so the handheld frother emulsifies it into an airy cloud instead of leaving heavy clumps at the bottom.",
-  "status": "needs_testing",
+  "status": "verified",
+  "featured": true,
+  "promoter_tag": "TRENDING",
+  "review": {
+    "score": 8.5,
+    "verdict": "The cold foam carries the whole drink. Microwave the cookie butter 8–10 seconds or it won't froth into an airy cloud.",
+    "notes": "Delicious speculoos spice and velvety texture. As written, it's very sweet — if you prefer coffee-forward balance, cut the vanilla syrup down to 1 tsp.",
+    "tested_date": "2026-09-20",
+    "tester": "Tony Melendez",
+    "channel_scores": {
+      "cometeer": 9.0,
+      "nespresso": 8.8,
+      "instant": 7.8
+    },
+    "channel_verdicts": {
+      "cometeer": "Medium roast extract balances the cinnamon and nutmeg notes without clashing.",
+      "nespresso": "Double Espresso Chiaro (80ml) provides enough body to keep the foam afloat.",
+      "instant": "Ensure the instant espresso concentrate is completely chilled before pouring over ice to prevent premature dilution."
+    }
+  },
   "tags": [
     "iced",
     "cookie-butter",

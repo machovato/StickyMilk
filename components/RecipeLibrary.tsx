@@ -12,10 +12,11 @@ import type {
 import { CHANNEL_LABELS } from "@/lib/types";
 import { useChannel } from "@/lib/channel-context";
 import { HeroBanner } from "./HeroBanner";
+import { PromoterShelf } from "./PromoterShelf";
 import { FilterSidebar } from "./FilterSidebar";
 import { RecipeCard } from "./RecipeCard";
 
-type SortOption = "popular" | "fastest" | "name";
+type SortOption = "popular" | "rating" | "fastest" | "name";
 
 export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
   const { defaultChannel } = useChannel();
@@ -180,22 +181,49 @@ export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
         return true;
       })
       .sort((a, b) => {
+        if (sortOption === "rating") {
+          const scoreA =
+            (defaultChannel && a.review?.channel_scores?.[defaultChannel]) ??
+            a.review?.score ??
+            0;
+          const scoreB =
+            (defaultChannel && b.review?.channel_scores?.[defaultChannel]) ??
+            b.review?.score ??
+            0;
+          if (scoreA !== scoreB) return scoreB - scoreA;
+          if (a.status === "verified" && b.status !== "verified") return -1;
+          if (a.status !== "verified" && b.status === "verified") return 1;
+          return a.name.localeCompare(b.name);
+        }
         if (sortOption === "fastest") {
-          const minPrepA = Math.min(
-            ...a.preparations.map((p) => p.prep_time_minutes)
-          );
-          const minPrepB = Math.min(
-            ...b.preparations.map((p) => p.prep_time_minutes)
-          );
-          return minPrepA - minPrepB;
+          const getPrepTime = (r: Recipe) => {
+            if (defaultChannel) {
+              const prep = r.preparations.find((p) => p.channel === defaultChannel);
+              if (prep) return prep.prep_time_minutes;
+            }
+            return Math.min(...r.preparations.map((p) => p.prep_time_minutes));
+          };
+          return getPrepTime(a) - getPrepTime(b);
         }
         if (sortOption === "name") {
           return a.name.localeCompare(b.name);
         }
-        // Default popular: verified recipes first, then by name
+        // Default popular: featured first, then test-kitchen score, then verified, then name
+        const isFeaturedA = a.featured ? 1 : 0;
+        const isFeaturedB = b.featured ? 1 : 0;
+        if (isFeaturedA !== isFeaturedB) return isFeaturedB - isFeaturedA;
+        const scoreA =
+          (defaultChannel && a.review?.channel_scores?.[defaultChannel]) ??
+          a.review?.score ??
+          0;
+        const scoreB =
+          (defaultChannel && b.review?.channel_scores?.[defaultChannel]) ??
+          b.review?.score ??
+          0;
+        if (scoreA !== scoreB) return scoreB - scoreA;
         if (a.status === "verified" && b.status !== "verified") return -1;
         if (a.status !== "verified" && b.status === "verified") return 1;
-        return 0;
+        return a.name.localeCompare(b.name);
       });
   }, [
     recipes,
@@ -234,6 +262,9 @@ export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
         avgDuration={avgDurationFormatted}
         condensedRatio="1:2.5 Target"
       />
+
+      {/* Coffee-Assigned Promoter Shelf (Trending & Test Kitchen Picks) */}
+      <PromoterShelf recipes={recipes} />
 
       {/* Split View: Left Filter Rail + Recipe Stream */}
       <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -317,6 +348,18 @@ export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
               <div className="flex items-center gap-1 bg-[#f8f2ee] p-1 border border-[#1a130e]/10">
                 <button
                   type="button"
+                  onClick={() => setSortOption("rating")}
+                  className={`px-3 py-1 font-mono text-xs transition-colors cursor-pointer ${
+                    sortOption === "rating"
+                      ? "bg-[#1a130e] text-[#b8f600] font-bold"
+                      : "text-[#1d1b19] hover:bg-[#ede7e3]"
+                  }`}
+                  title="Sort by StickyMilk 10-point test kitchen scores"
+                >
+                  ★ Top Rated
+                </button>
+                <button
+                  type="button"
                   onClick={() => setSortOption("popular")}
                   className={`px-3 py-1 font-mono text-xs transition-colors cursor-pointer ${
                     sortOption === "popular"
@@ -324,7 +367,7 @@ export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
                       : "text-[#1d1b19] hover:bg-[#ede7e3]"
                   }`}
                 >
-                  Most Popular
+                  Trending
                 </button>
                 <button
                   type="button"

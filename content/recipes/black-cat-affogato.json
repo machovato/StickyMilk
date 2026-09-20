@@ -3,7 +3,25 @@
   "name": "Black Cat Affogato",
   "format": "affogato",
   "flavor_notes": "Classic affogato character — intensely flavored hot coffee poured fast over cold vanilla gelato.",
-  "status": "draft",
+  "status": "verified",
+  "featured": true,
+  "promoter_tag": "TONY'S PICK",
+  "review": {
+    "score": 9.4,
+    "verdict": "Simple perfection. High-fat vanilla bean gelato melts into a luxurious custard under the hot espresso extraction.",
+    "tested_date": "2026-09-16",
+    "tester": "Tony Melendez",
+    "channel_scores": {
+      "cometeer": 9.6,
+      "nespresso": 9.3,
+      "instant": 8.5
+    },
+    "channel_verdicts": {
+      "cometeer": "Melt puck with 2 oz boiling water; the high extraction yield blankets the cold gelato without turning it watery.",
+      "nespresso": "Vertuo single Diavolitto or Il Caffè creates the ideal hot crema crown.",
+      "instant": "Use a super-concentrated bloom (1.5 tsp Medaglia d'Oro in just 1.5 oz boiling water) so the gelato doesn't melt too fast."
+    }
+  },
   "tags": [
     "after-dinner",
     "dessert",
