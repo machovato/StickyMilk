@@ -1,0 +1,232 @@
+{
+  "slug": "cookie-butter-creamer-latte",
+  "name": "Cookie Butter Creamer Latte",
+  "image": "/recipes/varieties/laceyglasley-cookie-butter.jpg",
+  "format": "iced",
+  "flavor_notes": "A quick, creamy cookie butter iced latte using Chobani Cookie Butter creamer and brown sugar with a Biscoff-coated rim.",
+  "barista_note": "The fast-track cookie butter hack: instead of whipping cold foam from scratch, Chobani Cookie Butter creamer delivers rich speculoos flavor instantly. Smear a spoonful of Biscoff along the rim or inside the cup for cafe-style presentation.",
+  "status": "needs_testing",
+  "tags": [
+    "iced",
+    "cookie-butter",
+    "sweet-treat",
+    "quick-fix",
+    "copycat"
+  ],
+  "sweetness_level": "rich_sweet",
+  "source": {
+    "type": "creator",
+    "name": "Lacey Glasley",
+    "handle": "@laceyglasley",
+    "avatar": "/creators/laceyglasley.jpg",
+    "platform": "TikTok",
+    "url": "https://www.tiktok.com/@laceyglasley/video/7558079774669688077"
+  },
+  "variations": [
+    {
+      "slug": "cookie-butter-cloud-latte",
+      "title": "Sofia's Homemade Cloud Foam",
+      "creator": {
+        "name": "Sofia H. | Fifi’s Coffee Bar",
+        "handle": "@sofia_hrdz",
+        "avatar": "/creators/sofia_hrdz.jpg",
+        "platform": "TikTok"
+      },
+      "twist": "Whips softened Biscoff with heavy cream and milk into an airy cold foam cloud poured over iced vanilla espresso.",
+      "thumbnail": "/recipes/cookie-butter-cloud-latte.jpg"
+    },
+    {
+      "slug": "cookie-butter-swirl-latte",
+      "title": "MainStMuse's Swirled Cup Latte",
+      "creator": {
+        "name": "MainStMuse",
+        "handle": "@mainstmuse",
+        "avatar": "/creators/mainstmuse.jpg",
+        "platform": "TikTok"
+      },
+      "twist": "Drizzles melted Biscoff inside the glass and dissolves cookie butter directly into the hot instant espresso concentrate.",
+      "thumbnail": "/recipes/varieties/mainstmuse-cookie-butter.jpg"
+    }
+  ],
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "tested_with": "Counter Culture Big Trouble or Equator Mocha Java",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced nutty medium roast that harmonizes with brown sugar and sweet cookie butter creamer.",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "prep_time_minutes": 3,
+      "difficulty": "easy",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, fully melted and chilled",
+          "item_id": "cometeer_capsule"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        },
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "item": "brown sugar",
+          "item_id": "brown_sugar"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "item": "Chobani Cookie Butter creamer (or sweet cream)"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "item": "cold whole milk",
+          "item_id": "milk"
+        },
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "item": "Speculoos / Biscoff cookie butter (for lining cup)",
+          "optional": true
+        }
+      ],
+      "steps": [
+        "Optionally smear 1 tsp of cookie butter around the inside walls or rim of a glass.",
+        "Fill the glass with ice.",
+        "Add the brown sugar, cookie butter creamer, and cold whole milk; stir gently.",
+        "Pour the chilled Cometeer extract directly over the iced milk blend and stir."
+      ],
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "tested_with": "Nespresso Double Espresso Chiaro or Dolce",
+      "roast_recommendation": "medium",
+      "roast_note": "Toasted cereal notes in Double Espresso Dolce pair smoothly with cookie butter spices.",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "prep_time_minutes": 3,
+      "difficulty": "easy",
+      "nespresso_system": "vertuo",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 80,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Double Espresso pod (Chiaro or Dolce)",
+          "item_id": "nespresso_double_pod"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        },
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "item": "brown sugar",
+          "item_id": "brown_sugar"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "item": "Chobani Cookie Butter creamer"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "item": "cold whole milk",
+          "item_id": "milk"
+        },
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "item": "Speculoos / Biscoff cookie butter (for lining cup)",
+          "optional": true
+        }
+      ],
+      "steps": [
+        "Optionally line the inside of your glass with a swirl of cookie butter.",
+        "Fill the glass with ice, then add brown sugar, cookie butter creamer, and cold milk.",
+        "Brew the Double Espresso pod directly over ice in a separate cup to cool slightly.",
+        "Pour the espresso over the iced creamer milk and stir to combine."
+      ],
+      "provenance": "adapted"
+    },
+    {
+      "channel": "instant",
+      "tested_with": "Nescafé Gold Espresso Blonde",
+      "roast_recommendation": "medium",
+      "roast_note": "A smooth blonde instant roast that lets the sweet cookie butter creamer shine without harsh bitterness.",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "prep_time_minutes": 3,
+      "difficulty": "easy",
+      "ingredients": [
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "item": "instant espresso (blonde or gold)",
+          "item_id": "instant_coffee"
+        },
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "item": "brown sugar",
+          "item_id": "brown_sugar"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "secondary_amount": 60,
+          "secondary_unit": "ml",
+          "item": "hot water",
+          "item_id": "hot_water"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "item": "Chobani Cookie Butter creamer"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "item": "cold whole milk",
+          "item_id": "milk"
+        },
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "item": "Speculoos / Biscoff cookie butter (for lining cup)",
+          "optional": true
+        }
+      ],
+      "steps": [
+        "In a small cup, dissolve 2 tsp instant espresso and 1 tsp brown sugar into 2 oz hot water.",
+        "Optionally smear 1 tsp of cookie butter along the inside of your serving glass.",
+        "Fill the glass with ice, then pour in 2 oz cookie butter creamer and 2 oz cold milk.",
+        "Pour the warm espresso concentrate over the iced creamer milk and stir well."
+      ],
+      "provenance": "original"
+    }
+  ]
+}

@@ -29,7 +29,6 @@ import {
   ProvenanceStatus,
   Recipe,
   RecipeFormat,
-  RecipeSource,
   RecipeStatus,
   SOURCE_TYPE_LABELS,
   SWEETNESS_LABELS,
@@ -339,14 +338,17 @@ export function validateRecipeCandidate(
         if (!isRecord(v)) {
           errors.push({ path: `variations[${i}]`, message: "must be an object" });
         } else {
+          if (typeof v.slug !== "string" || v.slug.trim() === "") {
+            errors.push({ path: `variations[${i}].slug`, message: "slug is required" });
+          }
           if (typeof v.title !== "string" || v.title.trim() === "") {
             errors.push({ path: `variations[${i}].title`, message: "title is required" });
           }
           if (typeof v.twist !== "string" || v.twist.trim() === "") {
             errors.push({ path: `variations[${i}].twist`, message: "twist is required" });
           }
-          if (typeof v.url !== "string" || v.url.trim() === "") {
-            errors.push({ path: `variations[${i}].url`, message: "url is required" });
+          if (v.url !== undefined && typeof v.url !== "string") {
+            errors.push({ path: `variations[${i}].url`, message: "url must be a string when present" });
           }
           if (typeof v.thumbnail !== "string" || v.thumbnail.trim() === "") {
             errors.push({ path: `variations[${i}].thumbnail`, message: "thumbnail is required" });

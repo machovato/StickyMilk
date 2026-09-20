@@ -189,6 +189,7 @@ export interface Promo {
 }
 
 export interface RecipeVariation {
+  slug: string;
   title: string;
   creator: {
     name: string;
@@ -197,7 +198,7 @@ export interface RecipeVariation {
     avatar?: string;
   };
   twist: string;
-  url: string;
+  url?: string;
   thumbnail: string;
 }
 

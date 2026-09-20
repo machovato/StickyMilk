@@ -24,10 +24,12 @@
   },
   "variations": [
     {
+      "slug": "cookie-butter-creamer-latte",
       "title": "Lacey's Creamer Shortcut",
       "creator": {
         "name": "Lacey Glasley",
         "handle": "@laceyglasley",
+        "avatar": "/creators/laceyglasley.jpg",
         "platform": "TikTok"
       },
       "twist": "Quick hack using Chobani Cookie Butter creamer and brown sugar instead of whipping cold foam from scratch.",
@@ -35,10 +37,12 @@
       "thumbnail": "/recipes/varieties/laceyglasley-cookie-butter.jpg"
     },
     {
+      "slug": "cookie-butter-swirl-latte",
       "title": "MainStMuse's Swirled Cup Latte",
       "creator": {
         "name": "MainStMuse",
         "handle": "@mainstmuse",
+        "avatar": "/creators/mainstmuse.jpg",
         "platform": "TikTok"
       },
       "twist": "Drizzles melted Biscoff inside the glass and dissolves cookie butter directly into the hot instant espresso concentrate.",

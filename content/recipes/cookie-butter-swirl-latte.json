@@ -1,0 +1,232 @@
+{
+  "slug": "cookie-butter-swirl-latte",
+  "name": "Cookie Butter Swirl Latte",
+  "image": "/recipes/varieties/mainstmuse-cookie-butter.jpg",
+  "format": "iced",
+  "flavor_notes": "Warm Biscoff cookie butter melted directly into hot espresso, poured over cold milk in a cookie butter-swirled glass.",
+  "barista_note": "The richest and most decadent of the viral cookie butter coffees: melting warm cookie butter straight into the hot espresso concentrate creates an ultra-velvety speculoos syrup that marbles beautifully as it cascades over iced milk.",
+  "status": "needs_testing",
+  "tags": [
+    "iced",
+    "cookie-butter",
+    "sweet-treat",
+    "copycat"
+  ],
+  "sweetness_level": "rich_sweet",
+  "source": {
+    "type": "creator",
+    "name": "MainStMuse",
+    "handle": "@mainstmuse",
+    "avatar": "/creators/mainstmuse.jpg",
+    "platform": "TikTok",
+    "url": "https://www.tiktok.com/@mainstmuse/video/7388970588754201887"
+  },
+  "variations": [
+    {
+      "slug": "cookie-butter-cloud-latte",
+      "title": "Sofia's Homemade Cloud Foam",
+      "creator": {
+        "name": "Sofia H. | Fifi’s Coffee Bar",
+        "handle": "@sofia_hrdz",
+        "avatar": "/creators/sofia_hrdz.jpg",
+        "platform": "TikTok"
+      },
+      "twist": "Whips softened Biscoff with heavy cream and milk into an airy cold foam cloud poured over iced vanilla espresso.",
+      "thumbnail": "/recipes/cookie-butter-cloud-latte.jpg"
+    },
+    {
+      "slug": "cookie-butter-creamer-latte",
+      "title": "Lacey's Quick Creamer Hack",
+      "creator": {
+        "name": "Lacey Glasley",
+        "handle": "@laceyglasley",
+        "avatar": "/creators/laceyglasley.jpg",
+        "platform": "TikTok"
+      },
+      "twist": "Uses Chobani Cookie Butter creamer and brown sugar with a Biscoff-coated rim for a 2-minute cafe copycat.",
+      "thumbnail": "/recipes/varieties/laceyglasley-cookie-butter.jpg"
+    }
+  ],
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "tested_with": "Counter Culture Big Trouble or George Howell Alchemy",
+      "roast_recommendation": "medium",
+      "roast_note": "Rich milk chocolate and nutty notes amplify the melted speculoos spices.",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "prep_time_minutes": 4,
+      "difficulty": "easy",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, melted and gently warmed",
+          "item_id": "cometeer_capsule"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "Speculoos / Lotus Biscoff cookie butter (for espresso melt)"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "Speculoos / Lotus Biscoff cookie butter (for cup swirl)",
+          "optional": true
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "cold whole milk or oat milk",
+          "item_id": "milk"
+        },
+        {
+          "amount": 1,
+          "unit": "cookie",
+          "item": "crushed Biscoff cookie",
+          "optional": true
+        }
+      ],
+      "steps": [
+        "Warm 1 tbsp cookie butter for 10 seconds and drizzle around the inside walls of your glass.",
+        "Fill the glass with ice and add 6 oz cold milk.",
+        "Warm the melted Cometeer extract slightly, then whisk in 1 tbsp cookie butter until glossy and fully dissolved.",
+        "Pour the cookie butter coffee extract over the iced milk and garnish with crushed cookie crumbs."
+      ],
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "tested_with": "Nespresso Double Espresso Chiaro (Vertuo 80ml)",
+      "roast_recommendation": "medium",
+      "roast_note": "Toasted wood and cereal notes in Chiaro harmonize perfectly with melted cookie butter.",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "prep_time_minutes": 4,
+      "difficulty": "easy",
+      "nespresso_system": "vertuo",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 80,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Double Espresso pod (Chiaro or Dolce)",
+          "item_id": "nespresso_double_pod"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "Speculoos / Lotus Biscoff cookie butter (for espresso melt)"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "Speculoos / Lotus Biscoff cookie butter (for cup swirl)",
+          "optional": true
+        },
+        {
+          "amount": 5,
+          "unit": "oz",
+          "item": "cold whole milk or oat milk",
+          "item_id": "milk"
+        },
+        {
+          "amount": 1,
+          "unit": "cookie",
+          "item": "crushed Biscoff cookie",
+          "optional": true
+        }
+      ],
+      "steps": [
+        "Warm 1 tbsp cookie butter for 10 seconds and swirl around the inside of your serving glass.",
+        "Fill the glass with ice and add 5 oz cold milk.",
+        "Place 1 tbsp cookie butter into a cup and brew the Double Espresso pod directly over it; stir immediately until the cookie butter dissolves into the hot crema.",
+        "Pour the cookie butter espresso over the iced milk and top with crushed cookie crumbs."
+      ],
+      "provenance": "adapted"
+    },
+    {
+      "channel": "instant",
+      "tested_with": "Nescafé Gold Espresso Blonde or Intense",
+      "roast_recommendation": "medium",
+      "roast_note": "A smooth blonde instant roast that lets the rich caramelized spiced speculoos shine through.",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "prep_time_minutes": 4,
+      "difficulty": "easy",
+      "ingredients": [
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "item": "instant espresso (blonde or gold)",
+          "item_id": "instant_coffee"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "secondary_amount": 60,
+          "secondary_unit": "ml",
+          "item": "hot water",
+          "item_id": "hot_water"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "Speculoos / Lotus Biscoff cookie butter (for espresso melt)"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "Speculoos / Lotus Biscoff cookie butter (for cup swirl)",
+          "optional": true
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "cold whole milk or oat milk",
+          "item_id": "milk"
+        },
+        {
+          "amount": 1,
+          "unit": "cookie",
+          "item": "crushed Biscoff cookie",
+          "optional": true
+        }
+      ],
+      "steps": [
+        "Warm 1 tbsp cookie butter in the microwave for 8–10 seconds and swirl inside the walls of your glass.",
+        "Fill the swirled glass with ice and pour in 6 oz cold milk.",
+        "In a small measuring cup, combine 2 tsp instant espresso and 1 tbsp cookie butter with 2 oz hot water; stir vigorously until fully melted and smooth.",
+        "Pour the warm cookie butter espresso mixture over the iced milk.",
+        "Top with crushed Biscoff cookie crumbs and stir before drinking."
+      ],
+      "provenance": "original"
+    }
+  ]
+}
