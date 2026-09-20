@@ -22,8 +22,15 @@ export function SourceAttribution({
 
     return (
       <div
-        className={`flex items-center gap-1 font-mono text-[10px] text-[#7f756f] truncate ${className}`}
+        className={`flex items-center gap-1.5 font-mono text-[10px] text-[#7f756f] truncate ${className}`}
       >
+        {source.avatar && (
+          <img
+            src={source.avatar}
+            alt={source.name}
+            className="w-4 h-4 rounded-full object-cover flex-shrink-0 border border-[#1a130e]/20"
+          />
+        )}
         <span className="uppercase text-[#a89e97]">
           {source.type === "creator" ? "Via" : "Source"}:
         </span>
@@ -40,33 +47,42 @@ export function SourceAttribution({
   // Detail page presentation
   return (
     <div
-      className={`p-3.5 bg-[#fbf8f5] border border-[#1a130e]/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs ${className}`}
+      className={`p-3.5 bg-[#fbf8f5] border border-[#1a130e]/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs ${className}`}
     >
-      <div className="flex flex-col gap-0.5">
-        <div className="flex items-center gap-2">
-          <span className="font-mono text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 bg-[#1a130e] text-white">
-            {source.type === "vendor"
-              ? "VENDOR SOURCE"
-              : source.type === "creator"
-              ? "CREATOR INSPIRATION"
-              : "STICKYMILK ORIGINAL"}
-          </span>
-          <span className="font-syne font-bold text-sm text-[#1a130e]">
-            {source.name}
-          </span>
-          {source.handle && (
-            <span className="font-mono text-xs text-[#001ec0] font-semibold">
-              {source.handle}
+      <div className="flex items-center gap-3">
+        {source.avatar && (
+          <img
+            src={source.avatar}
+            alt={source.name}
+            className="w-11 h-11 rounded-full object-cover border border-[#1a130e]/20 flex-shrink-0 shadow-sm"
+          />
+        )}
+        <div className="flex flex-col gap-0.5">
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 bg-[#1a130e] text-white">
+              {source.type === "vendor"
+                ? "VENDOR SOURCE"
+                : source.type === "creator"
+                ? "CREATOR INSPIRATION"
+                : "STICKYMILK ORIGINAL"}
             </span>
-          )}
+            <span className="font-syne font-bold text-sm text-[#1a130e]">
+              {source.name}
+            </span>
+            {source.handle && (
+              <span className="font-mono text-xs text-[#001ec0] font-semibold">
+                {source.handle}
+              </span>
+            )}
+          </div>
+          <p className="font-body text-xs text-[#7f756f]">
+            {source.type === "vendor"
+              ? "Formulated by roaster or equipment manufacturer test kitchens."
+              : source.type === "creator"
+              ? `Viral drink concept discovered on ${source.platform || "social media"}.`
+              : "Developed specifically for StickyMilk multi-channel translation."}
+          </p>
         </div>
-        <p className="font-body text-xs text-[#7f756f]">
-          {source.type === "vendor"
-            ? "Formulated by roaster or equipment manufacturer test kitchens."
-            : source.type === "creator"
-            ? `Viral drink concept discovered on ${source.platform || "social media"}.`
-            : "Developed specifically for StickyMilk multi-channel translation."}
-        </p>
       </div>
 
       {source.url && (

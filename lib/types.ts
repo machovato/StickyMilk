@@ -34,6 +34,7 @@ export interface RecipeSource {
   handle?: string;
   platform?: string;
   url?: string;
+  avatar?: string;
 }
 
 /**

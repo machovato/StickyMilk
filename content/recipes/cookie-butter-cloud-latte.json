@@ -1,6 +1,7 @@
 {
   "slug": "cookie-butter-cloud-latte",
   "name": "Cookie Butter Cloud Latte",
+  "image": "/recipes/cookie-butter-cloud-latte.jpg",
   "format": "iced",
   "flavor_notes": "Velvety spiced speculoos cookie butter cold foam layered over chilled espresso and sweet vanilla iced milk.",
   "barista_note": "Cookie butter is dense at room temp. Microwave it for 8–10 seconds before adding the heavy cream so the handheld frother emulsifies it into an airy cloud instead of leaving heavy clumps at the bottom.",
@@ -18,7 +19,8 @@
     "name": "Sofia H. | Fifi’s Coffee Bar",
     "handle": "@sofia_hrdz",
     "platform": "TikTok",
-    "url": "https://www.tiktok.com/@sofia_hrdz/video/7571593188838755614"
+    "url": "https://www.tiktok.com/@sofia_hrdz/video/7571593188838755614",
+    "avatar": "/creators/sofia_hrdz.jpg"
   },
   "preparations": [
     {

@@ -323,6 +323,12 @@ export function validateRecipeCandidate(
       ) {
         errors.push({ path: "source.url", message: "url must be a string when present" });
       }
+      if (
+        candidate.source.avatar !== undefined &&
+        typeof candidate.source.avatar !== "string"
+      ) {
+        errors.push({ path: "source.avatar", message: "avatar must be a string when present" });
+      }
     }
   }
   if (!VALID_STATUS.includes(candidate.status as RecipeStatus)) {
