@@ -242,50 +242,83 @@ export function RecipeDetail({
         </div>
       </div>
 
-      {/* Hardware System Switcher Tabs */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#1a130e] text-white p-3 sm:p-4 border border-black shadow-sm">
-        <div className="flex items-center gap-2">
-          <span className="w-2.5 h-2.5 bg-[#b8f600]" />
-          <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#b8f600]">
-            HARDWARE SYSTEM:
-          </span>
+      {/* Hardware System Switcher:
+          - When global MY COFFEE is blank (null): show full hardware tabs so visitor can freely explore all formulations (defaults to ORIGINAL).
+          - When global MY COFFEE is selected: respect user's machine choice without dual-selector conflict, but provide an optional 1-click peek at the original recipe.
+      */}
+      {!defaultChannel ? (
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#1a130e] text-white p-3 sm:p-4 border border-black shadow-sm">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 bg-[#b8f600]" />
+            <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#b8f600]">
+              EXPLORE HARDWARE FORMULATION:
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            {(["cometeer", "nespresso", "instant"] as Channel[]).map((c) => {
+              const hasPrep = recipe.preparations.some((p) => p.channel === c);
+              const isSelected = channel === c;
+              const p = recipe.preparations.find((p) => p.channel === c);
+              return (
+                <button
+                  key={c}
+                  type="button"
+                  onClick={() => setActiveChannelOverride(c)}
+                  disabled={!hasPrep}
+                  className={`flex items-center gap-2 px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-tight transition-all cursor-pointer border ${
+                    isSelected
+                      ? "bg-[#b8f600] text-[#1a130e] border-[#b8f600] shadow-sm"
+                      : hasPrep
+                      ? "bg-[#2a211a] text-white border-white/20 hover:border-white/50"
+                      : "bg-[#1a130e] text-white/40 border-white/10 opacity-60 cursor-not-allowed"
+                  }`}
+                >
+                  <span>{CHANNEL_LABELS[c]}</span>
+                  {p?.provenance === "original" && (
+                    <span
+                      className={`text-[9px] px-1 py-0.2 font-mono uppercase font-bold ${
+                        isSelected
+                          ? "bg-[#1a130e] text-[#b8f600]"
+                          : "bg-[#b8f600] text-[#1a130e]"
+                      }`}
+                    >
+                      ORIGINAL
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </div>
-        <div className="flex items-center gap-1.5 flex-wrap">
-          {(["cometeer", "nespresso", "instant"] as Channel[]).map((c) => {
-            const hasPrep = recipe.preparations.some((p) => p.channel === c);
-            const isSelected = channel === c;
-            const p = recipe.preparations.find((p) => p.channel === c);
-            return (
-              <button
-                key={c}
-                type="button"
-                onClick={() => setActiveChannelOverride(c)}
-                disabled={!hasPrep}
-                className={`flex items-center gap-2 px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-tight transition-all cursor-pointer border ${
-                  isSelected
-                    ? "bg-[#b8f600] text-[#1a130e] border-[#b8f600] shadow-sm"
-                    : hasPrep
-                    ? "bg-[#2a211a] text-white border-white/20 hover:border-white/50"
-                    : "bg-[#1a130e] text-white/40 border-white/10 opacity-60 cursor-not-allowed"
-                }`}
-              >
-                <span>{CHANNEL_LABELS[c]}</span>
-                {p?.provenance === "original" && (
-                  <span
-                    className={`text-[9px] px-1 py-0.2 font-mono uppercase font-bold ${
-                      isSelected
-                        ? "bg-[#1a130e] text-[#b8f600]"
-                        : "bg-[#b8f600] text-[#1a130e]"
-                    }`}
-                  >
-                    ORIGINAL
-                  </span>
-                )}
-              </button>
-            );
-          })}
+      ) : (
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 p-3 bg-[#f8f2ee] border border-[#1a130e]/15 text-xs font-mono">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#b8f600] border border-[#1a130e]" />
+            <span className="text-[#1a130e] font-bold uppercase">
+              VIEWING FOR {CHANNEL_LABELS[channel].toUpperCase()}
+            </span>
+            <span className="text-[#7f756f]">
+              ({prep?.provenance === "original" ? "ORIGINAL FORMULATION" : "SM HARDWARE TRANSLATION"})
+            </span>
+          </div>
+
+          {originalPrepChannel !== defaultChannel && (
+            <button
+              type="button"
+              onClick={() =>
+                setActiveChannelOverride(
+                  channel === originalPrepChannel ? null : originalPrepChannel
+                )
+              }
+              className="text-[#001ec0] hover:text-[#1a130e] underline underline-offset-2 font-bold cursor-pointer transition-colors"
+            >
+              {channel === originalPrepChannel
+                ? `Back to My Coffee (${CHANNEL_LABELS[defaultChannel]})`
+                : `Peek at Original ${CHANNEL_LABELS[originalPrepChannel]} Recipe ↗`}
+            </button>
+          )}
         </div>
-      </div>
+      )}
 
       {prep ? (
         <>
