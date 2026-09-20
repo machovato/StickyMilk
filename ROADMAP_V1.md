@@ -87,14 +87,21 @@ The system does not lock the platform to a permanent 3-item box. Preparations ar
 - [ ] **OpenGraph Social Cards:** Auto-generate brutalist preview cards for iMessage, Reddit, and Twitter sharing.
 - [ ] **Static Deployment Hardening:** Ensure read-only production deploy on Vercel/Cloudflare functions cleanly without filesystem write dependencies.
 
-### Sprint 4: The Intake Assistant (`/admin/import`)
-- [ ] **Admin Paste Tool:** Simple form to paste a vendor URL or TikTok video link + raw caption/ingredients.
+### Sprint 4: The Coffee Translator Engine (`/admin/import` & `/translate`)
+*Core CTA:* **`[ TRANSLATE FOR MY COFFEE → ]`**  
+*Subtext:* *"Paste a TikTok/IG reel and build your recipe here!"*
+
+- [ ] **High-Intent Ingestion Model:** Replaces dead-end "Submit a Recipe" forms with on-demand personal utility. Users bring the video they actually want; StickyMilk translates it for their counter setup and feeds the vault.
+- [ ] **The 3 Translation Superpowers:**
+  1. **Hardware Translation Layer:** Converts source video espresso/brew methods into calibrated Cometeer (26g melt), Nespresso Vertuo (single/double pull), and Specialty Instant (hot bloom) formulations.
+  2. **Nutritional Reality Check:** Calculates exact Calories, Caffeine (mg), and Sugar (g) with human reference benchmarks (*"~1.9 cups of coffee"*, *"almost a day's sugar"*), exposing the hidden macros viral videos ignore.
+  3. **Culinary Staging Engine (*Mise en Place*):** Sequences video cuts into temperature-stable kitchen physics (whip cold foam first as an input ingredient; pull hot espresso over ice last).
 - [ ] **Creator-Scoped Naming:** Automatically assign `{creator_slug}-{recipe_name}.json` ensuring database migration readiness and `@unique` constraints.
 - [ ] **Sub-Assembly & Phase Detection:** Parse raw ingredients and steps into multi-component sections (`group` for ingredients: Cold Foam, Base, Garnish; `## Phase N` for steps).
-- [ ] **Procedural Staging Engine (*Mise en Place*):** Kitchen physics sequencing (e.g. whip cold foam / prep cold elements first as an input ingredient before pulling hot espresso over ice).
-- [ ] **3-Channel Synthesis:** Fast automated drafting of Cometeer, Nespresso Vertuo, and Instant routes with calibrated liquid volumes.
 - [ ] **Novel Ingredient Fallback & Taxonomy Intake:** Check incoming ingredients against `content/taxonomy/ingredients.json`. For novel items, allow graceful intake with optional `item_id`, assign category macro baselines (e.g. average fruit preserve macros), and queue for 1-click taxonomy calibration.
-- [ ] **15-Second Review & Publish:** Populates the editor for quick inspection and atomic save to Git JSON.
+- [ ] **Dual-Entry Funnel:**
+  - *Phase 1 (V1 Admin):* Internal tool at `/admin/import` for Tony to rapidly ingest, score, and publish drinks.
+  - *Phase 2 (V2 Public):* Public `/translate` portal box letting visitors paste links and request translations for their coffee setup.
 
 ---
 

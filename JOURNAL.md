@@ -797,6 +797,26 @@ instead of a number.
      `components/RecipeLibrary.tsx` (`[ ★ TOP RATED | TRENDING | FASTEST BREW | A TO Z ]`).
      Cards display an instant `★ [SCORE]` pill in `components/RecipeCard.tsx`.
 
+5.22. **The Coffee Translator Engine (`TRANSLATE FOR MY COFFEE`) & User-Driven Intake.**
+   Confronted the ingestion scaling and intake model. Rejected brittle autonomous
+   web scrapers and uninspired "Submit a Recipe" crowdsource forms (which treat
+   users like unpaid data-entry workers). Replaced them with the **Coffee Translator**:
+   - **The Core CTA:** `[ TRANSLATE FOR MY COFFEE → ]` with subtext:
+     *"Paste a TikTok/IG reel and build your recipe here!"*.
+   - **High-Intent Ingestion:** A real user brings the video they actually want;
+     StickyMilk translates it for their specific counter setup and feeds the vault.
+     100% verified demand with zero wasted curation.
+   - **The 3 Translation Superpowers:**
+     1. *Hardware Translation Layer:* Calculates brew math across Cometeer (26g melt),
+        Nespresso Vertuo (40ml/80ml pull), and Specialty Instant (2oz hot bloom).
+     2. *Nutritional Reality Check:* Auto-calculates calories, caffeine (mg), and sugar (g)
+        with human reference points (*"almost a full day's sugar"*), exposing hidden macros viral videos ignore.
+     3. *Culinary Staging Engine (Mise en Place):* Restructures visual-first video cuts
+        into temperature-stable kitchen execution (whip cold foam first as an input ingredient; pull hot espresso over ice last).
+   - **Dual-Entry Funnel:** Phase 1 implements an internal admin tool at `/admin/import`
+     for Tony to rapidly ingest and verify drinks; Phase 2 introduces a public `/translate`
+     portal box where visitors request translations and grow the vault.
+
 ---
 
 ## 6. Known constraints / workarounds worth remembering
@@ -847,12 +867,11 @@ Aligned with `ROADMAP_V1.md`:
    - OpenGraph Social Cards: brutalist preview card generator for iMessage,
      Reddit, and X link sharing.
    - Vercel production deployment hardening.
-2. **Sprint 4: The Intake Assistant (`/admin/import`)**
-   - Admin Paste Tool: URL / video caption pasteboard.
+2. **Sprint 4: The Coffee Translator Engine (`/admin/import` & `/translate`)**
+   - User CTA: `[ TRANSLATE FOR MY COFFEE → ]` ("Paste a TikTok/IG reel and build your recipe here!").
+   - 3 Translation Superpowers: Hardware brew math, Nutritional reality check (caffeine/sugar), and Culinary staging (*mise en place*).
    - Multi-Component Detection & Phasing: automated breakdown into
      sub-assemblies (Foam, Base, Garnish) with *mise en place* step ordering.
-   - 3-Channel Synthesis: automated conversion into Cometeer, Nespresso
-     Vertuo, and Instant preparations.
    - Novel Ingredient Fallback & Taxonomy Intake: auto-matching known items
      and applying category-level macro benchmarks for unmapped ingredients.
    - Deterministic QA Gate: hard schema validation before saving to Git.

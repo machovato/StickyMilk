@@ -1,35 +1,39 @@
-# StickyMilk: Recipe Ingestion Engine (RIE) Specification
+# StickyMilk: The Coffee Translator & Ingestion Engine Specification
 
-*Version:* 1.0  
+*Version:* 2.0  
 *Author:* Tony Melendez & Antigravity  
-*Lineage:* Adapted from the Amerigo Content Ingestion Engine (CIE) architecture  
+*Core CTA:* **`[ TRANSLATE FOR MY COFFEE → ]`**  
+*Subtext:* *"Paste a TikTok/IG reel and build your recipe here!"*  
 *Status:* Active Specification  
 
 ---
 
 ## 1. Executive Summary & Vision
 
-StickyMilk is a specialty coffee translation layer across **Cometeer (frozen extract)**, **Nespresso Vertuo (single pod)**, and **Instant (freeze-dried)**.
+StickyMilk is a specialty coffee translation layer across **Cometeer (frozen extract)**, **Nespresso Vertuo (single & double pods)**, and **Specialty Instant (freeze-dried crystals)**.
 
-To keep the recipe catalog fresh, comprehensive, and scalable without a human hand-crafting every JSON file in VS Code, the **Recipe Ingestion Engine (RIE)** provides an automated, staged pipeline to:
-1. **Triage & Ingest** real recipes from official vendor archives (Nespresso, Cometeer) and viral social media trends (TikTok, Instagram coffee creators).
-2. **Normalize into a Recipe Intermediate Representation (IR)**, protecting all verbatim ingredient ratios and measurements.
-3. **Map Coffee Profiles & Taxonomy** using our standardized 3-tier coffee model (Light, Medium, Dark) and canonical ingredient IDs.
-4. **Synthesize 3-Channel Preparations** using our grounded conversion physics.
-5. **Run a Deterministic QA Gate** that validates the output against `lib/recipe-schema.ts` (zero LLM self-grading).
-6. **Deliver Safe Drafts** directly to `content/recipes/${slug}.json` with `status: "needs_testing"`.
+Rather than relying on brittle autonomous crawlers or passive "Submit a Recipe" forms (which feel like data-entry homework), the **Coffee Translator** operates as a high-intent, on-demand conversion utility:
+1. **User / Operator Drops a Link:** A visitor or curator pastes a TikTok, Instagram Reel, or YouTube Shorts link and selects their coffee foundation (`MY COFFEE: [ COMETEER | NESPRESSO VERTUO | INSTANT ]`).
+2. **Executes the 3 Translation Superpowers:**
+   - **Hardware Translation:** Automatically calculates the liquid and extraction physics for Cometeer (26g melt), Vertuo (40ml/80ml pull), and Instant (2oz hot bloom).
+   - **Nutritional Reality Check:** Calculates exact Calories, Caffeine (mg), and Sugar (g) with human reference points (*"~1.9 cups of coffee"*, *"almost a full day's sugar"*), exposing the hidden macros viral videos ignore.
+   - **Culinary Staging Engine (*Mise en Place*):** Re-sequences chaotic, visual-first video cuts into temperature-stable kitchen execution (whip cold foam first as an input ingredient; pull hot espresso over ice last).
+3. **Deterministic QA Gate:** Validates the resulting spec against `lib/recipe-schema.ts`.
+4. **Instant Value + Vault Growth:** The user immediately receives an executable Recipe Spec for their kitchen machine, while simultaneously creating a new candidate recipe in `content/recipes/${creator_slug}-${recipe_name}.json` with `status: "needs_testing"`.
 
 ---
 
-## 2. Core Architectural Principles (Learned from CIE)
+## 2. Core Architectural Principles
 
-1. **Rescue Mission, Not Migrate-Everything (Triage First):**  
-   We do not crawl and ingest entire websites. We filter aggressively for drinks that match StickyMilk's identity: condensed milk, textured sweet creams, cold foams, iced refreshers, and high-density coffee dynamics. OriginalLine-only or equipment-heavy recipes are rejected at Stage 0.
-2. **Protect Verbatim Facts (The Token Principle):**  
+1. **On-Demand Utility Over Passive Crawling (High Signal):**  
+   We do not crawl the entirety of social media. When a real user brings a video to the Coffee Translator, it provides 100% verified demand: a real person wants this drink and needs it adapted for their specific kitchen hardware.
+2. **The 3 Superpowers (Beyond Coffee Swapping):**  
+   Translation is more than substituting an espresso shot with Cometeer or Instant. It gives users the nutritional reality check that social videos hide, and re-sequences the recipe steps so the ice doesn't melt while whipping cold foam.
+3. **Protect Verbatim Facts (The Token Principle):**  
    In recipes, measurements, ratios, and units are sacred. Grams, milliliters, and exact branded pod citations are locked down as immutable facts. An LLM is never allowed to creatively paraphrase or round measurements.
-3. **Separation of Deterministic Code vs. LLM Judgment:**  
-   Scraping, schema validation, slug collision checks, and taxonomy lookups are 100% deterministic code. LLMs are only used for step restructuring and narrative summarization.
-4. **Deterministic QA Gate (No Self-Grading):**  
+4. **Deterministic Code vs. LLM Judgment:**  
+   Extraction, schema validation, slug collision checks, taxonomy lookups, and nutrition math are 100% deterministic code. LLMs are only used for step restructuring and narrative summarization.
+5. **Deterministic QA Gate (No Self-Grading):**  
    Every candidate recipe must pass `validateRecipeCandidate()` and check taxonomy IDs. If a field violates schema or a coffee intensity doesn't map, the pipeline fails loudly.
 
 ---
