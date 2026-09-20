@@ -108,11 +108,11 @@ export function RecipeDetail({
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 bg-white border border-[#1a130e]/15 shadow-sm">
         <div className="flex items-center gap-3 flex-wrap">
           <Link
-            href="/"
+            href="/recipes"
             className="flex items-center gap-1 font-mono text-xs uppercase font-bold text-[#001ec0] hover:text-[#1a130e] transition-colors"
           >
             <ArrowLeft size={16} weight="bold" />
-            <span>Back to Recipes</span>
+            <span>Back to Recipe Vault</span>
           </Link>
           <span className="text-[#d1c4bd]">|</span>
           <span className="font-mono text-[11px] font-bold px-2 py-0.5 bg-[#b8f600] text-[#141f00] uppercase">

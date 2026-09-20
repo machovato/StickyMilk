@@ -29,11 +29,11 @@ export default async function TagPage({ params }: TagPageProps) {
       <div className="bg-[#1a130e] text-white border-b border-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex flex-col gap-4">
           <Link
-            href="/"
+            href="/recipes"
             className="inline-flex items-center gap-1.5 font-mono text-xs uppercase font-bold text-[#b8f600] hover:text-white transition-colors w-fit"
           >
             <ArrowLeft size={16} weight="bold" />
-            <span>Back to All Recipes</span>
+            <span>Back to Recipe Vault</span>
           </Link>
 
           <div className="flex flex-col gap-1.5">

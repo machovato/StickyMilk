@@ -817,12 +817,37 @@ instead of a number.
      for Tony to rapidly ingest and verify drinks; Phase 2 introduces a public `/translate`
      portal box where visitors request translations and grow the vault.
 
+5.23. **The Front Door Portal & Recipe Vault Split (`/` vs. `/recipes`).**
+   Executed the architectural split validated by unanimous panel consensus:
+   - **The Archive Moves to `/recipes` (Recipe Vault):** Relocated `RecipeLibrary`
+     (full 22-drink catalog, instant search bar, multi-faceted filter rail, and
+     custom ratio formulator) to `/recipes`. Updated all back-links across
+     `RecipeDetail`, `app/tags/[tag]`, and `app/creators/[handle]` to point to `/recipes`.
+     Added a persistent `Recipe Vault` quick-nav button in `app/layout.tsx`.
+   - **The Front Door (`/`) Becomes a Lean 4-Block Portal:** Built `HomePortal.tsx`
+     delivering a focused, activation-oriented entry point that avoids the "dead
+     magazine" trap:
+     1. *Promise & Hardware Strip:* Editorial promise statement + interactive
+        `MY COFFEE TODAY: [ COMETEER | NESPRESSO | INSTANT | ALL SYSTEMS ]` selector
+        wired to `useChannel()`.
+     2. *The Hero (Current Obsession):* Lead drink (*Cà Phê Sữa Đá*) featuring
+        Tony's 10-point test kitchen score & unvarnished verdict, macro nutrition
+        nuggets, and 1-click `[ BREW THIS RECIPE → ]` button.
+     3. *The Translator CTA Strip:* High-voltage brutalist callout for
+        `TRANSLATE FOR MY COFFEE` with interactive reel paste input and action button.
+     4. *Counter Flight (4 Cards) + Vault Handoff:* 4 curated, non-redundant cards
+        dynamically filtered by active hardware, followed by a high-contrast
+        `[ BROWSE ALL 22 RECIPES IN THE VAULT → ]` banner.
+   - **Translator Staging Route (`/translate`):** Added a dedicated staging page
+     explaining the 3 translation superpowers (Hardware brew math, Nutritional
+     reality check, Kitchen mise en place) with video URL intake ready for Sprint 4.
+
 ---
 
 ## 6. Known constraints / workarounds worth remembering
 
 - **Local Production Build is Fully Verified:** `next build` completes
-  successfully with 0 errors across all 69 static pages. The sandbox font
+  successfully with 0 errors across all 71 static pages. The sandbox font
   limitation is not an issue in local or Vercel builds.
 - **`lib/recipes.ts`'s cache is a plain module variable, not a Next.js
   cache.** Restart `next dev` after hand-editing `content/recipes/*.json`

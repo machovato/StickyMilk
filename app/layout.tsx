@@ -71,6 +71,12 @@ export default function RootLayout({
 
               {/* Status / Links */}
               <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
+                <Link
+                  href="/recipes"
+                  className="font-mono text-xs uppercase font-bold tracking-wider px-2.5 sm:px-3 py-1.5 bg-white hover:bg-[#1a130e] hover:text-white text-[#1a130e] border border-[#1a130e]/20 transition-all shadow-xs"
+                >
+                  Recipe Vault
+                </Link>
                 <div className="hidden lg:flex items-center gap-2">
                   <span className="font-mono text-[11px] font-bold uppercase tracking-widest px-2 py-1 bg-[#b8f600] text-[#141f00]">
                     v2.4

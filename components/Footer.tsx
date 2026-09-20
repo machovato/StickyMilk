@@ -63,7 +63,13 @@ export async function Footer() {
                 href="/"
                 className="text-[#1d1b19] hover:text-[#001ec0] transition-colors"
               >
-                Recipe Archive
+                Front Door (Portal)
+              </Link>
+              <Link
+                href="/recipes"
+                className="text-[#1d1b19] hover:text-[#001ec0] transition-colors font-bold"
+              >
+                Recipe Vault (All Drinks)
               </Link>
               {isAuth ? (
                 <>

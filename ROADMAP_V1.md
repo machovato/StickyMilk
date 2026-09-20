@@ -81,6 +81,8 @@ The system does not lock the platform to a permanent 3-item box. Preparations ar
 - [x] **Multi-Component Culinary Architecture:** Supported sub-assemblies (e.g. Cold Foam vs. Latte Base vs. Garnish) via `Ingredient.group` checklist subheadings and `## Phase N` workflow dividers in preparation steps.
 - [x] **Cumulative Nutrition Engine:** Verified multi-phase cumulative macro sums in `lib/nutrition.ts` and added calibrated taxonomy entries for `cookie_butter` and `biscoff_cookie`.
 - [x] **3-Channel Parity Sprint:** Expanded catalog to 22 recipes with 100% 3-channel parity across Cometeer, Nespresso Vertuo, and Instant.
+- [x] **Front Door Portal Split (`/` vs. `/recipes`):** Moved full catalog, filter sidebar, and instant search to `/recipes` (Recipe Vault). Transformed `/` into a lean 4-block tasting flight and activation portal (Value Promise + Hardware Selector, Hero Current Obsession with 10-point test kitchen review, Translator CTA Strip, and 4-Card Counter Flight + Vault Handoff).
+- [x] **Translator Staging Route (`/translate`):** Built on-demand ingestion entry point explaining the 3 superpowers (Hardware Brew Math, Nutritional Reality Check, Culinary Mise en Place) and staging the Sprint 4 pipeline.
 
 ### Sprint 3: Mobile Experience & Production Readiness
 - [ ] **Counter Mode View:** Ensure mobile layout is high-contrast and readable from arm's length (large tap-friendly checklist, big step font).
