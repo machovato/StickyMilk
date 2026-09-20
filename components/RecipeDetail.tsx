@@ -187,15 +187,17 @@ export function RecipeDetail({
             {recipe.flavor_notes}
           </p>
 
-          {/* Flavor note chips */}
+          {/* Flavor note / collection chips */}
           <div className="flex flex-wrap gap-1.5 pt-1">
             {recipe.tags.map((tag) => (
-              <span
+              <Link
                 key={tag}
-                className="font-mono text-xs bg-[#f3ede9] px-2.5 py-1 text-[#1d1b19] font-medium"
+                href={`/tags/${encodeURIComponent(tag)}`}
+                className="font-mono text-xs bg-[#f3ede9] hover:bg-[#1a130e] hover:text-white px-2.5 py-1 text-[#1d1b19] font-medium transition-colors cursor-pointer"
+                title={`View all ${tag.replace(/-/g, " ")} recipes`}
               >
-                {tag.replace(/-/g, " ")}
-              </span>
+                #{tag.replace(/-/g, " ")}
+              </Link>
             ))}
           </div>
 

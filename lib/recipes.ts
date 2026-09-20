@@ -77,3 +77,79 @@ export function recipeSlugExists(slug: string): boolean {
   const files = readdirSync(CONTENT_DIR).filter((f) => f.endsWith(".json"));
   return files.includes(`${slug}.json`);
 }
+
+export function creatorSlugFromHandle(handleOrName: string): string {
+  return handleOrName
+    .replace(/^@/, "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9_-]+/g, "-");
+}
+
+export interface CreatorProfile {
+  slug: string;
+  name: string;
+  handle?: string;
+  platform?: string;
+  url?: string;
+  avatar?: string;
+  recipes: Recipe[];
+}
+
+export function getAllCreators(): CreatorProfile[] {
+  const recipes = getAllRecipes();
+  const map = new Map<string, CreatorProfile>();
+
+  for (const r of recipes) {
+    if (r.source && r.source.type === "creator") {
+      const key = r.source.handle || r.source.name;
+      const slug = creatorSlugFromHandle(key);
+      const existing = map.get(slug);
+      if (existing) {
+        existing.recipes.push(r);
+        if (!existing.avatar && r.source.avatar) existing.avatar = r.source.avatar;
+        if (!existing.url && r.source.url) existing.url = r.source.url;
+      } else {
+        map.set(slug, {
+          slug,
+          name: r.source.name,
+          handle: r.source.handle,
+          platform: r.source.platform,
+          url: r.source.url,
+          avatar: r.source.avatar,
+          recipes: [r],
+        });
+      }
+    }
+  }
+
+  return Array.from(map.values()).sort((a, b) => b.recipes.length - a.recipes.length);
+}
+
+export function getCreatorBySlug(slug: string): CreatorProfile | undefined {
+  const normalized = creatorSlugFromHandle(slug);
+  return getAllCreators().find((c) => c.slug === normalized);
+}
+
+export function getAllTags(): { tag: string; count: number }[] {
+  const recipes = getAllRecipes();
+  const counts = new Map<string, number>();
+
+  for (const r of recipes) {
+    for (const t of r.tags) {
+      counts.set(t, (counts.get(t) ?? 0) + 1);
+    }
+  }
+
+  return Array.from(counts.entries())
+    .map(([tag, count]) => ({ tag, count }))
+    .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag));
+}
+
+export function getRecipesByTag(tag: string): Recipe[] {
+  const normalized = tag.toLowerCase().trim();
+  return getAllRecipes().filter((r) =>
+    r.tags.some((t) => t.toLowerCase().trim() === normalized)
+  );
+}
+
