@@ -188,6 +188,19 @@ export interface Promo {
   active: boolean;
 }
 
+export interface RecipeVariation {
+  title: string;
+  creator: {
+    name: string;
+    handle?: string;
+    platform?: string;
+    avatar?: string;
+  };
+  twist: string;
+  url: string;
+  thumbnail: string;
+}
+
 export interface Recipe {
   slug: string;
   name: string;
@@ -201,6 +214,8 @@ export interface Recipe {
   status: RecipeStatus;
   /** Source attribution: where the recipe originated (vendor, creator, or editorial). */
   source?: RecipeSource;
+  /** Alternative creator variations or takes on this viral drink. */
+  variations?: RecipeVariation[];
   /** Mood/context/occasion facets for discovery, e.g. "summer", "date-night", "quick-fix". Freeform, editor-curated — not a fixed enum. */
   tags: string[];
   sweetness_level: SweetnessLevel;

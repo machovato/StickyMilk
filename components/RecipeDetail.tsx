@@ -21,6 +21,7 @@ import { PreparationSteps } from "./PreparationSteps";
 import { EmptyPreparationState } from "./EmptyPreparationState";
 import { BuildYourBar } from "./BuildYourBar";
 import { NutritionBreakdown } from "./NutritionBreakdown";
+import { RecipeVariations } from "./RecipeVariations";
 import { formatAmount } from "@/lib/format-amount";
 
 const SCALE_OPTIONS = [1, 2, 4];
@@ -468,6 +469,11 @@ export function RecipeDetail({
 
               {/* Per-Serving Caffeine & Sugar Profile */}
               <NutritionBreakdown prep={prep} scale={scale} />
+
+              {/* Try These Varieties: Alternate Creator Takes */}
+              {recipe.variations && recipe.variations.length > 0 && (
+                <RecipeVariations variations={recipe.variations} />
+              )}
             </div>
           </div>
 

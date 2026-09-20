@@ -331,6 +331,33 @@ export function validateRecipeCandidate(
       }
     }
   }
+  if (candidate.variations !== undefined) {
+    if (!Array.isArray(candidate.variations)) {
+      errors.push({ path: "variations", message: "must be an array when present" });
+    } else {
+      candidate.variations.forEach((v, i) => {
+        if (!isRecord(v)) {
+          errors.push({ path: `variations[${i}]`, message: "must be an object" });
+        } else {
+          if (typeof v.title !== "string" || v.title.trim() === "") {
+            errors.push({ path: `variations[${i}].title`, message: "title is required" });
+          }
+          if (typeof v.twist !== "string" || v.twist.trim() === "") {
+            errors.push({ path: `variations[${i}].twist`, message: "twist is required" });
+          }
+          if (typeof v.url !== "string" || v.url.trim() === "") {
+            errors.push({ path: `variations[${i}].url`, message: "url is required" });
+          }
+          if (typeof v.thumbnail !== "string" || v.thumbnail.trim() === "") {
+            errors.push({ path: `variations[${i}].thumbnail`, message: "thumbnail is required" });
+          }
+          if (!isRecord(v.creator) || typeof v.creator.name !== "string") {
+            errors.push({ path: `variations[${i}].creator.name`, message: "creator name is required" });
+          }
+        }
+      });
+    }
+  }
   if (!VALID_STATUS.includes(candidate.status as RecipeStatus)) {
     errors.push({ path: "status", message: `missing or invalid status (got ${JSON.stringify(candidate.status)})` });
   }
