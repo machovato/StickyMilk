@@ -68,52 +68,60 @@
       "ingredients": [
         {
           "amount": 1,
-          "unit": "capsule",
-          "secondary_amount": 26,
-          "secondary_unit": "g extract",
-          "item": "Cometeer capsule, fully melted and chilled",
-          "item_id": "cometeer_capsule"
-        },
-        {
-          "amount": 1,
-          "unit": "cup",
-          "item": "ice",
-          "item_id": "ice"
-        },
-        {
-          "amount": 4,
-          "unit": "oz",
-          "item": "cold whole milk",
-          "item_id": "milk"
-        },
-        {
-          "amount": 2,
-          "unit": "tsp",
-          "item": "vanilla syrup",
-          "item_id": "vanilla_syrup"
-        },
-        {
-          "amount": 1,
           "unit": "tbsp",
-          "item": "Speculoos / Lotus Biscoff cookie butter"
+          "item": "Speculoos / Lotus Biscoff cookie butter",
+          "group": "Cookie Butter Cloud Foam"
         },
         {
           "amount": 2,
           "unit": "tbsp",
           "item": "heavy cream",
-          "item_id": "heavy_cream"
+          "item_id": "heavy_cream",
+          "group": "Cookie Butter Cloud Foam"
         },
         {
           "amount": 1,
           "unit": "tbsp",
-          "item": "cold whole milk (for cold foam)",
-          "item_id": "milk"
+          "item": "cold whole milk",
+          "item_id": "milk",
+          "group": "Cookie Butter Cloud Foam"
+        },
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, fully melted and chilled",
+          "item_id": "cometeer_capsule",
+          "group": "Iced Vanilla Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice",
+          "group": "Iced Vanilla Latte Base"
+        },
+        {
+          "amount": 4,
+          "unit": "oz",
+          "item": "cold whole milk",
+          "item_id": "milk",
+          "group": "Iced Vanilla Latte Base"
+        },
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "item": "vanilla syrup",
+          "item_id": "vanilla_syrup",
+          "group": "Iced Vanilla Latte Base"
         },
         {
           "amount": 1,
           "unit": "cookie",
           "item": "crushed Biscoff cookie",
-          "optional": true
+          "optional": true,
+          "group": "Garnish"
         }
       ],
       "steps": [
@@ -142,52 +150,60 @@
       "ingredients": [
         {
           "amount": 1,
-          "unit": "pod",
-          "secondary_amount": 80,
-          "secondary_unit": "ml",
-          "item": "Nespresso Vertuo Double Espresso pod (Chiaro or Scuro)",
-          "item_id": "nespresso_double_pod"
-        },
-        {
-          "amount": 1,
-          "unit": "cup",
-          "item": "ice",
-          "item_id": "ice"
-        },
-        {
-          "amount": 3,
-          "unit": "oz",
-          "item": "cold whole milk",
-          "item_id": "milk"
-        },
-        {
-          "amount": 2,
-          "unit": "tsp",
-          "item": "vanilla syrup",
-          "item_id": "vanilla_syrup"
-        },
-        {
-          "amount": 1,
           "unit": "tbsp",
-          "item": "Speculoos / Lotus Biscoff cookie butter"
+          "item": "Speculoos / Lotus Biscoff cookie butter",
+          "group": "Cookie Butter Cloud Foam"
         },
         {
           "amount": 2,
           "unit": "tbsp",
           "item": "heavy cream",
-          "item_id": "heavy_cream"
+          "item_id": "heavy_cream",
+          "group": "Cookie Butter Cloud Foam"
         },
         {
           "amount": 1,
           "unit": "tbsp",
-          "item": "cold whole milk (for cold foam)",
-          "item_id": "milk"
+          "item": "cold whole milk",
+          "item_id": "milk",
+          "group": "Cookie Butter Cloud Foam"
+        },
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 80,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Double Espresso pod (Chiaro or Scuro)",
+          "item_id": "nespresso_double_pod",
+          "group": "Iced Vanilla Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice",
+          "group": "Iced Vanilla Latte Base"
+        },
+        {
+          "amount": 3,
+          "unit": "oz",
+          "item": "cold whole milk",
+          "item_id": "milk",
+          "group": "Iced Vanilla Latte Base"
+        },
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "item": "vanilla syrup",
+          "item_id": "vanilla_syrup",
+          "group": "Iced Vanilla Latte Base"
         },
         {
           "amount": 1,
           "unit": "cookie",
           "item": "crushed Biscoff cookie",
-          "optional": true
+          "optional": true,
+          "group": "Garnish"
         }
       ],
       "steps": [
@@ -214,10 +230,31 @@
       ],
       "ingredients": [
         {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "Speculoos / Lotus Biscoff cookie butter",
+          "group": "Cookie Butter Cloud Foam"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "heavy cream",
+          "item_id": "heavy_cream",
+          "group": "Cookie Butter Cloud Foam"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "cold whole milk",
+          "item_id": "milk",
+          "group": "Cookie Butter Cloud Foam"
+        },
+        {
           "amount": 1.5,
           "unit": "tsp",
           "item": "instant espresso",
-          "item_id": "instant_coffee"
+          "item_id": "instant_coffee",
+          "group": "Iced Vanilla Latte Base"
         },
         {
           "amount": 2,
@@ -225,48 +262,36 @@
           "secondary_amount": 60,
           "secondary_unit": "ml",
           "item": "hot water",
-          "item_id": "hot_water"
+          "item_id": "hot_water",
+          "group": "Iced Vanilla Latte Base"
         },
         {
           "amount": 1,
           "unit": "cup",
           "item": "ice",
-          "item_id": "ice"
+          "item_id": "ice",
+          "group": "Iced Vanilla Latte Base"
         },
         {
           "amount": 4,
           "unit": "oz",
           "item": "cold whole milk",
-          "item_id": "milk"
+          "item_id": "milk",
+          "group": "Iced Vanilla Latte Base"
         },
         {
           "amount": 2,
           "unit": "tsp",
           "item": "vanilla syrup",
-          "item_id": "vanilla_syrup"
-        },
-        {
-          "amount": 1,
-          "unit": "tbsp",
-          "item": "Speculoos / Lotus Biscoff cookie butter"
-        },
-        {
-          "amount": 2,
-          "unit": "tbsp",
-          "item": "heavy cream",
-          "item_id": "heavy_cream"
-        },
-        {
-          "amount": 1,
-          "unit": "tbsp",
-          "item": "cold whole milk (for cold foam)",
-          "item_id": "milk"
+          "item_id": "vanilla_syrup",
+          "group": "Iced Vanilla Latte Base"
         },
         {
           "amount": 1,
           "unit": "cookie",
           "item": "crushed Biscoff cookie",
-          "optional": true
+          "optional": true,
+          "group": "Garnish"
         }
       ],
       "steps": [
