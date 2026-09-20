@@ -42,7 +42,7 @@ export function RecipeDetail({
     "cometeer";
 
   const channel: Channel =
-    activeChannelOverride || defaultChannel || originalPrepChannel;
+    defaultChannel ?? (activeChannelOverride || originalPrepChannel);
 
   const [scale, setScale] = useState(1);
   const [copied, setCopied] = useState(false);
@@ -243,10 +243,10 @@ export function RecipeDetail({
       </div>
 
       {/* Hardware System Switcher:
-          - When global MY COFFEE is blank (null): show full hardware tabs so visitor can freely explore all formulations (defaults to ORIGINAL).
-          - When global MY COFFEE is selected: respect user's machine choice without dual-selector conflict, but provide an optional 1-click peek at the original recipe.
+          Only displayed when global MY COFFEE is blank (null).
+          When a user has selected a coffee, respect that choice 100% with zero noise or cross-hardware distraction.
       */}
-      {!defaultChannel ? (
+      {!defaultChannel && (
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#1a130e] text-white p-3 sm:p-4 border border-black shadow-sm">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 bg-[#b8f600]" />
@@ -289,34 +289,6 @@ export function RecipeDetail({
               );
             })}
           </div>
-        </div>
-      ) : (
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 p-3 bg-[#f8f2ee] border border-[#1a130e]/15 text-xs font-mono">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#b8f600] border border-[#1a130e]" />
-            <span className="text-[#1a130e] font-bold uppercase">
-              VIEWING FOR {CHANNEL_LABELS[channel].toUpperCase()}
-            </span>
-            <span className="text-[#7f756f]">
-              ({prep?.provenance === "original" ? "ORIGINAL FORMULATION" : "SM HARDWARE TRANSLATION"})
-            </span>
-          </div>
-
-          {originalPrepChannel !== defaultChannel && (
-            <button
-              type="button"
-              onClick={() =>
-                setActiveChannelOverride(
-                  channel === originalPrepChannel ? null : originalPrepChannel
-                )
-              }
-              className="text-[#001ec0] hover:text-[#1a130e] underline underline-offset-2 font-bold cursor-pointer transition-colors"
-            >
-              {channel === originalPrepChannel
-                ? `Back to My Coffee (${CHANNEL_LABELS[defaultChannel]})`
-                : `Peek at Original ${CHANNEL_LABELS[originalPrepChannel]} Recipe ↗`}
-            </button>
-          )}
         </div>
       )}
 
