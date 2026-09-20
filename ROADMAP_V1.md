@@ -64,17 +64,18 @@ The system does not lock the platform to a permanent 3-item box. Preparations ar
 
 ## 5. Phased V1 Build Sprints
 
-### Sprint 1: UX Realignment & Provenance Engine (Immediate)
-- [ ] **Header Selector:** Rename `CHANNEL:` to `MY COFFEE: [ COMETEER | NESPRESSO | INSTANT ]`.
-- [ ] **Source Schema:** Add `source` object to `lib/types.ts` (`type: "vendor" | "creator" | "editorial"`, `name`, `handle`, `platform`, `url`).
-- [ ] **Preparation Status Schema:** Add preparation status field (`original_recipe` | `adapted` | `sm_tested`).
-- [ ] **UI Badges:** Render clean, high-contrast badges for `ORIGINAL`, `SM ADAPTED`, and `⬡ SM TESTED` on recipe cards and detail pages.
-- [ ] **Source Byline:** Render creator/vendor credit with an external link to original video or page.
+### Sprint 1: UX Realignment & Provenance Engine (Completed ✓)
+- [x] **Header Selector:** Rename `CHANNEL:` to `MY COFFEE: [ COMETEER | NESPRESSO | INSTANT ]`.
+- [x] **Source Schema:** Add `source` object to `lib/types.ts` (`type: "vendor" | "creator" | "editorial"`, `name`, `handle`, `platform`, `url`).
+- [x] **Preparation Status Schema:** Add preparation status field (`provenance?: "original" | "adapted" | "tested"` + `nespresso_system?: "vertuo" | "original"`).
+- [x] **UI Badges:** Render clean, high-contrast badges for `ORIGINAL`, `SM ADAPTED`, and `⬡ SM TESTED` on recipe cards and detail pages.
+- [x] **Source Byline:** Render creator/vendor credit with an external link to original video or page.
+- [x] **Consumer Nutrition Profile:** Caffeine and sugar per serving with human reference points (`~1.9 cups of coffee`, `almost a full day's sugar`), with 180mg Cometeer baseline reconciled.
 
-### Sprint 2: Search, Filters & Catalog Coverage
-- [ ] **Instant Search:** Add client-side keyword search input at the top of the Recipe Archive (searching title, tags, ingredients).
-- [ ] **"My Coffee" Filter Lens:** Allow users to filter the library to recipes that have an active version for their selected system.
-- [ ] **3-Channel Parity Sprint:** Fill in missing Nespresso and Instant adaptations for the top 12–15 core drinks so the switcher doesn't hit empty dead ends.
+### Sprint 2: Search, Filters & Catalog Coverage (Completed ✓)
+- [x] **Instant Search:** Add client-side keyword search input at the top of the Recipe Archive (searching title, tags, ingredients, notes, and sources).
+- [x] **"My Coffee" Filter Lens:** Allow users to filter the library to recipes that have an active version for their selected system (`✓ ONLY [SYSTEM]` vs `SHOW ALL SYSTEMS`).
+- [x] **3-Channel Parity Sprint:** Fill in missing Nespresso and Instant adaptations across the entire catalog (19/19 recipes, 100% 3-channel parity).
 
 ### Sprint 3: Mobile Experience & Production Readiness
 - [ ] **Counter Mode View:** Ensure mobile layout is high-contrast and readable from arm's length (large tap-friendly checklist, big step font).
