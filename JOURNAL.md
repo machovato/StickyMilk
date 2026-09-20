@@ -1,14 +1,14 @@
 # StickyMilk — Project Journal
 
-Last updated: 2026-09-13 (Dial removal + Counter Barista redirection)
+Last updated: 2026-09-20 (Creator Architecture, De-Selection UX, Phased Procedures, Cumulative Nutrition & Ingestion Specs)
 
 This is the handoff document. If you're picking this project up — whether
 that's future-Tony or someone else — read this top to bottom before
 touching code. It covers what exists, why it's built the way it is, what's
 explicitly deferred, and what the next moves are. `README.md` is the quick
 orientation for running the app; this file is the "why," the history, and
-the pipeline. `SEED_NOTES.md` and `NEW_RECIPE_FORM_SPEC.md` are referenced
-inline where relevant rather than repeated here.
+the pipeline. `SEED_NOTES.md`, `ROADMAP_V1.md`, and `RECIPE_INGESTION_ENGINE_SPEC.md`
+are referenced inline where relevant rather than repeated here.
 
 ---
 
@@ -18,7 +18,7 @@ A specialty-coffee recipe app, built around one core idea:
 
 > StickyMilk is not a recipe library. It's a **translation layer between
 > three different coffee foundations**: Cometeer (26 g flash-frozen brewed
-> extract), Nespresso (40 ml espresso), and Instant (1.5 tsp freeze-dried +
+> extract), Nespresso (Vertuo 40 ml single & 80 ml double shots), and Instant (1.5 tsp freeze-dried +
 > hot water).
 
 The same drink concept — name, flavor, mood — can be made on any of the
@@ -27,11 +27,9 @@ by channel. That's why the data model separates "the drink" (`Recipe`) from
 "how you make it on a given channel" (`Preparation`) as two related but
 distinct objects, from day one.
 
-Tony is the sole author/operator right now — there's no auth, no public
-user accounts, no multi-user editorial workflow. Every authoring decision
-so far (the New Recipe form, the footer's dev-only link) has been made with
-"one person building this on their own machine" in mind, not "a team of
-editors" or "the public."
+Tony is the curator/operator — building a high-trust, editorial brutalist
+coffee hub with 22 hand-curated recipes holding 100% 3-channel parity,
+creator attribution, and rigorous consumer nutrition calculations.
 
 ---
 
@@ -72,35 +70,48 @@ Recipe
 ├── slug, name, image?
 ├── format: hot | iced | mocktail | cocktail | affogato | baking
 ├── flavor_notes        (shared across all channels — "the drink" itself)
+├── barista_note?       (universal craft or sensory technique note)
 ├── status: draft | needs_testing | verified
+├── source?: RecipeSource { type: "vendor"|"creator"|"editorial", name, handle?, platform?, url?, avatar? }
+├── variations?: RecipeVariation[] { slug, title, creator, twist, url?, thumbnail } (internal links to /recipes/[slug])
 ├── tags: string[]      (freeform, editorial mood/occasion facets)
 ├── sweetness_level: none | subtle | rich_sweet | dessert
-├── preparations: Preparation[]   (only channels actually written — never fabricate one)
+├── preparations: Preparation[]   (Cometeer, Nespresso Vertuo, Instant — 100% 3-channel parity)
 ├── promo?              (exists in the type, unused by any UI — see §7)
 └── data_issues?: string[]        (surfaced data-quality flags, not hidden)
 
 Preparation
 ├── channel: cometeer | nespresso | instant
-├── roast?, capsule_count?        (Cometeer only)
+├── provenance?: "original" | "adapted" | "tested" (transparent trust badge)
+├── nespresso_system?: "vertuo" | "original"       (indicates Vertuo double/single vs OriginalLine)
+├── roast_recommendation?: "light" | "medium" | "dark"
+├── roast_note?: string                            (required if roast_recommendation is set)
+├── tested_with?: string                           (specific blend or capsule citation)
+├── capsule_count?: number                         (Cometeer only)
 ├── caffeine_level: full | half | decaf
+├── caffeine_mg?: number                           (real scalable number at 1x batch)
 ├── ingredients: Ingredient[]
-├── steps: string[]
+├── steps: string[]                                (supports "## Phase N: [Name]" workflow dividers)
 ├── difficulty: easy | medium | advanced
 ├── prep_time_minutes: number
 ├── servings: number
-├── yield_unit?: string           (added in this session — see §5.4)
+├── yield_unit?: string
 ├── equipment?: string[]
-└── dietary?: DietaryTag[]        (dairy-free | vegan-adaptable | contains-alcohol | decaf-friendly)
+├── dietary?: DietaryTag[]                         (dairy-free | vegan-adaptable | contains-alcohol | decaf-friendly)
+└── barista_note?: string                          (channel-specific craft tip)
 
 Ingredient
-├── amount?: number     (0.5, 0.333 — a real decimal, not a fraction string, so scaling can multiply it)
+├── amount?: number                                (0.5, 0.333 — a real decimal for portion scaling)
 ├── unit?: string
-├── item: string        (only required field)
+├── secondary_amount?: number                      (scales by same factor as amount, e.g. 26g, 40ml)
+├── secondary_unit?: string
+├── item: string                                   (display label)
+├── item_id?: string                               (canonical ID in content/taxonomy/ingredients.json)
 ├── notes?: string
-├── display?: string    (added this session, unused so far — see §5.4)
-├── scaling?: "linear" | "discrete" | "none"   (added this session, unused so far)
-├── optional?: boolean  (added this session, unused so far)
-└── group?: string      (added this session, unused so far)
+├── display?: string
+├── scaling?: "linear" | "discrete" | "none"
+├── optional?: boolean
+└── group?: string                                 (sub-assembly heading, e.g. "Cookie Butter Cloud Foam")
 ```
 
 **Why `tags` (freeform) and `dietary` (fixed enum) are separate fields**,
@@ -114,6 +125,12 @@ that rigor and would get lost in a fixed vocabulary anyway.
 preparation-level:** they describe the drink concept itself, not how a
 given channel makes it. A mocha is a mocha regardless of which coffee
 foundation built it.
+
+**Why `group` on `Ingredient` and `## Phase` in `steps` exist:** real-world
+viral recipes are frequently multi-component builds (e.g. cold foam vs.
+latte base vs. garnish). `group` renders clean subheadings in the
+checklist, while `## Phase` inserts high-contrast workflow dividers in
+the preparation steps without inflating the step count.
 
 ---
 
@@ -670,131 +687,175 @@ instead of a number.
    is also still deferred, pending Tony's decision once he'd seen the
    Stitch mockups.
 
+5.13. **V1 Master Roadmap, Editorial Brutalist Realignment & Provenance Engine.**
+   Shifted StickyMilk from an early prototype toward a focused, high-contrast
+   editorial platform (`ROADMAP_V1.md`). Established the central product hook:
+   `MY COFFEE: [ COMETEER | NESPRESSO | INSTANT ]`. Built the transparent
+   Provenance Trust Model (`original`, `adapted`, `tested`) in `lib/types.ts`
+   and UI badges (`components/StatusBadge.tsx` and `components/ProvenanceBadge.tsx`):
+   - `original`: The source's baseline recipe formulation. High initial trust
+     when originating from established coffee houses or test kitchens.
+   - `adapted`: StickyMilk's calculated channel conversion (*"an instant coffee
+     fallback is better than no drink at all"*).
+   - `tested`: `⬡ SM TESTED` — formally brewed, tasted, and approved in the kitchen.
+   Achieved 100% 3-channel parity across all 22 recipes in the catalog (zero
+   unwritten fallback states across Cometeer, Nespresso Vertuo, and Instant).
+   Integrated real-time client-side keyword search indexing recipe names, tags,
+   flavor notes, and ingredients. Built session-based admin authentication
+   (`/admin/login`) protecting recipe editing and management routes.
+
+5.14. **Consumer Nutrition & Caffeine Profile Engine.**
+   Added live nutritional intelligence in `lib/nutrition.ts` and `components/RecipeDetail.tsx`
+   computing calories, caffeine (mg), and sugar (g) dynamically based on portion
+   scale. Reconciled Cometeer caffeine to a standardized 180 mg benchmark
+   (reflecting high-solubles 26 g frozen pucks) and Nespresso Vertuo single espresso
+   to ~80 mg. Crucially, translated raw lab numbers into intuitive human reference
+   points (`"~1.9 cups of coffee"`, `"almost a full day's sugar"`, `"1/3 daily sugar"`),
+   grounding macro data in visceral consumer reality without pseudo-scientific jargon.
+
+5.15. **Creator Provenance & Social Video Sourcing.**
+   Expanded beyond vendor recipes to embrace viral social media drinks (TikTok/Reels).
+   Onboarded viral creations including Sofia Hrdz's Cookie Butter Cloud Latte
+   (`@sofia_hrdz`), Lacey Glasley's Creamer Latte (`@laceyglasley`), and MainStMuse's
+   Swirled Latte (`@mainstmuse`). Built dedicated creator profiles (`/creators/[handle]`)
+   and tag archives (`/tags/[tag]`), adhering strictly to clean URL architecture
+   (e.g. `/creators/@sofia_hrdz`, zero query parameter pollution). Featured creator
+   avatars, video stills, and explicit source attribution (`SourceAttribution.tsx`)
+   with external links out to the original social posts.
+
+5.16. **"Try These Varieties" Interlinking Policy.**
+   Integrated a modular "Try These Varieties" carousel on recipe pages (`RecipeVariations.tsx`)
+   showcasing creator spins on trending drinks. Established a strict architectural
+   rule: **Internal-First Linking**. Variation cards route internally to `/recipes/[slug]`
+   so users remain immersed in StickyMilk's multi-channel translation experience,
+   rather than bouncing out to third-party social apps. External links to original
+   TikTok/Instagram videos remain exclusively on the detail page as honest source attribution.
+
+5.17. **Creator-Scoped Slugs & Database Migration Readiness.**
+   Standardized recipe naming and file paths to `{creator_slug}-{recipe_name}.json`
+   (e.g. `sofia_hrdz-cookie-butter-cloud-latte.json`). Addressed future migration
+   concerns: moving from flat JSON files to a relational database (PostgreSQL / Prisma)
+   requires `@unique` slug constraints. Generic slugs (`cookie-butter-latte`) inevitably
+   collide when multiple creators publish variations of the same drink. Scoping
+   by creator guarantees global uniqueness, prevents URL churn, avoids fragile
+   ID remapping, and ensures a seamless 1:1 migration into a database table.
+
+5.18. **"My Coffee" Hardware Selector UX & Zero-Noise Policy.**
+   Refined the global header selector (`HeaderChannelSelector.tsx`) and detail page
+   ergonomics:
+   - **Click-to-Deselect:** Clicking an active system toggles it off (`defaultChannel = null`).
+     "Nothing selected" naturally means "Show All Recipes" in the library and defaults to
+     the recipe's primary channel on detail pages, eliminating the need for an artificial
+     or cluttered "ALL" button.
+   - **Elimination of Dual-Selector Conflict:** On recipe detail pages, having both a
+     global header selector and an in-page hardware switcher created confusing dual-state
+     scenarios. Decision: The in-page channel tabs only render when *no* global coffee is
+     selected.
+   - **Rejection of the "Peek" Feature:** Explicitly eliminated a proposed "Peek at Cometeer"
+     toggle. StickyMilk's fundamental promise is *"the recipe for the coffee you have."*
+     If a user selects Instant or Nespresso, displaying Cometeer recipes or teasers introduces
+     unnecessary noise and friction.
+
+5.19. **Multi-Component Culinary Architecture & Workflow Phasing.**
+   Analyzing Sofia Hrdz's Cookie Butter Cloud Latte revealed a critical structural pattern:
+   the drink consists of distinct sub-assemblies (Cold Foam vs. Latte Base vs. Garnish).
+   Addressed this across both ingredients and steps:
+   - **Grouped Ingredients:** Activated `Ingredient.group` in `IngredientChecklist.tsx`,
+     rendering clean subheadings for each sub-assembly.
+   - **Procedural Workflow Phases:** Updated `PreparationSteps.tsx` to parse Markdown
+     headers (`## Phase 1: Cookie Butter Cloud Foam`, `## Phase 2: Latte Base Assembly`)
+     into styled workflow phase dividers without interrupting step numbering.
+   - **Culinary Staging (*Mise en Place*):** Video creators often mix up step order for
+     visual rhythm, but practical kitchen physics requires staging: temperature-stable
+     elements (cold foam) must be whipped first, becoming an intermediate input ingredient
+     ready to top the espresso and ice before the ice melts and dilutes the drink.
+
+5.20. **Cumulative Nutrition Engine & Ingestion Taxonomy Scaling.**
+   Verified that `lib/nutrition.ts` accumulates macros linearly across multi-phase
+   ingredient lists without deduplication (e.g. milk in cold foam + milk in latte base
+   both contribute accurately to totals). Expanded `content/taxonomy/ingredients.json`
+   with `cookie_butter` and `biscoff_cookie` and calibrated their macro profiles.
+   Formulated ingestion principles for novel ingredients: unmapped ingredients omit
+   `item_id` gracefully without breaking UI; Sprint 4 will co-locate nutritional
+   benchmarks in taxonomy and apply category-level macro baselines for novel items.
+
 ---
 
 ## 6. Known constraints / workarounds worth remembering
 
-- **This sandbox can't reach Google Fonts.** `next build` fails at the
-  font-fetch step (`fonts.googleapis.com` blocked). `next dev` degrades
-  gracefully (falls back to a system font with a warning). This is a
-  sandbox limitation, not a real bug — a real `next build` on Tony's
-  machine or in CI should work fine. Don't mistake this for a build
-  regression if you see it again.
-- **`device_bash` (a direct shell on Tony's Windows machine) has been
-  broken since a Windows update on September 8, 2026** — a known,
-  Anthropic-tracked issue, not something fixable from this side. Until
-  it's resolved, file delivery goes through `device_commit_files`
-  **per file**, not as a zip archive extracted over the project folder —
-  zip-and-extract was the original workaround but left stale files behind
-  once (see the fail-fast validation story above) and is slower to review.
-  Prefer sending the specific changed file(s) directly to their real path
-  in the connected `StickyMilk` folder.
+- **Local Production Build is Fully Verified:** `next build` completes
+  successfully with 0 errors across all 69 static pages. The sandbox font
+  limitation is not an issue in local or Vercel builds.
 - **`lib/recipes.ts`'s cache is a plain module variable, not a Next.js
   cache.** Restart `next dev` after hand-editing `content/recipes/*.json`
-  directly; the New Recipe form handles its own cache invalidation, you
-  don't need to for that path.
+  directly; the New Recipe form and edit actions handle their own cache
+  invalidation via `invalidateRecipeCache()`.
 - **npm install-scripts:** `@prisma/engines`, `better-sqlite3`, `prisma`,
   and `unrs-resolver` need their install scripts approved once
   (`npm install-scripts approve <pkg>`) before `npm install` succeeds
-  cleanly on Tony's machine — already done, but worth knowing if a fresh
-  clone ever needs it again.
+  cleanly on a fresh clone.
 
 ---
 
 ## 7. Explicitly deferred / not built (by design, not by accident)
 
-- **Auth, `/admin` area.** Planned, not started. The dev-only footer link
-  to `/recipes/new` is an intentional stand-in for this.
-- **Editing existing recipes** via the form (create-only for now — see
-  §5.4).
+- **Public user accounts & public ratings.** While Prisma models (`User`,
+  `Rating`) exist and admin authentication is live, public-facing user
+  logins and community ratings are deferred until catalog and search
+  reach scale.
 - **Image upload pipeline.** The `image` field is a plain text path; the
-  workflow is still "drop the file in `public/recipes/` yourself, type the
-  path, commit both manually."
+  workflow remains "drop the image in `public/recipes/` or `public/creators/`,
+  enter the path, and commit to git."
 - **Real ingredient scaling wired to the new `scaling` field.** The field
-  exists on `Ingredient`; nothing reads it yet. Today's scaler still just
-  does `amount * scale` for everything with an `amount`.
+  exists on `Ingredient`; currently the scaler multiplies all numerical
+  amounts linearly.
 - **The `Promo` type / affiliate mechanic.** Exists in `lib/types.ts`,
-  unused. Earlier discussion (see project history) explicitly decided
-  promo placement should be an opt-in per recipe, not baked into every
-  recipe/channel by default — nothing has been built toward this yet.
-- **Ratings/reviews UI.** The `User`/`Rating` Prisma models exist; no route,
-  no UI, no auth to attach it to yet.
-- **"Counter Barista" / "Dial Me a Drink."** A standalone pantry-input
-  tool, replacing the in-recipe Dial's personalization ambitions — full
-  design reasoning in §5.6. Not started. The catalog-match half's real
-  prerequisite (a matchable dairy/flavor facet — see §5.7) is now *closer*
-  now that ingredients can carry a taxonomy `item_id` with a `category`
-  (`dairy`, `milk-alternative`, etc.) — but that's per-ingredient-line, not
-  yet a recipe-level "what's the dairy component" field the matcher could
-  query directly. Still needs that, plus structured LLM output for the
-  generative half.
-- **Rich-text "story" content per recipe.** Raised in conversation but not
-  designed yet — the reasoning (recorded here since it'll matter when this
-  gets built): bare instructional steps are largely *not* copyrightable
-  (functional/factual, not expression) regardless of formatting; wrapping
-  them in genuine narrative content creates something that actually is
-  copyrightable, and doubles as an SEO/engagement play the way recipe
-  blogs have always used it. When this gets built: avoid a full HTML
-  rich-text blob (breaks the git-diffable JSON model, opens an XSS
-  surface) — lean toward a `story?: string` Markdown field, edited with a
-  lightweight Markdown-aware editor, most likely recipe-level (the story
-  is about the drink, not the channel) rather than per-preparation. Not
-  decided: exact field placement, editor library choice.
+  unused. Kept as an optional per-recipe property rather than hardcoded.
+- **"Counter Barista" / "Dial Me a Drink."** A standalone pantry-matching
+  and generative tool. Deferred until the intake and curation workflows
+  are fully stabilized.
+- **Rich-text "story" layer per recipe.** Stored for future SEO/copyright
+  defensibility (`story?: string` Markdown block).
 
 ---
 
 ## 8. Suggested pipeline from here
 
-Roughly in the order it makes sense to tackle them, though none of this is
-committed — revisit before starting each:
+Aligned with `ROADMAP_V1.md`:
 
-1. **Use the New Recipe form for real** — add a handful of new recipes
-   with it, see what's annoying or missing before building anything else
-   on top of it. (This is the most valuable next step: real usage will
-   surface issues faster than more design.)
-2. **Editing support** (`/recipes/[slug]/edit`) once create-only has been
-   exercised enough to know what the edit UX actually needs — especially
-   the slug-rename question (destructive by nature: delete old file,
-   write new one).
-3. **`/admin` area** — real login, gating both the New Recipe form and any
-   future editing/moderation tools behind it instead of the current
-   dev-only footer link.
-4. **Rich-text story field** — once there's an appetite for the narrative/
-   IP angle discussed in §7, and once the New Recipe form is stable enough
-   to extend rather than redesign.
-5. **"Counter Barista"** — once there's appetite for the first real
-   AI-generation feature (see §5.6 for the two-stage design and its real
-   prerequisites: a dairy-type facet, structured LLM output). Probably
-   after the New Recipe form and `/admin` area both exist, since its
-   "save to draft" bridge depends on the form and its generative half
-   probably wants to live behind the same gating as authoring.
-6. **Deploy to Vercel** — will require re-confirming the production
-   gating on `/recipes/new` actually works as intended (untested against a
-   real production build in this sandbox, since `next build` can't
-   complete here — see §6), and deciding what "editing content in
-   production" means going forward (still git-push-based, presumably).
-7. **Ratings/reviews UI + wiring up `User`/`Rating`.** No auth yet, so this
-   waits on `/admin`-style login existing first, or at least an anonymous-
-   rating mechanism if that's the direction.
-8. **The `Promo`/affiliate mechanic**, whenever monetization becomes a
-   live priority — the type already models it as an explicit per-recipe
-   opt-in, not automatic.
+1. **Sprint 3: Mobile Experience & Production Readiness**
+   - Counter Mode View: high-contrast, arm's-length mobile layout with
+     large tap targets and readable steps.
+   - OpenGraph Social Cards: brutalist preview card generator for iMessage,
+     Reddit, and X link sharing.
+   - Vercel production deployment hardening.
+2. **Sprint 4: The Intake Assistant (`/admin/import`)**
+   - Admin Paste Tool: URL / video caption pasteboard.
+   - Multi-Component Detection & Phasing: automated breakdown into
+     sub-assemblies (Foam, Base, Garnish) with *mise en place* step ordering.
+   - 3-Channel Synthesis: automated conversion into Cometeer, Nespresso
+     Vertuo, and Instant preparations.
+   - Novel Ingredient Fallback & Taxonomy Intake: auto-matching known items
+     and applying category-level macro benchmarks for unmapped ingredients.
+   - Deterministic QA Gate: hard schema validation before saving to Git.
+3. **Post-V1: Relational Database Migration**
+   - Migrate flat JSON files into PostgreSQL / Prisma schema when catalog
+     size or dynamic multi-user features demand it. Creator-scoped slug
+     architecture ensures zero URL churn or collision risk.
 
 ---
 
 ## 9. Quick reference: adding a recipe today
 
-Two ways, both write to `content/recipes/${slug}.json`:
+Two ways, both write to `content/recipes/${creator_slug}-${recipe_name}.json`:
 
-- **The form** (`http://localhost:3000/recipes/new`, dev-only) — the
-  intended path going forward. Validates before writing, checks slug
-  collisions, shows a readiness checklist, and lets you preview the real
-  detail page before saving.
-- **By hand** — copy the shape from any existing file in
-  `content/recipes/`, make sure `ingredients` are `{amount?, unit?, item,
-  notes?}` objects (not plain strings), and restart `next dev` afterward
-  (the reader's cache won't pick up a hand-edited file otherwise).
+- **The form** (`http://localhost:3000/recipes/new`, dev/admin) — the
+  intended path. Validates before writing, checks slug collisions, shows
+  a readiness checklist, and lets you preview the real detail page before saving.
+- **By hand** — copy the shape from an existing file, ensuring `ingredients`
+  carry `group` for multi-component drinks and steps utilize `## Phase N` headers
+  for workflow phases. Restart `next dev` after editing.
 
-Either way: never fabricate a preparation for a channel that wasn't
-actually written/tested — an honest gap (handled by the empty-preparation
-state) beats a plausible-looking guess.
+Always maintain 100% 3-channel parity across Cometeer, Nespresso Vertuo,
+and Instant, assigning honest `provenance` badges (`original`, `adapted`,
+or `tested`) to each.

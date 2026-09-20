@@ -76,7 +76,13 @@ The **Source Adapter** extracts raw content from external URLs or social caption
 export interface RecipeIR {
   source_type: "nespresso" | "cometeer" | "social_tiktok" | "social_instagram" | "editorial";
   source_url: string;
-  source_creator?: string;
+  source_creator?: {
+    name: string;
+    handle: string;
+    platform: string;
+    avatar?: string;
+  };
+  generated_slug: string;        // e.g. "sofia_hrdz-cookie-butter-cloud-latte" (scoped for DB migration)
   raw_title: string;
   stated_coffee: {
     raw_name: string;             // e.g. "Nespresso Il Caffè" or "Birch Dark Roast"
@@ -89,8 +95,14 @@ export interface RecipeIR {
     unit?: string;
     item: string;
     notes?: string;
+    group?: string;               // e.g. "Cookie Butter Cloud Foam", "Iced Vanilla Latte Base", "Garnish"
   }>;
   raw_steps: string[];
+  sub_assemblies?: Array<{
+    name: string;                 // e.g. "Cookie Butter Cloud Foam"
+    type: "cold_foam" | "base" | "syrup" | "garnish";
+    temperature_stability: "high" | "low"; // cold foam is stable; hot espresso over ice is low
+  }>;
   metadata: {
     glassware?: string;
     temperature: "iced" | "hot" | "blended";
@@ -100,11 +112,11 @@ export interface RecipeIR {
 }
 ```
 
-*Rule:* If `system === "original"` and no Vertuo pod equivalent exists, Stage 0 discards the candidate.
+*Slug Rule:* Always generate `{creator_slug}-{recipe_name}` for creator recipes to ensure global collision resistance and seamless PostgreSQL `@unique` index migration.
 
 ---
 
-### Stage 1: Coffee Profile & Taxonomy Mapping
+### Stage 1: Coffee Profile, Component & Taxonomy Mapping
 
 Stage 1 maps the raw facts in the IR to StickyMilk's canonical definitions.
 
@@ -117,21 +129,55 @@ Maps vendor terminology and intensity scales into our 3 universal buckets:
 | **Nespresso Intensity 5–8** (e.g. *Double Espresso Chiaro, Orafio, Inizio*)<br>**Cometeer:** *"Medium / Balanced"*<br>**Instant:** Arabica crystals (*Mount Hagen, Nescafé Gold*) | **`"medium"`** | *"Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups."* |
 | **Nespresso Intensity 1–4** (e.g. *Voltesso, Bianco Piccolo*)<br>**Cometeer:** *"Light / Bright"*<br>**Instant:** Specialty freeze-dried (*Blue Bottle, Swift Cup*) | **`"light"`** | *"Delicate, floral profile with crisp acidity to complement sparkling tonic or citrus."* |
 
-#### B. Ingredient Taxonomy Matching
-Every ingredient is run against `content/taxonomy/ingredients.json`:
-* Exact matches or known aliases automatically receive their canonical `item_id` and `default_unit`.
-* Ready-to-pour flavored creamers (e.g. Chobani Sweet Cream) are tagged under the `creamer` category.
-* Novel ingredients are flagged for taxonomy review.
+#### B. Component & Sub-Assembly Detection
+Scans ingredient and step clusters to isolate distinct culinary components:
+* **Cold Foam / Sweet Cream:** Keywords `heavy cream`, `milk frother`, `whip`, `cold foam`. Tagged with `group: "[Flavor] Cold Foam"`.
+* **Drink Base:** Milk, sweetener, ice, and espresso extraction. Tagged with `group: "Iced [Flavor] Latte Base"`.
+* **Garnish / Rim:** Crushed cookies, cinnamon dust, drizzle. Tagged with `group: "Garnish"` (marked `optional: true`).
+
+#### C. Ingredient Taxonomy Matching & Novel Ingredient Fallback
+Every ingredient is matched against `content/taxonomy/ingredients.json`:
+* **Exact & Alias Matches:** Automatically receive canonical `item_id`, `default_unit`, and linked nutritional benchmarks.
+* **Novel Ingredient Fallback (Graceful Degradation):**
+  * When an unknown ingredient is encountered (e.g. plum jam, specialty nut spread), the ingestion pipeline **does not abort**.
+  * `item_id` is omitted (`undefined`), allowing valid rendering on the frontend checklist.
+  * For consumer nutrition, an imputed baseline is applied using the ingredient's inferred category average (e.g. category `spread` or `fruit_preserve` benchmark).
+  * A taxonomy review entry is queued in `data_issues` for one-click calibration by the editor.
 
 ---
 
-### Stage 2: 3-Channel Synthesis (The Physics Layer)
+### Stage 2: 3-Channel Synthesis & Procedural Staging (Mise en Place)
 
-Stage 2 takes the primary channel preparation and deterministically derives the other two channels using StickyMilk's conversion physics:
+Stage 2 applies StickyMilk's conversion physics and enforces culinary workflow staging:
 
+#### A. Culinary Staging Engine (*Mise en Place*)
+Social media creators frequently edit video cuts out of sequence for visual rhythm. The staging engine re-sequences the instructions according to real kitchen physics:
+1. **Phase 1: Stable Sub-Assemblies (Cold Foam / Syrups / Rim):**
+   * Prepare before any ice or espresso is touched. Whipping cold foam first turns it into an immediate input ingredient for assembly.
+2. **Phase 2: Base Assembly & Ice:**
+   * Measure cold milk, syrups, and ice into the glass.
+3. **Phase 3: Extraction & Pouring:**
+   * Extract espresso or pour melted coffee directly over ice immediately before topping to prevent premature melt dilution.
+4. **Phase 4: Topping & Garnish:**
+   * Pour Phase 1 cold foam and apply garnish crumbs.
+
+Procedural steps insert styled Markdown headers:
+```json
+"steps": [
+  "## Phase 1: Cookie Butter Cold Foam",
+  "Warm cookie butter for 8–10 seconds to soften...",
+  "Froth with heavy cream and milk until thick and airy. Set aside.",
+  "## Phase 2: Latte Assembly",
+  "Fill glass with ice, milk, and vanilla...",
+  "Pour fresh espresso over iced milk...",
+  "Spoon prepared cold foam over top and garnish."
+]
+```
+
+#### B. 3-Channel Conversion Physics
 1. **Cometeer Conversion:**
    * 1 Nespresso Single Espresso (40 ml) or 1.5 tsp Instant $\rightarrow$ **1 Cometeer capsule (26 g)**.
-   * If iced: Puck is melted into liquid concentrate before pouring.
+   * If iced: Puck is melted into chilled liquid concentrate before pouring.
    * If hot: Puck is melted with hot water or hot milk.
 2. **Nespresso Vertuo Conversion:**
    * Single shot base: **1 single espresso pod (40 ml / 1.35 oz)**.
@@ -148,12 +194,13 @@ Stage 2 takes the primary channel preparation and deterministically derives the 
 Before any recipe JSON is written to disk:
 1. **Schema Check:** Executes `validateRecipeCandidate()` from `lib/recipe-schema.ts`.
 2. **Verbatim Audit:** Ensures no original ingredient amounts were dropped or altered during synthesis.
-3. **Status Assignment:** Every newly ingested recipe is tagged:
+3. **Cumulative Nutrition Verification:** Verifies all ingredients (across all sub-assembly groups) are included in macro calculation.
+4. **Status Assignment:** Every newly ingested recipe is tagged:
    ```json
    "status": "needs_testing"
    ```
-4. **Write Target:** Writes atomically to `content/recipes/${slug}.json`.
-5. **Cache Invalidation:** Calls `invalidateRecipeCache()` so the dev server immediately registers the new draft.
+5. **Write Target:** Writes atomically to `content/recipes/${generated_slug}.json`.
+6. **Cache Invalidation:** Calls `invalidateRecipeCache()` so the dev server immediately registers the new draft.
 
 ---
 
