@@ -486,5 +486,36 @@
       "caramel sauce"
     ],
     "default_unit": "tsp"
+  },
+  {
+    "id": "cookie_butter",
+    "name": "Speculoos / Biscoff cookie butter",
+    "category": "flavoring",
+    "allergens": [
+      "wheat",
+      "soy"
+    ],
+    "aliases": [
+      "Speculoos / Lotus Biscoff cookie butter",
+      "Speculoos / Biscoff cookie butter",
+      "cookie butter",
+      "Lotus Biscoff cookie butter"
+    ],
+    "default_unit": "tbsp"
+  },
+  {
+    "id": "biscoff_cookie",
+    "name": "Biscoff cookie",
+    "category": "topping",
+    "allergens": [
+      "wheat",
+      "soy"
+    ],
+    "aliases": [
+      "crushed Biscoff cookie",
+      "Biscoff cookie",
+      "Lotus Biscoff cookie"
+    ],
+    "default_unit": "cookie"
   }
 ]

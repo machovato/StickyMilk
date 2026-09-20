@@ -9,7 +9,7 @@ export interface NutritionBreakdown {
 }
 
 interface MacroItem {
-  baseUnit: "tbsp" | "tsp" | "oz" | "cup" | "scoop" | "capsule" | "pod";
+  baseUnit: "tbsp" | "tsp" | "oz" | "cup" | "scoop" | "capsule" | "pod" | "cookie";
   calories: number;
   sugar_g: number;
   fat_g: number;
@@ -187,6 +187,20 @@ const INGREDIENT_BENCHMARKS: Record<string, MacroItem> = {
     fat_g: 0,
     protein_g: 0.3,
     caffeine_mg: 40,
+  },
+  cookie_butter: {
+    baseUnit: "tbsp",
+    calories: 88,
+    sugar_g: 5.5,
+    fat_g: 5.9,
+    protein_g: 0.6,
+  },
+  biscoff_cookie: {
+    baseUnit: "cookie",
+    calories: 38,
+    sugar_g: 2.7,
+    fat_g: 1.5,
+    protein_g: 0.4,
   },
 };
 

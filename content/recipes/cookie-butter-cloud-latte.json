@@ -70,6 +70,7 @@
           "amount": 1,
           "unit": "tbsp",
           "item": "Speculoos / Lotus Biscoff cookie butter",
+          "item_id": "cookie_butter",
           "group": "Cookie Butter Cloud Foam"
         },
         {
@@ -120,6 +121,7 @@
           "amount": 1,
           "unit": "cookie",
           "item": "crushed Biscoff cookie",
+          "item_id": "biscoff_cookie",
           "optional": true,
           "group": "Garnish"
         }
@@ -155,6 +157,7 @@
           "amount": 1,
           "unit": "tbsp",
           "item": "Speculoos / Lotus Biscoff cookie butter",
+          "item_id": "cookie_butter",
           "group": "Cookie Butter Cloud Foam"
         },
         {
@@ -205,6 +208,7 @@
           "amount": 1,
           "unit": "cookie",
           "item": "crushed Biscoff cookie",
+          "item_id": "biscoff_cookie",
           "optional": true,
           "group": "Garnish"
         }
@@ -239,6 +243,7 @@
           "amount": 1,
           "unit": "tbsp",
           "item": "Speculoos / Lotus Biscoff cookie butter",
+          "item_id": "cookie_butter",
           "group": "Cookie Butter Cloud Foam"
         },
         {
@@ -296,6 +301,7 @@
           "amount": 1,
           "unit": "cookie",
           "item": "crushed Biscoff cookie",
+          "item_id": "biscoff_cookie",
           "optional": true,
           "group": "Garnish"
         }
