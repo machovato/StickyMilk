@@ -1,6 +1,6 @@
 "use client";
 
-import type { Channel, DietaryTag } from "@/lib/types";
+import type { Channel, DietaryTag, ProvenanceStatus } from "@/lib/types";
 import { CHANNEL_LABELS, DIETARY_LABELS } from "@/lib/types";
 import type { FieldError } from "@/lib/recipe-schema";
 import type { IngredientTaxonomyEntry } from "@/lib/taxonomy";
@@ -147,6 +147,54 @@ export function PreparationEditor({
               </button>
             </div>
           )}
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="flex flex-col gap-1">
+              <label className="font-mono text-xs font-bold uppercase text-[#1a130e]">
+                Preparation Provenance Tier
+              </label>
+              <select
+                value={prep.provenance || "adapted"}
+                onChange={(e) =>
+                  onChange({
+                    provenance: e.target.value as ProvenanceStatus,
+                  })
+                }
+                className="bg-[#f8f2ee] p-2.5 font-mono text-xs text-[#1a130e] border border-[#1a130e]/20 focus:border-[#001ec0] focus:bg-white focus:outline-none"
+              >
+                <option value="adapted">SM Adapted (Calculated Channel Conversion)</option>
+                <option value="original">Original Recipe (Source Formulation)</option>
+                <option value="tested">⬡ SM Tested (Formally Brewed & Approved)</option>
+              </select>
+              <p className="font-mono text-[10px] text-[#7f756f]">
+                Every channel has honest provenance. Never claim tested unless physically brewed.
+              </p>
+            </div>
+
+            {channel === "nespresso" && (
+              <div className="flex flex-col gap-1">
+                <label className="font-mono text-xs font-bold uppercase text-[#1a130e]">
+                  Nespresso Hardware System
+                </label>
+                <select
+                  value={prep.nespresso_system || ""}
+                  onChange={(e) =>
+                    onChange({
+                      nespresso_system: e.target.value as "vertuo" | "original" | "",
+                    })
+                  }
+                  className="bg-[#f8f2ee] p-2.5 font-mono text-xs text-[#1a130e] border border-[#1a130e]/20 focus:border-[#001ec0] focus:bg-white focus:outline-none"
+                >
+                  <option value="">Any / General Nespresso</option>
+                  <option value="vertuo">Vertuo (Double Espresso 80ml / Single 40ml)</option>
+                  <option value="original">Original Line (Standard 19-Bar 40ml)</option>
+                </select>
+                <p className="font-mono text-[10px] text-[#7f756f]">
+                  Helps users pick the right capsule type.
+                </p>
+              </div>
+            )}
+          </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="flex flex-col gap-1">

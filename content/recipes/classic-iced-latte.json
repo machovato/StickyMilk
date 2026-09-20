@@ -47,7 +47,8 @@
         "Pour the chilled coffee over the milk and stir."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 6
+      "prep_time_minutes": 6,
+      "provenance": "original"
     },
     {
       "channel": "nespresso",
@@ -82,7 +83,9 @@
         "Pour the espresso over the milk and stir."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 5
+      "prep_time_minutes": 5,
+      "provenance": "adapted",
+      "nespresso_system": "vertuo"
     },
     {
       "channel": "instant",
@@ -120,7 +123,14 @@
         "Pour the cooled coffee over the milk and stir."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 6
+      "prep_time_minutes": 6,
+      "provenance": "adapted"
     }
-  ]
+  ],
+  "source": {
+    "type": "vendor",
+    "name": "Cometeer",
+    "platform": "Cometeer Craft Library",
+    "url": "https://cometeer.com"
+  }
 }

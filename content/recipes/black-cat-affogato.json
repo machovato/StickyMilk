@@ -60,7 +60,102 @@
         "Serve immediately."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 4
+      "prep_time_minutes": 4,
+      "provenance": "original"
+    },
+    {
+      "channel": "nespresso",
+      "provenance": "adapted",
+      "nespresso_system": "vertuo",
+      "caffeine_level": "decaf",
+      "caffeine_mg": 9,
+      "servings": 1,
+      "prep_time_minutes": 3,
+      "difficulty": "easy",
+      "equipment": [
+        "small serving bowl or glass"
+      ],
+      "dietary": [
+        "vegan-adaptable"
+      ],
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 40,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo pod, brewed as a single shot",
+          "item_id": "nespresso_pod",
+          "notes": "Decaf Diavolitto or Il Caffè recommended"
+        },
+        {
+          "amount": 2,
+          "unit": "scoop",
+          "item": "vanilla gelato or ice cream"
+        },
+        {
+          "item": "Shaved dark chocolate",
+          "item_id": "shaved_dark_chocolate",
+          "notes": "optional"
+        }
+      ],
+      "steps": [
+        "Scoop cold gelato into a chilled serving glass or bowl.",
+        "Brew the Nespresso pod directly as a single espresso shot into a heatproof glass.",
+        "Pour the hot espresso immediately over the gelato.",
+        "Top with shaved dark chocolate if desired and serve at once."
+      ]
+    },
+    {
+      "channel": "instant",
+      "provenance": "adapted",
+      "caffeine_level": "decaf",
+      "servings": 1,
+      "prep_time_minutes": 2,
+      "difficulty": "easy",
+      "equipment": [
+        "small serving bowl or glass"
+      ],
+      "dietary": [
+        "vegan-adaptable"
+      ],
+      "ingredients": [
+        {
+          "amount": 1.5,
+          "unit": "tsp",
+          "item": "instant coffee",
+          "item_id": "instant_coffee",
+          "notes": "dark roast or instant espresso powder"
+        },
+        {
+          "amount": 1.5,
+          "unit": "oz",
+          "item": "boiling water",
+          "item_id": "boiling_water"
+        },
+        {
+          "amount": 2,
+          "unit": "scoop",
+          "item": "vanilla gelato or ice cream"
+        },
+        {
+          "item": "Shaved dark chocolate",
+          "item_id": "shaved_dark_chocolate",
+          "notes": "optional"
+        }
+      ],
+      "steps": [
+        "Dissolve the instant coffee in boiling water to produce a rich, dark coffee concentrate.",
+        "Place two scoops of cold gelato in a serving bowl.",
+        "Pour the hot coffee concentrate directly over the gelato.",
+        "Finish with shaved dark chocolate and enjoy immediately."
+      ]
     }
-  ]
+  ],
+  "source": {
+    "type": "vendor",
+    "name": "Intelligentsia Coffee",
+    "platform": "Intelligentsia Roasters",
+    "url": "https://www.intelligentsia.com"
+  }
 }

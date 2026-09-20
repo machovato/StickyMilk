@@ -65,7 +65,113 @@
         "Top with half-and-half and stir once."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 5
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "provenance": "adapted",
+      "nespresso_system": "vertuo",
+      "caffeine_level": "full",
+      "servings": 1,
+      "prep_time_minutes": 4,
+      "difficulty": "easy",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 40,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo pod, brewed as a single shot",
+          "item_id": "nespresso_pod"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "maple syrup",
+          "item_id": "maple_syrup"
+        },
+        {
+          "amount": 5,
+          "unit": "oz",
+          "item": "club soda"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "heavy cream",
+          "item_id": "heavy_cream"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        }
+      ],
+      "steps": [
+        "Stir maple syrup into club soda in an ice-filled glass.",
+        "Brew Nespresso single shot and cool slightly.",
+        "Pour espresso over the sparkling maple base.",
+        "Top with heavy cream and watch it cascade through the glass."
+      ]
+    },
+    {
+      "channel": "instant",
+      "provenance": "adapted",
+      "caffeine_level": "full",
+      "servings": 1,
+      "prep_time_minutes": 3,
+      "difficulty": "easy",
+      "ingredients": [
+        {
+          "amount": 1.5,
+          "unit": "tsp",
+          "item": "instant coffee",
+          "item_id": "instant_coffee"
+        },
+        {
+          "amount": 1.5,
+          "unit": "oz",
+          "item": "water",
+          "item_id": "water"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "maple syrup",
+          "item_id": "maple_syrup"
+        },
+        {
+          "amount": 5,
+          "unit": "oz",
+          "item": "club soda"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "heavy cream",
+          "item_id": "heavy_cream"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        }
+      ],
+      "steps": [
+        "Dissolve instant coffee and maple syrup in 1.5 oz room temp water.",
+        "Fill a glass with ice and add club soda.",
+        "Pour maple coffee mixture into the soda.",
+        "Float heavy cream on top and enjoy."
+      ]
     }
-  ]
+  ],
+  "source": {
+    "type": "creator",
+    "name": "Home Cafe Journal",
+    "handle": "@homecafejournal",
+    "platform": "Instagram"
+  }
 }

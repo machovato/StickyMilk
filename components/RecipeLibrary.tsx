@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { Coffee } from "@phosphor-icons/react";
+import { Coffee, MagnifyingGlass, X } from "@phosphor-icons/react";
 import type {
   Recipe,
   Channel,
@@ -9,6 +9,7 @@ import type {
   RoastRecommendation,
   CaffeineLevel,
 } from "@/lib/types";
+import { CHANNEL_LABELS } from "@/lib/types";
 import { useChannel } from "@/lib/channel-context";
 import { HeroBanner } from "./HeroBanner";
 import { FilterSidebar } from "./FilterSidebar";
@@ -21,6 +22,7 @@ export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
 
   // Filter states
   const [searchQuery, setSearchQuery] = useState("");
+  const [onlyCompatible, setOnlyCompatible] = useState(false);
   const [selectedSweetness, setSelectedSweetness] = useState<Set<SweetnessLevel>>(
     new Set()
   );
@@ -77,6 +79,7 @@ export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
 
   const hasActiveFilters =
     searchQuery.trim().length > 0 ||
+    onlyCompatible ||
     selectedSweetness.size > 0 ||
     selectedRoasts.size > 0 ||
     selectedCaffeine.size > 0 ||
@@ -85,6 +88,7 @@ export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
 
   const handleResetFilters = () => {
     setSearchQuery("");
+    setOnlyCompatible(false);
     setSelectedSweetness(new Set());
     setSelectedRoasts(new Set());
     setSelectedCaffeine(new Set());
@@ -106,22 +110,36 @@ export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
   const filteredRecipes = useMemo(() => {
     return recipes
       .filter((recipe) => {
-        // Search query
+        // Search query across name, notes, tags, source, and ingredients
         if (searchQuery.trim()) {
-          const q = searchQuery.toLowerCase();
+          const q = searchQuery.toLowerCase().trim();
           const matchesName = recipe.name.toLowerCase().includes(q);
           const matchesNotes = recipe.flavor_notes.toLowerCase().includes(q);
           const matchesTags = recipe.tags.some((t) =>
             t.toLowerCase().includes(q)
           );
-          if (!matchesName && !matchesNotes && !matchesTags) return false;
+          const matchesSource =
+            Boolean(recipe.source?.name?.toLowerCase().includes(q)) ||
+            Boolean(recipe.source?.handle?.toLowerCase().includes(q));
+          const matchesIngredients = recipe.preparations.some((p) =>
+            p.ingredients.some((ing) => ing.item.toLowerCase().includes(q))
+          );
+          if (
+            !matchesName &&
+            !matchesNotes &&
+            !matchesTags &&
+            !matchesSource &&
+            !matchesIngredients
+          ) {
+            return false;
+          }
         }
 
-        // Global overriding channel filter
+        // Active coffee system compatibility check
         const prep = recipe.preparations.find(
           (p) => p.channel === defaultChannel
         );
-        if (!prep) return false;
+        if (onlyCompatible && !prep) return false;
 
         // Sweetness filter
         if (
@@ -139,22 +157,24 @@ export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
           return false;
         }
 
-        // Preparation-specific filters (evaluated against the active channel)
-        if (
-          selectedRoasts.size > 0 &&
-          (!prep.roast_recommendation ||
-            !selectedRoasts.has(prep.roast_recommendation))
-        ) {
-          return false;
-        }
-        if (
-          selectedCaffeine.size > 0 &&
-          !selectedCaffeine.has(prep.caffeine_level)
-        ) {
-          return false;
-        }
-        if (prep.prep_time_minutes > maxPrepTime) {
-          return false;
+        // Preparation-specific filters (evaluated against the active channel prep if available)
+        if (prep) {
+          if (
+            selectedRoasts.size > 0 &&
+            (!prep.roast_recommendation ||
+              !selectedRoasts.has(prep.roast_recommendation))
+          ) {
+            return false;
+          }
+          if (
+            selectedCaffeine.size > 0 &&
+            !selectedCaffeine.has(prep.caffeine_level)
+          ) {
+            return false;
+          }
+          if (prep.prep_time_minutes > maxPrepTime) {
+            return false;
+          }
         }
 
         return true;
@@ -180,6 +200,7 @@ export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
   }, [
     recipes,
     searchQuery,
+    onlyCompatible,
     defaultChannel,
     selectedSweetness,
     selectedTags,
@@ -236,10 +257,34 @@ export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
         </div>
 
         {/* Main Recipe Archive Stream */}
-        <div className="lg:col-span-8 xl:col-span-9 flex flex-col gap-6">
+        <div className="lg:col-span-8 xl:col-span-9 flex flex-col gap-5">
+          {/* Instant Client-side Search Bar */}
+          <div className="relative w-full bg-white border-2 border-[#1a130e] shadow-sm flex items-center">
+            <div className="pl-3.5 pr-2 text-[#7f756f] flex items-center flex-shrink-0">
+              <MagnifyingGlass size={20} weight="bold" />
+            </div>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={`Search recipes, ingredients (condensed milk, tonic, ube), flavor notes, or creators...`}
+              className="w-full py-3 pr-10 font-mono text-xs sm:text-sm text-[#1a130e] placeholder-[#a89e97] bg-transparent focus:outline-none"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                className="absolute right-3 p-1 text-[#7f756f] hover:text-[#1a130e] font-mono text-xs cursor-pointer"
+                title="Clear search"
+              >
+                <X size={16} weight="bold" />
+              </button>
+            )}
+          </div>
+
           {/* Sorting & Live Tally Bar */}
           <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 bg-white shadow-sm border border-[#1a130e]/10">
-            <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex items-center gap-2.5 flex-wrap">
               <span className="w-3 h-3 bg-[#b8f600] inline-block border border-[#1a130e]/30" />
               <span className="font-syne font-bold text-lg text-[#1a130e] uppercase tracking-tight">
                 AVAILABLE RECIPES:
@@ -247,6 +292,20 @@ export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
               <span className="font-mono text-xs font-bold text-[#001ec0] bg-[#dfe0ff] px-2.5 py-0.5">
                 {filteredRecipes.length} of {recipes.length} AVAILABLE
               </span>
+
+              {/* My Coffee Compatibility Lens Toggle */}
+              <button
+                type="button"
+                onClick={() => setOnlyCompatible((prev) => !prev)}
+                className={`ml-1 px-2.5 py-1 font-mono text-xs font-bold uppercase transition-all cursor-pointer border ${
+                  onlyCompatible
+                    ? "bg-[#1a130e] text-[#b8f600] border-[#1a130e] shadow-xs"
+                    : "bg-[#f8f2ee] text-[#7f756f] border-[#1a130e]/20 hover:text-[#1a130e]"
+                }`}
+                title={`Filter exclusively to drinks with an active ${CHANNEL_LABELS[defaultChannel]} formulation`}
+              >
+                {onlyCompatible ? `✓ ${CHANNEL_LABELS[defaultChannel].toUpperCase()} ONLY` : `+ FILTER FOR ${CHANNEL_LABELS[defaultChannel].toUpperCase()}`}
+              </button>
             </div>
 
             <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">

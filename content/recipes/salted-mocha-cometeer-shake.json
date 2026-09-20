@@ -64,7 +64,102 @@
         "Add a tiny pinch of flaky salt on top."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 5
+      "prep_time_minutes": 5,
+      "provenance": "original"
+    },
+    {
+      "channel": "nespresso",
+      "provenance": "adapted",
+      "nespresso_system": "vertuo",
+      "caffeine_level": "full",
+      "servings": 1,
+      "prep_time_minutes": 5,
+      "difficulty": "easy",
+      "equipment": [
+        "blender"
+      ],
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 80,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Double Espresso pod",
+          "item_id": "nespresso_double_pod"
+        },
+        {
+          "amount": 3,
+          "unit": "scoop",
+          "item": "chocolate ice cream"
+        },
+        {
+          "amount": 0.25,
+          "unit": "cup",
+          "item": "whole milk"
+        },
+        {
+          "amount": 1,
+          "unit": "pinch",
+          "item": "flaky sea salt"
+        }
+      ],
+      "steps": [
+        "Brew double espresso shot and let cool in the fridge for 10 minutes.",
+        "Add chilled espresso, chocolate ice cream, milk, and pinch of sea salt to blender.",
+        "Blend on medium-high until thick and creamy.",
+        "Pour into glass and garnish with a tiny pinch of flaky sea salt."
+      ]
+    },
+    {
+      "channel": "instant",
+      "provenance": "adapted",
+      "caffeine_level": "full",
+      "servings": 1,
+      "prep_time_minutes": 4,
+      "difficulty": "easy",
+      "equipment": [
+        "blender"
+      ],
+      "ingredients": [
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "item": "instant coffee",
+          "item_id": "instant_coffee"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "hot water",
+          "item_id": "hot_water"
+        },
+        {
+          "amount": 3,
+          "unit": "scoop",
+          "item": "chocolate ice cream"
+        },
+        {
+          "amount": 0.25,
+          "unit": "cup",
+          "item": "whole milk"
+        },
+        {
+          "amount": 1,
+          "unit": "pinch",
+          "item": "flaky sea salt"
+        }
+      ],
+      "steps": [
+        "Dissolve instant coffee in 2 tbsp hot water to form a dark syrup.",
+        "Place coffee syrup, chocolate ice cream, milk, and sea salt in blender.",
+        "Blend until smooth and velvety.",
+        "Pour into chilled glass and serve."
+      ]
     }
-  ]
+  ],
+  "source": {
+    "type": "editorial",
+    "name": "StickyMilk Kitchen",
+    "platform": "Ice Cream Lab"
+  }
 }

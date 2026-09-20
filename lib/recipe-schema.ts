@@ -24,11 +24,16 @@ import {
   Difficulty,
   FORMAT_LABELS,
   Ingredient,
+  PROVENANCE_LABELS,
   Preparation,
+  ProvenanceStatus,
   Recipe,
   RecipeFormat,
+  RecipeSource,
   RecipeStatus,
+  SOURCE_TYPE_LABELS,
   SWEETNESS_LABELS,
+  SourceType,
   SweetnessLevel,
 } from "./types";
 
@@ -44,6 +49,9 @@ const VALID_FORMATS = Object.keys(FORMAT_LABELS) as RecipeFormat[];
 const VALID_SWEETNESS = Object.keys(SWEETNESS_LABELS) as SweetnessLevel[];
 const VALID_CHANNELS = Object.keys(CHANNEL_LABELS) as Channel[];
 const VALID_DIETARY = Object.keys(DIETARY_LABELS) as DietaryTag[];
+const VALID_PROVENANCE = Object.keys(PROVENANCE_LABELS) as ProvenanceStatus[];
+const VALID_SOURCE_TYPES = Object.keys(SOURCE_TYPE_LABELS) as SourceType[];
+const VALID_NESPRESSO_SYSTEMS = ["vertuo", "original"] as const;
 const VALID_CAFFEINE: CaffeineLevel[] = ["full", "half", "decaf"];
 const VALID_DIFFICULTY: Difficulty[] = ["easy", "medium", "advanced"];
 const VALID_STATUS: RecipeStatus[] = ["draft", "needs_testing", "verified"];
@@ -206,6 +214,24 @@ function validatePreparation(
   if (v.barista_note !== undefined && typeof v.barista_note !== "string") {
     errors.push({ path: `${path}.barista_note`, message: "must be a string when present" });
   }
+  if (
+    v.provenance !== undefined &&
+    !VALID_PROVENANCE.includes(v.provenance as ProvenanceStatus)
+  ) {
+    errors.push({
+      path: `${path}.provenance`,
+      message: `must be one of ${VALID_PROVENANCE.join(", ")} when present`,
+    });
+  }
+  if (
+    v.nespresso_system !== undefined &&
+    !VALID_NESPRESSO_SYSTEMS.includes(v.nespresso_system as "vertuo" | "original")
+  ) {
+    errors.push({
+      path: `${path}.nespresso_system`,
+      message: `must be one of ${VALID_NESPRESSO_SYSTEMS.join(", ")} when present`,
+    });
+  }
   if (!Array.isArray(v.ingredients) || v.ingredients.length === 0) {
     errors.push({ path: `${path}.ingredients`, message: "must have at least one ingredient" });
   } else {
@@ -262,6 +288,42 @@ export function validateRecipeCandidate(
   }
   if (candidate.barista_note !== undefined && typeof candidate.barista_note !== "string") {
     errors.push({ path: "barista_note", message: "must be a string when present" });
+  }
+  if (candidate.source !== undefined) {
+    if (!isRecord(candidate.source)) {
+      errors.push({ path: "source", message: "must be an object when present" });
+    } else {
+      if (!VALID_SOURCE_TYPES.includes(candidate.source.type as SourceType)) {
+        errors.push({
+          path: "source.type",
+          message: `missing or invalid source type (must be one of ${VALID_SOURCE_TYPES.join(", ")})`,
+        });
+      }
+      if (
+        typeof candidate.source.name !== "string" ||
+        candidate.source.name.trim() === ""
+      ) {
+        errors.push({ path: "source.name", message: "source name is required" });
+      }
+      if (
+        candidate.source.handle !== undefined &&
+        typeof candidate.source.handle !== "string"
+      ) {
+        errors.push({ path: "source.handle", message: "handle must be a string when present" });
+      }
+      if (
+        candidate.source.platform !== undefined &&
+        typeof candidate.source.platform !== "string"
+      ) {
+        errors.push({ path: "source.platform", message: "platform must be a string when present" });
+      }
+      if (
+        candidate.source.url !== undefined &&
+        typeof candidate.source.url !== "string"
+      ) {
+        errors.push({ path: "source.url", message: "url must be a string when present" });
+      }
+    }
   }
   if (!VALID_STATUS.includes(candidate.status as RecipeStatus)) {
     errors.push({ path: "status", message: `missing or invalid status (got ${JSON.stringify(candidate.status)})` });

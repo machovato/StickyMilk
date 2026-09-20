@@ -68,7 +68,101 @@
         "Garnish with grapefruit."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 5
+      "prep_time_minutes": 5,
+      "provenance": "tested"
+    },
+    {
+      "channel": "nespresso",
+      "provenance": "adapted",
+      "nespresso_system": "vertuo",
+      "caffeine_level": "full",
+      "servings": 1,
+      "prep_time_minutes": 4,
+      "difficulty": "easy",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 40,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo pod, brewed as a single shot",
+          "item_id": "nespresso_pod",
+          "notes": "light roast like Voltesso or Orafio"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "chilled tonic water",
+          "item_id": "tonic_water"
+        },
+        {
+          "amount": 1,
+          "unit": "slice",
+          "item": "grapefruit"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        }
+      ],
+      "steps": [
+        "Fill a highball glass with fresh ice and place the grapefruit slice against the inside glass wall.",
+        "Pour chilled tonic water gently over the ice.",
+        "Brew the Nespresso single shot into a small pitcher.",
+        "Slowly pour the espresso over the back of a bar spoon to float atop the tonic."
+      ]
+    },
+    {
+      "channel": "instant",
+      "provenance": "adapted",
+      "caffeine_level": "full",
+      "servings": 1,
+      "prep_time_minutes": 3,
+      "difficulty": "easy",
+      "ingredients": [
+        {
+          "amount": 1.5,
+          "unit": "tsp",
+          "item": "instant coffee",
+          "item_id": "instant_coffee"
+        },
+        {
+          "amount": 1.5,
+          "unit": "oz",
+          "item": "cold water",
+          "item_id": "water"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "chilled tonic water",
+          "item_id": "tonic_water"
+        },
+        {
+          "amount": 1,
+          "unit": "slice",
+          "item": "grapefruit"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        }
+      ],
+      "steps": [
+        "Whisk instant coffee crystals vigorously into 1.5 oz cold water until completely dissolved.",
+        "Fill a glass with ice and tuck in the grapefruit slice.",
+        "Pour tonic water into the glass.",
+        "Pour the dissolved coffee slowly over the surface to create clean visual layers."
+      ]
     }
-  ]
+  ],
+  "source": {
+    "type": "editorial",
+    "name": "StickyMilk Bar",
+    "platform": "Summer Citrus Lab"
+  }
 }

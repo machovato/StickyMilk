@@ -32,8 +32,8 @@ export function HeaderChannelSelector() {
 
   return (
     <div className="flex items-center bg-[#f3ede9] p-1 border border-[#1a130e]/15 shadow-sm">
-      <span className="hidden md:inline font-mono text-[10px] font-bold uppercase tracking-wider px-2 text-[#7f756f]">
-        CHANNEL:
+      <span className="hidden sm:inline font-mono text-[10px] font-bold uppercase tracking-wider px-2 text-[#7f756f]">
+        MY COFFEE:
       </span>
       <div className="flex items-center gap-1">
         {CHANNELS.map(({ id, label, hint }) => {

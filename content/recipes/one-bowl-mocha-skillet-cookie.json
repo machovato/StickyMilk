@@ -89,7 +89,117 @@
         "Spread in a small oven-safe skillet and bake 12–14 minutes, until the edges set."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 25
+      "prep_time_minutes": 25,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "provenance": "adapted",
+      "nespresso_system": "vertuo",
+      "caffeine_level": "full",
+      "servings": 6,
+      "yield_unit": "slices",
+      "prep_time_minutes": 20,
+      "difficulty": "medium",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 40,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo pod, brewed as a single shot",
+          "item_id": "nespresso_pod",
+          "notes": "pulled short (~30ml) for concentrated flavor"
+        },
+        {
+          "amount": 6,
+          "unit": "tbsp",
+          "item": "butter, melted",
+          "item_id": "butter"
+        },
+        {
+          "amount": 0.5,
+          "unit": "cup",
+          "item": "brown sugar"
+        },
+        {
+          "amount": 1,
+          "unit": "item",
+          "item": "egg"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "flour"
+        },
+        {
+          "amount": 0.5,
+          "unit": "cup",
+          "item": "chocolate chips"
+        }
+      ],
+      "steps": [
+        "Brew Nespresso single shot and whisk into melted butter and brown sugar.",
+        "Whisk in egg until glossy.",
+        "Fold in flour and chocolate chips until a thick dough forms.",
+        "Press into a buttered cast-iron skillet and bake at 350°F (175°C) for 18 minutes."
+      ]
+    },
+    {
+      "channel": "instant",
+      "provenance": "adapted",
+      "caffeine_level": "full",
+      "servings": 6,
+      "yield_unit": "slices",
+      "prep_time_minutes": 18,
+      "difficulty": "easy",
+      "ingredients": [
+        {
+          "amount": 1.5,
+          "unit": "tsp",
+          "item": "instant coffee",
+          "item_id": "instant_coffee",
+          "notes": "instant espresso powder dissolves instantly in butter"
+        },
+        {
+          "amount": 6,
+          "unit": "tbsp",
+          "item": "butter, melted",
+          "item_id": "butter"
+        },
+        {
+          "amount": 0.5,
+          "unit": "cup",
+          "item": "brown sugar"
+        },
+        {
+          "amount": 1,
+          "unit": "item",
+          "item": "egg"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "flour"
+        },
+        {
+          "amount": 0.5,
+          "unit": "cup",
+          "item": "chocolate chips"
+        }
+      ],
+      "steps": [
+        "Whisk instant espresso powder directly into warm melted butter until dissolved.",
+        "Add brown sugar and egg; beat until smooth.",
+        "Stir in flour and chocolate chips.",
+        "Spread in skillet and bake at 350°F (175°C) for 18 minutes."
+      ]
     }
-  ]
+  ],
+  "source": {
+    "type": "creator",
+    "name": "Bake With Coffee",
+    "handle": "@bakewithcoffee",
+    "platform": "Instagram"
+  }
 }

@@ -15,6 +15,7 @@ import {
   isReadyToSave,
   type PreparationDraft,
   type RecipeDraft,
+  type RecipeSourceDraft,
 } from "@/lib/recipe-draft";
 import { validateRecipeCandidate } from "@/lib/recipe-schema";
 import type { IngredientTaxonomyEntry } from "@/lib/taxonomy";
@@ -384,6 +385,125 @@ export function RecipeForm({
             onChange={(tags) => setDraft((d) => ({ ...d, tags }))}
             placeholder="e.g. afternoon-kick, summer-chilled, date-night"
           />
+        </div>
+      </section>
+
+      {/* Source Attribution (Two-Tier Trust Model) */}
+      <section className="p-6 bg-white border border-[#1a130e]/15 shadow-sm flex flex-col gap-4">
+        <div className="flex items-center justify-between pb-2 border-b border-[#1a130e]/10">
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 bg-[#001ec0]" />
+            <h2 className="font-syne text-base font-bold uppercase tracking-wider text-[#1a130e]">
+              Source Attribution (Two-Tier Model)
+            </h2>
+          </div>
+          <span className="font-mono text-xs text-[#7f756f]">
+            VENDOR · CREATOR · EDITORIAL
+          </span>
+        </div>
+
+        <p className="font-mono text-xs text-[#4d4540]">
+          Where did this drink formulation originate? Coffee vendor test kitchens carry high baseline trust; creator recipes capture viral social trends.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="flex flex-col gap-1">
+            <label className="font-mono text-xs font-bold uppercase text-[#1a130e]">
+              Source Type
+            </label>
+            <select
+              value={draft.source.type}
+              onChange={(e) =>
+                setDraft((d) => ({
+                  ...d,
+                  source: {
+                    ...d.source,
+                    type: e.target.value as RecipeSourceDraft["type"],
+                  },
+                }))
+              }
+              className="bg-[#f8f2ee] p-2.5 font-mono text-xs text-[#1a130e] border border-[#1a130e]/20 focus:border-[#001ec0] focus:bg-white focus:outline-none"
+            >
+              <option value="">No Source (Internal Draft)</option>
+              <option value="vendor">Coffee Vendor / Roaster (e.g. Nespresso, Cometeer)</option>
+              <option value="creator">Creator / Social (e.g. TikTok, Instagram)</option>
+              <option value="editorial">StickyMilk Editorial (Original Recipe)</option>
+            </select>
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <label className="font-mono text-xs font-bold uppercase text-[#1a130e]">
+              Source Name
+            </label>
+            <input
+              type="text"
+              value={draft.source.name}
+              onChange={(e) =>
+                setDraft((d) => ({
+                  ...d,
+                  source: { ...d.source, name: e.target.value },
+                }))
+              }
+              placeholder="e.g. Nespresso Official or CoffeeGal2008"
+              className="bg-[#f8f2ee] p-2.5 font-mono text-xs text-[#1a130e] border border-[#1a130e]/20 focus:border-[#001ec0] focus:bg-white focus:outline-none"
+            />
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <label className="font-mono text-xs font-bold uppercase text-[#1a130e]">
+              Social Handle
+            </label>
+            <input
+              type="text"
+              value={draft.source.handle}
+              onChange={(e) =>
+                setDraft((d) => ({
+                  ...d,
+                  source: { ...d.source, handle: e.target.value },
+                }))
+              }
+              placeholder="e.g. @coffeegal2008"
+              className="bg-[#f8f2ee] p-2.5 font-mono text-xs text-[#1a130e] border border-[#1a130e]/20 focus:border-[#001ec0] focus:bg-white focus:outline-none"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="flex flex-col gap-1">
+            <label className="font-mono text-xs font-bold uppercase text-[#1a130e]">
+              Platform / Network
+            </label>
+            <input
+              type="text"
+              value={draft.source.platform}
+              onChange={(e) =>
+                setDraft((d) => ({
+                  ...d,
+                  source: { ...d.source, platform: e.target.value },
+                }))
+              }
+              placeholder="e.g. TikTok, Instagram Reels, Official Site"
+              className="bg-[#f8f2ee] p-2.5 font-mono text-xs text-[#1a130e] border border-[#1a130e]/20 focus:border-[#001ec0] focus:bg-white focus:outline-none"
+            />
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <label className="font-mono text-xs font-bold uppercase text-[#1a130e]">
+              Original Recipe / Video URL
+            </label>
+            <input
+              type="url"
+              value={draft.source.url}
+              onChange={(e) =>
+                setDraft((d) => ({
+                  ...d,
+                  source: { ...d.source, url: e.target.value },
+                }))
+              }
+              placeholder="https://..."
+              className="bg-[#f8f2ee] p-2.5 font-mono text-xs text-[#1a130e] border border-[#1a130e]/20 focus:border-[#001ec0] focus:bg-white focus:outline-none"
+            />
+          </div>
         </div>
       </section>
 

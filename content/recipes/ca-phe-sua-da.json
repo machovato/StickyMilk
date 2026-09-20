@@ -60,7 +60,8 @@
         "Pour the coffee mixture over the ice and stir."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 5
+      "prep_time_minutes": 5,
+      "provenance": "tested"
     },
     {
       "channel": "nespresso",
@@ -98,7 +99,9 @@
         "Pour the coffee mixture over the ice and stir."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 5
+      "prep_time_minutes": 5,
+      "provenance": "adapted",
+      "nespresso_system": "vertuo"
     },
     {
       "channel": "instant",
@@ -140,7 +143,13 @@
         "Pour the coffee mixture over the ice and stir."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 4
+      "prep_time_minutes": 4,
+      "provenance": "adapted"
     }
-  ]
+  ],
+  "source": {
+    "type": "editorial",
+    "name": "StickyMilk Kitchen",
+    "platform": "StickyMilk Signature"
+  }
 }

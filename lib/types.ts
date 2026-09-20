@@ -15,6 +15,28 @@ export type Difficulty = "easy" | "medium" | "advanced";
 export type RecipeStatus = "draft" | "needs_testing" | "verified";
 
 /**
+ * Trust & testing hierarchy for a specific channel preparation.
+ * Never claims physical validation when a drink is a calculated conversion.
+ */
+export type ProvenanceStatus = "original" | "adapted" | "tested";
+
+/**
+ * Origin classification of a recipe:
+ * - vendor: High baseline trust (roasters/equipment makers like Nespresso, Cometeer, Starbucks)
+ * - creator: Viral/social concepts (TikTok, Instagram, YouTube)
+ * - editorial: StickyMilk original development
+ */
+export type SourceType = "vendor" | "creator" | "editorial";
+
+export interface RecipeSource {
+  type: SourceType;
+  name: string;
+  handle?: string;
+  platform?: string;
+  url?: string;
+}
+
+/**
  * Sweetness/body of the finished drink itself (not any one preparation) —
  * this is StickyMilk, so how sweet/creamy something reads is a primary
  * discovery axis alongside format and mood.
@@ -140,6 +162,18 @@ export interface Preparation {
   equipment?: string[];
   dietary?: DietaryTag[];
   /**
+   * Provenance of this specific channel preparation:
+   * - "original": The baseline formulation developed by the recipe's original author/source.
+   * - "adapted": StickyMilk's calculated conversion for this coffee channel.
+   * - "tested": Formally brewed, tasted, and approved by StickyMilk.
+   */
+  provenance?: ProvenanceStatus;
+  /**
+   * For Nespresso preparations: denotes whether formulated for Vertuo (e.g. double espresso 80ml)
+   * or Original Line (standard 19-bar single espresso 40ml).
+   */
+  nespresso_system?: "vertuo" | "original";
+  /**
    * An optional, high-value craft or technique insight from the barista or creator
    * (e.g. "Add a tiny pinch of salt to round out bitterness", or a creamer shortcut).
    */
@@ -164,6 +198,8 @@ export interface Recipe {
   /** Universal craft or sensory technique note shared across all channels for this drink. */
   barista_note?: string;
   status: RecipeStatus;
+  /** Source attribution: where the recipe originated (vendor, creator, or editorial). */
+  source?: RecipeSource;
   /** Mood/context/occasion facets for discovery, e.g. "summer", "date-night", "quick-fix". Freeform, editor-curated — not a fixed enum. */
   tags: string[];
   sweetness_level: SweetnessLevel;
@@ -196,6 +232,18 @@ export const STATUS_LABELS: Record<RecipeStatus, string> = {
   draft: "Draft",
   needs_testing: "Needs testing",
   verified: "Verified",
+};
+
+export const PROVENANCE_LABELS: Record<ProvenanceStatus, string> = {
+  original: "Original Recipe",
+  adapted: "SM Adapted",
+  tested: "SM Tested",
+};
+
+export const SOURCE_TYPE_LABELS: Record<SourceType, string> = {
+  vendor: "Coffee Vendor",
+  creator: "Creator / Social",
+  editorial: "StickyMilk Editorial",
 };
 
 export const SWEETNESS_LABELS: Record<SweetnessLevel, string> = {

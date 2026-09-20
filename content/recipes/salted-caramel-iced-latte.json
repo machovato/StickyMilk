@@ -64,7 +64,8 @@
         "Pour the chilled Cometeer extract over the ice to layer, then drizzle with caramel sauce."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 4
+      "prep_time_minutes": 4,
+      "provenance": "adapted"
     },
     {
       "channel": "nespresso",
@@ -116,7 +117,9 @@
         "Finish with a drizzle of caramel sauce over the crema foam."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 3
+      "prep_time_minutes": 3,
+      "provenance": "original",
+      "nespresso_system": "vertuo"
     },
     {
       "channel": "instant",
@@ -174,7 +177,14 @@
         "Drizzle caramel sauce over the top and stir."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 4
+      "prep_time_minutes": 4,
+      "provenance": "adapted"
     }
-  ]
+  ],
+  "source": {
+    "type": "creator",
+    "name": "CoffeeGal",
+    "handle": "@coffeegal",
+    "platform": "TikTok"
+  }
 }

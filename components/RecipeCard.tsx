@@ -3,6 +3,8 @@ import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import type { Channel, Recipe } from "@/lib/types";
 import { CHANNEL_LABELS, FORMAT_LABELS, SWEETNESS_LABELS } from "@/lib/types";
 import { getRecipeImage } from "@/lib/recipe-images";
+import { ProvenanceBadge } from "./ProvenanceBadge";
+import { SourceAttribution } from "./SourceAttribution";
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -52,8 +54,8 @@ export function RecipeCard({ recipe, channel }: RecipeCardProps) {
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
 
-        {/* Top category badge */}
-        <div className="absolute top-3 left-3 flex gap-1 flex-wrap z-10">
+        {/* Top category & provenance HUD */}
+        <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-1 z-10">
           <span
             className={`px-2 py-0.5 font-mono text-[11px] uppercase tracking-wider ${getBadgeClass(
               recipe.format
@@ -61,6 +63,9 @@ export function RecipeCard({ recipe, channel }: RecipeCardProps) {
           >
             {FORMAT_LABELS[recipe.format]}
           </span>
+          {prep && (
+            <ProvenanceBadge provenance={prep.provenance ?? (recipe.source?.type === "vendor" ? "original" : "adapted")} size="xs" />
+          )}
         </div>
 
         {/* Ratio & Time HUD */}
@@ -84,15 +89,38 @@ export function RecipeCard({ recipe, channel }: RecipeCardProps) {
             <span className="uppercase text-[#001ec0] font-bold truncate">
               {`${roastLabel} // ${caffeineLabel}`}
             </span>
-            <span className="truncate text-right text-[10px] text-[#4d4540]">
-              {CHANNEL_LABELS[channel].toUpperCase()}
-            </span>
+            <div className="flex items-center gap-1 font-mono text-[9px]">
+              {(["cometeer", "nespresso", "instant"] as Channel[]).map((c) => {
+                const hasChan = recipe.preparations.some((p) => p.channel === c);
+                const isActive = c === channel;
+                return (
+                  <span
+                    key={c}
+                    title={hasChan ? `${CHANNEL_LABELS[c]} available` : `${CHANNEL_LABELS[c]} not available yet`}
+                    className={`w-4 h-4 flex items-center justify-center font-bold uppercase border ${
+                      isActive
+                        ? "bg-[#1a130e] text-white border-[#1a130e]"
+                        : hasChan
+                        ? "bg-[#f3ede9] text-[#1a130e] border-[#1a130e]/20"
+                        : "text-[#d1c4bd] border-dashed border-[#d1c4bd]/50"
+                    }`}
+                  >
+                    {c[0].toUpperCase()}
+                  </span>
+                );
+              })}
+            </div>
           </div>
 
           {/* Title */}
           <h2 className="font-syne text-xl font-bold text-[#1a130e] tracking-tight group-hover:text-[#001ec0] transition-colors line-clamp-1">
             {recipe.name}
           </h2>
+
+          {/* Source Byline */}
+          {recipe.source && (
+            <SourceAttribution source={recipe.source} variant="card" />
+          )}
 
           {/* Description / Flavor Notes */}
           <p className="font-body text-[13px] leading-relaxed text-[#4d4540] line-clamp-2">

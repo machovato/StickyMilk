@@ -62,7 +62,120 @@
         "Finish with lime; skip a second capsule — the soda is the volume, the puck is the coffee."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 5
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "provenance": "adapted",
+      "nespresso_system": "vertuo",
+      "caffeine_level": "full",
+      "servings": 1,
+      "prep_time_minutes": 4,
+      "difficulty": "easy",
+      "equipment": [
+        "tall glass",
+        "straw"
+      ],
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 40,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo pod, brewed as a single shot",
+          "item_id": "nespresso_pod",
+          "notes": "brewed and chilled over 1 ice cube"
+        },
+        {
+          "amount": 8,
+          "unit": "oz",
+          "item": "Dr Pepper or cola"
+        },
+        {
+          "amount": 1.5,
+          "unit": "tbsp",
+          "item": "coconut cream"
+        },
+        {
+          "amount": 1,
+          "unit": "wedge",
+          "item": "fresh lime"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        }
+      ],
+      "steps": [
+        "Brew the Nespresso single shot over one ice cube to quickly drop temperature.",
+        "Fill a tall glass to the brim with pebble or cubed ice.",
+        "Pour the chilled soda over the ice, leaving 2 inches at the top.",
+        "Squeeze in the fresh lime wedge and drop it in.",
+        "Pour the espresso shot over the soda, then top with coconut cream.",
+        "Stir gently once with a straw and sip."
+      ]
+    },
+    {
+      "channel": "instant",
+      "provenance": "adapted",
+      "caffeine_level": "full",
+      "servings": 1,
+      "prep_time_minutes": 3,
+      "difficulty": "easy",
+      "equipment": [
+        "tall glass",
+        "straw"
+      ],
+      "ingredients": [
+        {
+          "amount": 1.5,
+          "unit": "tsp",
+          "item": "instant coffee",
+          "item_id": "instant_coffee"
+        },
+        {
+          "amount": 1.5,
+          "unit": "oz",
+          "item": "warm water",
+          "item_id": "water"
+        },
+        {
+          "amount": 8,
+          "unit": "oz",
+          "item": "Dr Pepper or cola"
+        },
+        {
+          "amount": 1.5,
+          "unit": "tbsp",
+          "item": "coconut cream"
+        },
+        {
+          "amount": 1,
+          "unit": "wedge",
+          "item": "fresh lime"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        }
+      ],
+      "steps": [
+        "Dissolve instant coffee in 1.5 oz warm water to make a quick extract.",
+        "Fill a tall glass with ice and pour in the chilled soda.",
+        "Squeeze in lime wedge, then pour coffee extract over the soda.",
+        "Drizzle coconut cream over the top and stir lightly."
+      ]
     }
-  ]
+  ],
+  "source": {
+    "type": "creator",
+    "name": "Mountain Sips",
+    "handle": "@mountainsips",
+    "platform": "TikTok"
+  }
 }

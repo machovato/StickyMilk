@@ -13,6 +13,8 @@ import {
 import { useChannel } from "@/lib/channel-context";
 import { getRecipeImage } from "@/lib/recipe-images";
 import { StatusBadge } from "./StatusBadge";
+import { ProvenanceBadge } from "./ProvenanceBadge";
+import { SourceAttribution } from "./SourceAttribution";
 import { BaristaDiff } from "./BaristaDiff";
 import { IngredientChecklist } from "./IngredientChecklist";
 import { PreparationSteps } from "./PreparationSteps";
@@ -192,6 +194,11 @@ export function RecipeDetail({
             ))}
           </div>
 
+          {/* Source Attribution (Vendor vs Creator vs Editorial) */}
+          {recipe.source && (
+            <SourceAttribution source={recipe.source} variant="detail" />
+          )}
+
           {/* Barista Tip if provided */}
           {recipe.barista_note && (
             <div className="p-4 bg-[#f8f2ee] border-l-4 border-[#001ec0] flex flex-col gap-1 text-xs">
@@ -255,13 +262,23 @@ export function RecipeDetail({
 
             {/* Scaler Metric Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="bg-white p-3 border border-[#1a130e]/10 flex flex-col">
-                <span className="font-mono text-[11px] text-[#7f756f] uppercase">
-                  Extraction Channel
-                </span>
-                <span className="font-syne text-xl font-bold text-[#1a130e] mt-1">
-                  {CHANNEL_LABELS[channel]}
-                </span>
+              <div className="bg-white p-3 border border-[#1a130e]/10 flex flex-col justify-between">
+                <div className="flex items-center justify-between gap-1">
+                  <span className="font-mono text-[11px] text-[#7f756f] uppercase">
+                    Extraction Channel
+                  </span>
+                  <ProvenanceBadge provenance={prep.provenance ?? (recipe.source?.type === "vendor" ? "original" : "adapted")} size="xs" />
+                </div>
+                <div className="flex items-baseline gap-2 mt-1">
+                  <span className="font-syne text-xl font-bold text-[#1a130e]">
+                    {CHANNEL_LABELS[channel]}
+                  </span>
+                  {prep.nespresso_system && (
+                    <span className="font-mono text-[10px] uppercase font-bold text-[#001ec0] bg-[#dfe0ff] px-1.5 py-0.5">
+                      {prep.nespresso_system}
+                    </span>
+                  )}
+                </div>
                 <span className="font-mono text-[10px] text-[#001ec0] mt-0.5">
                   {prep.difficulty.toUpperCase()} DIFFICULTY
                 </span>
@@ -364,9 +381,23 @@ export function RecipeDetail({
 
               {/* Craft Provenance & Sensory Specs */}
               <div className="bg-white p-5 border border-[#1a130e]/15 flex flex-col gap-3">
-                <span className="font-mono text-[11px] font-bold uppercase text-[#1a130e] tracking-wider border-b border-[#1a130e]/10 pb-2">
-                  CRAFT PROVENANCE
-                </span>
+                <div className="flex items-center justify-between border-b border-[#1a130e]/10 pb-2">
+                  <span className="font-mono text-[11px] font-bold uppercase text-[#1a130e] tracking-wider">
+                    CRAFT PROVENANCE
+                  </span>
+                  <ProvenanceBadge provenance={prep.provenance ?? (recipe.source?.type === "vendor" ? "original" : "adapted")} size="sm" />
+                </div>
+
+                {prep.nespresso_system && (
+                  <div className="flex flex-col gap-0.5 text-xs">
+                    <span className="font-mono text-[11px] uppercase text-[#7f756f]">
+                      Hardware Profile:
+                    </span>
+                    <span className="font-mono font-bold text-[#1a130e] uppercase">
+                      Nespresso {prep.nespresso_system === "vertuo" ? "Vertuo (Centrifusion)" : "Original Line (19-Bar)"}
+                    </span>
+                  </div>
+                )}
 
                 {prep.roast_recommendation && (
                   <div className="flex flex-col gap-1 text-xs">

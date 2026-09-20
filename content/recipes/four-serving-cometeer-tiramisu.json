@@ -91,7 +91,140 @@
         "Dust with cocoa before serving."
       ],
       "difficulty": "medium",
-      "prep_time_minutes": 30
+      "prep_time_minutes": 30,
+      "provenance": "original"
+    },
+    {
+      "channel": "nespresso",
+      "provenance": "adapted",
+      "nespresso_system": "vertuo",
+      "caffeine_level": "full",
+      "servings": 4,
+      "yield_unit": "servings",
+      "prep_time_minutes": 25,
+      "difficulty": "medium",
+      "ingredients": [
+        {
+          "amount": 2,
+          "unit": "pod",
+          "secondary_amount": 160,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Double Espresso pod",
+          "item_id": "nespresso_double_pod",
+          "notes": "2 double espresso pods brewed (160ml total)"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "coffee liqueur or Marsala wine",
+          "item_id": "coffee_liqueur"
+        },
+        {
+          "amount": 16,
+          "unit": "piece",
+          "item": "ladyfinger cookies"
+        },
+        {
+          "amount": 8,
+          "unit": "oz",
+          "item": "mascarpone cheese",
+          "item_id": "mascarpone"
+        },
+        {
+          "amount": 0.5,
+          "unit": "cup",
+          "item": "heavy cream",
+          "item_id": "heavy_cream"
+        },
+        {
+          "amount": 3,
+          "unit": "tbsp",
+          "item": "powdered sugar"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "cocoa powder",
+          "item_id": "cocoa_powder"
+        }
+      ],
+      "steps": [
+        "Brew both Nespresso double espresso pods and allow to cool; stir in liqueur.",
+        "Whip heavy cream, mascarpone, and powdered sugar until soft peaks form.",
+        "Quickly dip ladyfingers into cooled espresso (1 second per side).",
+        "Layer ladyfingers and mascarpone cream in an 8x8 dish.",
+        "Dust top generously with cocoa powder and chill for at least 4 hours."
+      ]
+    },
+    {
+      "channel": "instant",
+      "provenance": "adapted",
+      "caffeine_level": "full",
+      "servings": 4,
+      "yield_unit": "servings",
+      "prep_time_minutes": 20,
+      "difficulty": "easy",
+      "ingredients": [
+        {
+          "amount": 3,
+          "unit": "tbsp",
+          "item": "instant coffee",
+          "item_id": "instant_coffee",
+          "notes": "instant espresso powder works best"
+        },
+        {
+          "amount": 0.75,
+          "unit": "cup",
+          "item": "hot water",
+          "item_id": "hot_water"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "coffee liqueur",
+          "item_id": "coffee_liqueur"
+        },
+        {
+          "amount": 16,
+          "unit": "piece",
+          "item": "ladyfinger cookies"
+        },
+        {
+          "amount": 8,
+          "unit": "oz",
+          "item": "mascarpone cheese",
+          "item_id": "mascarpone"
+        },
+        {
+          "amount": 0.5,
+          "unit": "cup",
+          "item": "heavy cream",
+          "item_id": "heavy_cream"
+        },
+        {
+          "amount": 3,
+          "unit": "tbsp",
+          "item": "powdered sugar"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "cocoa powder",
+          "item_id": "cocoa_powder"
+        }
+      ],
+      "steps": [
+        "Dissolve 3 tbsp instant espresso in 3/4 cup hot water; stir in liqueur and cool.",
+        "Beat mascarpone, heavy cream, and powdered sugar until smooth and fluffy.",
+        "Dip ladyfingers briefly into espresso mixture and arrange in dish.",
+        "Spread half the cream, repeat with second layer of ladyfingers and cream.",
+        "Dust with cocoa powder and refrigerate."
+      ]
     }
-  ]
+  ],
+  "source": {
+    "type": "editorial",
+    "name": "StickyMilk Kitchen",
+    "platform": "Baking & Desserts"
+  }
 }

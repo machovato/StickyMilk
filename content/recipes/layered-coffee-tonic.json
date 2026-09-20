@@ -56,7 +56,89 @@
         "Garnish with lemon peel; stir only if you want it mixed."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 6
+      "prep_time_minutes": 6,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "provenance": "adapted",
+      "nespresso_system": "vertuo",
+      "caffeine_level": "full",
+      "servings": 1,
+      "prep_time_minutes": 4,
+      "difficulty": "easy",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 40,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo pod, brewed as a single shot",
+          "item_id": "nespresso_pod"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "tonic water",
+          "item_id": "tonic_water"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        }
+      ],
+      "steps": [
+        "Fill glass with ice and pour tonic water, leaving 1.5 inches at the rim.",
+        "Brew Nespresso pod as a single espresso shot.",
+        "Pour espresso gently over a spoon to float a distinct dark layer over the effervescent tonic."
+      ]
+    },
+    {
+      "channel": "instant",
+      "provenance": "adapted",
+      "caffeine_level": "full",
+      "servings": 1,
+      "prep_time_minutes": 3,
+      "difficulty": "easy",
+      "ingredients": [
+        {
+          "amount": 1.5,
+          "unit": "tsp",
+          "item": "instant coffee",
+          "item_id": "instant_coffee"
+        },
+        {
+          "amount": 1.5,
+          "unit": "oz",
+          "item": "cold water",
+          "item_id": "water"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "tonic water",
+          "item_id": "tonic_water"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        }
+      ],
+      "steps": [
+        "Dissolve instant coffee in 1.5 oz cold water.",
+        "Pour tonic water into an ice-filled glass.",
+        "Carefully float the coffee concentrate over the top."
+      ]
     }
-  ]
+  ],
+  "source": {
+    "type": "creator",
+    "name": "Barista Hustle",
+    "handle": "@baristahustle",
+    "platform": "Instagram"
+  }
 }

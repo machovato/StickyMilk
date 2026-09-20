@@ -57,7 +57,8 @@
         "Finish with a light dusting of cinnamon."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 5
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
     },
     {
       "channel": "nespresso",
@@ -101,7 +102,9 @@
         "Finish with a light dusting of cinnamon."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 5
+      "prep_time_minutes": 5,
+      "provenance": "original",
+      "nespresso_system": "vertuo"
     },
     {
       "channel": "instant",
@@ -148,7 +151,14 @@
         "Finish with a light dusting of cinnamon."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 5
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
     }
-  ]
+  ],
+  "source": {
+    "type": "vendor",
+    "name": "Nespresso",
+    "platform": "Nespresso Official Recipes",
+    "url": "https://www.nespresso.com/recipes"
+  }
 }

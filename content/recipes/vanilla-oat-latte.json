@@ -55,7 +55,8 @@
         "Add the hot oat milk and finish with cinnamon."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 5
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
     },
     {
       "channel": "nespresso",
@@ -98,7 +99,9 @@
         "Add the hot oat milk and finish with cinnamon."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 5
+      "prep_time_minutes": 5,
+      "provenance": "original",
+      "nespresso_system": "vertuo"
     },
     {
       "channel": "instant",
@@ -145,7 +148,14 @@
         "Pour into a mug, add the hot oat milk, and finish with cinnamon."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 5
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
     }
-  ]
+  ],
+  "source": {
+    "type": "vendor",
+    "name": "Nespresso & Oatly",
+    "platform": "Craft Barista Series",
+    "url": "https://www.nespresso.com/recipes"
+  }
 }

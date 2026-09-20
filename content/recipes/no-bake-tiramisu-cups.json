@@ -90,7 +90,125 @@
         "Chill 20 minutes and dust with cocoa."
       ],
       "difficulty": "medium",
-      "prep_time_minutes": 25
+      "prep_time_minutes": 25,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "provenance": "adapted",
+      "nespresso_system": "vertuo",
+      "caffeine_level": "full",
+      "servings": 2,
+      "yield_unit": "cups",
+      "prep_time_minutes": 15,
+      "difficulty": "easy",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 80,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Double Espresso pod",
+          "item_id": "nespresso_double_pod"
+        },
+        {
+          "amount": 6,
+          "unit": "piece",
+          "item": "ladyfinger cookies"
+        },
+        {
+          "amount": 4,
+          "unit": "oz",
+          "item": "mascarpone cheese",
+          "item_id": "mascarpone"
+        },
+        {
+          "amount": 0.25,
+          "unit": "cup",
+          "item": "heavy cream",
+          "item_id": "heavy_cream"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "powdered sugar"
+        },
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "item": "cocoa powder",
+          "item_id": "cocoa_powder"
+        }
+      ],
+      "steps": [
+        "Brew double espresso shot and cool to room temperature.",
+        "Whip mascarpone, heavy cream, and powdered sugar into a smooth cream.",
+        "Break ladyfingers into glass cups and spoon cooled espresso over each.",
+        "Top with mascarpone cream, dust with cocoa powder, and serve."
+      ]
+    },
+    {
+      "channel": "instant",
+      "provenance": "adapted",
+      "caffeine_level": "full",
+      "servings": 2,
+      "yield_unit": "cups",
+      "prep_time_minutes": 12,
+      "difficulty": "easy",
+      "ingredients": [
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "item": "instant coffee",
+          "item_id": "instant_coffee"
+        },
+        {
+          "amount": 3,
+          "unit": "oz",
+          "item": "hot water",
+          "item_id": "hot_water"
+        },
+        {
+          "amount": 6,
+          "unit": "piece",
+          "item": "ladyfinger cookies"
+        },
+        {
+          "amount": 4,
+          "unit": "oz",
+          "item": "mascarpone cheese",
+          "item_id": "mascarpone"
+        },
+        {
+          "amount": 0.25,
+          "unit": "cup",
+          "item": "heavy cream",
+          "item_id": "heavy_cream"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "powdered sugar"
+        },
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "item": "cocoa powder",
+          "item_id": "cocoa_powder"
+        }
+      ],
+      "steps": [
+        "Dissolve instant coffee in hot water and let cool.",
+        "Whisk mascarpone, cream, and sugar until thickened.",
+        "Break ladyfingers into two dessert cups and spoon coffee over them.",
+        "Layer cream over the soaked cookies and dust with cocoa powder."
+      ]
     }
-  ]
+  ],
+  "source": {
+    "type": "creator",
+    "name": "Pastry & Roast",
+    "handle": "@pastryandroast",
+    "platform": "TikTok"
+  }
 }

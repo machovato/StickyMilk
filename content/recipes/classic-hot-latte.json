@@ -50,7 +50,8 @@
         "Spoon the foam over the top."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 5
+      "prep_time_minutes": 5,
+      "provenance": "original"
     },
     {
       "channel": "nespresso",
@@ -88,7 +89,9 @@
         "Spoon the foam over the top."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 5
+      "prep_time_minutes": 5,
+      "provenance": "adapted",
+      "nespresso_system": "vertuo"
     },
     {
       "channel": "instant",
@@ -129,7 +132,14 @@
         "Spoon the foam over the top."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 5
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
     }
-  ]
+  ],
+  "source": {
+    "type": "vendor",
+    "name": "Cometeer",
+    "platform": "Cometeer Craft Library",
+    "url": "https://cometeer.com"
+  }
 }

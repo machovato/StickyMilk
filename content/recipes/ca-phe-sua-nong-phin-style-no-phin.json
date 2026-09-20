@@ -53,7 +53,94 @@
         "Taste; add 1 tsp more condensed milk if you want street-cart sweetness."
       ],
       "difficulty": "easy",
-      "prep_time_minutes": 4
+      "prep_time_minutes": 4,
+      "provenance": "tested"
+    },
+    {
+      "channel": "nespresso",
+      "provenance": "adapted",
+      "nespresso_system": "vertuo",
+      "caffeine_level": "full",
+      "servings": 1,
+      "prep_time_minutes": 4,
+      "difficulty": "easy",
+      "dietary": [
+        "decaf-friendly"
+      ],
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 80,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Double Espresso pod",
+          "item_id": "nespresso_double_pod",
+          "notes": "Double Espresso Scuro or Chiaro recommended"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "secondary_amount": 60,
+          "secondary_unit": "ml",
+          "item": "hot water",
+          "item_id": "hot_water"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "sweetened condensed milk",
+          "item_id": "sweetened_condensed_milk"
+        }
+      ],
+      "steps": [
+        "Add 2 tbsp sweetened condensed milk to the bottom of a heatproof glass mug.",
+        "Brew the Nespresso double espresso shot directly over the condensed milk.",
+        "Pour in 2 oz hot water to match traditional phin dilution.",
+        "Stir thoroughly with a spoon until the condensed milk is completely incorporated."
+      ]
+    },
+    {
+      "channel": "instant",
+      "provenance": "adapted",
+      "caffeine_level": "full",
+      "servings": 1,
+      "prep_time_minutes": 3,
+      "difficulty": "easy",
+      "dietary": [
+        "decaf-friendly"
+      ],
+      "ingredients": [
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "item": "instant coffee",
+          "item_id": "instant_coffee",
+          "notes": "dark roast for authentic bold profile"
+        },
+        {
+          "amount": 4,
+          "unit": "oz",
+          "item": "just-off-boil water",
+          "item_id": "just_off_boil_water"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "sweetened condensed milk",
+          "item_id": "sweetened_condensed_milk"
+        }
+      ],
+      "steps": [
+        "Add condensed milk to the bottom of your mug.",
+        "Dissolve the instant coffee in 4 oz just-off-boil water in a separate cup.",
+        "Pour the hot dark coffee over the condensed milk.",
+        "Stir vigorously until rich, velvety, and fully blended."
+      ]
     }
-  ]
+  ],
+  "source": {
+    "type": "editorial",
+    "name": "StickyMilk Kitchen",
+    "platform": "Vietnamese Heritage Series"
+  }
 }

@@ -73,7 +73,126 @@
         "Strain into a chilled cocktail glass."
       ],
       "difficulty": "medium",
-      "prep_time_minutes": 8
+      "prep_time_minutes": 8,
+      "provenance": "tested"
+    },
+    {
+      "channel": "nespresso",
+      "provenance": "adapted",
+      "nespresso_system": "vertuo",
+      "caffeine_level": "full",
+      "servings": 1,
+      "prep_time_minutes": 5,
+      "difficulty": "medium",
+      "equipment": [
+        "blender"
+      ],
+      "dietary": [
+        "contains-alcohol"
+      ],
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 80,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Double Espresso pod",
+          "item_id": "nespresso_double_pod"
+        },
+        {
+          "amount": 1.5,
+          "unit": "oz",
+          "item": "vodka",
+          "item_id": "vodka"
+        },
+        {
+          "amount": 1,
+          "unit": "oz",
+          "item": "coffee liqueur",
+          "item_id": "coffee_liqueur"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "sweetened condensed milk",
+          "item_id": "sweetened_condensed_milk"
+        },
+        {
+          "amount": 1.5,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        }
+      ],
+      "steps": [
+        "Brew double espresso shot and chill over a handful of ice cubes.",
+        "Add chilled espresso, vodka, coffee liqueur, condensed milk, and remaining ice into blender.",
+        "Blend on high until smooth and slushy.",
+        "Pour into martini glass and serve with a straw."
+      ]
+    },
+    {
+      "channel": "instant",
+      "provenance": "adapted",
+      "caffeine_level": "full",
+      "servings": 1,
+      "prep_time_minutes": 4,
+      "difficulty": "easy",
+      "equipment": [
+        "blender"
+      ],
+      "dietary": [
+        "contains-alcohol"
+      ],
+      "ingredients": [
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "item": "instant coffee",
+          "item_id": "instant_coffee"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "item": "cold water",
+          "item_id": "water"
+        },
+        {
+          "amount": 1.5,
+          "unit": "oz",
+          "item": "vodka",
+          "item_id": "vodka"
+        },
+        {
+          "amount": 1,
+          "unit": "oz",
+          "item": "coffee liqueur",
+          "item_id": "coffee_liqueur"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "sweetened condensed milk",
+          "item_id": "sweetened_condensed_milk"
+        },
+        {
+          "amount": 1.5,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        }
+      ],
+      "steps": [
+        "Dissolve instant coffee in 2 oz cold water.",
+        "Add to blender with vodka, coffee liqueur, condensed milk, and ice.",
+        "Blend until thick and frosty.",
+        "Pour into glass and garnish with coffee beans."
+      ]
     }
-  ]
+  ],
+  "source": {
+    "type": "editorial",
+    "name": "StickyMilk Nightcap",
+    "platform": "Signature Bar"
+  }
 }

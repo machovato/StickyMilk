@@ -4,10 +4,13 @@ import type {
   DietaryTag,
   Difficulty,
   IngredientScaling,
+  ProvenanceStatus,
   Recipe,
   RecipeFormat,
+  RecipeSource,
   RecipeStatus,
   RoastRecommendation,
+  SourceType,
   SweetnessLevel,
 } from "./types";
 import { CHANNEL_LABELS } from "./types";
@@ -53,7 +56,29 @@ export interface StepDraft {
   text: string;
 }
 
+export interface RecipeSourceDraft {
+  type: SourceType | "";
+  name: string;
+  handle: string;
+  platform: string;
+  url: string;
+}
+
+export function emptySourceDraft(): RecipeSourceDraft {
+  return {
+    type: "",
+    name: "",
+    handle: "",
+    platform: "",
+    url: "",
+  };
+}
+
 export interface PreparationDraft {
+  /** Provenance tier: original, adapted, or tested. */
+  provenance: ProvenanceStatus | "";
+  /** For Nespresso preparations: vertuo or original. */
+  nespresso_system: "vertuo" | "original" | "";
   /** "" means no recommendation — matches the "most preps have neither" default. */
   roast_recommendation: RoastRecommendation | "";
   /** Required alongside roast_recommendation, blank otherwise — see `Preparation.roast_note`. */
@@ -87,6 +112,7 @@ export interface RecipeDraft {
   flavor_notes: string;
   barista_note: string;
   status: RecipeStatus;
+  source: RecipeSourceDraft;
   tags: string[];
   sweetness_level: SweetnessLevel | "";
   preparations: Record<Channel, PreparationDraft | null>;
@@ -115,6 +141,8 @@ export function emptyStepDraft(): StepDraft {
 
 export function emptyPreparationDraft(): PreparationDraft {
   return {
+    provenance: "adapted",
+    nespresso_system: "",
     roast_recommendation: "",
     roast_note: "",
     tested_with: "",
@@ -138,6 +166,8 @@ export function emptyPreparationDraft(): PreparationDraft {
 export function clonePreparationDraft(p: PreparationDraft): PreparationDraft {
   return {
     ...p,
+    provenance: p.provenance,
+    nespresso_system: p.nespresso_system,
     equipment: [...p.equipment],
     dietary: [...p.dietary],
     barista_note: p.barista_note,
@@ -156,6 +186,7 @@ export function emptyRecipeDraft(): RecipeDraft {
     flavor_notes: "",
     barista_note: "",
     status: "draft",
+    source: emptySourceDraft(),
     tags: [],
     sweetness_level: "",
     preparations: { cometeer: emptyPreparationDraft(), nespresso: null, instant: null },
@@ -197,6 +228,11 @@ function ingredientToCandidate(ing: IngredientDraft) {
 function preparationToCandidate(channel: Channel, prep: PreparationDraft) {
   return {
     channel,
+    provenance: prep.provenance === "" ? undefined : prep.provenance,
+    nespresso_system:
+      channel === "nespresso" && prep.nespresso_system !== ""
+        ? prep.nespresso_system
+        : undefined,
     roast_recommendation: prep.roast_recommendation === "" ? undefined : prep.roast_recommendation,
     roast_note: undefinedIfBlank(prep.roast_note),
     tested_with: undefinedIfBlank(prep.tested_with),
@@ -226,6 +262,19 @@ export function draftToCandidate(draft: RecipeDraft): unknown {
     preparationToCandidate(c, draft.preparations[c] as PreparationDraft)
   );
 
+  const source =
+    draft.source &&
+    draft.source.name.trim() !== "" &&
+    draft.source.type !== ""
+      ? {
+          type: draft.source.type,
+          name: draft.source.name.trim(),
+          handle: undefinedIfBlank(draft.source.handle),
+          platform: undefinedIfBlank(draft.source.platform),
+          url: undefinedIfBlank(draft.source.url),
+        }
+      : undefined;
+
   return {
     slug: draft.slug.trim(),
     name: draft.name.trim(),
@@ -234,6 +283,7 @@ export function draftToCandidate(draft: RecipeDraft): unknown {
     flavor_notes: draft.flavor_notes.trim(),
     barista_note: undefinedIfBlank(draft.barista_note),
     status: draft.status,
+    source,
     tags: draft.tags,
     sweetness_level: draft.sweetness_level === "" ? undefined : draft.sweetness_level,
     preparations,
@@ -250,6 +300,8 @@ export function recipeToDraft(recipe: Recipe): RecipeDraft {
 
   for (const prep of recipe.preparations) {
     preparations[prep.channel] = {
+      provenance: prep.provenance ?? "",
+      nespresso_system: prep.nespresso_system ?? "",
       roast_recommendation: prep.roast_recommendation ?? "",
       roast_note: prep.roast_note ?? "",
       tested_with: prep.tested_with ?? "",
@@ -284,6 +336,16 @@ export function recipeToDraft(recipe: Recipe): RecipeDraft {
     };
   }
 
+  const source: RecipeSourceDraft = recipe.source
+    ? {
+        type: recipe.source.type,
+        name: recipe.source.name,
+        handle: recipe.source.handle ?? "",
+        platform: recipe.source.platform ?? "",
+        url: recipe.source.url ?? "",
+      }
+    : emptySourceDraft();
+
   return {
     name: recipe.name,
     slug: recipe.slug,
@@ -293,6 +355,7 @@ export function recipeToDraft(recipe: Recipe): RecipeDraft {
     flavor_notes: recipe.flavor_notes,
     barista_note: recipe.barista_note ?? "",
     status: recipe.status,
+    source,
     tags: [...recipe.tags],
     sweetness_level: recipe.sweetness_level,
     preparations,
