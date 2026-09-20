@@ -82,9 +82,14 @@ export function RecipeDetail({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Find condensed milk ingredient for the quick metric card
-  const condensedIngredient = prep?.ingredients.find((ing) =>
-    ing.item.toLowerCase().includes("condensed")
+  // Find primary sweetener or flavor component for the quick metric card
+  const primarySweetener = prep?.ingredients.find(
+    (ing) =>
+      ing.item_id === "sweetened_condensed_milk" ||
+      ing.item.toLowerCase().includes("condensed") ||
+      ing.item.toLowerCase().includes("syrup") ||
+      ing.item.toLowerCase().includes("sugar") ||
+      ing.item.toLowerCase().includes("butter")
   );
 
   return (
@@ -284,17 +289,17 @@ export function RecipeDetail({
                 </span>
               </div>
 
-              <div className="bg-white p-3 border-2 border-[#001ec0] flex flex-col">
-                <span className="font-mono text-[11px] text-[#001ec0] uppercase font-bold">
-                  Sweetened Condensed Milk
+              <div className="bg-white p-3 border border-[#1a130e]/10 flex flex-col justify-between">
+                <span className="font-mono text-[11px] text-[#7f756f] uppercase">
+                  Sweetness Profile
                 </span>
-                <span className="font-syne text-xl font-bold text-[#001ec0] mt-1">
-                  {condensedIngredient?.amount != null
-                    ? `${formatAmount(condensedIngredient.amount * scale)} ${condensedIngredient.unit ?? ""}`.trim()
-                    : "To taste"}
-                </span>
-                <span className="font-mono text-[10px] text-[#4d4540] mt-0.5">
+                <span className="font-syne text-xl font-bold text-[#1a130e] mt-1">
                   {SWEETNESS_LABELS[recipe.sweetness_level]}
+                </span>
+                <span className="font-mono text-[10px] text-[#7f756f] mt-0.5 truncate">
+                  {primarySweetener?.amount != null
+                    ? `${formatAmount(primarySweetener.amount * scale)} ${primarySweetener.unit ?? ""} ${primarySweetener.item}`.trim()
+                    : "Unsweetened base"}
                 </span>
               </div>
 
