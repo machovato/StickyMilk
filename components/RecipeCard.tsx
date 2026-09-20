@@ -8,11 +8,13 @@ import { SourceAttribution } from "./SourceAttribution";
 
 interface RecipeCardProps {
   recipe: Recipe;
-  channel: Channel;
+  channel: Channel | null;
 }
 
 export function RecipeCard({ recipe, channel }: RecipeCardProps) {
-  const prep = recipe.preparations.find((p) => p.channel === channel);
+  const prep = channel
+    ? recipe.preparations.find((p) => p.channel === channel)
+    : (recipe.preparations.find((p) => p.provenance === "original") || recipe.preparations[0]);
   const image = getRecipeImage(recipe.slug);
 
   // Category badge styling variant

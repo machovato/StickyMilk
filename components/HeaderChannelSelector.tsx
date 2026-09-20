@@ -30,6 +30,15 @@ const CHANNELS: ChannelOption[] = [
 export function HeaderChannelSelector() {
   const { defaultChannel, setDefaultChannel } = useChannel();
 
+  const handleToggle = (id: Channel) => {
+    if (defaultChannel === id) {
+      // De-select: nothing selected = "All Recipes"
+      setDefaultChannel(null);
+    } else {
+      setDefaultChannel(id);
+    }
+  };
+
   return (
     <div className="flex items-center bg-[#f3ede9] p-1 border border-[#1a130e]/15 shadow-sm">
       <span className="hidden sm:inline font-mono text-[10px] font-bold uppercase tracking-wider px-2 text-[#7f756f]">
@@ -42,8 +51,12 @@ export function HeaderChannelSelector() {
             <button
               key={id}
               type="button"
-              onClick={() => setDefaultChannel(id)}
-              title={hint}
+              onClick={() => handleToggle(id)}
+              title={
+                active
+                  ? `${label} active — click to de-select and show all recipes`
+                  : hint
+              }
               aria-pressed={active}
               className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1 font-mono text-xs uppercase font-bold tracking-tight transition-all cursor-pointer ${
                 active

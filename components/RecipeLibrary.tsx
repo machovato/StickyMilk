@@ -136,10 +136,10 @@ export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
         }
 
         // Active coffee system compatibility check
-        const prep = recipe.preparations.find(
-          (p) => p.channel === defaultChannel
-        );
-        if (onlyCompatible && !prep) return false;
+        const prep = defaultChannel
+          ? recipe.preparations.find((p) => p.channel === defaultChannel)
+          : (recipe.preparations.find((p) => p.provenance === "original") || recipe.preparations[0]);
+        if (defaultChannel && onlyCompatible && !prep) return false;
 
         // Sweetness filter
         if (
@@ -294,18 +294,20 @@ export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
               </span>
 
               {/* My Coffee Compatibility Lens Toggle */}
-              <button
-                type="button"
-                onClick={() => setOnlyCompatible((prev) => !prev)}
-                className={`ml-1 px-2.5 py-1 font-mono text-xs font-bold uppercase transition-all cursor-pointer border ${
-                  onlyCompatible
-                    ? "bg-[#1a130e] text-[#b8f600] border-[#1a130e] shadow-xs"
-                    : "bg-[#f8f2ee] text-[#7f756f] border-[#1a130e]/20 hover:text-[#1a130e]"
-                }`}
-                title={`Filter exclusively to drinks with an active ${CHANNEL_LABELS[defaultChannel]} formulation`}
-              >
-                {onlyCompatible ? `✓ ${CHANNEL_LABELS[defaultChannel].toUpperCase()} ONLY` : `+ FILTER FOR ${CHANNEL_LABELS[defaultChannel].toUpperCase()}`}
-              </button>
+              {defaultChannel && (
+                <button
+                  type="button"
+                  onClick={() => setOnlyCompatible((prev) => !prev)}
+                  className={`ml-1 px-2.5 py-1 font-mono text-xs font-bold uppercase transition-all cursor-pointer border ${
+                    onlyCompatible
+                      ? "bg-[#1a130e] text-[#b8f600] border-[#1a130e] shadow-xs"
+                      : "bg-[#f8f2ee] text-[#7f756f] border-[#1a130e]/20 hover:text-[#1a130e]"
+                  }`}
+                  title={`Filter exclusively to drinks with an active ${CHANNEL_LABELS[defaultChannel]} formulation`}
+                >
+                  {onlyCompatible ? `✓ ${CHANNEL_LABELS[defaultChannel].toUpperCase()} ONLY` : `+ FILTER FOR ${CHANNEL_LABELS[defaultChannel].toUpperCase()}`}
+                </button>
+              )}
             </div>
 
             <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">

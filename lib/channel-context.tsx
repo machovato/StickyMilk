@@ -10,17 +10,19 @@ import {
 import type { Channel } from "./types";
 
 const STORAGE_KEY = "stickymilk_default_channel";
-const DEFAULT_CHANNEL: Channel = "cometeer";
+const DEFAULT_CHANNEL: Channel | null = null;
 
 interface ChannelContextValue {
   /**
    * The visitor's stored default channel (anonymous: localStorage; a future
    * registered-user version would read/write User.default_channel instead —
    * this hook is the one place that swap would happen).
+   *
+   * When null: no coffee system is locked in (Nothing selected = "Show All").
    */
-  defaultChannel: Channel;
-  /** Silently overwrites the stored default — no confirmation, per spec. */
-  setDefaultChannel: (channel: Channel) => void;
+  defaultChannel: Channel | null;
+  /** Silently sets or clears (null) the stored default — no confirmation, per spec. */
+  setDefaultChannel: (channel: Channel | null) => void;
 }
 
 const ChannelContext = createContext<ChannelContextValue | null>(null);
@@ -29,10 +31,10 @@ function isChannel(value: string | null): value is Channel {
   return value === "cometeer" || value === "nespresso" || value === "instant";
 }
 
-function readStoredChannel(): Channel {
+function readStoredChannel(): Channel | null {
   try {
     const stored = window.localStorage.getItem(STORAGE_KEY);
-    return isChannel(stored) ? stored : DEFAULT_CHANNEL;
+    return isChannel(stored) ? stored : null;
   } catch {
     return DEFAULT_CHANNEL;
   }
@@ -46,18 +48,21 @@ function subscribe(onStoreChange: () => void) {
 }
 
 export function ChannelProvider({ children }: { children: ReactNode }) {
-  // No onboarding question — everyone starts on Cometeer on the server and
-  // on first client render, then useSyncExternalStore reconciles with
-  // whatever's actually in localStorage without an effect-driven setState.
+  // Fresh visitors start on null ("Show All"), then useSyncExternalStore
+  // reconciles with whatever's actually stored in localStorage.
   const defaultChannel = useSyncExternalStore(
     subscribe,
     readStoredChannel,
     () => DEFAULT_CHANNEL
   );
 
-  const setDefaultChannel = useCallback((channel: Channel) => {
+  const setDefaultChannel = useCallback((channel: Channel | null) => {
     try {
-      window.localStorage.setItem(STORAGE_KEY, channel);
+      if (channel) {
+        window.localStorage.setItem(STORAGE_KEY, channel);
+      } else {
+        window.localStorage.removeItem(STORAGE_KEY);
+      }
     } catch {
       // best-effort only
     }

@@ -34,7 +34,15 @@ export function RecipeDetail({
   isAdmin?: boolean;
 }) {
   const { defaultChannel, setDefaultChannel } = useChannel();
-  const channel = defaultChannel;
+  const [activeChannelOverride, setActiveChannelOverride] = useState<Channel | null>(null);
+
+  const originalPrepChannel =
+    recipe.preparations.find((p) => p.provenance === "original")?.channel ||
+    recipe.preparations[0]?.channel ||
+    "cometeer";
+
+  const channel: Channel =
+    activeChannelOverride || defaultChannel || originalPrepChannel;
 
   const [scale, setScale] = useState(1);
   const [copied, setCopied] = useState(false);
@@ -231,6 +239,51 @@ export function RecipeDetail({
             </div>
           )}
 
+        </div>
+      </div>
+
+      {/* Hardware System Switcher Tabs */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-[#1a130e] text-white p-3 sm:p-4 border border-black shadow-sm">
+        <div className="flex items-center gap-2">
+          <span className="w-2.5 h-2.5 bg-[#b8f600]" />
+          <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#b8f600]">
+            HARDWARE SYSTEM:
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5 flex-wrap">
+          {(["cometeer", "nespresso", "instant"] as Channel[]).map((c) => {
+            const hasPrep = recipe.preparations.some((p) => p.channel === c);
+            const isSelected = channel === c;
+            const p = recipe.preparations.find((p) => p.channel === c);
+            return (
+              <button
+                key={c}
+                type="button"
+                onClick={() => setActiveChannelOverride(c)}
+                disabled={!hasPrep}
+                className={`flex items-center gap-2 px-3 py-1.5 font-mono text-xs font-bold uppercase tracking-tight transition-all cursor-pointer border ${
+                  isSelected
+                    ? "bg-[#b8f600] text-[#1a130e] border-[#b8f600] shadow-sm"
+                    : hasPrep
+                    ? "bg-[#2a211a] text-white border-white/20 hover:border-white/50"
+                    : "bg-[#1a130e] text-white/40 border-white/10 opacity-60 cursor-not-allowed"
+                }`}
+              >
+                <span>{CHANNEL_LABELS[c]}</span>
+                {p?.provenance === "original" && (
+                  <span
+                    className={`text-[9px] px-1 py-0.2 font-mono uppercase font-bold ${
+                      isSelected
+                        ? "bg-[#1a130e] text-[#b8f600]"
+                        : "bg-[#b8f600] text-[#1a130e]"
+                    }`}
+                  >
+                    ORIGINAL
+                  </span>
+                )}
+              </button>
+            );
+          })}
         </div>
       </div>
 
