@@ -1,0 +1,253 @@
+{
+  "slug": "cookie-butter-cloud-latte",
+  "name": "Cookie Butter Cloud Latte",
+  "format": "iced",
+  "flavor_notes": "Velvety spiced speculoos cookie butter cold foam layered over chilled espresso and sweet vanilla iced milk.",
+  "barista_note": "Cookie butter is dense at room temp. Microwave it for 8–10 seconds before adding the heavy cream so the handheld frother emulsifies it into an airy cloud instead of leaving heavy clumps at the bottom.",
+  "status": "needs_testing",
+  "tags": [
+    "iced",
+    "cookie-butter",
+    "cold-foam",
+    "sweet-treat",
+    "copycat"
+  ],
+  "sweetness_level": "rich_sweet",
+  "source": {
+    "type": "creator",
+    "name": "Sofia H. | Fifi’s Coffee Bar",
+    "handle": "@sofia_hrdz",
+    "platform": "TikTok",
+    "url": "https://www.tiktok.com/@sofia_hrdz/video/7571593188838755614"
+  },
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "tested_with": "Counter Culture Big Trouble or Joe Coffee The Daily",
+      "roast_recommendation": "medium",
+      "roast_note": "Caramel-forward, nutty medium roast that balances speculoos spices without overpowering the foam.",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "prep_time_minutes": 4,
+      "difficulty": "easy",
+      "equipment": [
+        "handheld milk frother"
+      ],
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, fully melted and chilled",
+          "item_id": "cometeer_capsule"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        },
+        {
+          "amount": 4,
+          "unit": "oz",
+          "item": "cold whole milk",
+          "item_id": "milk"
+        },
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "item": "vanilla syrup",
+          "item_id": "vanilla_syrup"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "Speculoos / Lotus Biscoff cookie butter"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "heavy cream",
+          "item_id": "heavy_cream"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "cold whole milk (for cold foam)",
+          "item_id": "milk"
+        },
+        {
+          "amount": 1,
+          "unit": "cookie",
+          "item": "crushed Biscoff cookie",
+          "optional": true
+        }
+      ],
+      "steps": [
+        "Defrost the Cometeer capsule completely and chill before pouring.",
+        "In a small frothing cup, warm 1 tbsp cookie butter for 8–10 seconds to soften. Add 2 tbsp heavy cream and 1 tbsp cold milk, then froth with a handheld frother until thick and airy.",
+        "Fill a serving glass with ice, add 2 tsp vanilla syrup and 4 oz cold whole milk, and stir.",
+        "Pour the chilled Cometeer extract directly over the iced milk.",
+        "Float the cookie butter cloud foam over top and garnish with crushed Biscoff cookie crumbs."
+      ],
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "tested_with": "Nespresso Double Espresso Chiaro (Vertuo 80ml)",
+      "roast_recommendation": "medium",
+      "roast_note": "Toasted cereal and biscuit notes in Double Espresso Chiaro pair seamlessly with spiced speculoos.",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "prep_time_minutes": 4,
+      "difficulty": "easy",
+      "equipment": [
+        "handheld milk frother"
+      ],
+      "nespresso_system": "vertuo",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 80,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Double Espresso pod (Chiaro or Scuro)",
+          "item_id": "nespresso_double_pod"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        },
+        {
+          "amount": 3,
+          "unit": "oz",
+          "item": "cold whole milk",
+          "item_id": "milk"
+        },
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "item": "vanilla syrup",
+          "item_id": "vanilla_syrup"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "Speculoos / Lotus Biscoff cookie butter"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "heavy cream",
+          "item_id": "heavy_cream"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "cold whole milk (for cold foam)",
+          "item_id": "milk"
+        },
+        {
+          "amount": 1,
+          "unit": "cookie",
+          "item": "crushed Biscoff cookie",
+          "optional": true
+        }
+      ],
+      "steps": [
+        "In a small frothing cup, warm 1 tbsp cookie butter for 8–10 seconds to soften. Add 2 tbsp heavy cream and 1 tbsp cold milk, then froth with a handheld frother until thick and velvety.",
+        "Fill a serving glass with ice, then add 2 tsp vanilla syrup and 3 oz cold whole milk. Stir gently.",
+        "Brew the Vertuo Double Espresso pod directly over ice in a separate cup to rapidly chill (or brew directly into the glass).",
+        "Pour the chilled espresso over the iced vanilla milk.",
+        "Crown with the cookie butter cloud foam and sprinkle crushed Biscoff cookie crumbs on top."
+      ],
+      "provenance": "adapted"
+    },
+    {
+      "channel": "instant",
+      "tested_with": "Nescafé Gold Espresso or Medaglia d'Oro",
+      "roast_recommendation": "medium",
+      "roast_note": "A smooth, nutty medium instant roast lets the spiced speculoos and brown-sugar flavors shine.",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "prep_time_minutes": 5,
+      "difficulty": "easy",
+      "equipment": [
+        "handheld milk frother"
+      ],
+      "ingredients": [
+        {
+          "amount": 1.5,
+          "unit": "tsp",
+          "item": "instant espresso",
+          "item_id": "instant_coffee"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "secondary_amount": 60,
+          "secondary_unit": "ml",
+          "item": "hot water",
+          "item_id": "hot_water"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice"
+        },
+        {
+          "amount": 4,
+          "unit": "oz",
+          "item": "cold whole milk",
+          "item_id": "milk"
+        },
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "item": "vanilla syrup",
+          "item_id": "vanilla_syrup"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "Speculoos / Lotus Biscoff cookie butter"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "heavy cream",
+          "item_id": "heavy_cream"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "cold whole milk (for cold foam)",
+          "item_id": "milk"
+        },
+        {
+          "amount": 1,
+          "unit": "cookie",
+          "item": "crushed Biscoff cookie",
+          "optional": true
+        }
+      ],
+      "steps": [
+        "In a small frothing cup, warm 1 tbsp cookie butter in the microwave for 8–10 seconds to soften.",
+        "Add 2 tbsp heavy cream and 1 tbsp cold milk to the warm cookie butter. Froth with a handheld milk frother for 20–30 seconds until a thick, airy 'cloud' foam forms.",
+        "In a small cup, stir 1.5 tsp instant espresso into 2 oz hot water until completely dissolved.",
+        "Fill a serving glass with ice, then add 2 tsp vanilla syrup and 4 oz cold whole milk. Stir to blend.",
+        "Pour the dissolved espresso over the iced milk.",
+        "Spoon or pour the cookie butter cloud foam over top, and finish with crushed Biscoff cookie crumbs."
+      ],
+      "provenance": "original"
+    }
+  ]
+}
