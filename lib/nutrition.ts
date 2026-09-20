@@ -18,8 +18,8 @@ interface MacroItem {
 }
 
 /**
- * Standard USDA & manufacturer verified nutritional benchmarks for specialty
- * coffee and condensed milk formulations.
+ * Practical nutritional estimates based on standard ingredient package labels
+ * (whole milk, sweetened condensed milk, and coffee formats).
  */
 const INGREDIENT_BENCHMARKS: Record<string, MacroItem> = {
   sweetened_condensed_milk: {
@@ -154,7 +154,7 @@ const INGREDIENT_BENCHMARKS: Record<string, MacroItem> = {
     sugar_g: 0,
     fat_g: 0,
     protein_g: 0.5,
-    caffeine_mg: 130,
+    caffeine_mg: 180,
   },
   cometeer_decaf_capsule: {
     baseUnit: "capsule",
@@ -215,7 +215,7 @@ function getUnitMultiplier(fromUnit: string | undefined, toUnit: string): number
 }
 
 /**
- * Deterministically calculates macros and caffeine for a preparation.
+ * Estimates macros and caffeine for a preparation.
  * Scales dynamically with the portion multiplier (1x, 2x, 4x).
  */
 export function calculateNutrition(

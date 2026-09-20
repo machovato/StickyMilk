@@ -459,7 +459,7 @@ export function RecipeDetail({
                 ) : null}
               </div>
 
-              {/* WIIFM (What's In It For Me) Nutrition & Bio-metrics */}
+              {/* Per-Serving Caffeine & Sugar Profile */}
               <NutritionBreakdown prep={prep} scale={scale} />
             </div>
           </div>
