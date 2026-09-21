@@ -77,14 +77,6 @@ export default function RootLayout({
                 >
                   Recipe Vault
                 </Link>
-                <div className="hidden lg:flex items-center gap-2">
-                  <span className="font-mono text-[11px] font-bold uppercase tracking-widest px-2 py-1 bg-[#b8f600] text-[#141f00]">
-                    v2.4
-                  </span>
-                  <span className="font-mono text-[11px] uppercase tracking-wider text-[#4d4540]">
-                    Multi-Channel Coffee
-                  </span>
-                </div>
                 <AdminHeaderControls />
               </div>
             </div>

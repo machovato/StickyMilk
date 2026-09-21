@@ -3,7 +3,23 @@
   "name": "Classic Iced Latte",
   "format": "iced",
   "flavor_notes": "Cold, creamy milk with a bright, caramel-toned coffee finish.",
-  "status": "draft",
+  "status": "verified",
+  "review": {
+    "score": 8.8,
+    "verdict": "The daily baseline. Clean, unfussy, zero sugar. If using oat milk, grab barista edition or it separates instantly over ice.",
+    "tested_date": "2026-09-20",
+    "tester": "Tony Melendez",
+    "channel_scores": {
+      "cometeer": 9.2,
+      "nespresso": 8.8,
+      "instant": 7.5
+    },
+    "channel_verdicts": {
+      "cometeer": "Onyx Southern Weather extract provides exceptional café-level sweetness and body.",
+      "nespresso": "Pull a single espresso shot over ice-cold milk; a double can overwhelm a 6oz glass.",
+      "instant": "Needs 2 tsp dissolved in only 1 oz hot water so you don't over-dilute the cold milk."
+    }
+  },
   "tags": [
     "iced",
     "summer",

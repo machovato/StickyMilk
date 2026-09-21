@@ -831,13 +831,22 @@ instead of a number.
         `MY COFFEE TODAY: [ COMETEER | NESPRESSO | INSTANT | ALL SYSTEMS ]` selector
         wired to `useChannel()`.
      2. *The Hero (Current Obsession):* Lead drink (*Cà Phê Sữa Đá*) featuring
-        Tony's 10-point test kitchen score & unvarnished verdict, macro nutrition
-        nuggets, and 1-click `[ BREW THIS RECIPE → ]` button.
-     3. *The Translator CTA Strip:* High-voltage brutalist callout for
-        `TRANSLATE FOR MY COFFEE` with interactive reel paste input and action button.
-     4. *Counter Flight (4 Cards) + Vault Handoff:* 4 curated, non-redundant cards
-        dynamically filtered by active hardware, followed by a high-contrast
-        `[ BROWSE ALL 22 RECIPES IN THE VAULT → ]` banner.
+        Tony's 10-point test kitchen score & unvarnished verdict with culinary teeth,
+        explicit `/ SERVING` nutrition chips, and hardware-aware CTA
+        (`MAKE THIS WITH VERTUO →` / `COMETEER` / `INSTANT`).
+     3. *The Translator CTA Strip:* Visceral user-outcome language
+        (*"SAW A DRINK YOU WANT? MAKE IT WITH YOUR COFFEE."*) with a high-contrast
+        pure white URL paste box and explicit attribution footnote.
+     4. *Counter Flight (3 Cards, Not 4) + Vault Handoff:* Dropped cramped 4-card
+        grid to 3 breathing cards delivering clear flavor range (Creator Hit from
+        @CoffeeGal2008, House Indulgence, and Clean Morning Baseline) with Tony's
+        unvarnished pull-quotes visible on every card, followed by the sole
+        `[ BROWSE ALL 22 DRINKS IN THE VAULT → ]` handoff banner.
+   - **Surgical Polish & Dialect Hygiene:**
+     - De-duplicated the hardware selector: `HeaderChannelSelector` conditionally
+       hides on `/` to let the on-page counter bar lead, while remaining active across all subpages.
+     - Stripped out all builder jargon (`LEAD DRINK SPEC`, `HARDWARE CALIBRATION`,
+       `100% PARITY`, `SPRINT 4`, `V2.4`, unauthenticated `Admin Login` in footer chrome).
    - **Translator Staging Route (`/translate`):** Added a dedicated staging page
      explaining the 3 translation superpowers (Hardware brew math, Nutritional
      reality check, Kitchen mise en place) with video URL intake ready for Sprint 4.

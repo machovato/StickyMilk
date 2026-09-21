@@ -71,7 +71,7 @@ export async function Footer() {
               >
                 Recipe Vault (All Drinks)
               </Link>
-              {isAuth ? (
+              {isAuth && (
                 <>
                   <Link
                     href="/recipes/new"
@@ -88,13 +88,6 @@ export async function Footer() {
                     </button>
                   </form>
                 </>
-              ) : (
-                <Link
-                  href="/admin/login"
-                  className="text-[#7f756f] hover:text-[#1d1b19] transition-colors"
-                >
-                  Admin Login
-                </Link>
               )}
               <p className="text-[#7f756f] text-[11px] pt-1">
                 {CHANNEL_ORDER.map((c) => CHANNEL_LABELS[c]).join(" · ")}
