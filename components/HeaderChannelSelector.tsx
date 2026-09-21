@@ -1,8 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import type { Channel } from "@/lib/types";
-import { CHANNEL_LABELS } from "@/lib/types";
 import { useChannel } from "@/lib/channel-context";
 
 interface ChannelOption {
@@ -30,39 +28,15 @@ const CHANNELS: ChannelOption[] = [
 ];
 
 export function HeaderChannelSelector() {
-  const pathname = usePathname();
   const { defaultChannel, setDefaultChannel } = useChannel();
 
   const handleToggle = (id: Channel) => {
     if (defaultChannel === id) {
-      setDefaultChannel(null);
+      setDefaultChannel(null); // Click active toggles off: show all recipes
     } else {
       setDefaultChannel(id);
     }
   };
-
-  // On the homepage (/), the page itself prominently features the full MY COFFEE TODAY
-  // declaration bar. To avoid duplicate controls in the viewport, the header only renders
-  // a compact active-status pill if a system is selected, or stays clean if none is.
-  if (pathname === "/") {
-    if (!defaultChannel) return null;
-    return (
-      <div className="hidden sm:flex items-center gap-2 bg-[#1a130e] text-white px-3 py-1 border border-black shadow-sm">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#b8f600]" aria-hidden="true" />
-        <span className="font-mono text-xs uppercase font-bold tracking-tight">
-          {CHANNEL_LABELS[defaultChannel]} ACTIVE
-        </span>
-        <button
-          type="button"
-          onClick={() => setDefaultChannel(null)}
-          title="Clear coffee selection"
-          className="text-[#a89e97] hover:text-[#b8f600] font-mono text-xs ml-1 cursor-pointer"
-        >
-          [×]
-        </button>
-      </div>
-    );
-  }
 
   return (
     <div className="flex items-center bg-[#f3ede9] p-1 border border-[#1a130e]/15 shadow-sm">
@@ -79,7 +53,7 @@ export function HeaderChannelSelector() {
               onClick={() => handleToggle(id)}
               title={
                 active
-                  ? `${label} active — click to show all recipes`
+                  ? `${label} active — click to reset and show all systems`
                   : hint
               }
               aria-pressed={active}

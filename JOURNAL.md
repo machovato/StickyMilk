@@ -842,14 +842,23 @@ instead of a number.
         @CoffeeGal2008, House Indulgence, and Clean Morning Baseline) with Tony's
         unvarnished pull-quotes visible on every card, followed by the sole
         `[ BROWSE ALL 22 DRINKS IN THE VAULT → ]` handoff banner.
-   - **Surgical Polish & Dialect Hygiene:**
-     - De-duplicated the hardware selector: `HeaderChannelSelector` conditionally
-       hides on `/` to let the on-page counter bar lead, while remaining active across all subpages.
-     - Stripped out all builder jargon (`LEAD DRINK SPEC`, `HARDWARE CALIBRATION`,
-       `100% PARITY`, `SPRINT 4`, `V2.4`, unauthenticated `Admin Login` in footer chrome).
-   - **Translator Staging Route (`/translate`):** Added a dedicated staging page
-     explaining the 3 translation superpowers (Hardware brew math, Nutritional
-     reality check, Kitchen mise en place) with video URL intake ready for Sprint 4.
+   - **The Selector as the App's Global Lever:** Recognized that `MY COFFEE` is an
+     app-level setting rather than page content. Restored the full tactile selector
+     (`MY COFFEE: [ COMETEER | NESPRESSO | INSTANT ]`) permanently in the sticky
+     top header across all routes. Removed the redundant duplicate black box and blue banner
+     from the homepage hero, instantly saving ~140px of vertical space.
+   - **Unified Above-the-Fold Hero Narrative (Option 2):**
+     Restructured the top fold into a single cohesive narrative:
+     1. *Left Column (~57%):* The thesis (*"You saw a coffee drink you want..."*)
+        flowing directly into the editorial transition (*"Like turning an espresso-bar
+        affogato into a two-minute kitchen win with whatever coffee is on your counter"*).
+     2. *Right Column (~43%):* The Proof of Life anchored on Intelligentsia's
+        *Black Cat Affogato* (`★ 9.4 / 10`), complete with photo, Tony's unvarnished
+        verdict (*"High-fat vanilla bean gelato is mandatory — cheap ice cream dissolves
+        into lukewarm soup before you grab a spoon"*), hardware-aware CTA, and live macro chips.
+     3. *Natural Flow:* The visitor reads the promise, sees the affogato, sets their machine
+        in the header, and watches the affogato update its brew instructions and CTA—all
+        above the fold on a standard 1080p viewport without scrolling.
 
 ---
 

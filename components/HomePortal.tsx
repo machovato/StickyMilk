@@ -9,41 +9,26 @@ import {
   Star,
 } from "@phosphor-icons/react";
 import type { Recipe, Channel } from "@/lib/types";
-import { CHANNEL_LABELS, FORMAT_LABELS, SWEETNESS_LABELS } from "@/lib/types";
+import { CHANNEL_LABELS, FORMAT_LABELS } from "@/lib/types";
 import { useChannel } from "@/lib/channel-context";
 import { getRecipeImage } from "@/lib/recipe-images";
 import { calculateNutrition } from "@/lib/nutrition";
 import { BARISTA_DIFF } from "@/lib/barista-diff";
-import { ProvenanceBadge } from "./ProvenanceBadge";
 
 interface HomePortalProps {
   recipes: Recipe[];
 }
 
-const CHANNEL_OPTIONS: { id: Channel; label: string; desc: string }[] = [
-  {
-    id: "cometeer",
-    label: "Cometeer",
-    desc: "Frozen Liquid Extract",
-  },
-  {
-    id: "nespresso",
-    label: "Nespresso",
-    desc: "Vertuo Espresso",
-  },
-  {
-    id: "instant",
-    label: "Instant",
-    desc: "Specialty Soluble",
-  },
-];
-
 export function HomePortal({ recipes }: HomePortalProps) {
-  const { defaultChannel, setDefaultChannel } = useChannel();
+  const { defaultChannel } = useChannel();
   const [translatorUrl, setTranslatorUrl] = useState("");
 
-  // Select the lead hero recipe based on the active hardware selection
+  // Hero Lead Drink is anchored on the Black Cat Affogato as the prime proof-of-life,
+  // or adapts to the highest scored drink for an active channel.
   const heroRecipe = useMemo(() => {
+    const affogato = recipes.find((r) => r.slug === "black-cat-affogato");
+    if (affogato) return affogato;
+
     if (defaultChannel) {
       const candidates = [...recipes].filter((r) =>
         r.preparations.some((p) => p.channel === defaultChannel)
@@ -53,18 +38,12 @@ export function HomePortal({ recipes }: HomePortalProps) {
           a.review?.channel_scores?.[defaultChannel] ?? a.review?.score ?? 0;
         const scoreB =
           b.review?.channel_scores?.[defaultChannel] ?? b.review?.score ?? 0;
-        if (scoreA !== scoreB) return scoreB - scoreA;
-        if (a.featured && !b.featured) return -1;
-        if (!a.featured && b.featured) return 1;
-        return a.name.localeCompare(b.name);
+        return scoreB - scoreA;
       });
       return candidates[0] || recipes[0];
     }
 
-    // Default overall: highest review score
-    const withReview = [...recipes].filter((r) => r.review != null);
-    withReview.sort((a, b) => (b.review?.score ?? 0) - (a.review?.score ?? 0));
-    return withReview[0] || recipes[0];
+    return recipes[0];
   }, [recipes, defaultChannel]);
 
   // Lead preparation for the hero drink
@@ -89,16 +68,16 @@ export function HomePortal({ recipes }: HomePortalProps) {
   const heroScore =
     (defaultChannel && heroRecipe?.review?.channel_scores?.[defaultChannel]) ??
     heroRecipe?.review?.score ??
-    9.8;
+    9.4;
   const heroVerdict =
     (defaultChannel &&
       heroRecipe?.review?.channel_verdicts?.[defaultChannel]) ||
     heroRecipe?.review?.verdict ||
     heroRecipe?.flavor_notes;
 
-  // 3 Curated Counter Flight Cards with clear flavor range & creator spotlight
+  // 3 Curated Counter Flight Cards with clear flavor range & creator spotlight:
   // 1. Creator Hit (e.g. Cookie Butter Cloud Latte by @CoffeeGal2008)
-  // 2. Savory / Indulgent Favorite (e.g. Salted Caramel Iced Latte or Black Cat Affogato)
+  // 2. Cult Classic / House Benchmark (e.g. Cà Phê Sữa Đá by Nguyen Coffee Supply)
   // 3. Clean Everyday Morning Baseline (e.g. Classic Iced Latte, zero sugar)
   const flightRecipes = useMemo(() => {
     const available = recipes.filter((r) => r.slug !== heroRecipe?.slug);
@@ -112,11 +91,11 @@ export function HomePortal({ recipes }: HomePortalProps) {
       compatible.find((r) => r.slug === "cookie-butter-cloud-latte") ||
       compatible[0];
 
-    const houseFav =
+    const houseClassic =
       compatible.find(
         (r) =>
           r.slug !== creatorHit?.slug &&
-          (r.slug === "salted-caramel-iced-latte" || r.slug === "black-cat-affogato")
+          (r.slug === "ca-phe-sua-da" || r.slug === "salted-caramel-iced-latte")
       ) ||
       compatible.find((r) => r.slug !== creatorHit?.slug && r.review != null) ||
       compatible[1];
@@ -125,14 +104,14 @@ export function HomePortal({ recipes }: HomePortalProps) {
       compatible.find(
         (r) =>
           r.slug !== creatorHit?.slug &&
-          r.slug !== houseFav?.slug &&
+          r.slug !== houseClassic?.slug &&
           (r.slug === "classic-iced-latte" || r.slug === "vanilla-oat-latte" || r.sweetness_level === "none")
       ) ||
       compatible.find(
-        (r) => r.slug !== creatorHit?.slug && r.slug !== houseFav?.slug
+        (r) => r.slug !== creatorHit?.slug && r.slug !== houseClassic?.slug
       );
 
-    const list = [creatorHit, houseFav, everyday].filter(
+    const list = [creatorHit, houseClassic, everyday].filter(
       (r): r is Recipe => Boolean(r)
     );
 
@@ -147,18 +126,6 @@ export function HomePortal({ recipes }: HomePortalProps) {
 
     return list.slice(0, 3);
   }, [recipes, heroRecipe?.slug, defaultChannel]);
-
-  const handleChannelSelect = (channel: Channel) => {
-    if (defaultChannel === channel) {
-      setDefaultChannel(null); // Click active toggles off
-    } else {
-      setDefaultChannel(channel);
-    }
-  };
-
-  const handleClearChannel = () => {
-    setDefaultChannel(null);
-  };
 
   const handleTranslatorSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -195,315 +162,212 @@ export function HomePortal({ recipes }: HomePortalProps) {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10 flex flex-col gap-10 sm:gap-14 text-left">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 flex flex-col gap-10 sm:gap-14 text-left">
       {/* =========================================================================
-          BLOCK 1: The Promise & Hardware Declaration Strip
+          UNIFIED ABOVE-THE-FOLD HERO: The Promise + The Affogato Obsession
           ========================================================================= */}
-      <section className="flex flex-col gap-6">
-        {/* Editorial Value Proposition */}
-        <div className="flex flex-col gap-3">
-          <div className="flex items-center gap-2.5">
-            <span className="w-2.5 h-2.5 bg-[#b8f600] border border-[#1a130e]/30 inline-block" />
-            <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#001ec0]">
-              MULTI-CHANNEL COFFEE DIRECTORY
-            </span>
-          </div>
-
-          <h1 className="font-syne text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#1a130e] tracking-tight leading-[1.08] max-w-4xl">
-            You saw a coffee drink you want.
-            <br />
-            <span className="text-[#001ec0]">
-              StickyMilk shows you how to make it with the coffee you have.
-            </span>
-          </h1>
-
-          <p className="font-mono text-xs sm:text-sm text-[#7f756f] uppercase tracking-wider font-semibold pt-1">
-            COMETEER · NESPRESSO VERTUO · SPECIALTY INSTANT
-          </p>
-        </div>
-
-        {/* Hardware Declaration Strip */}
-        <div className="bg-[#1a130e] text-white p-4 sm:p-5 border-2 border-black shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4 mt-2">
-          <div className="flex items-center gap-2">
-            <Coffee size={20} weight="fill" className="text-[#b8f600]" />
-            <span className="font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-white">
-              MY COFFEE TODAY:
-            </span>
-          </div>
-
-          {/* 4 Interactive Selector Buttons */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full md:w-auto">
-            {CHANNEL_OPTIONS.map(({ id, label, desc }) => {
-              const active = defaultChannel === id;
-              return (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => handleChannelSelect(id)}
-                  aria-pressed={active}
-                  className={`flex flex-col items-center justify-center px-4 py-2.5 border transition-all cursor-pointer text-center ${
-                    active
-                      ? "bg-[#b8f600] text-[#141f00] border-[#b8f600] font-bold shadow-[0_0_12px_rgba(184,246,0,0.35)]"
-                      : "bg-[#221a15] text-[#d1c4bd] border-white/15 hover:border-white/40 hover:text-white"
-                  }`}
-                >
-                  <span className="font-mono text-xs uppercase font-extrabold tracking-tight">
-                    {active ? `● ${label}` : label}
-                  </span>
-                  <span
-                    className={`font-mono text-[10px] tracking-tight mt-0.5 ${
-                      active ? "text-[#141f00]/80" : "text-[#7f756f]"
-                    }`}
-                  >
-                    {desc}
-                  </span>
-                </button>
-              );
-            })}
-
-            {/* "All Systems" Button */}
-            <button
-              type="button"
-              onClick={handleClearChannel}
-              aria-pressed={defaultChannel === null}
-              className={`flex flex-col items-center justify-center px-4 py-2.5 border transition-all cursor-pointer text-center ${
-                defaultChannel === null
-                  ? "bg-white text-[#1a130e] border-white font-bold shadow-sm"
-                  : "bg-[#221a15] text-[#d1c4bd] border-white/15 hover:border-white/40 hover:text-white"
-              }`}
-            >
-              <span className="font-mono text-xs uppercase font-extrabold tracking-tight">
-                {defaultChannel === null ? "● ALL SYSTEMS" : "ALL SYSTEMS"}
-              </span>
-              <span
-                className={`font-mono text-[10px] tracking-tight mt-0.5 ${
-                  defaultChannel === null ? "text-[#1a130e]/70" : "text-[#7f756f]"
-                }`}
-              >
-                Show All
-              </span>
-            </button>
-          </div>
-        </div>
-
-        {/* Active System Notification Feedback */}
-        {defaultChannel && (
-          <div className="flex items-center justify-between px-4 py-2.5 bg-[#edf0ff] border border-[#001ec0]/20 text-[#001ec0] font-mono text-xs">
-            <span>
-              Showing recipes, test kitchen reviews, and brew instructions calibrated for{" "}
-              <strong>{CHANNEL_LABELS[defaultChannel]}</strong>.
-            </span>
-            <button
-              type="button"
-              onClick={handleClearChannel}
-              className="underline hover:text-[#1a130e] font-bold cursor-pointer ml-3"
-            >
-              Reset to All Systems
-            </button>
-          </div>
-        )}
-      </section>
-
-      {/* =========================================================================
-          BLOCK 2: The Hero: Current Obsession (Lead Centerpiece Drink)
-          ========================================================================= */}
-      {heroRecipe && (
-        <section className="flex flex-col gap-3">
-          <div className="flex items-center justify-between border-b-2 border-[#1a130e] pb-2">
+      <section className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+        {/* Left Column: The Narrative & Core Proposition (~57% width) */}
+        <div className="lg:col-span-7 flex flex-col justify-between gap-6 py-1">
+          <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
-              <Sparkle size={18} weight="fill" className="text-[#001ec0]" />
-              <span className="font-mono text-xs font-bold uppercase tracking-wider text-[#1a130e]">
-                TONY&apos;S CURRENT OBSESSION // TEST KITCHEN REVIEW
+              <span className="w-2.5 h-2.5 bg-[#b8f600] border border-[#1a130e]/30 inline-block" />
+              <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#001ec0]">
+                MULTI-CHANNEL COFFEE DIRECTORY
               </span>
             </div>
-            <span className="font-mono text-xs font-bold uppercase text-[#001ec0]">
-              {defaultChannel
-                ? `TOP ${CHANNEL_LABELS[defaultChannel].toUpperCase()} PICK`
-                : "TONY'S PICK"}
-            </span>
+
+            <h1 className="font-syne text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1a130e] tracking-tight leading-[1.08]">
+              You saw a coffee drink you want.
+              <br />
+              <span className="text-[#001ec0]">
+                StickyMilk shows you how to make it with the coffee you have.
+              </span>
+            </h1>
+
+            <p className="font-mono text-xs sm:text-sm text-[#7f756f] uppercase tracking-wider font-semibold">
+              COMETEER · NESPRESSO VERTUO · SPECIALTY INSTANT
+            </p>
+
+            {/* Editorial Transition into the Affogato */}
+            <p className="font-body text-sm sm:text-base text-[#4d4540] leading-relaxed max-w-xl">
+              We test trending drinks on real home machines, expose the hidden sugar,
+              and give you the exact steps. Like turning an espresso-bar affogato into a
+              two-minute kitchen win with whatever coffee is sitting on your counter.
+            </p>
           </div>
 
-          <div className="w-full bg-[#1a130e] text-white border-2 border-black shadow-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 items-stretch">
-            {/* Left: Lead Content & Review Verdict */}
-            <div className="lg:col-span-7 p-6 sm:p-8 flex flex-col justify-between gap-6 border-b lg:border-b-0 lg:border-r border-white/10">
-              <div className="flex flex-col gap-4">
-                {/* HUD Row */}
-                <div className="flex items-center gap-2.5 flex-wrap">
-                  <span className="font-mono text-[11px] font-bold uppercase tracking-widest px-2.5 py-0.5 bg-[#b8f600] text-[#141f00]">
-                    {FORMAT_LABELS[heroRecipe.format]}
-                  </span>
-                  {leadPrep && (
-                    <ProvenanceBadge
-                      provenance={
-                        leadPrep.provenance ??
-                        (heroRecipe.source?.type === "vendor"
-                          ? "original"
-                          : "adapted")
-                      }
-                      size="sm"
-                    />
-                  )}
-                  <span className="font-mono text-[11px] text-[#d1c4bd] uppercase">
-                    {SWEETNESS_LABELS[heroRecipe.sweetness_level]}
-                  </span>
-                  <span className="font-mono text-[11px] text-[#7f756f]">
-                    · {leadPrep?.prep_time_minutes ?? 4}:00 MIN PREP
-                  </span>
-                </div>
+          {/* App Lever Status & Trust Line */}
+          <div className="flex flex-col gap-3 pt-3 border-t border-[#1a130e]/15">
+            <div className="flex items-center gap-2 font-mono text-xs text-[#1a130e]">
+              <span className="w-2 h-2 bg-[#001ec0] inline-block" />
+              <span>
+                {defaultChannel ? (
+                  <>
+                    Active Setting: <strong>{CHANNEL_LABELS[defaultChannel].toUpperCase()}</strong>.
+                    Every recipe below is formatted for your machine.
+                  </>
+                ) : (
+                  <>
+                    Use <strong>MY COFFEE</strong> in the top header to adapt any drink in one click.
+                  </>
+                )}
+              </span>
+            </div>
 
-                {/* Drink Title */}
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap font-mono text-[11px] text-[#7f756f] font-semibold uppercase">
+              <span className="px-2 py-0.5 bg-[#ede7e3] text-[#1a130e]">
+                22 TESTED RECIPES
+              </span>
+              <span>·</span>
+              <span className="px-2 py-0.5 bg-[#ede7e3] text-[#1a130e]">
+                10-POINT TASTE REVIEWS
+              </span>
+              <span>·</span>
+              <span className="px-2 py-0.5 bg-[#ede7e3] text-[#1a130e]">
+                HONEST NUTRITION
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column: The Lead Proof (Black Cat Affogato) (~43% width) */}
+        {heroRecipe && (
+          <div className="lg:col-span-5 bg-[#1a130e] text-white border-2 border-black shadow-xl overflow-hidden flex flex-col justify-between">
+            {/* Lead Image & HUD */}
+            <div className="relative w-full aspect-[16/10] overflow-hidden bg-[#221a15]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={heroRecipe.image || heroImage?.imageUrl}
+                alt={heroImage?.imageAlt || heroRecipe.name}
+                className="w-full h-full object-cover"
+              />
+
+              {/* Top Score Pill & Format */}
+              <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between z-10">
+                <span className="px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest bg-[#b8f600] text-[#141f00]">
+                  {FORMAT_LABELS[heroRecipe.format]}
+                </span>
+                <span className="px-2 py-0.5 font-mono text-xs font-extrabold bg-[#1a130e] text-[#b8f600] border border-white/20 flex items-center gap-1 shadow-sm">
+                  <Star size={13} weight="fill" className="text-[#b8f600]" />
+                  <span>{heroScore.toFixed(1)} / 10</span>
+                </span>
+              </div>
+
+              {/* Bottom Image HUD */}
+              <div className="absolute bottom-2 left-2.5 right-2.5 bg-[#1a130e]/90 backdrop-blur-xs px-2.5 py-1 border border-white/10 flex items-center justify-between text-[11px] font-mono">
+                <span className="text-[#b8f600] font-bold uppercase">
+                  TONY&apos;S CURRENT OBSESSION
+                </span>
+                <span className="text-[#d1c4bd]">
+                  {leadPrep?.prep_time_minutes ?? 3}:00 MIN PREP
+                </span>
+              </div>
+            </div>
+
+            {/* Drink Content & Verdict */}
+            <div className="p-5 sm:p-6 flex flex-col justify-between flex-1 gap-4">
+              <div className="flex flex-col gap-3">
                 <div>
-                  <h2 className="font-syne text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.1]">
+                  <h2 className="font-syne text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
                     {heroRecipe.name}
                   </h2>
                   {heroRecipe.source?.name && (
-                    <div className="font-mono text-xs text-[#a89e97] mt-1.5 flex items-center gap-1.5">
-                      <span>
-                        {heroRecipe.source.type === "vendor"
-                          ? "Created by:"
-                          : "Inspired by:"}{" "}
-                        {heroRecipe.source.handle || heroRecipe.source.name}
-                      </span>
+                    <div className="font-mono text-xs text-[#a89e97] mt-1 flex items-center gap-1.5">
+                      <span>Origin: {heroRecipe.source.name}</span>
                       {heroRecipe.source.url && (
                         <a
                           href={heroRecipe.source.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[#b8f600] hover:underline inline-flex items-center gap-0.5"
+                          className="text-[#b8f600] hover:underline"
                         >
-                          [Original Video ↗]
+                          [Original ↗]
                         </a>
                       )}
                     </div>
                   )}
                 </div>
 
-                {/* 10-Point Test Kitchen Score & Raw Verdict Quote */}
-                <div className="bg-[#221a15] p-4 sm:p-5 border border-white/15 flex flex-col gap-2.5">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Star
-                        size={18}
-                        weight="fill"
-                        className="text-[#b8f600]"
-                      />
-                      <span className="font-mono text-xs uppercase tracking-wider font-bold text-[#b8f600]">
-                        TONY&apos;S TAKE:
-                      </span>
-                    </div>
-                    <span className="font-syne text-xl font-extrabold text-white">
-                      {heroScore.toFixed(1)}{" "}
-                      <span className="font-mono text-xs text-[#7f756f]">
-                        / 10
-                      </span>
-                    </span>
-                  </div>
-
-                  <blockquote className="font-body text-sm sm:text-base text-[#f5eee9] italic border-l-2 border-[#b8f600] pl-3 leading-relaxed">
+                {/* Tony's Unvarnished Verdict Quote */}
+                <div className="bg-[#221a15] p-3.5 border border-white/15 flex flex-col gap-1.5">
+                  <span className="font-mono text-[10px] uppercase tracking-wider font-bold text-[#b8f600]">
+                    TONY&apos;S TAKE:
+                  </span>
+                  <blockquote className="font-body text-xs sm:text-sm text-[#f5eee9] italic border-l-2 border-[#b8f600] pl-2.5 leading-relaxed">
                     &ldquo;{heroVerdict}&rdquo;
                   </blockquote>
                 </div>
 
-                {/* Macro Nutrition Nuggets */}
+                {/* Macro Nutrition Line */}
                 {heroNutrition && (
-                  <div className="grid grid-cols-3 gap-2 pt-1 font-mono text-xs">
-                    <div className="bg-[#140e0a] p-2.5 border border-white/10">
-                      <span className="text-[10px] uppercase text-[#7f756f] block">
-                        CALORIES / SERVING
+                  <div className="grid grid-cols-3 gap-2 font-mono text-[11px] pt-0.5">
+                    <div className="bg-[#140e0a] p-2 border border-white/10 text-center">
+                      <span className="text-[9px] uppercase text-[#7f756f] block">
+                        CALORIES
                       </span>
-                      <span className="font-bold text-white text-sm">
+                      <span className="font-bold text-white">
                         {heroNutrition.calories} CAL
                       </span>
                     </div>
-                    <div className="bg-[#140e0a] p-2.5 border border-white/10">
-                      <span className="text-[10px] uppercase text-[#7f756f] block">
-                        CAFFEINE / SERVING
+                    <div className="bg-[#140e0a] p-2 border border-white/10 text-center">
+                      <span className="text-[9px] uppercase text-[#7f756f] block">
+                        CAFFEINE
                       </span>
-                      <span className="font-bold text-[#b8f600] text-sm">
+                      <span className="font-bold text-[#b8f600]">
                         {heroNutrition.caffeine_mg} MG
                       </span>
                     </div>
-                    <div className="bg-[#140e0a] p-2.5 border border-white/10">
-                      <span className="text-[10px] uppercase text-[#7f756f] block">
-                        SUGAR / SERVING
+                    <div className="bg-[#140e0a] p-2 border border-white/10 text-center">
+                      <span className="text-[9px] uppercase text-[#7f756f] block">
+                        SUGAR
                       </span>
-                      <span className="font-bold text-[#dfe0ff] text-sm">
+                      <span className="font-bold text-[#dfe0ff]">
                         {heroNutrition.sugar_g}G
                       </span>
                     </div>
                   </div>
                 )}
-              </div>
 
-              {/* Hardware-Aware 1-Click Brew Action */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
-                <Link
-                  href={`/recipes/${heroRecipe.slug}`}
-                  className="flex-1 flex items-center justify-center gap-2 bg-[#b8f600] hover:bg-white text-[#141f00] px-6 py-3.5 font-mono text-xs sm:text-sm font-extrabold uppercase tracking-wider transition-colors shadow-sm cursor-pointer"
-                >
-                  <span>{getCtaLabel(defaultChannel)}</span>
-                  <ArrowRight size={18} weight="bold" />
-                </Link>
-
-                <Link
-                  href={`/recipes/${heroRecipe.slug}`}
-                  className="px-4 py-3.5 bg-[#221a15] hover:bg-[#2c221c] text-[#d1c4bd] hover:text-white border border-white/15 font-mono text-xs uppercase tracking-wider text-center transition-colors cursor-pointer"
-                >
-                  View Recipe &amp; Steps
-                </Link>
-              </div>
-            </div>
-
-            {/* Right: Visual Artwork + How It's Made */}
-            <div className="lg:col-span-5 relative flex flex-col justify-between p-6 sm:p-8 bg-[#140e0a]">
-              {/* Image banner */}
-              <div className="relative w-full aspect-square sm:aspect-video lg:aspect-square overflow-hidden border border-white/15 bg-[#221a15] shadow-inner mb-4">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={heroRecipe.image || heroImage?.imageUrl}
-                  alt={heroImage?.imageAlt || heroRecipe.name}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute bottom-2 left-2 right-2 bg-[#1a130e]/85 backdrop-blur-sm px-2.5 py-1.5 border border-white/10 flex items-center justify-between text-[11px] font-mono">
-                  <span className="text-[#b8f600] font-bold uppercase">
-                    {heroRecipe.sweetness_level.replace(/_/g, " ")}
-                  </span>
-                  <span className="text-[#d1c4bd]">
-                    {defaultChannel
-                      ? CHANNEL_LABELS[defaultChannel]
-                      : "3 Coffee Formats"}
-                  </span>
-                </div>
-              </div>
-
-              {/* How It's Made / Base Mechanics */}
-              <div className="bg-[#1a130e] p-4 border border-white/10 flex flex-col gap-2 text-xs font-mono">
-                <div className="flex items-center justify-between text-[#b8f600] font-bold uppercase text-[11px]">
-                  <span>HOW IT&apos;S MADE:</span>
-                  <span>
-                    {defaultChannel
-                      ? CHANNEL_LABELS[defaultChannel].toUpperCase()
-                      : "ALL 3 SYSTEMS"}
-                  </span>
-                </div>
-                <p className="font-body text-xs text-[#d1c4bd] leading-relaxed">
+                {/* How It's Made */}
+                <div className="bg-[#140e0a] p-2.5 border border-white/10 font-mono text-[11px] text-[#d1c4bd] leading-relaxed">
+                  <strong className="text-[#b8f600] uppercase block mb-0.5">
+                    HOW IT&apos;S MADE:
+                  </strong>
                   {defaultChannel ? (
                     <>
-                      <strong>Base:</strong> {BARISTA_DIFF[defaultChannel].coffeeBase}.{" "}
-                      {BARISTA_DIFF[defaultChannel].reason}
+                      {BARISTA_DIFF[defaultChannel].coffeeBase}. {BARISTA_DIFF[defaultChannel].reason}
                     </>
                   ) : (
-                    "Works with Cometeer frozen extract, Nespresso Vertuo, and Specialty Instant."
+                    "Pour 1 hot espresso or concentrate directly over a large scoop of cold vanilla bean gelato."
                   )}
-                </p>
+                </div>
+              </div>
+
+              {/* Hardware CTA */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 pt-1">
+                <Link
+                  href={`/recipes/${heroRecipe.slug}`}
+                  className="flex-1 flex items-center justify-center gap-2 bg-[#b8f600] hover:bg-white text-[#141f00] px-4 py-3 font-mono text-xs font-extrabold uppercase tracking-wider transition-colors shadow-sm cursor-pointer"
+                >
+                  <span>{getCtaLabel(defaultChannel)}</span>
+                  <ArrowRight size={16} weight="bold" />
+                </Link>
+
+                <Link
+                  href={`/recipes/${heroRecipe.slug}`}
+                  className="px-3.5 py-3 bg-[#221a15] hover:bg-[#2c221c] text-[#d1c4bd] hover:text-white border border-white/15 font-mono text-xs uppercase tracking-wider text-center transition-colors cursor-pointer"
+                >
+                  Recipe Steps
+                </Link>
               </div>
             </div>
           </div>
-        </section>
-      )}
+        )}
+      </section>
 
       {/* =========================================================================
-          BLOCK 3: The Translator CTA Strip (Visceral Outcome-First Language)
+          BLOCK 2: The Translator CTA Strip (Visceral Outcome-First Language)
           ========================================================================= */}
       <section className="bg-[#001ec0] text-white p-6 sm:p-8 border-2 border-black shadow-lg relative overflow-hidden">
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
@@ -553,7 +417,7 @@ export function HomePortal({ recipes }: HomePortalProps) {
       </section>
 
       {/* =========================================================================
-          BLOCK 4: The Counter Flight (3 Breathing Cards with Range & Pull-Quotes)
+          BLOCK 3: The Counter Flight (3 Breathing Cards with Range & Pull-Quotes)
           ========================================================================= */}
       <section className="flex flex-col gap-6">
         {/* Section Header */}
@@ -567,7 +431,7 @@ export function HomePortal({ recipes }: HomePortalProps) {
             <p className="font-body text-xs sm:text-sm text-[#7f756f]">
               {defaultChannel
                 ? `3 curated drinks tested and calibrated specifically for ${CHANNEL_LABELS[defaultChannel]}.`
-                : "3 high-conviction recipes spanning viral creator hits, house favorites, and daily drivers."}
+                : "3 high-conviction recipes spanning viral creator hits, house benchmarks, and clean morning baselines."}
             </p>
           </div>
         </div>
