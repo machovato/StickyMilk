@@ -12,8 +12,6 @@ import type { Recipe, Channel } from "@/lib/types";
 import { CHANNEL_LABELS, FORMAT_LABELS } from "@/lib/types";
 import { useChannel } from "@/lib/channel-context";
 import { getRecipeImage } from "@/lib/recipe-images";
-import { calculateNutrition } from "@/lib/nutrition";
-import { BARISTA_DIFF } from "@/lib/barista-diff";
 
 interface HomePortalProps {
   recipes: Recipe[];
@@ -38,7 +36,10 @@ export function HomePortal({ recipes }: HomePortalProps) {
           a.review?.channel_scores?.[defaultChannel] ?? a.review?.score ?? 0;
         const scoreB =
           b.review?.channel_scores?.[defaultChannel] ?? b.review?.score ?? 0;
-        return scoreB - scoreA;
+        if (scoreA !== scoreB) return scoreB - scoreA;
+        if (a.featured && !b.featured) return -1;
+        if (!a.featured && b.featured) return 1;
+        return a.name.localeCompare(b.name);
       });
       return candidates[0] || recipes[0];
     }
@@ -62,7 +63,6 @@ export function HomePortal({ recipes }: HomePortalProps) {
   }, [heroRecipe, defaultChannel]);
 
   const heroImage = heroRecipe ? getRecipeImage(heroRecipe.slug) : null;
-  const heroNutrition = leadPrep ? calculateNutrition(leadPrep, 1) : null;
 
   // Hero review data
   const heroScore =
@@ -257,7 +257,7 @@ export function HomePortal({ recipes }: HomePortalProps) {
               {/* Bottom Image HUD */}
               <div className="absolute bottom-2 left-2.5 right-2.5 bg-[#1a130e]/90 backdrop-blur-xs px-2.5 py-1 border border-white/10 flex items-center justify-between text-[11px] font-mono">
                 <span className="text-[#b8f600] font-bold uppercase">
-                  TONY&apos;S CURRENT OBSESSION
+                  CURRENT OBSESSION
                 </span>
                 <span className="text-[#d1c4bd]">
                   {leadPrep?.prep_time_minutes ?? 3}:00 MIN PREP
@@ -289,58 +289,14 @@ export function HomePortal({ recipes }: HomePortalProps) {
                   )}
                 </div>
 
-                {/* Tony's Unvarnished Verdict Quote */}
+                {/* StickyMilk's Unvarnished Verdict Quote */}
                 <div className="bg-[#221a15] p-3.5 border border-white/15 flex flex-col gap-1.5">
                   <span className="font-mono text-[10px] uppercase tracking-wider font-bold text-[#b8f600]">
-                    TONY&apos;S TAKE:
+                    STICKYMILK&apos;S TAKE:
                   </span>
                   <blockquote className="font-body text-xs sm:text-sm text-[#f5eee9] italic border-l-2 border-[#b8f600] pl-2.5 leading-relaxed">
                     &ldquo;{heroVerdict}&rdquo;
                   </blockquote>
-                </div>
-
-                {/* Macro Nutrition Line */}
-                {heroNutrition && (
-                  <div className="grid grid-cols-3 gap-2 font-mono text-[11px] pt-0.5">
-                    <div className="bg-[#140e0a] p-2 border border-white/10 text-center">
-                      <span className="text-[9px] uppercase text-[#7f756f] block">
-                        CALORIES
-                      </span>
-                      <span className="font-bold text-white">
-                        {heroNutrition.calories} CAL
-                      </span>
-                    </div>
-                    <div className="bg-[#140e0a] p-2 border border-white/10 text-center">
-                      <span className="text-[9px] uppercase text-[#7f756f] block">
-                        CAFFEINE
-                      </span>
-                      <span className="font-bold text-[#b8f600]">
-                        {heroNutrition.caffeine_mg} MG
-                      </span>
-                    </div>
-                    <div className="bg-[#140e0a] p-2 border border-white/10 text-center">
-                      <span className="text-[9px] uppercase text-[#7f756f] block">
-                        SUGAR
-                      </span>
-                      <span className="font-bold text-[#dfe0ff]">
-                        {heroNutrition.sugar_g}G
-                      </span>
-                    </div>
-                  </div>
-                )}
-
-                {/* How It's Made */}
-                <div className="bg-[#140e0a] p-2.5 border border-white/10 font-mono text-[11px] text-[#d1c4bd] leading-relaxed">
-                  <strong className="text-[#b8f600] uppercase block mb-0.5">
-                    HOW IT&apos;S MADE:
-                  </strong>
-                  {defaultChannel ? (
-                    <>
-                      {BARISTA_DIFF[defaultChannel].coffeeBase}. {BARISTA_DIFF[defaultChannel].reason}
-                    </>
-                  ) : (
-                    "Pour 1 hot espresso or concentrate directly over a large scoop of cold vanilla bean gelato."
-                  )}
                 </div>
               </div>
 

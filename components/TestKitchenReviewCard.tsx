@@ -26,7 +26,7 @@ export function TestKitchenReviewCard({
               STICKYMILK TEST KITCHEN // VERDICT
             </h2>
             <p className="font-mono text-[11px] text-[#a89e97]">
-              Evaluated by {review.tester || "Tony Melendez"}
+              Evaluated by {review.tester === "Tony Melendez" ? "StickyMilk Test Kitchen" : (review.tester || "StickyMilk Test Kitchen")}
               {review.tested_date && ` on ${review.tested_date}`}
             </p>
           </div>

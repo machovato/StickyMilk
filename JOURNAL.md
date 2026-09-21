@@ -853,12 +853,17 @@ instead of a number.
         flowing directly into the editorial transition (*"Like turning an espresso-bar
         affogato into a two-minute kitchen win with whatever coffee is on your counter"*).
      2. *Right Column (~43%):* The Proof of Life anchored on Intelligentsia's
-        *Black Cat Affogato* (`★ 9.4 / 10`), complete with photo, Tony's unvarnished
-        verdict (*"High-fat vanilla bean gelato is mandatory — cheap ice cream dissolves
-        into lukewarm soup before you grab a spoon"*), hardware-aware CTA, and live macro chips.
-     3. *Natural Flow:* The visitor reads the promise, sees the affogato, sets their machine
-        in the header, and watches the affogato update its brew instructions and CTA—all
-        above the fold on a standard 1080p viewport without scrolling.
+        *Black Cat Affogato* (`★ 9.4 / 10`), complete with photo, format tag,
+        and **StickyMilk's Take** unvarnished verdict (*"High-fat vanilla bean gelato is mandatory —
+        cheap ice cream dissolves into lukewarm soup before you grab a spoon"*),
+        followed directly by the hardware CTA button. Trimmed the nutrition grid and
+        mechanics box from the card to keep the hero ultra-compact and avoid vertical overflow.
+     3. *Attribution Hygiene:* Renamed all visitor-facing "Tony's Take" and "Tony's Obsession"
+        to "StickyMilk's Take" and "Current Obsession", and updated review tester attribution
+        to "StickyMilk Test Kitchen" across all content files and components.
+     4. *Natural Flow:* The visitor reads the promise, sees the affogato, sets their machine
+        in the header, and watches the affogato update its CTA—all
+        above the fold on a standard 1080p viewport with zero scroll.
 
 ---
 
