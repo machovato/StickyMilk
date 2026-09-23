@@ -124,3 +124,22 @@ When the recipe catalog grows beyond ~100 recipes or requires dynamic user submi
 2. **Stable URLs:** Zero URL churn or redirection debt when moving from static generation to database queries.
 3. **Structured Taxonomy Migration:** Co-locating nutrition benchmarks directly with taxonomy rows simplifies multi-component macro calculations in SQL.
 4. **Relational Linkage:** Direct foreign key mapping between `Creator` and `Recipe` models, replacing embedded JSON source blocks.
+
+---
+
+## 8. Curated Franchise Initiatives & Content Collections
+
+### The "Protein Coffee" (Proffee) Collection
+- **The Concept:** Captures the massive cross-over demand between fitness culture, TikTok hacks, and coffee lovers substituting café syrups with ready-to-drink (RTD) protein shakes (e.g. Fairlife Vanilla, Premier Protein, Owyn).
+- **The StickyMilk Moat & Culinary Reality:**
+  - *Beverage Physics & Curdling Warnings:* Not all RTD shakes handle espresso heat or coffee acidity well. Formulations react differently:
+    - **Ultra-Filtered Milk (Fairlife Core Power):** Gold standard. Natural dairy base creates a silky café-latte mouthfeel, froths easily into protein cold foam, and never separates or curdles.
+    - **Whey / Casein Concentrates (Premier Protein):** High protein yield (30g), but prone to curdling if hit with direct hot water. *Kitchen Rule:* Mandatory ice pack; espresso must cool over ice before adding shake.
+    - **Plant-Based Protein (Owyn, Koia):** Dense viscosity requires slight water/ice dilution to prevent thick sludge.
+  - *Hardware Translation Blueprint:*
+    - **Nespresso:** 1 Vertuo Double Espresso Scuro (80ml) pulled directly over a tumbler full of ice, topped with 6–8 oz Fairlife Vanilla shake.
+    - **Cometeer:** 1 dark roast puck melted with 1 oz water, shaken over ice with protein shake.
+    - **Instant:** 2 tsp dark roast espresso crystals dissolved in 1.5 oz hot bloom water, chilled, and stirred into shake.
+  - *Nutritional Engine Fit:* Directly surfaces the high-protein macro profile (`25–30g Protein`, `<3g Sugar`, `~150–180mg Caffeine`), giving fitness users the exact macro reality check they want.
+  - *Taxonomy Integration:* Seed `fairlife_vanilla_shake`, `premier_protein_shake` into `content/taxonomy/ingredients.json` and associate tags: `"protein"`, `"proffee"`, `"post-workout"`.
+

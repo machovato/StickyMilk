@@ -865,6 +865,30 @@ instead of a number.
         in the header, and watches the affogato update its CTA—all
         above the fold on a standard 1080p viewport with zero scroll.
 
+5.24. **Product Expansion: The "Protein Coffee" (Proffee) Collection & RTD Shake Physics.**
+   Formally captured a major viral coffee franchise for the recipe pipeline:
+   - **The Phenomenon:** Captures the widespread Starbucks hack and fitness routine
+     where ready-to-drink (RTD) protein shakes (e.g. Fairlife Core Power, Premier Protein)
+     replace traditional milks and heavy syrups.
+   - **The StickyMilk Value-Add & Kitchen Reality:**
+     - *Curdling & Emulsion Chemistry:* Most viral videos ignore beverage physics.
+       Certain protein shakes curdle or turn gritty when exposed to high-acid espresso
+       or uncooled heat. StickyMilk establishes clear RTD shake categories:
+       1. *Ultra-Filtered Dairy (Fairlife):* Gold standard. Natural dairy base creates
+          a smooth café-latte emulsion, froths into protein cold foam, and never separates.
+       2. *Whey/Casein Blends (Premier Protein):* Delivers 30g protein, but must be
+          poured strictly over ice after the espresso cools; hot pulls cause curdling.
+       3. *Plant Blends (Owyn, Koia):* High viscosity requires minor dilution.
+     - *Hardware Translations:*
+       - **Nespresso:** 1 Double Espresso Chiaro (80ml) over a tall tumbler of ice + 6–8 oz vanilla RTD shake.
+       - **Cometeer:** 1 dark roast puck melted with 1 oz water, shaken over ice with shake.
+       - **Instant:** 2 tsp espresso powder bloomed in 1.5 oz warm water, chilled, and stirred into shake.
+     - *Macro Alignment:* StickyMilk's nutrition engine (`protein_g`, `sugar_g`, `caffeine_mg`)
+       naturally highlights the fitness appeal (`~26–30g Protein`, `<3g Sugar`, `~180mg Caffeine`).
+     - *Taxonomy Readiness:* Seeded into roadmap to add `fairlife_vanilla_shake` and
+       `premier_protein_shake` to `content/taxonomy/ingredients.json` with `"proffee"`,
+       `"protein-coffee"`, and `"high-protein"` tags.
+
 ---
 
 ## 6. Known constraints / workarounds worth remembering
