@@ -159,6 +159,7 @@ export async function translateRecipeAction(payload: {
     // 4. Auto-seed into the vault as needs_testing
     result.recipe.status = "needs_testing";
     result.recipe.review = undefined;
+    result.recipe.created_at = new Date().toISOString();
 
     let finalSlug = result.recipe.slug;
     if (recipeSlugExists(finalSlug)) {
@@ -228,6 +229,7 @@ export async function saveTranslatedRecipeAction(recipeCandidate: Recipe): Promi
   const recipeToSave: Recipe = {
     ...recipeCandidate,
     status: "needs_testing",
+    created_at: recipeCandidate.created_at || new Date().toISOString(),
   };
 
   const errors = validateRecipeCandidate(recipeToSave, ingredientTaxonomyIds());

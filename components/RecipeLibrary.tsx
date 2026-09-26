@@ -16,7 +16,19 @@ import { PromoterShelf } from "./PromoterShelf";
 import { FilterSidebar } from "./FilterSidebar";
 import { RecipeCard } from "./RecipeCard";
 
-type SortOption = "popular" | "rating" | "fastest" | "name";
+type SortOption = "newest" | "oldest" | "popular" | "rating" | "fastest" | "name";
+
+function getRecipeTimestamp(r: Recipe): number {
+  if (r.created_at) {
+    const t = new Date(r.created_at).getTime();
+    if (!isNaN(t)) return t;
+  }
+  if (r.review?.tested_date) {
+    const t = new Date(r.review.tested_date).getTime();
+    if (!isNaN(t)) return t;
+  }
+  return 0;
+}
 
 export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
   const { defaultChannel } = useChannel();
@@ -181,6 +193,18 @@ export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
         return true;
       })
       .sort((a, b) => {
+        if (sortOption === "newest") {
+          const timeA = getRecipeTimestamp(a);
+          const timeB = getRecipeTimestamp(b);
+          if (timeA !== timeB) return timeB - timeA;
+          return a.name.localeCompare(b.name);
+        }
+        if (sortOption === "oldest") {
+          const timeA = getRecipeTimestamp(a);
+          const timeB = getRecipeTimestamp(b);
+          if (timeA !== timeB) return timeA - timeB;
+          return a.name.localeCompare(b.name);
+        }
         if (sortOption === "rating") {
           const scoreA =
             (defaultChannel && a.review?.channel_scores?.[defaultChannel]) ??
@@ -341,11 +365,35 @@ export function RecipeLibrary({ recipes }: { recipes: Recipe[] }) {
               )}
             </div>
 
-            <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+            <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end flex-wrap">
               <span className="font-mono text-[11px] font-bold uppercase text-[#4d4540]">
                 ORDER BY:
               </span>
-              <div className="flex items-center gap-1 bg-[#f8f2ee] p-1 border border-[#1a130e]/10">
+              <div className="flex items-center gap-1 bg-[#f8f2ee] p-1 border border-[#1a130e]/10 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => setSortOption("newest")}
+                  className={`px-3 py-1 font-mono text-xs transition-colors cursor-pointer ${
+                    sortOption === "newest"
+                      ? "bg-[#1a130e] text-[#b8f600] font-bold"
+                      : "text-[#1d1b19] hover:bg-[#ede7e3]"
+                  }`}
+                  title="Sort by newest additions to the vault"
+                >
+                  Newest
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSortOption("oldest")}
+                  className={`px-3 py-1 font-mono text-xs transition-colors cursor-pointer ${
+                    sortOption === "oldest"
+                      ? "bg-[#1a130e] text-[#b8f600] font-bold"
+                      : "text-[#1d1b19] hover:bg-[#ede7e3]"
+                  }`}
+                  title="Sort by earliest additions to the vault"
+                >
+                  Oldest
+                </button>
                 <button
                   type="button"
                   onClick={() => setSortOption("rating")}

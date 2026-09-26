@@ -360,6 +360,9 @@ export function validateRecipeCandidate(
       });
     }
   }
+  if (candidate.created_at !== undefined && typeof candidate.created_at !== "string") {
+    errors.push({ path: "created_at", message: "must be a string when present" });
+  }
   if (candidate.featured !== undefined && typeof candidate.featured !== "boolean") {
     errors.push({ path: "featured", message: "must be a boolean when present" });
   }

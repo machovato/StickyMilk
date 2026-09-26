@@ -1,5 +1,5 @@
 import "server-only";
-import { readdirSync, readFileSync } from "node:fs";
+import { readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import type { Recipe } from "./types";
 import { asValidatedRecipe, validateRecipeCandidate } from "./recipe-schema";
@@ -47,10 +47,24 @@ export function getAllRecipes(): Recipe[] {
 
   const files = readdirSync(CONTENT_DIR).filter((f) => f.endsWith(".json"));
   const recipes = files.map((file) => {
-    const raw = readFileSync(path.join(CONTENT_DIR, file), "utf-8");
+    const filePath = path.join(CONTENT_DIR, file);
+    const raw = readFileSync(filePath, "utf-8");
     const candidate: unknown = JSON.parse(raw);
     validate(candidate, file);
-    return asValidatedRecipe(candidate);
+    const recipe = asValidatedRecipe(candidate);
+    if (!recipe.created_at) {
+      try {
+        const stat = statSync(filePath);
+        const fileDate =
+          stat.birthtime && stat.birthtime.getTime() > 0
+            ? stat.birthtime
+            : stat.mtime;
+        recipe.created_at = fileDate.toISOString();
+      } catch {
+        recipe.created_at = new Date(0).toISOString();
+      }
+    }
+    return recipe;
   });
 
   recipes.sort((a, b) => a.name.localeCompare(b.name));

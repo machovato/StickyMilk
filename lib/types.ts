@@ -235,6 +235,8 @@ export interface Recipe {
   /** Universal craft or sensory technique note shared across all channels for this drink. */
   barista_note?: string;
   status: RecipeStatus;
+  /** ISO timestamp of when the recipe was created or ingested */
+  created_at?: string;
   /** Source attribution: where the recipe originated (vendor, creator, or editorial). */
   source?: RecipeSource;
   /** Alternative creator variations or takes on this viral drink. */
