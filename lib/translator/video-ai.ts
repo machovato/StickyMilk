@@ -27,12 +27,13 @@ export async function extractRecipeWithGeminiVideo(
   try {
     console.log(`[VideoAI] Resolving and downloading video for: ${videoUrl}`);
 
-    // Download video using yt-dlp (limits size to <= 25MB)
+    // Download video using yt-dlp (limits size to <= 25MB) and grab metadata
     const { stdout: uploaderOut } = await execAsync(
-      `python -m yt_dlp --print uploader -f "b[ext=mp4]/b" --max-filesize 25M -o "${tempFilePath}" "${videoUrl}"`
+      `python -m yt_dlp --print "%(uploader)s|||%(thumbnail)s|||%(title)s" -f "b[ext=mp4]/b" --max-filesize 25M -o "${tempFilePath}" "${videoUrl}"`
     );
 
-    const detectedUploader = uploaderOut.trim().split("\n")[0] || "";
+    const firstMetaLine = uploaderOut.trim().split("\n").filter((l) => l.includes("|||"))[0] || "";
+    const [detectedUploader = "", detectedThumbnail = "", detectedTitle = ""] = firstMetaLine.split("|||");
 
     if (!existsSync(tempFilePath)) {
       console.warn("[VideoAI] Failed to download video stream to temp file");
@@ -70,12 +71,15 @@ export async function extractRecipeWithGeminiVideo(
 
     console.log("[VideoAI] Prompting Gemini 2.5 Flash to extract text overlays and recipe...");
     const prompt = `You are an expert barista and coffee recipe ingestion engine for StickyMilk.
-Watch this coffee video carefully:
-1. READ ALL ON-SCREEN TEXT OVERLAYS: Look for text stickers, ingredients, brand labels, measuring numbers, and cup markings (e.g. syrups, milks, cream, sugar, espresso).
-2. LISTEN TO AUDIO: Catch any spoken ingredients or instructions.
-3. WATCH THE VISUAL ACTIONS: Note if they froth cold foam in a separate cup, add ice, pour milk, pull espresso.
-4. Extract the recipe into strict JSON with this exact schema:
+Watch this video carefully:
+1. VERIFY DOMAIN & SAFETY: Confirm whether this is a legitimate coffee, espresso, tea, or specialty beverage preparation. If it is NOT a beverage recipe (e.g. non-drink content, prank, or inappropriate/NSFW content), set "is_coffee_or_beverage": false and provide a clear "rejection_reason".
+2. READ ALL ON-SCREEN TEXT OVERLAYS: Look for text stickers, ingredients, brand labels, measuring numbers, and cup markings (e.g. syrups, milks, cream, sugar, espresso).
+3. LISTEN TO AUDIO: Catch any spoken ingredients or instructions.
+4. WATCH THE VISUAL ACTIONS: Note if they froth cold foam in a separate cup, add ice, pour milk, pull espresso.
+5. Extract the recipe into strict JSON with this exact schema:
 {
+  "is_coffee_or_beverage": boolean,
+  "rejection_reason": string,
   "raw_title": string,
   "creator_handle": string,
   "creator_name": string,
@@ -120,6 +124,11 @@ Return ONLY valid JSON matching this schema.`;
     }
 
     const parsed = JSON.parse(cleanJsonMatch[0]);
+
+    if (parsed.is_coffee_or_beverage === false) {
+      console.warn(`[VideoAI] Content rejected by domain safety check: ${parsed.rejection_reason}`);
+      throw new Error(parsed.rejection_reason || "StickyMilk only translates coffee and specialty beverage recipes.");
+    }
 
     // Clean and normalize ingredients
     const rawIngredients = (parsed.raw_ingredients || []).map(
@@ -219,6 +228,7 @@ Return ONLY valid JSON matching this schema.`;
       },
       extraction_mode: "video_multimodal_ai",
       text_overlays: parsed.text_overlays_found || [],
+      thumbnail_url: detectedThumbnail?.trim() || undefined,
     };
 
     return ir;

@@ -57,6 +57,7 @@ export interface RecipeIR {
   };
   extraction_mode?: "video_multimodal_ai" | "caption_heuristic";
   text_overlays?: string[];
+  thumbnail_url?: string;
 }
 
 export interface TranslationSuperpowers {
@@ -113,4 +114,5 @@ export interface TranslationResult {
   warnings: string[];
   extraction_mode?: "video_multimodal_ai" | "caption_heuristic";
   text_overlays?: string[];
+  is_cached_hit?: boolean;
 }

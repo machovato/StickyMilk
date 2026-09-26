@@ -101,6 +101,24 @@ export interface PreparationDraft {
   steps: StepDraft[];
 }
 
+export interface ReviewDraft {
+  score: string;
+  verdict: string;
+  notes: string;
+  tester: string;
+  tested_date: string;
+}
+
+export function emptyReviewDraft(): ReviewDraft {
+  return {
+    score: "",
+    verdict: "",
+    notes: "",
+    tester: "StickyMilk Test Kitchen",
+    tested_date: new Date().toISOString().split("T")[0],
+  };
+}
+
 export interface RecipeDraft {
   name: string;
   slug: string;
@@ -113,6 +131,7 @@ export interface RecipeDraft {
   barista_note: string;
   status: RecipeStatus;
   source: RecipeSourceDraft;
+  review: ReviewDraft;
   tags: string[];
   sweetness_level: SweetnessLevel | "";
   preparations: Record<Channel, PreparationDraft | null>;
@@ -187,6 +206,7 @@ export function emptyRecipeDraft(): RecipeDraft {
     barista_note: "",
     status: "draft",
     source: emptySourceDraft(),
+    review: emptyReviewDraft(),
     tags: [],
     sweetness_level: "",
     preparations: { cometeer: emptyPreparationDraft(), nespresso: null, instant: null },
@@ -275,6 +295,17 @@ export function draftToCandidate(draft: RecipeDraft): unknown {
         }
       : undefined;
 
+  const review =
+    draft.review && draft.review.verdict.trim() !== "" && draft.review.score.trim() !== ""
+      ? {
+          score: numOrRaw(draft.review.score),
+          verdict: draft.review.verdict.trim(),
+          notes: undefinedIfBlank(draft.review.notes),
+          tester: undefinedIfBlank(draft.review.tester),
+          tested_date: undefinedIfBlank(draft.review.tested_date),
+        }
+      : undefined;
+
   return {
     slug: draft.slug.trim(),
     name: draft.name.trim(),
@@ -284,6 +315,7 @@ export function draftToCandidate(draft: RecipeDraft): unknown {
     barista_note: undefinedIfBlank(draft.barista_note),
     status: draft.status,
     source,
+    review,
     tags: draft.tags,
     sweetness_level: draft.sweetness_level === "" ? undefined : draft.sweetness_level,
     preparations,
@@ -346,6 +378,16 @@ export function recipeToDraft(recipe: Recipe): RecipeDraft {
       }
     : emptySourceDraft();
 
+  const review: ReviewDraft = recipe.review
+    ? {
+        score: recipe.review.score != null ? String(recipe.review.score) : "",
+        verdict: recipe.review.verdict ?? "",
+        notes: recipe.review.notes ?? "",
+        tester: recipe.review.tester ?? "StickyMilk Test Kitchen",
+        tested_date: recipe.review.tested_date ?? "",
+      }
+    : emptyReviewDraft();
+
   return {
     name: recipe.name,
     slug: recipe.slug,
@@ -356,6 +398,7 @@ export function recipeToDraft(recipe: Recipe): RecipeDraft {
     barista_note: recipe.barista_note ?? "",
     status: recipe.status,
     source,
+    review,
     tags: [...recipe.tags],
     sweetness_level: recipe.sweetness_level,
     preparations,

@@ -275,7 +275,13 @@ export function TranslatorHUD({
                 <span className="font-mono text-[11px] font-bold px-2 py-0.5 bg-[#fef8f4] text-[#1a130e] uppercase">
                   STATUS: {result.recipe.status.toUpperCase()}
                 </span>
-                {result.extraction_mode === "video_multimodal_ai" && (
+                {result.is_cached_hit && (
+                  <span className="font-mono text-[11px] font-bold px-2 py-0.5 bg-[#b8f600] text-[#141f00] uppercase flex items-center gap-1">
+                    <CheckCircle size={14} weight="fill" />
+                    <span>FOUND IN VAULT (INSTANT HIT)</span>
+                  </span>
+                )}
+                {result.extraction_mode === "video_multimodal_ai" && !result.is_cached_hit && (
                   <span className="font-mono text-[11px] font-bold px-2 py-0.5 bg-[#001ec0] text-white uppercase flex items-center gap-1">
                     <VideoCamera size={14} weight="fill" />
                     <span>AI VIDEO OVERLAY EXTRACTION</span>
@@ -321,24 +327,12 @@ export function TranslatorHUD({
                 <span>{copiedJson ? "COPIED JSON" : "EXPORT JSON"}</span>
               </button>
 
-              {isAdmin ? (
-                <button
-                  type="button"
-                  onClick={handleSaveToVault}
-                  disabled={isSaving}
-                  className="px-5 py-2.5 bg-[#b8f600] hover:bg-[#001ec0] text-[#141f00] hover:text-white font-mono text-xs font-extrabold uppercase tracking-wider transition-colors border-2 border-black flex items-center gap-2 cursor-pointer disabled:opacity-50"
-                >
-                  <FloppyDisk size={16} weight="bold" />
-                  <span>{isSaving ? "SAVING TO VAULT..." : "SAVE TO VAULT"}</span>
-                </button>
-              ) : (
-                <Link
-                  href="/admin/login?next=/translate"
-                  className="px-4 py-2.5 bg-white/10 hover:bg-[#b8f600] hover:text-[#141f00] text-white font-mono text-xs font-bold border border-white/30 uppercase tracking-wider transition-colors flex items-center gap-2"
-                >
-                  <span>ADMIN LOGIN TO SAVE</span>
-                </Link>
-              )}
+              <Link
+                href={`/recipes/${result.recipe.slug}`}
+                className="px-5 py-2.5 bg-[#b8f600] hover:bg-[#001ec0] text-[#141f00] hover:text-white font-mono text-xs font-extrabold uppercase tracking-wider transition-colors border-2 border-black flex items-center gap-2 cursor-pointer"
+              >
+                <span>VIEW IN VAULT →</span>
+              </Link>
             </div>
           </div>
 
