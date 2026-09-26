@@ -4,6 +4,7 @@ import React, { useMemo, useState } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
+  CircleNotch,
   Clock,
   Coffee,
   Sparkle,
@@ -22,6 +23,7 @@ interface HomePortalProps {
 export function HomePortal({ recipes }: HomePortalProps) {
   const { defaultChannel } = useChannel();
   const [translatorUrl, setTranslatorUrl] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
 
   // Hero Lead Drink is anchored on the Black Cat Affogato as the prime proof-of-life,
   // or adapts to the highest scored drink for an active channel.
@@ -139,9 +141,9 @@ export function HomePortal({ recipes }: HomePortalProps) {
 
   const handleTranslatorSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const target = translatorUrl.trim()
-      ? `/translate?url=${encodeURIComponent(translatorUrl.trim())}`
-      : `/translate`;
+    if (!translatorUrl.trim()) return;
+    setIsProcessing(true);
+    const target = `/translate?url=${encodeURIComponent(translatorUrl.trim())}`;
     window.location.href = target;
   };
 
@@ -362,22 +364,42 @@ export function HomePortal({ recipes }: HomePortalProps) {
             >
               <input
                 type="url"
+                disabled={isProcessing}
                 value={translatorUrl}
                 onChange={(e) => setTranslatorUrl(e.target.value)}
                 placeholder="Paste TikTok or Instagram Reel URL..."
-                className="px-4 py-3 bg-white text-[#1a130e] placeholder-[#7f756f] font-mono text-xs sm:text-sm border-2 border-black w-full sm:w-80 lg:w-96 focus:outline-none shadow-inner"
+                className="px-4 py-3 bg-white text-[#1a130e] placeholder-[#7f756f] font-mono text-xs sm:text-sm border-2 border-black w-full sm:w-80 lg:w-96 focus:outline-none shadow-inner disabled:opacity-60"
               />
               <button
                 type="submit"
-                className="px-6 py-3 bg-[#1a130e] hover:bg-white hover:text-[#1a130e] text-[#b8f600] font-mono text-xs sm:text-sm font-extrabold uppercase tracking-wider border-2 border-black transition-colors cursor-pointer flex items-center justify-center gap-2 whitespace-nowrap shadow-sm"
+                disabled={isProcessing}
+                className="px-6 py-3 bg-[#1a130e] hover:bg-white hover:text-[#1a130e] text-[#b8f600] font-mono text-xs sm:text-sm font-extrabold uppercase tracking-wider border-2 border-black transition-colors cursor-pointer flex items-center justify-center gap-2 whitespace-nowrap shadow-sm disabled:opacity-75 disabled:cursor-not-allowed"
               >
-                <span>BUILD MY RECIPE</span>
-                <ArrowRight size={16} weight="bold" />
+                {isProcessing ? (
+                  <>
+                    <CircleNotch size={18} weight="bold" className="animate-spin text-[#b8f600]" />
+                    <span>AI TRANSLATING...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>BUILD MY RECIPE</span>
+                    <ArrowRight size={16} weight="bold" />
+                  </>
+                )}
               </button>
             </form>
-            <span className="font-mono text-[11px] text-[#dfe0ff]/80">
-              Source credited. Ingredients, quantities, and nutrition estimates clearly marked.
-            </span>
+            {isProcessing ? (
+              <div className="p-3 bg-black/60 border border-[#b8f600] text-[#b8f600] font-mono text-xs flex items-center gap-2.5 animate-pulse">
+                <CircleNotch size={16} weight="bold" className="animate-spin text-[#b8f600] flex-shrink-0" />
+                <span>
+                  <strong>Gemini AI Active:</strong> Downloading video stream, inspecting on-screen text overlays, and calculating equipment brew math... Please hold on.
+                </span>
+              </div>
+            ) : (
+              <span className="font-mono text-[11px] text-[#dfe0ff]/80">
+                Source credited. Ingredients, quantities, and nutrition estimates clearly marked.
+              </span>
+            )}
           </div>
         </div>
       </section>

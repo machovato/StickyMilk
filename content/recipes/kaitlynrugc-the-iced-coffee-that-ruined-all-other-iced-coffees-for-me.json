@@ -1,0 +1,199 @@
+{
+  "slug": "kaitlynrugc-the-iced-coffee-that-ruined-all-other-iced-coffees-for-me",
+  "name": "the iced coffee that ruined all other iced coffees for me",
+  "image": "/recipes/kaitlynrugc-the-iced-coffee-that-ruined-all-other-iced-coffees-for-me.jpg",
+  "format": "iced",
+  "flavor_notes": "Rich espresso layered with smooth cold milk and balanced sweetness.",
+  "barista_note": "Pour espresso directly over ice to preserve the temperature boundary and prevent watery dilution.",
+  "status": "needs_testing",
+  "tags": [
+    "iced",
+    "latte",
+    "viral-trend",
+    "quick-fix"
+  ],
+  "sweetness_level": "rich_sweet",
+  "source": {
+    "type": "creator",
+    "name": "Kaitlyn",
+    "handle": "@kaitlynrugc",
+    "platform": "Instagram",
+    "url": "https://www.instagram.com/p/DcM3BHjN-3F/"
+  },
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Counter Culture Big Trouble or Joe Coffee The Daily",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, melted and chilled",
+          "item_id": "cometeer_capsule",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "brown sugar",
+          "item_id": "brown_sugar",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "maple syrup",
+          "item_id": "maple_syrup",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "portion",
+          "item": "ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "whole milk",
+          "item_id": "milk",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Glass Staging & Ice Base",
+        "Fill your serving glass with ice cubes, then pour in milk and syrups; stir gently to combine.",
+        "## Phase 2: Coffee Extraction & Pour",
+        "Melt the Cometeer capsule completely and chill before pouring (or run under warm water for 2 minutes to liquefy). Pour the chilled coffee extract directly over the iced milk."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 4,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "nespresso_system": "vertuo",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Nespresso Double Espresso Chiaro (Vertuo 80ml)",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 80,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Double Espresso pod",
+          "item_id": "nespresso_double_pod",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "brown sugar",
+          "item_id": "brown_sugar",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "maple syrup",
+          "item_id": "maple_syrup",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "portion",
+          "item": "ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "whole milk",
+          "item_id": "milk",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Glass Staging & Ice Base",
+        "Fill your serving glass with ice cubes, then pour in milk and syrups; stir gently to combine.",
+        "## Phase 2: Coffee Extraction & Pour",
+        "Brew the Nespresso Vertuo pod directly into a small cup or over ice to chill quickly, then pour gently over the iced milk."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 4,
+      "provenance": "original"
+    },
+    {
+      "channel": "instant",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Nescafé Gold Espresso or Mount Hagen Organic",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "secondary_amount": 60,
+          "secondary_unit": "ml hot bloom water",
+          "item": "Instant espresso crystals (e.g. Medaglia d'Oro)",
+          "item_id": "instant_coffee",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "brown sugar",
+          "item_id": "brown_sugar",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "maple syrup",
+          "item_id": "maple_syrup",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "portion",
+          "item": "ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "whole milk",
+          "item_id": "milk",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Glass Staging & Ice Base",
+        "Fill your serving glass with ice cubes, then pour in milk and syrups; stir gently to combine.",
+        "## Phase 2: Coffee Extraction & Pour",
+        "Dissolve 1.5–2 tsp instant espresso crystals in 2 oz (60ml) hot water to fully bloom the coffee. Chill the concentrate, then pour directly over the iced milk."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 4,
+      "provenance": "adapted"
+    }
+  ]
+}

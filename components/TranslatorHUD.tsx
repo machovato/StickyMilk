@@ -16,6 +16,7 @@ import {
   FloppyDisk,
   Warning,
   CheckCircle,
+  CircleNotch,
   VideoCamera,
 } from "@phosphor-icons/react";
 import type { Channel } from "@/lib/types";
@@ -192,16 +193,23 @@ export function TranslatorHUD({
             <button
               type="submit"
               disabled={isTranslating}
-              className="px-6 py-3.5 bg-[#1a130e] hover:bg-[#001ec0] text-[#b8f600] font-mono text-xs sm:text-sm font-extrabold uppercase tracking-wider transition-colors border-2 border-black flex items-center justify-center gap-2 cursor-pointer shadow-sm disabled:opacity-60 whitespace-nowrap"
+              className="px-6 py-3.5 bg-[#1a130e] hover:bg-[#001ec0] text-[#b8f600] font-mono text-xs sm:text-sm font-extrabold uppercase tracking-wider transition-colors border-2 border-black flex items-center justify-center gap-2 cursor-pointer shadow-sm disabled:opacity-75 disabled:cursor-not-allowed whitespace-nowrap"
             >
-              <span>
-                {isTranslating
-                  ? url && !caption
-                    ? "AI WATCHING VIDEO & EXTRACTING..."
-                    : "TRANSLATING RECIPE..."
-                  : "TRANSLATE FOR MY COFFEE"}
-              </span>
-              <ArrowRight size={16} weight="bold" />
+              {isTranslating ? (
+                <>
+                  <CircleNotch size={18} weight="bold" className="animate-spin text-[#b8f600]" />
+                  <span>
+                    {url && !caption
+                      ? "AI WATCHING VIDEO & EXTRACTING..."
+                      : "TRANSLATING RECIPE..."}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span>TRANSLATE FOR MY COFFEE</span>
+                  <ArrowRight size={16} weight="bold" />
+                </>
+              )}
             </button>
           </div>
 

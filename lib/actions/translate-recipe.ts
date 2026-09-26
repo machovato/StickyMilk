@@ -181,9 +181,13 @@ export async function translateRecipeAction(payload: {
       mkdirSync(CONTENT_DIR, { recursive: true });
       writeFileSync(filePath, toRecipeFileContents(validated), "utf-8");
       invalidateRecipeCache();
-      revalidatePath("/");
-      revalidatePath("/recipes");
-      revalidatePath("/translate");
+      try {
+        revalidatePath("/");
+        revalidatePath("/recipes");
+        revalidatePath("/translate");
+      } catch (revErr) {
+        // Safe to ignore in SSR render contexts
+      }
       console.log(
         `[Action] Successfully auto-ingested community recipe into vault: content/recipes/${finalSlug}.json`
       );
@@ -254,10 +258,14 @@ export async function saveTranslatedRecipeAction(recipeCandidate: Recipe): Promi
   );
 
   invalidateRecipeCache();
-  revalidatePath("/");
-  revalidatePath("/recipes");
-  revalidatePath(`/recipes/${recipe.slug}`);
-  revalidatePath("/translate");
+  try {
+    revalidatePath("/");
+    revalidatePath("/recipes");
+    revalidatePath(`/recipes/${recipe.slug}`);
+    revalidatePath("/translate");
+  } catch (revErr) {
+    // Safe to ignore if outside revalidation context
+  }
 
   return {
     success: true,
