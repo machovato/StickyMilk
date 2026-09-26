@@ -137,13 +137,36 @@ export async function translateRecipeAction(payload: {
 
     const result = synthesizeRecipe(ir);
 
-    // 3. Download video thumbnail image to public/recipes if available
-    if (ir.thumbnail_url) {
+    // 3. Resolve slug uniqueness
+    let finalSlug = result.recipe.slug;
+    if (recipeSlugExists(finalSlug)) {
+      let counter = 2;
+      while (recipeSlugExists(`${finalSlug}-${counter}`)) {
+        counter++;
+      }
+      finalSlug = `${finalSlug}-${counter}`;
+      result.recipe.slug = finalSlug;
+    }
+
+    // 4. Save hero thumbnail image to public/recipes (prioritize smart title frame over generic CDN thumbnail)
+    const imageDir = path.join(process.cwd(), "public", "recipes");
+    mkdirSync(imageDir, { recursive: true });
+    const imageFileName = `${finalSlug}.jpg`;
+    const imagePath = path.join(imageDir, imageFileName);
+
+    if (ir.hero_frame_base64) {
       try {
-        const imageDir = path.join(process.cwd(), "public", "recipes");
-        mkdirSync(imageDir, { recursive: true });
-        const imageFileName = `${result.recipe.slug}.jpg`;
-        const imagePath = path.join(imageDir, imageFileName);
+        const buffer = Buffer.from(ir.hero_frame_base64, "base64");
+        writeFileSync(imagePath, buffer);
+        result.recipe.image = `/recipes/${imageFileName}`;
+        console.log(
+          `[Action] Saved smart hero thumbnail to: /recipes/${imageFileName} (${ir.hero_frame_reason || "selected hero frame"})`
+        );
+      } catch (heroErr) {
+        console.warn("[Action] Failed to save hero frame thumbnail:", heroErr);
+      }
+    } else if (ir.thumbnail_url) {
+      try {
         const imgRes = await fetch(ir.thumbnail_url);
         if (imgRes.ok) {
           const buffer = Buffer.from(await imgRes.arrayBuffer());
@@ -156,20 +179,10 @@ export async function translateRecipeAction(payload: {
       }
     }
 
-    // 4. Auto-seed into the vault as needs_testing
+    // 5. Auto-seed into the vault as needs_testing
     result.recipe.status = "needs_testing";
     result.recipe.review = undefined;
     result.recipe.created_at = new Date().toISOString();
-
-    let finalSlug = result.recipe.slug;
-    if (recipeSlugExists(finalSlug)) {
-      let counter = 2;
-      while (recipeSlugExists(`${finalSlug}-${counter}`)) {
-        counter++;
-      }
-      finalSlug = `${finalSlug}-${counter}`;
-      result.recipe.slug = finalSlug;
-    }
 
     const validationErrors = validateRecipeCandidate(
       result.recipe,

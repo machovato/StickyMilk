@@ -58,6 +58,8 @@ export interface RecipeIR {
   extraction_mode?: "video_multimodal_ai" | "caption_heuristic";
   text_overlays?: string[];
   thumbnail_url?: string;
+  hero_frame_base64?: string;
+  hero_frame_reason?: string;
 }
 
 export interface TranslationSuperpowers {

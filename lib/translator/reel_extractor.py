@@ -74,6 +74,7 @@ def extract_reel(video_url: str):
         step_frames = max(1, int(fps * step_seconds))
 
         frame_parts = []
+        raw_frame_data = []
         frame_idx = 0
         saved_frames = 0
 
@@ -91,6 +92,7 @@ def extract_reel(video_url: str):
                 success, enc = cv2.imencode(".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 85])
                 if success:
                     b64_str = base64.b64encode(enc.tobytes()).decode("utf-8")
+                    raw_frame_data.append(b64_str)
                     frame_parts.append({
                         "inline_data": {
                             "mime_type": "image/jpeg",
@@ -106,37 +108,46 @@ def extract_reel(video_url: str):
             print(json.dumps({"error": "No frames could be extracted from video stream"}))
             sys.exit(1)
 
-        # 3. Prompt Gemini 2.5 Flash with the full 2 FPS frame sequence
-        prompt = """You are an expert barista and coffee recipe ingestion engine for StickyMilk.
-Here are sequential video frames (captured at 2 FPS) from a social media coffee reel.
+        # 3. Prompt Gemini 2.5 Flash with the full 2 FPS frame sequence and hero frame selection
+        prompt = f"""You are an expert barista and coffee recipe ingestion engine for StickyMilk.
+Here are {saved_frames} sequential video frames (captured at 2 FPS, indexed 0 to {saved_frames - 1}) from a social media coffee reel.
 1. VERIFY DOMAIN & SAFETY: Confirm whether this is a legitimate beverage recipe. If NOT (e.g. non-drink content, prank, inappropriate/NSFW), set "is_coffee_or_beverage": false and provide "rejection_reason".
 2. READ ALL ON-SCREEN TEXT OVERLAYS: Pay special attention to fast 0.5-second cuts, text stickers, ingredients, brand labels, measuring numbers, and cup markings (e.g. brown sugar, maple syrup, flaky sea salt, espresso, milk, cream, syrups).
 3. WATCH VISUAL ACTIONS: Note if they froth cold foam, pinch flaky salt, add ice, pour milk, pull espresso.
-4. Extract the recipe into strict JSON with this exact schema:
-{
+4. SELECT HERO THUMBNAIL FRAME:
+Select the single best frame index (0-indexed from 0 to {saved_frames - 1}) to use as the hero thumbnail image for this recipe.
+Follow this strict priority:
+- Priority 1: Pick a frame that clearly features the on-screen drink title, hook text, or recipe name overlay (e.g. 'the iced coffee that ruined all other iced coffees for me', 'Pumpkin Banana Bread Iced Latte', etc.), ideally while also showing the drink or glass.
+- Priority 2: If no frame contains the drink name or title text overlay, pick the most appetizing, clear hero shot of the completed drink (e.g. beautiful crema, swirling milk/espresso layers, cold foam crown, garnish).
+Avoid blurry mid-action shots, pouring streams obstructing the glass, or plain ingredient packages without the drink.
+Provide "hero_frame_index": number (0 to {saved_frames - 1}) and "hero_frame_reason": string explaining why it was chosen.
+5. Extract the recipe into strict JSON with this exact schema:
+{{
   "is_coffee_or_beverage": boolean,
   "rejection_reason": string,
   "raw_title": string,
+  "hero_frame_index": number,
+  "hero_frame_reason": string,
   "creator_handle": string,
   "creator_name": string,
-  "stated_coffee": {
+  "stated_coffee": {{
     "raw_name": string,
     "system": "vertuo" | "original" | "capsule" | "instant",
     "shots": number,
     "roast_profile": "light" | "medium" | "dark"
-  },
+  }},
   "raw_ingredients": [
-    {
+    {{
       "amount": number,
       "unit": string,
       "item": string,
       "group": "Cold Foam" | "Latte Base" | "Garnish",
       "optional": boolean
-    }
+    }}
   ],
   "raw_steps": [ string ],
   "text_overlays_found": [ string ]
-}
+}}
 Return ONLY valid JSON matching this schema."""
 
         contents = [prompt] + frame_parts
@@ -159,6 +170,13 @@ Return ONLY valid JSON matching this schema."""
             parsed["detected_title"] = detected_title
             parsed["video_duration"] = duration
             parsed["frames_analyzed"] = saved_frames
+
+            # Extract hero frame base64
+            hero_idx = parsed.get("hero_frame_index")
+            if isinstance(hero_idx, int) and 0 <= hero_idx < len(raw_frame_data):
+                parsed["hero_frame_base64"] = raw_frame_data[hero_idx]
+            elif raw_frame_data:
+                parsed["hero_frame_base64"] = raw_frame_data[0]
 
             print(json.dumps(parsed))
         except Exception as e:

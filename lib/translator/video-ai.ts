@@ -174,6 +174,8 @@ export async function extractRecipeWithGeminiVideo(
       extraction_mode: "video_multimodal_ai",
       text_overlays: parsed.text_overlays_found || [],
       thumbnail_url: detectedThumbnail?.trim() || undefined,
+      hero_frame_base64: parsed.hero_frame_base64 || undefined,
+      hero_frame_reason: parsed.hero_frame_reason || undefined,
     };
 
     return ir;
