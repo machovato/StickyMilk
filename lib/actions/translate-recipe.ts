@@ -119,12 +119,20 @@ export async function translateRecipeAction(payload: {
       ir = await extractRecipeWithGeminiVideo(rawUrl);
     }
 
-    // Fallback to text caption / heuristic extractor if video AI didn't run or failed
+    // Fallback to text caption / heuristic extractor if caption/preset provided, otherwise fail loudly
     if (!ir) {
-      ir = extractRecipeIR({
-        url: payload.url,
-        caption: payload.caption,
-      });
+      if (payload.caption || isPreset) {
+        ir = extractRecipeIR({
+          url: payload.url,
+          caption: payload.caption,
+        });
+      } else {
+        return {
+          success: false,
+          error:
+            "Could not process or extract ingredients from this video reel. Please verify the URL or paste the video caption.",
+        };
+      }
     }
 
     const result = synthesizeRecipe(ir);

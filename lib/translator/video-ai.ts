@@ -1,5 +1,4 @@
-import "server-only";
-import { exec } from "node:child_process";
+import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { existsSync, unlinkSync } from "node:fs";
 import path from "node:path";
@@ -9,7 +8,7 @@ import type { RecipeIR } from "./types";
 import { slugify } from "@/lib/slugify";
 import { parseVideoUrl } from "./extractor";
 
-const execAsync = promisify(exec);
+const execFileAsync = promisify(execFile);
 
 export async function extractRecipeWithGeminiVideo(
   videoUrl: string
@@ -28,10 +27,21 @@ export async function extractRecipeWithGeminiVideo(
     console.log(`[VideoAI] Resolving and downloading video for: ${videoUrl}`);
 
     // Download video using yt-dlp (limits size to <= 25MB) and grab metadata
-    // CRITICAL: --no-simulate is required when using --print with -o, otherwise yt-dlp simulates and does not write the file!
-    const { stdout: uploaderOut } = await execAsync(
-      `python -m yt_dlp --print "%(uploader)s|||%(thumbnail)s|||%(title)s" --no-simulate -f "b[ext=mp4]/b" --max-filesize 25M -o "${tempFilePath}" "${videoUrl}"`
-    );
+    // Using execFile avoids Windows shell escaping and %() parameter expansion issues
+    const { stdout: uploaderOut } = await execFileAsync("python", [
+      "-m",
+      "yt_dlp",
+      "--print",
+      "%(uploader)s|||%(thumbnail)s|||%(title)s",
+      "--no-simulate",
+      "-f",
+      "b[ext=mp4]/b",
+      "--max-filesize",
+      "25M",
+      "-o",
+      tempFilePath,
+      videoUrl,
+    ]);
 
     const firstMetaLine = uploaderOut.trim().split("\n").filter((l) => l.includes("|||"))[0] || "";
     const [detectedUploader = "", detectedThumbnail = "", detectedTitle = ""] = firstMetaLine.split("|||");
