@@ -517,5 +517,34 @@
       "Lotus Biscoff cookie"
     ],
     "default_unit": "cookie"
+  },
+  {
+    "id": "ground_cinnamon",
+    "name": "Ground cinnamon",
+    "category": "flavoring",
+    "allergens": [],
+    "aliases": [
+      "ground cinnamon",
+      "cinnamon",
+      "cinnamon dust"
+    ],
+    "default_unit": "pinch"
+  },
+  {
+    "id": "vanilla_protein_shake",
+    "name": "Vanilla RTD protein shake",
+    "category": "milk-alternative",
+    "allergens": [
+      "dairy"
+    ],
+    "aliases": [
+      "vanilla protein shake",
+      "Fairlife vanilla protein shake",
+      "Fairlife protein shake",
+      "protein shake",
+      "RTD protein shake",
+      "vanilla RTD protein shake"
+    ],
+    "default_unit": "oz"
   }
 ]

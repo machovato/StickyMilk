@@ -19,9 +19,15 @@ export function toRecipeFileContents(recipe: Recipe): string {
     flavor_notes: recipe.flavor_notes,
     barista_note: recipe.barista_note,
     status: recipe.status,
+    featured: recipe.featured,
+    promoter_tag: recipe.promoter_tag,
+    review: recipe.review,
     tags: recipe.tags,
     sweetness_level: recipe.sweetness_level,
+    source: recipe.source,
+    variations: recipe.variations,
     preparations: recipe.preparations.map(orderPreparation),
+    data_issues: recipe.data_issues,
   };
 
   // JSON.stringify drops keys whose value is `undefined`, so optional
@@ -32,6 +38,7 @@ export function toRecipeFileContents(recipe: Recipe): string {
 function orderPreparation(prep: Preparation) {
   return {
     channel: prep.channel,
+    nespresso_system: prep.nespresso_system,
     roast_recommendation: prep.roast_recommendation,
     roast_note: prep.roast_note,
     tested_with: prep.tested_with,
@@ -47,6 +54,7 @@ function orderPreparation(prep: Preparation) {
     steps: prep.steps,
     difficulty: prep.difficulty,
     prep_time_minutes: prep.prep_time_minutes,
+    provenance: prep.provenance,
   };
 }
 

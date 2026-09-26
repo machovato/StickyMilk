@@ -9,7 +9,7 @@ export interface NutritionBreakdown {
 }
 
 interface MacroItem {
-  baseUnit: "tbsp" | "tsp" | "oz" | "cup" | "scoop" | "capsule" | "pod" | "cookie";
+  baseUnit: "tbsp" | "tsp" | "oz" | "cup" | "scoop" | "capsule" | "pod" | "cookie" | "pinch";
   calories: number;
   sugar_g: number;
   fat_g: number;
@@ -202,6 +202,20 @@ const INGREDIENT_BENCHMARKS: Record<string, MacroItem> = {
     fat_g: 1.5,
     protein_g: 0.4,
   },
+  ground_cinnamon: {
+    baseUnit: "pinch",
+    calories: 2,
+    sugar_g: 0.1,
+    fat_g: 0.02,
+    protein_g: 0.05,
+  },
+  vanilla_protein_shake: {
+    baseUnit: "oz",
+    calories: 12.5,
+    sugar_g: 0.2,
+    fat_g: 0.25,
+    protein_g: 2.3,
+  },
 };
 
 /** Normalizes ingredient units to the benchmark's base unit. */
@@ -218,6 +232,7 @@ function getUnitMultiplier(fromUnit: string | undefined, toUnit: string): number
     tsp: 1 / 6,
     cup: 8,
     ml: 1 / 29.5735,
+    pinch: 1 / 48,
   };
 
   if (ozFactors[from] !== undefined && ozFactors[to] !== undefined) {

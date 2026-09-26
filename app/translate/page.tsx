@@ -1,17 +1,20 @@
 import Link from "next/link";
 import {
   ArrowLeft,
-  ArrowRight,
   Coffee,
   Lightning,
   Thermometer,
 } from "@phosphor-icons/react/dist/ssr";
 import { isAdminAuthenticated } from "@/lib/auth";
+import { TranslatorHUD } from "@/components/TranslatorHUD";
+import { extractRecipeIR } from "@/lib/translator/extractor";
+import { synthesizeRecipe } from "@/lib/translator/synthesis";
+import type { TranslationResult } from "@/lib/translator/types";
 
 export const metadata = {
-  title: "Coffee Translator // StickyMilk",
+  title: "The Coffee Translator Engine // StickyMilk",
   description:
-    "Translate viral TikTok and Instagram coffee recipes into calibrated Cometeer, Nespresso Vertuo, and Instant formulations.",
+    "Translate viral TikTok, Instagram Reels, and YouTube Shorts into calibrated Cometeer, Nespresso Vertuo, and Instant formulations.",
 };
 
 interface TranslatePageProps {
@@ -21,6 +24,16 @@ interface TranslatePageProps {
 export default async function TranslatePage({ searchParams }: TranslatePageProps) {
   const { url } = await searchParams;
   const isAuth = await isAdminAuthenticated();
+
+  let initialResult: TranslationResult | undefined = undefined;
+  if (url) {
+    try {
+      const ir = extractRecipeIR({ url });
+      initialResult = synthesizeRecipe(ir);
+    } catch {
+      // Ignored for initial server render; handled gracefully on client
+    }
+  }
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex flex-col gap-10 text-left">
@@ -35,8 +48,13 @@ export default async function TranslatePage({ searchParams }: TranslatePageProps
         </Link>
         <span className="text-[#d1c4bd]">|</span>
         <span className="font-mono text-[11px] font-bold px-2 py-0.5 bg-[#b8f600] text-[#141f00] uppercase">
-          SPRINT 4 STAGING
+          COFFEE TRANSLATOR ENGINE
         </span>
+        {isAuth && (
+          <span className="font-mono text-[11px] font-bold px-2 py-0.5 bg-[#001ec0] text-white uppercase">
+            ADMIN CURATOR
+          </span>
+        )}
       </div>
 
       {/* Main Hero Header */}
@@ -44,7 +62,7 @@ export default async function TranslatePage({ searchParams }: TranslatePageProps
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 bg-[#001ec0]" />
           <span className="font-mono text-xs font-bold uppercase tracking-widest text-[#001ec0]">
-            ON-DEMAND RECIPE INGESTION
+            ON-DEMAND RECIPE INGESTION & CALIBRATION
           </span>
         </div>
         <h1 className="font-syne text-3xl sm:text-5xl font-extrabold text-[#1a130e] tracking-tight leading-[1.1]">
@@ -57,53 +75,21 @@ export default async function TranslatePage({ searchParams }: TranslatePageProps
         </p>
       </div>
 
-      {/* Ingestion Input Card */}
-      <div className="bg-white p-6 sm:p-8 border-2 border-black shadow-lg flex flex-col gap-5">
-        <div className="flex flex-col gap-1">
-          <span className="font-mono text-xs font-bold uppercase text-[#1a130e] tracking-wider">
-            PASTE REEL OR VIDEO URL
+      {/* Interactive Translator HUD */}
+      <TranslatorHUD
+        initialUrl={url}
+        isAdmin={isAuth}
+        initialResult={initialResult}
+      />
+
+      {/* How The Translator Works: The 3 Superpowers */}
+      <div className="flex flex-col gap-4 mt-6 pt-10 border-t-2 border-[#1a130e]/15">
+        <div className="flex items-center gap-2">
+          <span className="font-mono text-xs font-bold uppercase text-[#001ec0] tracking-wider">
+            CANONICAL ENGINE SPECIFICATION
           </span>
-          <p className="font-body text-xs text-[#7f756f]">
-            Supports TikTok links, Instagram Reels, and YouTube Shorts.
-          </p>
         </div>
-
-        <form
-          action={isAuth ? "/recipes/new" : undefined}
-          method={isAuth ? "GET" : undefined}
-          className="flex flex-col sm:flex-row items-stretch gap-3"
-        >
-          <input
-            type="url"
-            name="importUrl"
-            defaultValue={url || ""}
-            placeholder="https://www.tiktok.com/@creator/video/... or https://www.instagram.com/reel/..."
-            className="flex-1 px-4 py-3.5 bg-[#fef8f4] text-[#1a130e] placeholder-[#a89e97] font-mono text-xs sm:text-sm border-2 border-[#1a130e]/30 focus:border-[#1a130e] focus:outline-none"
-          />
-          <button
-            type="submit"
-            className="px-6 py-3.5 bg-[#1a130e] hover:bg-[#001ec0] text-[#b8f600] font-mono text-xs sm:text-sm font-extrabold uppercase tracking-wider transition-colors border-2 border-black flex items-center justify-center gap-2 cursor-pointer shadow-sm"
-          >
-            <span>{isAuth ? "LOAD IN LAB" : "TRANSLATE FOR MY COFFEE"}</span>
-            <ArrowRight size={16} weight="bold" />
-          </button>
-        </form>
-
-        {!isAuth && (
-          <div className="p-3 bg-[#f8f2ee] border border-[#1a130e]/10 text-xs font-mono text-[#7f756f]">
-            💡 <strong>Sprint 4 Ingestion Pipeline:</strong> Public link intake is being hooked up directly
-            to Tony&apos;s test kitchen queue. Admin curators can{" "}
-            <Link href="/admin/login" className="text-[#001ec0] underline font-bold">
-              log in
-            </Link>{" "}
-            to parse and publish drafts immediately.
-          </div>
-        )}
-      </div>
-
-      {/* The 3 Superpowers */}
-      <div className="flex flex-col gap-4">
-        <h2 className="font-syne text-xl font-bold uppercase text-[#1a130e] tracking-tight">
+        <h2 className="font-syne text-xl sm:text-2xl font-bold uppercase text-[#1a130e] tracking-tight">
           How The Translator Works: 3 Superpowers
         </h2>
 

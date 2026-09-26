@@ -889,6 +889,36 @@ instead of a number.
        `premier_protein_shake` to `content/taxonomy/ingredients.json` with `"proffee"`,
        `"protein-coffee"`, and `"high-protein"` tags.
 
+5.25. **Shipped Sprint 4: The Coffee Translator Engine (`/admin/import` & `/translate`).**
+   Engineered the full 4-stage ingestion and conversion pipeline specified in
+   `RECIPE_INGESTION_ENGINE_SPEC.md`, replacing crowdsourced data entry with high-intent on-demand utility:
+   - **Stage 0: Extraction (`lib/translator/extractor.ts`):** Parses TikTok, Instagram Reels,
+     and YouTube Shorts URLs or raw video captions/transcripts. Extracts creators, clean titles,
+     and detects multi-component sub-assemblies (Cold Foam vs. Base vs. Garnish).
+     Provided 3 instant 1-click trending presets: Sofia Hrdz's *Maple Cinnamon Cloud Latte*,
+     CoffeeGal's *Salted Caramel Cookie Butter Latte*, and StickyMilk's *Fairlife Vanilla Proffee*.
+   - **Stage 1: Taxonomy Matching & Novel Ingredient Fallback (`lib/translator/synthesis.ts`):**
+     Matches items against `content/taxonomy/ingredients.json` (added `vanilla_protein_shake`
+     and `ground_cinnamon`). Novel ingredients gracefully degrade without crashing by omitting
+     `item_id` and queuing for editor calibration.
+   - **Stage 2: 3-Channel Synthesis & The 3 Superpowers:**
+     1. *Hardware Brew Math:* Synthesizes exact ratios for Cometeer (26g melt), Nespresso Vertuo
+        (single 40ml or double 80ml pod pull), and Instant (2oz hot bloom) with tested roast/pod picks.
+     2. *Nutritional Reality Check:* Computes exact calories, sugar, fat, protein, and caffeine
+        with human reference benchmarks (*"~1.6 cups of coffee"*, *"5 tsp sugar"*).
+     3. *Kitchen Mise en Place:* Re-sequences video cuts into temperature-stable phases
+        (Phase 1: whip cold foam first while glass is dry; Phase 2: ice and cold base;
+        Phase 3: espresso pulled over ice last; Phase 4: crown & garnish).
+   - **Stage 3: Deterministic QA Gate & Server Action (`lib/actions/translate-recipe.ts`):**
+     Every candidate recipe is validated against `validateRecipeCandidate()`, ensuring 0 schema
+     errors. Authenticated admins can save drafts directly to `content/recipes/${creator_slug}-${recipe_name}.json`
+     tagged `status: "needs_testing"`.
+   - **Live Translator HUD (`components/TranslatorHUD.tsx` & `/translate`):**
+     Features reactive `MY COFFEE` lever switching between Cometeer, Vertuo, and Instant live,
+     3-superpowers metric grid, ingredients sub-assembly table with taxonomy verification chips,
+     and JSON export. Added `/admin/import` authenticated redirect.
+   - **Verified with 100% automated test suite (`scripts/test-translator.ts`)** and 0 errors across 72 static pages in `next build`.
+
 ---
 
 ## 6. Known constraints / workarounds worth remembering
