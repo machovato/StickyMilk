@@ -28,8 +28,9 @@ export async function extractRecipeWithGeminiVideo(
     console.log(`[VideoAI] Resolving and downloading video for: ${videoUrl}`);
 
     // Download video using yt-dlp (limits size to <= 25MB) and grab metadata
+    // CRITICAL: --no-simulate is required when using --print with -o, otherwise yt-dlp simulates and does not write the file!
     const { stdout: uploaderOut } = await execAsync(
-      `python -m yt_dlp --print "%(uploader)s|||%(thumbnail)s|||%(title)s" -f "b[ext=mp4]/b" --max-filesize 25M -o "${tempFilePath}" "${videoUrl}"`
+      `python -m yt_dlp --print "%(uploader)s|||%(thumbnail)s|||%(title)s" --no-simulate -f "b[ext=mp4]/b" --max-filesize 25M -o "${tempFilePath}" "${videoUrl}"`
     );
 
     const firstMetaLine = uploaderOut.trim().split("\n").filter((l) => l.includes("|||"))[0] || "";
@@ -190,28 +191,59 @@ Return ONLY valid JSON matching this schema.`;
     }
 
     const urlInfo = parseVideoUrl(videoUrl);
-    const creatorHandle = parsed.creator_handle
-      ? parsed.creator_handle.startsWith("@")
-        ? parsed.creator_handle
-        : `@${parsed.creator_handle}`
+    const videoByMatch = detectedTitle.match(/Video by ([a-zA-Z0-9_.-]+)/i);
+    const fallbackHandle = videoByMatch
+      ? `@${videoByMatch[1]}`
       : detectedUploader
-      ? `@${detectedUploader}`
+      ? `@${detectedUploader.toLowerCase().replace(/\s+/g, "")}`
       : urlInfo.handle || "@creator";
 
+    const creatorHandle =
+      parsed.creator_handle && !parsed.creator_handle.toLowerCase().includes("creator")
+        ? parsed.creator_handle.startsWith("@")
+          ? parsed.creator_handle
+          : `@${parsed.creator_handle}`
+        : fallbackHandle;
+
+    const creatorName =
+      parsed.creator_name && !parsed.creator_name.toLowerCase().includes("creator")
+        ? parsed.creator_name
+        : detectedUploader || fallbackHandle.replace("@", "");
+
+    // If Gemini title is missing or generic, synthesize an appetizing name from the real ingredients
+    let rawTitle = parsed.raw_title;
+    if (
+      !rawTitle ||
+      rawTitle.toLowerCase().includes("viral specialty") ||
+      rawTitle.toLowerCase() === "iced latte"
+    ) {
+      const ingItems = rawIngredients.map((i: { item: string }) => i.item.toLowerCase());
+      const features: string[] = [];
+      if (ingItems.some((i: string) => i.includes("brown sugar"))) features.push("Brown Sugar");
+      if (ingItems.some((i: string) => i.includes("maple"))) features.push("Maple");
+      if (ingItems.some((i: string) => i.includes("cookie butter") || i.includes("biscoff"))) features.push("Cookie Butter");
+      if (ingItems.some((i: string) => i.includes("caramel"))) features.push("Caramel");
+      if (ingItems.some((i: string) => i.includes("vanilla"))) features.push("Vanilla");
+      if (ingItems.some((i: string) => i.includes("cinnamon"))) features.push("Cinnamon");
+      if (ingItems.some((i: string) => i.includes("cold foam"))) features.push("Cold Foam");
+
+      rawTitle = features.length > 0 ? `${features.join(" ")} Iced Latte` : "Specialty Iced Latte";
+    }
+
     const creatorSlug = slugify(creatorHandle.replace("@", ""));
-    const recipeSlug = slugify(parsed.raw_title || "iced-latte");
+    const recipeSlug = slugify(rawTitle);
     const generatedSlug = `${creatorSlug}-${recipeSlug}`;
 
     const ir: RecipeIR = {
       source_type: urlInfo.sourceType,
       source_url: videoUrl,
       source_creator: {
-        name: parsed.creator_name || detectedUploader || creatorHandle.replace("@", ""),
+        name: creatorName,
         handle: creatorHandle,
         platform: urlInfo.platform,
       },
       generated_slug: generatedSlug,
-      raw_title: parsed.raw_title || "Viral Specialty Latte",
+      raw_title: rawTitle,
       stated_coffee: {
         raw_name: parsed.stated_coffee?.raw_name || "Espresso",
         system: parsed.stated_coffee?.system || "vertuo",
