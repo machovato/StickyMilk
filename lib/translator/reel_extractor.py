@@ -1,0 +1,172 @@
+import sys
+import os
+import json
+import base64
+import tempfile
+import cv2
+from google import genai
+from dotenv import load_dotenv
+
+# Ensure environment variables are loaded
+env_path = os.path.join(os.getcwd(), ".env")
+if os.path.exists(env_path):
+    load_dotenv(env_path)
+
+def extract_reel(video_url: str):
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        print(json.dumps({"error": "GEMINI_API_KEY is not configured"}))
+        sys.exit(1)
+
+    client = genai.Client(api_key=api_key)
+
+    with tempfile.TemporaryDirectory() as temp_dir:
+        temp_video_path = os.path.join(temp_dir, "video.mp4")
+
+        # 1. Download video and extract metadata using yt-dlp
+        import subprocess
+        try:
+            cmd = [
+                "python",
+                "-m",
+                "yt_dlp",
+                "--print",
+                "%(uploader)s|||%(thumbnail)s|||%(title)s",
+                "--no-simulate",
+                "-f",
+                "b[ext=mp4]/b",
+                "--max-filesize",
+                "25M",
+                "-o",
+                temp_video_path,
+                video_url,
+            ]
+            proc = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            meta_line = proc.stdout.strip().split("\n")
+            first_meta = [l for l in meta_line if "|||" in l]
+            detected_uploader = ""
+            detected_thumbnail = ""
+            detected_title = ""
+            if first_meta:
+                parts = first_meta[0].split("|||")
+                if len(parts) >= 3:
+                    detected_uploader, detected_thumbnail, detected_title = parts[0], parts[1], parts[2]
+        except Exception as e:
+            print(json.dumps({"error": f"Failed to download video stream: {str(e)}"}))
+            sys.exit(1)
+
+        if not os.path.exists(temp_video_path):
+            print(json.dumps({"error": "Downloaded video file not found"}))
+            sys.exit(1)
+
+        # 2. Extract frames at high temporal resolution (2 FPS = every 0.5s) to catch fast micro-cuts
+        cap = cv2.VideoCapture(temp_video_path)
+        fps = cap.get(cv2.CAP_PROP_FPS) or 30.0
+        total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) or 0
+        duration = total_frames / fps if fps else 0
+
+        # Calculate sampling interval: default to 2 FPS (every 0.5s)
+        # Cap total frames at 60 to stay fast and within model limits
+        step_seconds = 0.5
+        if duration > 30:
+            step_seconds = max(0.5, duration / 60.0)
+
+        step_frames = max(1, int(fps * step_seconds))
+
+        frame_parts = []
+        frame_idx = 0
+        saved_frames = 0
+
+        while cap.isOpened() and saved_frames < 70:
+            ret, frame = cap.read()
+            if not ret:
+                break
+            if frame_idx % step_frames == 0:
+                # Resize large frames to max width 720 to keep upload lightning fast
+                h, w = frame.shape[:2]
+                if w > 720:
+                    scale = 720.0 / w
+                    frame = cv2.resize(frame, (720, int(h * scale)))
+
+                success, enc = cv2.imencode(".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 85])
+                if success:
+                    b64_str = base64.b64encode(enc.tobytes()).decode("utf-8")
+                    frame_parts.append({
+                        "inline_data": {
+                            "mime_type": "image/jpeg",
+                            "data": b64_str,
+                        }
+                    })
+                    saved_frames += 1
+            frame_idx += 1
+
+        cap.release()
+
+        if not frame_parts:
+            print(json.dumps({"error": "No frames could be extracted from video stream"}))
+            sys.exit(1)
+
+        # 3. Prompt Gemini 2.5 Flash with the full 2 FPS frame sequence
+        prompt = """You are an expert barista and coffee recipe ingestion engine for StickyMilk.
+Here are sequential video frames (captured at 2 FPS) from a social media coffee reel.
+1. VERIFY DOMAIN & SAFETY: Confirm whether this is a legitimate beverage recipe. If NOT (e.g. non-drink content, prank, inappropriate/NSFW), set "is_coffee_or_beverage": false and provide "rejection_reason".
+2. READ ALL ON-SCREEN TEXT OVERLAYS: Pay special attention to fast 0.5-second cuts, text stickers, ingredients, brand labels, measuring numbers, and cup markings (e.g. brown sugar, maple syrup, flaky sea salt, espresso, milk, cream, syrups).
+3. WATCH VISUAL ACTIONS: Note if they froth cold foam, pinch flaky salt, add ice, pour milk, pull espresso.
+4. Extract the recipe into strict JSON with this exact schema:
+{
+  "is_coffee_or_beverage": boolean,
+  "rejection_reason": string,
+  "raw_title": string,
+  "creator_handle": string,
+  "creator_name": string,
+  "stated_coffee": {
+    "raw_name": string,
+    "system": "vertuo" | "original" | "capsule" | "instant",
+    "shots": number,
+    "roast_profile": "light" | "medium" | "dark"
+  },
+  "raw_ingredients": [
+    {
+      "amount": number,
+      "unit": string,
+      "item": string,
+      "group": "Cold Foam" | "Latte Base" | "Garnish",
+      "optional": boolean
+    }
+  ],
+  "raw_steps": [ string ],
+  "text_overlays_found": [ string ]
+}
+Return ONLY valid JSON matching this schema."""
+
+        contents = [prompt] + frame_parts
+
+        try:
+            resp = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=contents,
+            )
+            raw_text = resp.text or ""
+            import re
+            json_match = re.search(r"\{[\s\S]*\}", raw_text)
+            if not json_match:
+                print(json.dumps({"error": "Failed to parse JSON from Gemini response"}))
+                sys.exit(1)
+
+            parsed = json.loads(json_match.group(0))
+            parsed["detected_uploader"] = detected_uploader
+            parsed["detected_thumbnail"] = detected_thumbnail
+            parsed["detected_title"] = detected_title
+            parsed["video_duration"] = duration
+            parsed["frames_analyzed"] = saved_frames
+
+            print(json.dumps(parsed))
+        except Exception as e:
+            print(json.dumps({"error": f"Gemini multimodal extraction failed: {str(e)}"}))
+            sys.exit(1)
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print(json.dumps({"error": "Missing video URL argument"}))
+        sys.exit(1)
+    extract_reel(sys.argv[1])

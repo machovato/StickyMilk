@@ -3,8 +3,8 @@
   "name": "the iced coffee that ruined all other iced coffees for me",
   "image": "/recipes/kaitlynrugc-the-iced-coffee-that-ruined-all-other-iced-coffees-for-me.jpg",
   "format": "iced",
-  "flavor_notes": "Rich espresso layered with smooth cold milk and balanced sweetness.",
-  "barista_note": "Pour espresso directly over ice to preserve the temperature boundary and prevent watery dilution.",
+  "flavor_notes": "Rich espresso shaken with brown sugar, pure maple syrup, and a pinch of flaky sea salt, topped with chilled whole milk.",
+  "barista_note": "Whisk the brown sugar, maple syrup, and flaky sea salt directly into the hot espresso before adding ice — this melts the sugar and blooms the coffee aroma.",
   "status": "needs_testing",
   "tags": [
     "iced",
@@ -56,6 +56,13 @@
         },
         {
           "amount": 1,
+          "unit": "pinch",
+          "item": "flaky sea salt",
+          "item_id": "flaky_salt",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
           "unit": "portion",
           "item": "ice",
           "item_id": "ice",
@@ -70,10 +77,12 @@
         }
       ],
       "steps": [
-        "## Phase 1: Glass Staging & Ice Base",
-        "Fill your serving glass with ice cubes, then pour in milk and syrups; stir gently to combine.",
-        "## Phase 2: Coffee Extraction & Pour",
-        "Melt the Cometeer capsule completely and chill before pouring (or run under warm water for 2 minutes to liquefy). Pour the chilled coffee extract directly over the iced milk."
+        "## Phase 1: Flavor Base & Extraction",
+        "In your glass, combine 1 tbsp brown sugar, 1 tbsp maple syrup, and a pinch of flaky sea salt.",
+        "Melt the Cometeer capsule (run under warm tap water for 2 minutes or thaw). Pour the concentrated coffee extract directly over the syrups and salt; whisk with a handheld frother until frothy and dissolved.",
+        "## Phase 2: Ice & Milk Crown",
+        "Fill the glass to the brim with plenty of ice cubes.",
+        "Pour cold whole milk over the ice for that satisfying swirl, stir gently, and serve."
       ],
       "difficulty": "easy",
       "prep_time_minutes": 4,
@@ -115,6 +124,13 @@
         },
         {
           "amount": 1,
+          "unit": "pinch",
+          "item": "flaky sea salt",
+          "item_id": "flaky_salt",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
           "unit": "portion",
           "item": "ice",
           "item_id": "ice",
@@ -129,10 +145,12 @@
         }
       ],
       "steps": [
-        "## Phase 1: Glass Staging & Ice Base",
-        "Fill your serving glass with ice cubes, then pour in milk and syrups; stir gently to combine.",
-        "## Phase 2: Coffee Extraction & Pour",
-        "Brew the Nespresso Vertuo pod directly into a small cup or over ice to chill quickly, then pour gently over the iced milk."
+        "## Phase 1: Flavor Base & Hot Extraction",
+        "In your serving glass, add 1 tbsp brown sugar, 1 tbsp maple syrup, and a pinch of flaky sea salt.",
+        "Brew the Nespresso Double Espresso (80ml) pod directly over the sugar, syrup, and salt. Use a handheld frother to whisk the espresso mixture for 10 seconds until the sugar dissolves and creates a golden microfoam.",
+        "## Phase 2: Ice & Milk Pour",
+        "Fill the glass with plenty of ice cubes.",
+        "Pour whole milk over the ice to the top, stir with a glass straw, and enjoy."
       ],
       "difficulty": "easy",
       "prep_time_minutes": 4,
@@ -172,6 +190,13 @@
         },
         {
           "amount": 1,
+          "unit": "pinch",
+          "item": "flaky sea salt",
+          "item_id": "flaky_salt",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
           "unit": "portion",
           "item": "ice",
           "item_id": "ice",
@@ -186,10 +211,12 @@
         }
       ],
       "steps": [
-        "## Phase 1: Glass Staging & Ice Base",
-        "Fill your serving glass with ice cubes, then pour in milk and syrups; stir gently to combine.",
-        "## Phase 2: Coffee Extraction & Pour",
-        "Dissolve 1.5–2 tsp instant espresso crystals in 2 oz (60ml) hot water to fully bloom the coffee. Chill the concentrate, then pour directly over the iced milk."
+        "## Phase 1: Bloom & Whisk",
+        "In your glass, combine 1 tbsp brown sugar, 1 tbsp maple syrup, a pinch of flaky sea salt, and 2 tsp instant espresso crystals.",
+        "Add 2 oz (60ml) hot water to bloom the crystals and dissolve the sugar; whisk briskly with a handheld frother until glossy and lightly foamy.",
+        "## Phase 2: Ice & Milk Crown",
+        "Pack the glass with ice cubes.",
+        "Pour chilled whole milk over the ice to fill the glass and stir gently."
       ],
       "difficulty": "easy",
       "prep_time_minutes": 4,

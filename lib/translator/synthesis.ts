@@ -85,6 +85,10 @@ function findTaxonomyMatch(
     const ps = taxonomy.find((e) => e.id === "vanilla_protein_shake");
     if (ps) return { id: ps.id, name: ps.name, is_novel: false };
   }
+  if (lower.includes("salt")) {
+    const fs = taxonomy.find((e) => e.id === "flaky_salt") || taxonomy.find((e) => e.id === "pinch_of_salt");
+    if (fs) return { id: fs.id, name: fs.name, is_novel: false };
+  }
   if (lower.includes("ice")) {
     const ice = taxonomy.find((e) => e.id === "ice");
     if (ice) return { id: ice.id, name: ice.name, is_novel: false };

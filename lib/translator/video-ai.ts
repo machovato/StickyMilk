@@ -1,9 +1,6 @@
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { existsSync, unlinkSync } from "node:fs";
 import path from "node:path";
-import os from "node:os";
-import { GoogleGenAI } from "@google/genai";
 import type { RecipeIR } from "./types";
 import { slugify } from "@/lib/slugify";
 import { parseVideoUrl } from "./extractor";
@@ -19,127 +16,33 @@ export async function extractRecipeWithGeminiVideo(
     return null;
   }
 
-  const ai = new GoogleGenAI({ apiKey });
-  const tempFileName = `sm_reel_${Date.now()}_${Math.random().toString(36).slice(2)}.mp4`;
-  const tempFilePath = path.join(os.tmpdir(), tempFileName);
-
   try {
-    console.log(`[VideoAI] Resolving and downloading video for: ${videoUrl}`);
-
-    // Download video using yt-dlp (limits size to <= 25MB) and grab metadata
-    // Using execFile avoids Windows shell escaping and %() parameter expansion issues
-    const { stdout: uploaderOut } = await execFileAsync("python", [
-      "-m",
-      "yt_dlp",
-      "--print",
-      "%(uploader)s|||%(thumbnail)s|||%(title)s",
-      "--no-simulate",
-      "-f",
-      "b[ext=mp4]/b",
-      "--max-filesize",
-      "25M",
-      "-o",
-      tempFilePath,
-      videoUrl,
-    ]);
-
-    const firstMetaLine = uploaderOut.trim().split("\n").filter((l) => l.includes("|||"))[0] || "";
-    const [detectedUploader = "", detectedThumbnail = "", detectedTitle = ""] = firstMetaLine.split("|||");
-
-    if (!existsSync(tempFilePath)) {
-      console.warn("[VideoAI] Failed to download video stream to temp file");
-      return null;
-    }
-
-    console.log("[VideoAI] Uploading video to Gemini File API...");
-    const uploadResult = await ai.files.upload({
-      file: tempFilePath,
-      config: {
-        mimeType: "video/mp4",
-      },
+    console.log(`[VideoAI] Running high-temporal 2 FPS reel extraction for: ${videoUrl}`);
+    const scriptPath = path.join(process.cwd(), "lib", "translator", "reel_extractor.py");
+    const { stdout } = await execFileAsync("python", [scriptPath, videoUrl], {
+      maxBuffer: 20 * 1024 * 1024,
     });
 
-    if (!uploadResult.name) {
-      console.warn("[VideoAI] Upload succeeded but no file name returned");
+    const cleanJson = stdout.trim();
+    if (!cleanJson.startsWith("{")) {
+      console.warn("[VideoAI] Non-JSON output from reel extractor:", cleanJson);
       return null;
     }
 
-    const fileName = uploadResult.name;
-
-    // Wait until Gemini finishes processing the video
-    let file = await ai.files.get({ name: fileName });
-    let attempts = 0;
-    while (file.state === "PROCESSING" && attempts < 25) {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      file = await ai.files.get({ name: fileName });
-      attempts++;
-    }
-
-    if (file.state !== "ACTIVE") {
-      console.warn(`[VideoAI] Gemini file processing ended in state: ${file.state}`);
+    const parsed = JSON.parse(cleanJson);
+    if (parsed.error) {
+      console.warn(`[VideoAI] Extraction error: ${parsed.error}`);
       return null;
     }
-
-    console.log("[VideoAI] Prompting Gemini 2.5 Flash to extract text overlays and recipe...");
-    const prompt = `You are an expert barista and coffee recipe ingestion engine for StickyMilk.
-Watch this video carefully:
-1. VERIFY DOMAIN & SAFETY: Confirm whether this is a legitimate coffee, espresso, tea, or specialty beverage preparation. If it is NOT a beverage recipe (e.g. non-drink content, prank, or inappropriate/NSFW content), set "is_coffee_or_beverage": false and provide a clear "rejection_reason".
-2. READ ALL ON-SCREEN TEXT OVERLAYS: Look for text stickers, ingredients, brand labels, measuring numbers, and cup markings (e.g. syrups, milks, cream, sugar, espresso).
-3. LISTEN TO AUDIO: Catch any spoken ingredients or instructions.
-4. WATCH THE VISUAL ACTIONS: Note if they froth cold foam in a separate cup, add ice, pour milk, pull espresso.
-5. Extract the recipe into strict JSON with this exact schema:
-{
-  "is_coffee_or_beverage": boolean,
-  "rejection_reason": string,
-  "raw_title": string,
-  "creator_handle": string,
-  "creator_name": string,
-  "stated_coffee": {
-    "raw_name": string,
-    "system": "vertuo" | "original" | "capsule" | "instant",
-    "shots": number,
-    "roast_profile": "light" | "medium" | "dark"
-  },
-  "raw_ingredients": [
-    {
-      "amount": number,
-      "unit": string,
-      "item": string,
-      "group": "Cold Foam" | "Latte Base" | "Garnish",
-      "optional": boolean
-    }
-  ],
-  "raw_steps": [ string ],
-  "text_overlays_found": [ string ]
-}
-Return ONLY valid JSON matching this schema.`;
-
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: [
-        {
-          role: "user",
-          parts: [
-            { fileData: { fileUri: uploadResult.uri, mimeType: uploadResult.mimeType } },
-            { text: prompt },
-          ],
-        },
-      ],
-    });
-
-    const text = response.text || "";
-    const cleanJsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!cleanJsonMatch) {
-      console.warn("[VideoAI] Failed to extract JSON from Gemini response:", text);
-      return null;
-    }
-
-    const parsed = JSON.parse(cleanJsonMatch[0]);
 
     if (parsed.is_coffee_or_beverage === false) {
       console.warn(`[VideoAI] Content rejected by domain safety check: ${parsed.rejection_reason}`);
       throw new Error(parsed.rejection_reason || "StickyMilk only translates coffee and specialty beverage recipes.");
     }
+
+    const detectedUploader = parsed.detected_uploader || "";
+    const detectedThumbnail = parsed.detected_thumbnail || "";
+    const detectedTitle = parsed.detected_title || "";
 
     // Clean and normalize ingredients
     const rawIngredients = (parsed.raw_ingredients || []).map(
@@ -277,13 +180,5 @@ Return ONLY valid JSON matching this schema.`;
   } catch (err: unknown) {
     console.error("[VideoAI] Video multimodal extraction error:", err);
     return null;
-  } finally {
-    if (existsSync(tempFilePath)) {
-      try {
-        unlinkSync(tempFilePath);
-      } catch {
-        // Ignored
-      }
-    }
   }
 }
