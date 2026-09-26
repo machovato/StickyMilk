@@ -55,6 +55,8 @@ export interface RecipeIR {
     prep_time_minutes?: number;
     sweetness_hint?: SweetnessLevel;
   };
+  extraction_mode?: "video_multimodal_ai" | "caption_heuristic";
+  text_overlays?: string[];
 }
 
 export interface TranslationSuperpowers {
@@ -109,4 +111,6 @@ export interface TranslationResult {
   taxonomy_matches: TaxonomyMatch[];
   validation_errors: FieldError[];
   warnings: string[];
+  extraction_mode?: "video_multimodal_ai" | "caption_heuristic";
+  text_overlays?: string[];
 }

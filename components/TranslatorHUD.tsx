@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -16,6 +16,7 @@ import {
   FloppyDisk,
   Warning,
   CheckCircle,
+  VideoCamera,
 } from "@phosphor-icons/react";
 import type { Channel } from "@/lib/types";
 import { CHANNEL_LABELS } from "@/lib/types";
@@ -39,12 +40,14 @@ export function TranslatorHUD({
   initialResult,
 }: TranslatorHUDProps) {
   const router = useRouter();
+  const resultRef = useRef<HTMLDivElement>(null);
   const { defaultChannel, setDefaultChannel } = useChannel();
   const [selectedChannel, setSelectedChannel] = useState<Channel>(defaultChannel || "nespresso");
 
   const [url, setUrl] = useState(initialUrl);
   const [caption, setCaption] = useState("");
   const [showCaptionInput, setShowCaptionInput] = useState(false);
+  const [showTextOverlays, setShowTextOverlays] = useState(true);
   const [isTranslating, startTranslating] = useTransition();
   const [isSaving, startSaving] = useTransition();
 
@@ -74,6 +77,9 @@ export function TranslatorHUD({
       });
       if (res.success && res.result) {
         setResult(res.result);
+        setTimeout(() => {
+          resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 150);
       } else {
         setErrorMessage(res.error || "Failed to translate preset");
       }
@@ -96,6 +102,9 @@ export function TranslatorHUD({
       });
       if (res.success && res.result) {
         setResult(res.result);
+        setTimeout(() => {
+          resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 150);
       } else {
         setErrorMessage(res.error || "Translation failed");
       }
@@ -141,11 +150,11 @@ export function TranslatorHUD({
               INPUT RECIPE LINK OR CAPTION
             </span>
             <span className="font-mono text-[11px] font-bold px-2 py-0.5 bg-[#fef8f4] border border-[#1a130e]/20 text-[#1a130e]">
-              TIKTOK • INSTAGRAM • YOUTUBE SHORTS
+              TIKTOK • INSTAGRAM • YOUTUBE SHORTS • GEMINI VIDEO AI
             </span>
           </div>
           <p className="font-body text-xs text-[#7f756f]">
-            Drop any viral coffee video link. We extract the formulation, calibrate home hardware ratios, and calculate honest macros.
+            Drop any viral coffee video link. Gemini Multimodal AI watches the reel, reads on-screen text overlays, and calibrates honest home ratios.
           </p>
         </div>
 
@@ -183,9 +192,15 @@ export function TranslatorHUD({
             <button
               type="submit"
               disabled={isTranslating}
-              className="px-6 py-3.5 bg-[#1a130e] hover:bg-[#001ec0] text-[#b8f600] font-mono text-xs sm:text-sm font-extrabold uppercase tracking-wider transition-colors border-2 border-black flex items-center justify-center gap-2 cursor-pointer shadow-sm disabled:opacity-60"
+              className="px-6 py-3.5 bg-[#1a130e] hover:bg-[#001ec0] text-[#b8f600] font-mono text-xs sm:text-sm font-extrabold uppercase tracking-wider transition-colors border-2 border-black flex items-center justify-center gap-2 cursor-pointer shadow-sm disabled:opacity-60 whitespace-nowrap"
             >
-              <span>{isTranslating ? "TRANSLATING RECIPE..." : "TRANSLATE FOR MY COFFEE"}</span>
+              <span>
+                {isTranslating
+                  ? url && !caption
+                    ? "AI WATCHING VIDEO & EXTRACTING..."
+                    : "TRANSLATING RECIPE..."
+                  : "TRANSLATE FOR MY COFFEE"}
+              </span>
               <ArrowRight size={16} weight="bold" />
             </button>
           </div>
@@ -212,6 +227,15 @@ export function TranslatorHUD({
             )}
           </div>
         </form>
+
+        {isTranslating && (
+          <div className="p-4 bg-[#001ec0]/10 border-2 border-[#001ec0] text-[#001ec0] font-mono text-xs flex items-center gap-2.5 animate-pulse">
+            <VideoCamera size={20} weight="fill" className="text-[#001ec0]" />
+            <span>
+              <strong>Gemini Multimodal AI is active:</strong> Downloading video stream, analyzing visual frames, and transcribing text overlays...
+            </span>
+          </div>
+        )}
 
         {errorMessage && (
           <div className="p-4 bg-[#ffebee] border-2 border-[#ba1a1a] text-[#ba1a1a] font-mono text-xs flex items-center gap-2">
@@ -240,7 +264,7 @@ export function TranslatorHUD({
 
       {/* Translation Result HUD */}
       {result && (
-        <div className="flex flex-col gap-8 animate-fadeIn">
+        <div ref={resultRef} className="flex flex-col gap-8 animate-fadeIn scroll-mt-6">
           {/* Result Header Bar */}
           <div className="bg-[#1a130e] text-white p-6 sm:p-8 border-2 border-black flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="flex flex-col gap-2">
@@ -251,13 +275,21 @@ export function TranslatorHUD({
                 <span className="font-mono text-[11px] font-bold px-2 py-0.5 bg-[#fef8f4] text-[#1a130e] uppercase">
                   STATUS: {result.recipe.status.toUpperCase()}
                 </span>
+                {result.extraction_mode === "video_multimodal_ai" && (
+                  <span className="font-mono text-[11px] font-bold px-2 py-0.5 bg-[#001ec0] text-white uppercase flex items-center gap-1">
+                    <VideoCamera size={14} weight="fill" />
+                    <span>AI VIDEO OVERLAY EXTRACTION</span>
+                  </span>
+                )}
                 <span className="font-mono text-xs text-[#a89e97]">
                   SLUG: <code className="text-[#b8f600]">{result.recipe.slug}</code>
                 </span>
               </div>
+
               <h2 className="font-syne text-2xl sm:text-4xl font-extrabold text-[#fef8f4] tracking-tight">
                 {result.recipe.name}
               </h2>
+
               <div className="flex items-center gap-3 text-xs font-mono text-[#d1c4bd] flex-wrap">
                 <span>By <strong>{result.ir.source_creator?.name}</strong> ({result.ir.source_creator?.handle})</span>
                 <span>•</span>
@@ -309,6 +341,40 @@ export function TranslatorHUD({
               )}
             </div>
           </div>
+
+          {/* Text Overlays Read On Screen Pill */}
+          {result.text_overlays && result.text_overlays.length > 0 && (
+            <div className="bg-[#fef8f4] border-2 border-[#001ec0] p-4 flex flex-col gap-2">
+              <div
+                onClick={() => setShowTextOverlays((prev) => !prev)}
+                className="flex items-center justify-between cursor-pointer select-none"
+              >
+                <div className="flex items-center gap-2 font-mono text-xs font-bold text-[#001ec0]">
+                  <VideoCamera size={16} weight="fill" />
+                  <span>
+                    GEMINI AI READ {result.text_overlays.length} TEXT OVERLAYS ON-SCREEN:
+                  </span>
+                </div>
+                <button type="button" className="text-[#001ec0] font-mono text-xs font-bold flex items-center gap-1">
+                  <span>{showTextOverlays ? "Hide" : "Show"}</span>
+                  {showTextOverlays ? <CaretUp size={14} weight="bold" /> : <CaretDown size={14} weight="bold" />}
+                </button>
+              </div>
+
+              {showTextOverlays && (
+                <div className="flex flex-wrap gap-1.5 pt-2 border-t border-[#001ec0]/20">
+                  {result.text_overlays.map((overlay, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2.5 py-1 bg-white border border-[#001ec0]/30 font-mono text-xs text-[#1a130e] font-semibold"
+                    >
+                      &ldquo;{overlay}&rdquo;
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Machine Lever Selector */}
           <div className="bg-[#fef8f4] border-2 border-black p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">

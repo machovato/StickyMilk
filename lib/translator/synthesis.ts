@@ -474,5 +474,7 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
     taxonomy_matches: taxonomyMatches,
     validation_errors: validationErrors,
     warnings,
+    extraction_mode: ir.extraction_mode,
+    text_overlays: ir.text_overlays,
   };
 }
