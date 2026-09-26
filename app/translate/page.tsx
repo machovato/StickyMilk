@@ -7,8 +7,7 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { isAdminAuthenticated } from "@/lib/auth";
 import { TranslatorHUD } from "@/components/TranslatorHUD";
-import { extractRecipeIR } from "@/lib/translator/extractor";
-import { synthesizeRecipe } from "@/lib/translator/synthesis";
+import { translateRecipeAction } from "@/lib/actions/translate-recipe";
 import type { TranslationResult } from "@/lib/translator/types";
 
 export const metadata = {
@@ -28,8 +27,10 @@ export default async function TranslatePage({ searchParams }: TranslatePageProps
   let initialResult: TranslationResult | undefined = undefined;
   if (url) {
     try {
-      const ir = extractRecipeIR({ url });
-      initialResult = synthesizeRecipe(ir);
+      const res = await translateRecipeAction({ url });
+      if (res.success && res.result) {
+        initialResult = res.result;
+      }
     } catch {
       // Ignored for initial server render; handled gracefully on client
     }
