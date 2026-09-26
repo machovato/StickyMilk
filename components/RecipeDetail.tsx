@@ -12,7 +12,6 @@ import {
 } from "@/lib/types";
 import { useChannel } from "@/lib/channel-context";
 import { getRecipeImage } from "@/lib/recipe-images";
-import { StatusBadge } from "./StatusBadge";
 import { ProvenanceBadge } from "./ProvenanceBadge";
 import { SourceAttribution } from "./SourceAttribution";
 import { BaristaDiff } from "./BaristaDiff";
@@ -103,8 +102,36 @@ export function RecipeDetail({
   );
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 flex flex-col gap-8 text-left">
-      {/* Top Navigation & Action Bar */}
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 flex flex-col gap-6 text-left">
+      {/* Top Admin Curator Bar (Only visible when authenticated as admin) */}
+      {isAdmin && (
+        <div className="w-full bg-[#1a130e] text-white px-4 py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 font-mono text-xs border border-black shadow-xs">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 bg-[#b8f600] rounded-full animate-pulse" />
+            <span className="text-[#dfe0ff]">
+              Admin Curator Mode · Internal Status:{" "}
+              <strong className="text-white uppercase">{recipe.status.replace("_", " ")}</strong>
+            </span>
+          </div>
+          <div className="flex items-center gap-3">
+            <Link
+              href={`/recipes/${recipe.slug}/edit`}
+              className="px-3 py-1 bg-[#b8f600] hover:bg-white text-[#141f00] font-bold uppercase transition-colors"
+            >
+              Edit Recipe &amp; Rate ✎
+            </Link>
+            <span className="text-white/20">|</span>
+            <Link
+              href="/admin"
+              className="text-[#d1c4bd] hover:text-[#b8f600] transition-colors"
+            >
+              Admin Dashboard →
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* Top Navigation & Public Action Bar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 bg-white border border-[#1a130e]/15 shadow-sm">
         <div className="flex items-center gap-3 flex-wrap">
           <Link
@@ -123,16 +150,7 @@ export function RecipeDetail({
           </span>
         </div>
 
-        <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
-          {isAdmin && (
-            <Link
-              href={`/recipes/${recipe.slug}/edit`}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-[#b8f600] hover:bg-[#001ec0] hover:text-white text-[#141f00] font-mono text-xs uppercase font-bold transition-colors cursor-pointer border border-[#1a130e]/20"
-            >
-              <span>Edit Recipe ✎</span>
-            </Link>
-          )}
-          <StatusBadge status={recipe.status} />
+        <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
           <button
             type="button"
             onClick={handleCopyFormula}
