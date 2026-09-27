@@ -1,0 +1,190 @@
+{
+  "slug": "nespresso-tiramisu-cappuccino",
+  "name": "Tiramisu Cappuccino",
+  "format": "hot",
+  "flavor_notes": "Rich espresso layered with smooth steamed milk and balanced sweetness.",
+  "barista_note": "Warm the mug first so the milk and coffee stay hot to the last sip.",
+  "status": "needs_testing",
+  "tags": [
+    "hot",
+    "latte",
+    "nespresso-original",
+    "quick-fix"
+  ],
+  "sweetness_level": "dessert",
+  "source": {
+    "type": "vendor",
+    "name": "Nespresso",
+    "handle": "@nespresso",
+    "platform": "Nespresso",
+    "url": "https://www.nespresso.com/us/en/coffee-recipes/details/tiramisu-cappuccino"
+  },
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Counter Culture Big Trouble or Joe Coffee The Daily",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, melted and chilled",
+          "item_id": "cometeer_capsule",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 2,
+          "unit": "TSPS.",
+          "item": "Chocolate Sauce or Syrup",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 2,
+          "unit": "TBS.",
+          "item": "Mascarpone Cheese",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 4,
+          "unit": "oz.",
+          "item": "Milk",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 3,
+          "item": "Speculoos Spice Cookies",
+          "group": "Garnish"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Hot Extraction",
+        "In your serving mug, combine 2 TSPS. Chocolate Sauce or Syrup and 2 TBS. Mascarpone Cheese.",
+        "Pour 2–4 oz of just-off-boil water into the mug and empty the frozen Cometeer capsule into it; stir until the syrups and coffee are fully integrated.",
+        "## Phase 2: Steamed Milk & Pour",
+        "Warm and froth milk to about 140°F (60°C). Pour the frothed milk over the coffee, holding back the foam, then spoon the velvety foam on top.",
+        "## Phase 3: Crown & Garnish",
+        "Finish with a dusting of Speculoos Spice Cookies."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 10,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "nespresso_system": "original",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Il Caffé",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 40.5,
+          "secondary_unit": "ml",
+          "item": "Nespresso Original Il Caffé pod",
+          "item_id": "nespresso_pod",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 2,
+          "unit": "TSPS.",
+          "item": "Chocolate Sauce or Syrup",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 2,
+          "unit": "TBS.",
+          "item": "Mascarpone Cheese",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 4,
+          "unit": "oz.",
+          "item": "Milk",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 3,
+          "item": "Speculoos Spice Cookies",
+          "group": "Garnish"
+        }
+      ],
+      "steps": [
+        "Add chocolate sauce to your serving glass.",
+        "Spoon mascarpone cheese over the chocolate sauce in the glass.",
+        "Froth milk until it has a cappuccino texture, then pour into the glass over the mascarpone.",
+        "Brew the Il Caffé capsule directly into the glass.",
+        "Crumble speculoos cookies on top as a garnish."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 10,
+      "provenance": "original"
+    },
+    {
+      "channel": "instant",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Nescafé Gold Espresso or Mount Hagen Organic",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "secondary_amount": 60,
+          "secondary_unit": "ml hot bloom water",
+          "item": "Instant espresso crystals (e.g. Medaglia d'Oro)",
+          "item_id": "instant_coffee",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 2,
+          "unit": "TSPS.",
+          "item": "Chocolate Sauce or Syrup",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 2,
+          "unit": "TBS.",
+          "item": "Mascarpone Cheese",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 4,
+          "unit": "oz.",
+          "item": "Milk",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 3,
+          "item": "Speculoos Spice Cookies",
+          "group": "Garnish"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Hot Extraction",
+        "In your serving mug, combine 2 TSPS. Chocolate Sauce or Syrup and 2 TBS. Mascarpone Cheese.",
+        "Dissolve 1.5–2 tsp instant espresso crystals in 2 oz (60ml) hot water directly in the mug over the syrups and spices; stir until completely dissolved.",
+        "## Phase 2: Steamed Milk & Pour",
+        "Warm and froth milk to about 140°F (60°C). Pour the frothed milk over the coffee, holding back the foam, then spoon the velvety foam on top.",
+        "## Phase 3: Crown & Garnish",
+        "Finish with a dusting of Speculoos Spice Cookies."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 10,
+      "provenance": "adapted"
+    }
+  ]
+}
