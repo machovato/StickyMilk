@@ -1,6 +1,20 @@
 {
   "slug": "classic-iced-latte",
   "name": "Classic Iced Latte",
+  "image": "/recipes/classic-iced-latte-ai-mukdwbwl.jpg",
+  "image_source": "ai",
+  "photo_brief": {
+    "tell": "Iced latte with its distinctive layers of coffee atop milk and ice in a tall glass.",
+    "vessel": "iced",
+    "colors": "Light tan with clear ice.",
+    "hero_detail": "The delicate swirling pattern where the dark coffee begins to mix with the white milk.",
+    "story_prop": "clear metal straw",
+    "stages": {
+      "before": "A tall clear glass filled with ice and opaque white milk, topped with a distinct layer of dark caramel-toned coffee.",
+      "after": "A uniform, creamy light tan beverage with clear ice cubes, showing gentle condensation on the glass."
+    },
+    "created_at": "2026-09-27T22:12:17.447Z"
+  },
   "format": "iced",
   "flavor_notes": "Cold, creamy milk with a bright, caramel-toned coffee finish.",
   "status": "verified",
@@ -27,6 +41,12 @@
     "quick-fix"
   ],
   "sweetness_level": "none",
+  "source": {
+    "type": "vendor",
+    "name": "Cometeer",
+    "platform": "Cometeer Craft Library",
+    "url": "https://cometeer.com"
+  },
   "preparations": [
     {
       "channel": "cometeer",
@@ -70,6 +90,7 @@
     },
     {
       "channel": "nespresso",
+      "nespresso_system": "vertuo",
       "caffeine_level": "full",
       "servings": 1,
       "yield_unit": "drink",
@@ -103,8 +124,7 @@
       ],
       "difficulty": "easy",
       "prep_time_minutes": 5,
-      "provenance": "adapted",
-      "nespresso_system": "vertuo"
+      "provenance": "adapted"
     },
     {
       "channel": "instant",
@@ -147,11 +167,5 @@
       "prep_time_minutes": 6,
       "provenance": "adapted"
     }
-  ],
-  "source": {
-    "type": "vendor",
-    "name": "Cometeer",
-    "platform": "Cometeer Craft Library",
-    "url": "https://cometeer.com"
-  }
+  ]
 }

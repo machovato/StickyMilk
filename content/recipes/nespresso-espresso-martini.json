@@ -1,0 +1,209 @@
+{
+  "slug": "nespresso-espresso-martini",
+  "name": "Espresso Martini",
+  "format": "iced",
+  "flavor_notes": "A classic chilled coffee cocktail, combining bold espresso with vodka and vanilla syrup, garnished with a strawberry and cacao nibs.",
+  "barista_note": "Pour espresso directly over ice to preserve the temperature boundary and prevent watery dilution.",
+  "status": "needs_testing",
+  "tags": [
+    "iced",
+    "espresso",
+    "nespresso-official",
+    "quick-fix"
+  ],
+  "sweetness_level": "rich_sweet",
+  "source": {
+    "type": "vendor",
+    "name": "Nespresso",
+    "handle": "@nespresso",
+    "platform": "Nespresso",
+    "url": "https://www.nespresso.com/us/en/coffee-recipes/details/espresso-martini"
+  },
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "dark",
+      "roast_note": "Bold, roasty profile with low acidity to punch through sweet syrups and cream.",
+      "tested_with": "Counter Culture Forty-Six or Equator Mocha Java",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, melted",
+          "item_id": "cometeer_capsule",
+          "notes": "A little stronger than the original: Cometeer capsules can't be split. For less caffeine, use Half Caff (~90 mg) or Decaf capsules; same flavor.",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Vodka, Vanilla-Flavored or Plain",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 3,
+          "unit": "tsp",
+          "item": "Vanilla Syrup",
+          "item_id": "vanilla_syrup",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "whole",
+          "item": "Strawberry",
+          "optional": true,
+          "group": "Garnish"
+        },
+        {
+          "item": "Cacao Nibs",
+          "optional": true,
+          "group": "Garnish"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Extraction",
+        "In your serving glass, combine Vodka, Vanilla-Flavored or Plain and 3 tsp Vanilla Syrup.",
+        "Melt the Cometeer capsule (about 5 minutes submerged in hot water, or overnight in the fridge). Pour it directly over the syrups and spices; stir or whisk with a handheld frother until completely dissolved.",
+        "## Phase 2: Ice & Milk Pour",
+        "Fill the glass with plenty of ice cubes.",
+        "Pour cold milk over the ice; stir gently to combine and watch the layers swirl.",
+        "## Phase 3: Crown & Garnish",
+        "Finish with a dusting of Strawberry."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 10,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "nespresso_system": "original",
+      "roast_recommendation": "dark",
+      "roast_note": "Bold, roasty profile with low acidity to punch through sweet syrups and cream.",
+      "tested_with": "Decaffeinato Intenso",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 40,
+          "secondary_unit": "ml",
+          "item": "Nespresso Original Decaffeinato Intenso pod",
+          "item_id": "nespresso_pod",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Vodka, Vanilla-Flavored or Plain",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 3,
+          "unit": "tsp",
+          "item": "Vanilla Syrup",
+          "item_id": "vanilla_syrup",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "whole",
+          "item": "Strawberry",
+          "optional": true,
+          "group": "Garnish"
+        },
+        {
+          "item": "Cacao Nibs",
+          "optional": true,
+          "group": "Garnish"
+        }
+      ],
+      "steps": [
+        "Brew the Nespresso Decaffeinato Intenso capsule.",
+        "Combine the brewed espresso, vodka, and vanilla syrup in a cocktail shaker.",
+        "Fill the shaker with ice, cover, and shake vigorously until well chilled.",
+        "Strain the mixture into a martini glass.",
+        "If using, slice a whole strawberry three-quarters of the way through from the bottom and place it on the glass rim.",
+        "If using, top with a few cacao nibs."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 10,
+      "provenance": "original"
+    },
+    {
+      "channel": "instant",
+      "roast_recommendation": "dark",
+      "roast_note": "Bold, roasty profile with low acidity to punch through sweet syrups and cream.",
+      "tested_with": "Medaglia d'Oro or Café Bustelo Instant Espresso",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "secondary_amount": 30,
+          "secondary_unit": "ml hot bloom water",
+          "item": "Instant espresso crystals (e.g. Medaglia d'Oro)",
+          "item_id": "instant_coffee",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Vodka, Vanilla-Flavored or Plain",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 3,
+          "unit": "tsp",
+          "item": "Vanilla Syrup",
+          "item_id": "vanilla_syrup",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "whole",
+          "item": "Strawberry",
+          "optional": true,
+          "group": "Garnish"
+        },
+        {
+          "item": "Cacao Nibs",
+          "optional": true,
+          "group": "Garnish"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Extraction",
+        "In your serving glass, combine Vodka, Vanilla-Flavored or Plain and 3 tsp Vanilla Syrup.",
+        "Dissolve 1 tsp instant espresso in 1 oz (30 ml) hot water directly over the syrups and spices; stir until completely dissolved.",
+        "## Phase 2: Ice & Milk Pour",
+        "Fill the glass with plenty of ice cubes.",
+        "Pour cold milk over the ice; stir gently to combine and watch the layers swirl.",
+        "## Phase 3: Crown & Garnish",
+        "Finish with a dusting of Strawberry."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 10,
+      "provenance": "adapted"
+    }
+  ]
+}

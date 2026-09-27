@@ -1,0 +1,259 @@
+{
+  "slug": "flairshotscafe-vanilla-brulee-latte",
+  "name": "Vanilla Brûlée Latte",
+  "image": "/recipes/flairshotscafe-vanilla-brulee-latte.jpg",
+  "image_source": "video_frame",
+  "format": "iced",
+  "flavor_notes": "This drink features a rich espresso and oat milk base, topped with a creamy vanilla cold foam and a caramelized sugar brûlée crust.",
+  "barista_note": "Whip the cold foam first so it forms a stable, airy head before pouring espresso over ice.",
+  "status": "needs_testing",
+  "tags": [
+    "iced",
+    "latte",
+    "cold-foam",
+    "viral-trend",
+    "quick-fix"
+  ],
+  "sweetness_level": "rich_sweet",
+  "source": {
+    "type": "creator",
+    "name": "Flair Shots",
+    "handle": "@flairshotscafe",
+    "platform": "Instagram",
+    "url": "https://www.instagram.com/p/Da5EOa1qp8_/"
+  },
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Counter Culture Big Trouble or Joe Coffee The Daily",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "equipment": [
+        "handheld milk frother"
+      ],
+      "ingredients": [
+        {
+          "amount": 50,
+          "unit": "ml",
+          "item": "all-purpose cream",
+          "item_id": "heavy_cream",
+          "group": "Cold Foam"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "milk",
+          "item_id": "milk",
+          "optional": true,
+          "group": "Cold Foam"
+        },
+        {
+          "amount": 15,
+          "unit": "g",
+          "item": "vanilla syrup",
+          "group": "Cold Foam"
+        },
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, melted",
+          "item_id": "cometeer_capsule",
+          "notes": "For less caffeine, use Half Caff (~90 mg) or Decaf capsules; same flavor.",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 120,
+          "unit": "ml",
+          "item": "oat milk",
+          "item_id": "oat_milk",
+          "group": "Latte Base"
+        },
+        {
+          "item": "sugar",
+          "group": "Garnish"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Cold Foam Preparation",
+        "In a small frothing cup, combine the cold foam ingredients and froth with a handheld milk frother for 20–30 seconds until thick and airy. Set aside.",
+        "## Phase 2: Glass Staging & Ice Base",
+        "Fill your serving glass with ice cubes, then pour in cold milk.",
+        "## Phase 3: Coffee Extraction & Pour",
+        "Melt the Cometeer capsule (about 5 minutes submerged in hot water, or overnight in the fridge). Pour the melted coffee directly over the iced milk.",
+        "## Phase 4: Crown & Garnish",
+        "Spoon the prepared cold foam from Phase 1 over the top of the iced latte.",
+        "Finish with a dusting of sugar."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 4,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "nespresso_system": "vertuo",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Nespresso Double Espresso Chiaro (Vertuo 80ml)",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "equipment": [
+        "handheld milk frother"
+      ],
+      "ingredients": [
+        {
+          "amount": 50,
+          "unit": "ml",
+          "item": "all-purpose cream",
+          "item_id": "heavy_cream",
+          "group": "Cold Foam"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "milk",
+          "item_id": "milk",
+          "optional": true,
+          "group": "Cold Foam"
+        },
+        {
+          "amount": 15,
+          "unit": "g",
+          "item": "vanilla syrup",
+          "group": "Cold Foam"
+        },
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 80,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Double Espresso pod",
+          "item_id": "nespresso_double_pod",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 120,
+          "unit": "ml",
+          "item": "oat milk",
+          "item_id": "oat_milk",
+          "group": "Latte Base"
+        },
+        {
+          "item": "sugar",
+          "group": "Garnish"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Cold Foam Preparation",
+        "In a small frothing cup, combine the cold foam ingredients and froth with a handheld milk frother for 20–30 seconds until thick and airy. Set aside.",
+        "## Phase 2: Glass Staging & Ice Base",
+        "Fill your serving glass with ice cubes, then pour in cold milk.",
+        "## Phase 3: Coffee Extraction & Pour",
+        "Brew 1 Double Espresso pod into a small cup or directly over ice to chill quickly, then pour gently over the iced milk.",
+        "## Phase 4: Crown & Garnish",
+        "Spoon the prepared cold foam from Phase 1 over the top of the iced latte.",
+        "Finish with a dusting of sugar."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 4,
+      "provenance": "original"
+    },
+    {
+      "channel": "instant",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Nescafé Gold Espresso or Mount Hagen Organic",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "equipment": [
+        "handheld milk frother"
+      ],
+      "ingredients": [
+        {
+          "amount": 50,
+          "unit": "ml",
+          "item": "all-purpose cream",
+          "item_id": "heavy_cream",
+          "group": "Cold Foam"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "milk",
+          "item_id": "milk",
+          "optional": true,
+          "group": "Cold Foam"
+        },
+        {
+          "amount": 15,
+          "unit": "g",
+          "item": "vanilla syrup",
+          "group": "Cold Foam"
+        },
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "secondary_amount": 60,
+          "secondary_unit": "ml hot bloom water",
+          "item": "Instant espresso crystals (e.g. Medaglia d'Oro)",
+          "item_id": "instant_coffee",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 120,
+          "unit": "ml",
+          "item": "oat milk",
+          "item_id": "oat_milk",
+          "group": "Latte Base"
+        },
+        {
+          "item": "sugar",
+          "group": "Garnish"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Cold Foam Preparation",
+        "In a small frothing cup, combine the cold foam ingredients and froth with a handheld milk frother for 20–30 seconds until thick and airy. Set aside.",
+        "## Phase 2: Glass Staging & Ice Base",
+        "Fill your serving glass with ice cubes, then pour in cold milk.",
+        "## Phase 3: Coffee Extraction & Pour",
+        "Dissolve 2 tsp instant espresso in 2 oz (60 ml) hot water to fully bloom the coffee, then pour directly over the iced milk.",
+        "## Phase 4: Crown & Garnish",
+        "Spoon the prepared cold foam from Phase 1 over the top of the iced latte.",
+        "Finish with a dusting of sugar."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 4,
+      "provenance": "adapted"
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "slug": "nespresso-iced-coffee",
+  "name": "Iced Coffee",
+  "format": "iced",
+  "flavor_notes": "A simple and refreshing iced coffee, perfect for anytime enjoyment with its intense yet cool profile.",
+  "barista_note": "Pour espresso directly over ice to preserve the temperature boundary and prevent watery dilution.",
+  "status": "needs_testing",
+  "tags": [
+    "iced",
+    "coffee",
+    "nespresso-official",
+    "quick-fix"
+  ],
+  "sweetness_level": "none",
+  "source": {
+    "type": "vendor",
+    "name": "Nespresso",
+    "handle": "@nespresso",
+    "platform": "Nespresso",
+    "url": "https://www.nespresso.com/us/en/coffee-recipes/details/iced-coffee"
+  },
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Counter Culture Big Trouble or Joe Coffee The Daily",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, melted",
+          "item_id": "cometeer_capsule",
+          "notes": "For less caffeine, use Half Caff (~90 mg) or Decaf capsules; same flavor.",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 8,
+          "unit": "oz",
+          "item": "cold water",
+          "item_id": "water",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Glass Staging & Ice Base",
+        "Fill your serving glass with ice cubes, then pour in cold milk.",
+        "## Phase 2: Coffee Extraction & Pour",
+        "Melt the Cometeer capsule (about 5 minutes submerged in hot water, or overnight in the fridge). Pour the melted coffee and 8 oz cold water directly over the iced milk."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "nespresso_system": "vertuo",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Any Vertuo Mug capsule",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 230,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Any Vertuo Mug capsule",
+          "item_id": "nespresso_double_pod",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "Fill a serving glass with ice.",
+        "Brew the coffee into a metal pitcher.",
+        "Pour the brewed coffee over the ice in the glass.",
+        "Stir to chill before enjoying."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5,
+      "provenance": "original"
+    },
+    {
+      "channel": "instant",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Nescafé Gold Espresso or Mount Hagen Organic",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "secondary_amount": 230,
+          "secondary_unit": "ml hot water",
+          "item": "Instant espresso crystals (e.g. Medaglia d'Oro)",
+          "item_id": "instant_coffee",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Glass Staging & Ice Base",
+        "Fill your serving glass with ice cubes, then pour in cold milk.",
+        "## Phase 2: Coffee Extraction & Pour",
+        "Dissolve 2 tsp instant espresso in 8 oz (230 ml) hot water to fully bloom the coffee, then pour directly over the iced milk."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
+    }
+  ]
+}

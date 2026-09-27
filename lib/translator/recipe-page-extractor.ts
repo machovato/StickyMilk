@@ -151,8 +151,12 @@ export function findRecipeJsonLd(html: string): Record<string, unknown> | null {
   const blocks = html.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi);
   for (const [, body] of blocks) {
     let data: unknown;
+    // Replace non-breaking spaces and Unicode whitespace that break JSON.parse in some CMS templates
+    const cleanBody = body
+      .replace(/[\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]/g, " ")
+      .trim();
     try {
-      data = JSON.parse(body.trim());
+      data = JSON.parse(cleanBody);
     } catch {
       continue;
     }

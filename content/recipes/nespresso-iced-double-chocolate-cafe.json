@@ -1,0 +1,201 @@
+{
+  "slug": "nespresso-iced-double-chocolate-cafe",
+  "name": "Iced Double Chocolate Cafe",
+  "format": "iced",
+  "flavor_notes": "A cool, rich chocolate-flavored coffee drink made with espresso and skim milk for a sweet refreshment.",
+  "barista_note": "Pour espresso directly over ice to preserve the temperature boundary and prevent watery dilution.",
+  "status": "needs_testing",
+  "tags": [
+    "iced",
+    "mocha",
+    "nespresso-official",
+    "quick-fix"
+  ],
+  "sweetness_level": "dessert",
+  "source": {
+    "type": "vendor",
+    "name": "Nespresso",
+    "handle": "@nespresso",
+    "platform": "Nespresso",
+    "url": "https://www.nespresso.com/us/en/vertuo-coffee-recipe-iced-double-chocolate"
+  },
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Counter Culture Big Trouble or Joe Coffee The Daily",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, melted",
+          "item_id": "cometeer_capsule",
+          "notes": "A little stronger than the original: Cometeer capsules can't be split. For less caffeine, use Half Caff (~90 mg) or Decaf capsules; same flavor.",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "chocolate syrup",
+          "item_id": "chocolate_syrup",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "chocolate powder",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 4,
+          "unit": "oz",
+          "item": "skim milk",
+          "item_id": "milk",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "item": "ice cubes",
+          "item_id": "ice",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Extraction",
+        "In your serving glass, combine 2 tbsp chocolate syrup and 1 tbsp chocolate powder.",
+        "Melt the Cometeer capsule (about 5 minutes submerged in hot water, or overnight in the fridge). Pour it directly over the syrups and spices; stir or whisk with a handheld frother until completely dissolved.",
+        "## Phase 2: Ice & Milk Pour",
+        "Fill the glass with plenty of ice cubes.",
+        "Pour 4 oz skim milk over the ice; stir gently to combine and watch the layers swirl."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 15,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "nespresso_system": "vertuo",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Diavolitto",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 40,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Diavolitto pod",
+          "item_id": "nespresso_pod",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "chocolate syrup",
+          "item_id": "chocolate_syrup",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "chocolate powder",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 4,
+          "unit": "oz",
+          "item": "skim milk",
+          "item_id": "milk",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "item": "ice cubes",
+          "item_id": "ice",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "Combine chocolate syrup, chocolate powder, and skim milk in a cocktail shaker.",
+        "Shake until well combined.",
+        "Fill a coffee cup with ice.",
+        "Pour the chocolate milk mixture over the ice.",
+        "Brew the Diavolitto espresso directly into the cup."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 15,
+      "provenance": "original"
+    },
+    {
+      "channel": "instant",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Nescafé Gold Espresso or Mount Hagen Organic",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "secondary_amount": 30,
+          "secondary_unit": "ml hot bloom water",
+          "item": "Instant espresso crystals (e.g. Medaglia d'Oro)",
+          "item_id": "instant_coffee",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 2,
+          "unit": "tbsp",
+          "item": "chocolate syrup",
+          "item_id": "chocolate_syrup",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "chocolate powder",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 4,
+          "unit": "oz",
+          "item": "skim milk",
+          "item_id": "milk",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 2,
+          "unit": "oz",
+          "item": "ice cubes",
+          "item_id": "ice",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Extraction",
+        "In your serving glass, combine 2 tbsp chocolate syrup and 1 tbsp chocolate powder.",
+        "Dissolve 1 tsp instant espresso in 1 oz (30 ml) hot water directly over the syrups and spices; stir until completely dissolved.",
+        "## Phase 2: Ice & Milk Pour",
+        "Fill the glass with plenty of ice cubes.",
+        "Pour 4 oz skim milk over the ice; stir gently to combine and watch the layers swirl."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 15,
+      "provenance": "adapted"
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "slug": "nespresso-iced-caramel-macchiato",
+  "name": "Iced Caramel Macchiato",
+  "format": "iced",
+  "flavor_notes": "A popular chilled coffee drink featuring Nespresso espresso, milk, and a sweet caramel drizzle, layered for a classic macchiato look.",
+  "barista_note": "Pour espresso directly over ice to preserve the temperature boundary and prevent watery dilution.",
+  "status": "needs_testing",
+  "tags": [
+    "iced",
+    "macchiato",
+    "nespresso-official",
+    "quick-fix"
+  ],
+  "sweetness_level": "rich_sweet",
+  "source": {
+    "type": "vendor",
+    "name": "Nespresso",
+    "handle": "@nespresso",
+    "platform": "Nespresso",
+    "url": "https://www.nespresso.com/us/en/coffee-recipes/details/iced-caramel-macchiato"
+  },
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "dark",
+      "roast_note": "Bold, roasty profile with low acidity to punch through sweet syrups and cream.",
+      "tested_with": "Counter Culture Forty-Six or Equator Mocha Java",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, melted",
+          "item_id": "cometeer_capsule",
+          "notes": "For less caffeine, use Half Caff (~90 mg) or Decaf capsules; same flavor.",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Milk",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Caramel Syrup",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Extraction",
+        "In your serving glass, combine Caramel Syrup.",
+        "Melt the Cometeer capsule (about 5 minutes submerged in hot water, or overnight in the fridge). Pour it directly over the syrups and spices; stir or whisk with a handheld frother until completely dissolved.",
+        "## Phase 2: Ice & Milk Pour",
+        "Fill the glass with plenty of ice cubes.",
+        "Pour Milk over the ice; stir gently to combine and watch the layers swirl."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "nespresso_system": "vertuo",
+      "roast_recommendation": "dark",
+      "roast_note": "Bold, roasty profile with low acidity to punch through sweet syrups and cream.",
+      "tested_with": "Double Espresso Scuro",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 80,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Double Espresso Scuro pod",
+          "item_id": "nespresso_double_pod",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Milk",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Caramel Syrup",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "Fill a glass with ice.",
+        "Pour milk into the glass.",
+        "Add caramel syrup.",
+        "Brew Double Espresso Scuro into the glass."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5,
+      "provenance": "original"
+    },
+    {
+      "channel": "instant",
+      "roast_recommendation": "dark",
+      "roast_note": "Bold, roasty profile with low acidity to punch through sweet syrups and cream.",
+      "tested_with": "Medaglia d'Oro or Café Bustelo Instant Espresso",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "secondary_amount": 60,
+          "secondary_unit": "ml hot bloom water",
+          "item": "Instant espresso crystals (e.g. Medaglia d'Oro)",
+          "item_id": "instant_coffee",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Milk",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Caramel Syrup",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Extraction",
+        "In your serving glass, combine Caramel Syrup.",
+        "Dissolve 2 tsp instant espresso in 2 oz (60 ml) hot water directly over the syrups and spices; stir until completely dissolved.",
+        "## Phase 2: Ice & Milk Pour",
+        "Fill the glass with plenty of ice cubes.",
+        "Pour Milk over the ice; stir gently to combine and watch the layers swirl."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
+    }
+  ]
+}

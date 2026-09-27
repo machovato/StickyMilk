@@ -1,0 +1,163 @@
+{
+  "slug": "nespresso-vertuo-on-ice-macchiato",
+  "name": "Nespresso Vertuo on ice macchiato",
+  "format": "iced",
+  "flavor_notes": "A simple iced macchiato where a rich Melozio coffee is brewed over half and half cream and ice.",
+  "barista_note": "Pour espresso directly over ice to preserve the temperature boundary and prevent watery dilution.",
+  "status": "needs_testing",
+  "tags": [
+    "iced",
+    "macchiato",
+    "nespresso-official",
+    "quick-fix"
+  ],
+  "sweetness_level": "none",
+  "source": {
+    "type": "vendor",
+    "name": "Nespresso",
+    "handle": "@nespresso",
+    "platform": "Nespresso",
+    "url": "https://www.nespresso.com/recipes/us/en/22684NES-nespresso-vertuo-on-ice-macchiato.html"
+  },
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Counter Culture Big Trouble or Joe Coffee The Daily",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, melted",
+          "item_id": "cometeer_capsule",
+          "notes": "For less caffeine, use Half Caff (~90 mg) or Decaf capsules; same flavor.",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 8,
+          "unit": "oz",
+          "item": "cold water",
+          "item_id": "water",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "oz",
+          "item": "Half and half cream",
+          "item_id": "heavy_cream",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 6,
+          "unit": "unit",
+          "item": "Ice Cubes",
+          "item_id": "ice",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Glass Staging & Ice Base",
+        "Fill your serving glass with ice cubes, then pour in cold milk.",
+        "## Phase 2: Coffee Extraction & Pour",
+        "Melt the Cometeer capsule (about 5 minutes submerged in hot water, or overnight in the fridge). Pour the melted coffee and 8 oz cold water directly over the iced milk."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "nespresso_system": "vertuo",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Melozio",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 230,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Melozio pod",
+          "item_id": "nespresso_double_pod",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "oz",
+          "item": "Half and half cream",
+          "item_id": "heavy_cream",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 6,
+          "unit": "unit",
+          "item": "Ice Cubes",
+          "item_id": "ice",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "Pour 1 oz of half and half cream into a glass.",
+        "Add 6 ice cubes to the glass.",
+        "Brew 7.77 oz of Melozio coffee directly over the ice and cream."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5,
+      "provenance": "original"
+    },
+    {
+      "channel": "instant",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Nescafé Gold Espresso or Mount Hagen Organic",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "secondary_amount": 230,
+          "secondary_unit": "ml hot water",
+          "item": "Instant espresso crystals (e.g. Medaglia d'Oro)",
+          "item_id": "instant_coffee",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "oz",
+          "item": "Half and half cream",
+          "item_id": "heavy_cream",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 6,
+          "unit": "unit",
+          "item": "Ice Cubes",
+          "item_id": "ice",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Glass Staging & Ice Base",
+        "Fill your serving glass with ice cubes, then pour in cold milk.",
+        "## Phase 2: Coffee Extraction & Pour",
+        "Dissolve 2 tsp instant espresso in 8 oz (230 ml) hot water to fully bloom the coffee, then pour directly over the iced milk."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
+    }
+  ]
+}

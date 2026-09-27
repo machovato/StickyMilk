@@ -1,6 +1,20 @@
 {
   "slug": "ca-phe-sua-da",
   "name": "Cà Phê Sữa Đá",
+  "image": "/recipes/ca-phe-sua-da-ai-mukdeabn.jpg",
+  "image_source": "ai",
+  "photo_brief": {
+    "tell": "A tall, refreshing iced coffee showcasing the dramatic contrast between rich, dark coffee and sweet, creamy condensed milk.",
+    "vessel": "iced",
+    "colors": "Layered: dark brown coffee atop creamy white condensed milk, with clear ice cubes in between.",
+    "hero_detail": "Visible condensation clinging to the cold glass, highlighting its refreshing quality.",
+    "story_prop": "A small, vintage silver iced tea spoon submerged in the drink.",
+    "stages": {
+      "before": "Deep dark brown coffee sits above a thick, creamy white layer of condensed milk, with clear ice cubes visibly separating them.",
+      "after": "The coffee and milk are fully stirred into a uniform, opaque light caramel brown, with melting ice cubes."
+    },
+    "created_at": "2026-09-27T21:54:45.593Z"
+  },
   "format": "iced",
   "flavor_notes": "Vietnamese-style iced coffee — condensed-milk sweetness against dark, bold coffee, without the long phin drip.",
   "status": "verified",
@@ -12,7 +26,7 @@
     "tested_date": "2026-09-18",
     "tester": "StickyMilk Test Kitchen",
     "channel_scores": {
-      "cometeer": 10.0,
+      "cometeer": 10,
       "nespresso": 9.2,
       "instant": 8.5
     },
@@ -28,6 +42,11 @@
     "vietnamese-style"
   ],
   "sweetness_level": "rich_sweet",
+  "source": {
+    "type": "editorial",
+    "name": "StickyMilk Kitchen",
+    "platform": "StickyMilk Signature"
+  },
   "preparations": [
     {
       "channel": "cometeer",
@@ -83,6 +102,7 @@
     },
     {
       "channel": "nespresso",
+      "nespresso_system": "vertuo",
       "caffeine_level": "full",
       "servings": 1,
       "dietary": [
@@ -118,8 +138,7 @@
       ],
       "difficulty": "easy",
       "prep_time_minutes": 5,
-      "provenance": "adapted",
-      "nespresso_system": "vertuo"
+      "provenance": "adapted"
     },
     {
       "channel": "instant",
@@ -164,10 +183,5 @@
       "prep_time_minutes": 4,
       "provenance": "adapted"
     }
-  ],
-  "source": {
-    "type": "editorial",
-    "name": "StickyMilk Kitchen",
-    "platform": "StickyMilk Signature"
-  }
+  ]
 }

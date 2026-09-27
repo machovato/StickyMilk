@@ -1,0 +1,149 @@
+{
+  "slug": "nespresso-white-chocolate-pumpkin-spice-latte",
+  "name": "White Chocolate Pumpkin Spice Latte",
+  "format": "hot",
+  "flavor_notes": "A warm, comforting latte combining espresso with the sweet, aromatic flavors of white chocolate and pumpkin spice.",
+  "barista_note": "Warm the mug first so the milk and coffee stay hot to the last sip.",
+  "status": "needs_testing",
+  "tags": [
+    "hot",
+    "latte",
+    "nespresso-official",
+    "quick-fix"
+  ],
+  "sweetness_level": "rich_sweet",
+  "source": {
+    "type": "vendor",
+    "name": "Nespresso",
+    "handle": "@nespresso",
+    "platform": "Nespresso",
+    "url": "https://www.nespresso.com/us/en/coffee-recipes/details/white-chocolate-pumpkin-spice-latte"
+  },
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Counter Culture Big Trouble or Joe Coffee The Daily",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, melted",
+          "item_id": "cometeer_capsule",
+          "notes": "A little stronger than the original: Cometeer capsules can't be split. For less caffeine, use Half Caff (~90 mg) or Decaf capsules; same flavor.",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Milk",
+          "group": "Latte Base"
+        },
+        {
+          "item": "White Chocolate Syrup",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Pumpkin Spice Syrup",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Hot Extraction",
+        "In your serving mug, combine White Chocolate Syrup.",
+        "Melt the Cometeer capsule (about 5 minutes submerged in hot water, or overnight in the fridge). Pour it into the mug over the syrups and spices; stir until fully dissolved.",
+        "## Phase 2: Steamed Milk & Pour",
+        "Warm and froth milk to about 140°F (60°C). Pour the frothed milk over the coffee, holding back the foam, then spoon the velvety foam on top."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "nespresso_system": "vertuo",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Espresso",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "item": "Nespresso Vertuo Espresso pod",
+          "item_id": "nespresso_double_pod",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Milk",
+          "group": "Latte Base"
+        },
+        {
+          "item": "White Chocolate Syrup",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Pumpkin Spice Syrup",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "Combine a shot of espresso with steamed milk and the white chocolate and pumpkin spice flavorings.",
+        "No further preparation details were provided in the source text."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5,
+      "provenance": "original"
+    },
+    {
+      "channel": "instant",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Nescafé Gold Espresso or Mount Hagen Organic",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "secondary_amount": 30,
+          "secondary_unit": "ml hot bloom water",
+          "item": "Instant espresso crystals (e.g. Medaglia d'Oro)",
+          "item_id": "instant_coffee",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Milk",
+          "group": "Latte Base"
+        },
+        {
+          "item": "White Chocolate Syrup",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Pumpkin Spice Syrup",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Hot Extraction",
+        "In your serving mug, combine White Chocolate Syrup.",
+        "Dissolve 1 tsp instant espresso in 1 oz (30 ml) hot water directly in the mug over the syrups and spices; stir until completely dissolved.",
+        "## Phase 2: Steamed Milk & Pour",
+        "Warm and froth milk to about 140°F (60°C). Pour the frothed milk over the coffee, holding back the foam, then spoon the velvety foam on top."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
+    }
+  ]
+}

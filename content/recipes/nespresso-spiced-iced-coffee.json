@@ -1,0 +1,200 @@
+{
+  "slug": "nespresso-spiced-iced-coffee",
+  "name": "Spiced Iced Coffee",
+  "format": "iced",
+  "flavor_notes": "This spiced iced coffee features a refreshing contrast of warm cinnamon and ginger with cool ice, sweetened luxuriously with honey.",
+  "barista_note": "Pour espresso directly over ice to preserve the temperature boundary and prevent watery dilution.",
+  "status": "needs_testing",
+  "tags": [
+    "iced",
+    "coffee",
+    "nespresso-official",
+    "quick-fix"
+  ],
+  "sweetness_level": "rich_sweet",
+  "source": {
+    "type": "vendor",
+    "name": "Nespresso",
+    "handle": "@nespresso",
+    "platform": "Nespresso",
+    "url": "https://www.nespresso.com/us/en/vertuo-coffee-recipe-spiced-iced"
+  },
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Counter Culture Big Trouble or Joe Coffee The Daily",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, melted",
+          "item_id": "cometeer_capsule",
+          "notes": "For less caffeine, use Half Caff (~90 mg) or Decaf capsules; same flavor.",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "oz",
+          "item": "good honey",
+          "item_id": "honey",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 0.75,
+          "unit": "oz",
+          "item": "ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 0.125,
+          "unit": "tsp",
+          "item": "ginger",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 0.125,
+          "unit": "tsp",
+          "item": "cinnamon",
+          "item_id": "ground_cinnamon",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Extraction",
+        "In your serving glass, combine 1 oz good honey, 0.125 tsp ginger, and 0.125 tsp cinnamon.",
+        "Melt the Cometeer capsule (about 5 minutes submerged in hot water, or overnight in the fridge). Pour it directly over the syrups and spices; stir or whisk with a handheld frother until completely dissolved.",
+        "## Phase 2: Ice & Milk Pour",
+        "Fill the glass with plenty of ice cubes.",
+        "Pour cold milk over the ice; stir gently to combine and watch the layers swirl."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 20,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "nespresso_system": "vertuo",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Decaffeinato",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "item": "Nespresso Vertuo Decaffeinato pod",
+          "item_id": "nespresso_double_pod",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "oz",
+          "item": "good honey",
+          "item_id": "honey",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 0.75,
+          "unit": "oz",
+          "item": "ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 0.125,
+          "unit": "tsp",
+          "item": "ginger",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 0.125,
+          "unit": "tsp",
+          "item": "cinnamon",
+          "item_id": "ground_cinnamon",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "Add honey, ginger, and cinnamon to a heat-proof glass.",
+        "Brew coffee directly into the glass and stir until dissolved.",
+        "Allow the mixture to cool slightly.",
+        "Fill a cocktail shaker with ice.",
+        "Pour the cooled coffee mixture into the shaker and shake vigorously until well-chilled.",
+        "Pour the entire contents, including the ice, into a serving glass."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 20,
+      "provenance": "original"
+    },
+    {
+      "channel": "instant",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Nescafé Gold Espresso or Mount Hagen Organic",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "secondary_amount": 60,
+          "secondary_unit": "ml hot bloom water",
+          "item": "Instant espresso crystals (e.g. Medaglia d'Oro)",
+          "item_id": "instant_coffee",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "oz",
+          "item": "good honey",
+          "item_id": "honey",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 0.75,
+          "unit": "oz",
+          "item": "ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 0.125,
+          "unit": "tsp",
+          "item": "ginger",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 0.125,
+          "unit": "tsp",
+          "item": "cinnamon",
+          "item_id": "ground_cinnamon",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Extraction",
+        "In your serving glass, combine 1 oz good honey, 0.125 tsp ginger, and 0.125 tsp cinnamon.",
+        "Dissolve 2 tsp instant espresso in 2 oz (60 ml) hot water directly over the syrups and spices; stir until completely dissolved.",
+        "## Phase 2: Ice & Milk Pour",
+        "Fill the glass with plenty of ice cubes.",
+        "Pour cold milk over the ice; stir gently to combine and watch the layers swirl."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 20,
+      "provenance": "adapted"
+    }
+  ]
+}

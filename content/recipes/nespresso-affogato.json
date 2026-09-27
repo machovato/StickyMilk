@@ -1,0 +1,153 @@
+{
+  "slug": "nespresso-affogato",
+  "name": "Affogato",
+  "format": "iced",
+  "flavor_notes": "A simple yet indulgent dessert featuring rich espresso poured over creamy vanilla or chocolate ice cream, often topped with whipped cream.",
+  "barista_note": "Pour espresso directly over ice to preserve the temperature boundary and prevent watery dilution.",
+  "status": "needs_testing",
+  "tags": [
+    "iced",
+    "affogato",
+    "nespresso-official",
+    "quick-fix"
+  ],
+  "sweetness_level": "dessert",
+  "source": {
+    "type": "vendor",
+    "name": "Nespresso",
+    "handle": "@nespresso",
+    "platform": "Nespresso",
+    "url": "https://www.nespresso.com/us/en/coffee-recipes/details/affogato"
+  },
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Counter Culture Big Trouble or Joe Coffee The Daily",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, melted",
+          "item_id": "cometeer_capsule",
+          "notes": "For less caffeine, use Half Caff (~90 mg) or Decaf capsules; same flavor.",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "scoop",
+          "item": "Ice cream, Vanilla or Chocolate Recommended",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Whipped cream",
+          "optional": true,
+          "group": "Garnish"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Glass Staging & Ice Base",
+        "Fill your serving glass with ice cubes, then pour in cold milk.",
+        "## Phase 2: Coffee Extraction & Pour",
+        "Melt the Cometeer capsule (about 5 minutes submerged in hot water, or overnight in the fridge). Pour the melted coffee directly over the iced milk.",
+        "## Phase 3: Crown & Garnish",
+        "Finish with a dusting of Whipped cream."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "nespresso_system": "vertuo",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Orafio",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 80,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Orafio pod",
+          "item_id": "nespresso_double_pod",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "scoop",
+          "item": "Ice cream, Vanilla or Chocolate Recommended",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Whipped cream",
+          "optional": true,
+          "group": "Garnish"
+        }
+      ],
+      "steps": [
+        "Scoop 1-2 scoops of ice cream into a glass.",
+        "Brew the Nespresso Orafio capsule into a pitcher or directly into the glass.",
+        "Pour the hot espresso over the ice cream.",
+        "Optionally, top with whipped cream.",
+        "Serve immediately."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5,
+      "provenance": "original"
+    },
+    {
+      "channel": "instant",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Nescafé Gold Espresso or Mount Hagen Organic",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "secondary_amount": 60,
+          "secondary_unit": "ml hot bloom water",
+          "item": "Instant espresso crystals (e.g. Medaglia d'Oro)",
+          "item_id": "instant_coffee",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "scoop",
+          "item": "Ice cream, Vanilla or Chocolate Recommended",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Whipped cream",
+          "optional": true,
+          "group": "Garnish"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Glass Staging & Ice Base",
+        "Fill your serving glass with ice cubes, then pour in cold milk.",
+        "## Phase 2: Coffee Extraction & Pour",
+        "Dissolve 2 tsp instant espresso in 2 oz (60 ml) hot water to fully bloom the coffee, then pour directly over the iced milk.",
+        "## Phase 3: Crown & Garnish",
+        "Finish with a dusting of Whipped cream."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
+    }
+  ]
+}

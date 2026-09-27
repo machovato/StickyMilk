@@ -1,0 +1,160 @@
+{
+  "slug": "nespresso-vanilla-latte",
+  "name": "Vanilla Latte",
+  "format": "hot",
+  "flavor_notes": "A classic hot latte featuring bold Nespresso espresso and rich vanilla syrup, topped with frothed milk for a comforting beverage.",
+  "barista_note": "Warm the mug first so the milk and coffee stay hot to the last sip.",
+  "status": "needs_testing",
+  "tags": [
+    "hot",
+    "latte",
+    "nespresso-official",
+    "quick-fix"
+  ],
+  "sweetness_level": "rich_sweet",
+  "source": {
+    "type": "vendor",
+    "name": "Nespresso",
+    "handle": "@nespresso",
+    "platform": "Nespresso",
+    "url": "https://www.nespresso.com/us/en/coffee-recipes/details/vanilla-latte"
+  },
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "dark",
+      "roast_note": "Bold, roasty profile with low acidity to punch through sweet syrups and cream.",
+      "tested_with": "Counter Culture Forty-Six or Equator Mocha Java",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, melted",
+          "item_id": "cometeer_capsule",
+          "notes": "For less caffeine, use Half Caff (~90 mg) or Decaf capsules; same flavor.",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 150,
+          "unit": "ml",
+          "item": "whole milk",
+          "item_id": "milk",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 15,
+          "unit": "ml",
+          "item": "vanilla syrup",
+          "item_id": "vanilla_syrup",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Hot Extraction",
+        "In your serving mug, combine 15 ml vanilla syrup.",
+        "Melt the Cometeer capsule (about 5 minutes submerged in hot water, or overnight in the fridge). Pour it into the mug over the syrups and spices; stir until fully dissolved.",
+        "## Phase 2: Steamed Milk & Pour",
+        "Warm and froth milk to about 140°F (60°C). Pour the frothed milk over the coffee, holding back the foam, then spoon the velvety foam on top."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 3,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "nespresso_system": "vertuo",
+      "roast_recommendation": "dark",
+      "roast_note": "Bold, roasty profile with low acidity to punch through sweet syrups and cream.",
+      "tested_with": "Double Espresso Scuro",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 80,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Double Espresso Scuro pod",
+          "item_id": "nespresso_double_pod",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 150,
+          "unit": "ml",
+          "item": "whole milk",
+          "item_id": "milk",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 15,
+          "unit": "ml",
+          "item": "vanilla syrup",
+          "item_id": "vanilla_syrup",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "Brew a Double Espresso Scuro capsule into a mug.",
+        "Add vanilla syrup to the brewed coffee and stir to combine.",
+        "Froth the milk until hot and foamy using a Nespresso Aeroccino or steam wand.",
+        "Gently pour the frothed milk into the mug with the coffee and syrup.",
+        "Serve immediately."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 3,
+      "provenance": "original"
+    },
+    {
+      "channel": "instant",
+      "roast_recommendation": "dark",
+      "roast_note": "Bold, roasty profile with low acidity to punch through sweet syrups and cream.",
+      "tested_with": "Medaglia d'Oro or Café Bustelo Instant Espresso",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "secondary_amount": 60,
+          "secondary_unit": "ml hot bloom water",
+          "item": "Instant espresso crystals (e.g. Medaglia d'Oro)",
+          "item_id": "instant_coffee",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 150,
+          "unit": "ml",
+          "item": "whole milk",
+          "item_id": "milk",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 15,
+          "unit": "ml",
+          "item": "vanilla syrup",
+          "item_id": "vanilla_syrup",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Hot Extraction",
+        "In your serving mug, combine 15 ml vanilla syrup.",
+        "Dissolve 2 tsp instant espresso in 2 oz (60 ml) hot water directly in the mug over the syrups and spices; stir until completely dissolved.",
+        "## Phase 2: Steamed Milk & Pour",
+        "Warm and froth milk to about 140°F (60°C). Pour the frothed milk over the coffee, holding back the foam, then spoon the velvety foam on top."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 3,
+      "provenance": "adapted"
+    }
+  ]
+}

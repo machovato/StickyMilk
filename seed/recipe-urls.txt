@@ -12,6 +12,26 @@ https://www.nespresso.com/recipes/int/en/37631ICE-vertuo-iced-pistachio-vanilla-
 https://www.nespresso.com/us/en/vertuo-coffee-recipe-iced-double-chocolate
 https://www.nespresso.com/us/en/vertuo-coffee-recipe-spiced-iced
 
+https://www.nespresso.com/us/en/coffee-recipes/details/amaretto-spiced-latte
+https://www.nespresso.com/us/en/coffee-recipes/details/honey-oat-cafe-au-lait
+https://www.nespresso.com/us/en/coffee-recipes/details/honey-caramel-latte
+https://www.nespresso.com/us/en/coffee-recipes/details/gingerbread-viennois
+https://www.nespresso.com/us/en/coffee-recipes/details/pumpkin-spice-latte
+https://www.nespresso.com/us/en/coffee-recipes/details/white-chocolate-pumpkin-spice-latte
+https://www.nespresso.com/us/en/coffee-recipes/details/cappuccino
+https://www.nespresso.com/us/en/coffee-recipes/details/cinnamon-roll-cappuccino
+https://www.nespresso.com/us/en/coffee-recipes/details/vanilla-latte
+https://www.nespresso.com/us/en/coffee-recipes/details/espresso-martini
+https://www.nespresso.com/us/en/coffee-recipes/details/affogato
+https://www.nespresso.com/us/en/coffee-recipes/details/iced-coffee
+https://www.nespresso.com/us/en/coffee-recipes/details/iced-latte
+https://www.nespresso.com/us/en/coffee-recipes/details/iced-caramel-macchiato
+https://www.nespresso.com/us/en/coffee-recipes/details/flat-white
+https://www.nespresso.com/us/en/coffee-recipes/details/caramel-macchiato
+https://www.nespresso.com/us/en/coffee-recipes/details/macchiato
+https://www.nespresso.com/us/en/coffee-recipes/details/cortado
+
 # Cometeer: add individual recipe pages from https://cometeer.com/pages/cometeer-recipes
 
 # Recipe blogs: add coffee drink recipe pages here
+

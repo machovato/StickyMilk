@@ -1,0 +1,238 @@
+{
+  "slug": "nespresso-pumpkin-spice-latte",
+  "name": "Pumpkin Spice Latte",
+  "format": "hot",
+  "flavor_notes": "A sweet and spiced latte combining espresso with a pumpkin puree infused with almond milk, agave, vanilla, and cinnamon.",
+  "barista_note": "Warm the mug first so the milk and coffee stay hot to the last sip.",
+  "status": "needs_testing",
+  "tags": [
+    "hot",
+    "latte",
+    "nespresso-official",
+    "quick-fix"
+  ],
+  "sweetness_level": "rich_sweet",
+  "source": {
+    "type": "vendor",
+    "name": "Nespresso",
+    "handle": "@nespresso",
+    "platform": "Nespresso",
+    "url": "https://www.nespresso.com/us/en/coffee-recipes/details/pumpkin-spice-latte"
+  },
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Counter Culture Big Trouble or Joe Coffee The Daily",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, melted",
+          "item_id": "cometeer_capsule",
+          "notes": "A little stronger than the original: Cometeer capsules can't be split. For less caffeine, use Half Caff (~90 mg) or Decaf capsules; same flavor.",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 3,
+          "unit": "oz",
+          "item": "Pumpkin Pie Filling",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 0.75,
+          "unit": "oz",
+          "item": "Almond Milk",
+          "item_id": "milk",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "oz",
+          "item": "Agave Syrup",
+          "item_id": "agave",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 0.25,
+          "unit": "tsp",
+          "item": "Vanilla Extract",
+          "item_id": "vanilla_extract",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 0.25,
+          "unit": "tsp",
+          "item": "Cinnamon",
+          "item_id": "ground_cinnamon",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Cinnamon",
+          "optional": true,
+          "group": "Garnish"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Hot Extraction",
+        "In your serving mug, combine 3 oz Pumpkin Pie Filling, 1 oz Agave Syrup, 0.25 tsp Vanilla Extract, and 0.25 tsp Cinnamon.",
+        "Melt the Cometeer capsule (about 5 minutes submerged in hot water, or overnight in the fridge). Pour it into the mug over the syrups and spices; stir until fully dissolved.",
+        "## Phase 2: Steamed Milk & Pour",
+        "Warm and froth milk to about 140°F (60°C). Pour the frothed milk over the coffee, holding back the foam, then spoon the velvety foam on top.",
+        "## Phase 3: Crown & Garnish",
+        "Finish with a dusting of Cinnamon."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "nespresso_system": "original",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Diavolitto",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 40.5,
+          "secondary_unit": "ml",
+          "item": "Nespresso Original Diavolitto pod",
+          "item_id": "nespresso_pod",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 3,
+          "unit": "oz",
+          "item": "Pumpkin Pie Filling",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 0.75,
+          "unit": "oz",
+          "item": "Almond Milk",
+          "item_id": "milk",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "oz",
+          "item": "Agave Syrup",
+          "item_id": "agave",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 0.25,
+          "unit": "tsp",
+          "item": "Vanilla Extract",
+          "item_id": "vanilla_extract",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 0.25,
+          "unit": "tsp",
+          "item": "Cinnamon",
+          "item_id": "ground_cinnamon",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Cinnamon",
+          "optional": true,
+          "group": "Garnish"
+        }
+      ],
+      "steps": [
+        "Whisk pumpkin pie filling, almond milk, agave syrup, vanilla extract, and 1/4 tsp cinnamon together in a small bowl.",
+        "Spoon the mixture into a glass.",
+        "Brew the Diavolitto espresso directly into the glass.",
+        "Stir well and top with a sprinkle of cinnamon."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5,
+      "provenance": "original"
+    },
+    {
+      "channel": "instant",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Nescafé Gold Espresso or Mount Hagen Organic",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "tsp",
+          "secondary_amount": 30,
+          "secondary_unit": "ml hot bloom water",
+          "item": "Instant espresso crystals (e.g. Medaglia d'Oro)",
+          "item_id": "instant_coffee",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 3,
+          "unit": "oz",
+          "item": "Pumpkin Pie Filling",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 0.75,
+          "unit": "oz",
+          "item": "Almond Milk",
+          "item_id": "milk",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "oz",
+          "item": "Agave Syrup",
+          "item_id": "agave",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 0.25,
+          "unit": "tsp",
+          "item": "Vanilla Extract",
+          "item_id": "vanilla_extract",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 0.25,
+          "unit": "tsp",
+          "item": "Cinnamon",
+          "item_id": "ground_cinnamon",
+          "group": "Latte Base"
+        },
+        {
+          "item": "Cinnamon",
+          "optional": true,
+          "group": "Garnish"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Hot Extraction",
+        "In your serving mug, combine 3 oz Pumpkin Pie Filling, 1 oz Agave Syrup, 0.25 tsp Vanilla Extract, and 0.25 tsp Cinnamon.",
+        "Dissolve 1 tsp instant espresso in 1 oz (30 ml) hot water directly in the mug over the syrups and spices; stir until completely dissolved.",
+        "## Phase 2: Steamed Milk & Pour",
+        "Warm and froth milk to about 140°F (60°C). Pour the frothed milk over the coffee, holding back the foam, then spoon the velvety foam on top.",
+        "## Phase 3: Crown & Garnish",
+        "Finish with a dusting of Cinnamon."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 5,
+      "provenance": "adapted"
+    }
+  ]
+}

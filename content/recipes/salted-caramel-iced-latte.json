@@ -1,6 +1,16 @@
 {
   "slug": "salted-caramel-iced-latte",
   "name": "Salted Caramel Iced Latte",
+  "image": "/recipes/salted-caramel-iced-latte-ai-mukdgclv.jpg",
+  "image_source": "ai",
+  "photo_brief": {
+    "tell": "A tall glass with distinct layers of espresso and milk, topped with a caramel drizzle.",
+    "vessel": "iced",
+    "colors": "caramel drizzle, dark brown, light tan",
+    "hero_detail": "Caramel drizzle artfully draped over the top surface and down the sides of the glass.",
+    "story_prop": "a small spoon",
+    "created_at": "2026-09-27T22:08:54.820Z"
+  },
   "format": "iced",
   "flavor_notes": "Silky cold milk and sweet salted caramel balanced by bold, toasted espresso with a buttery caramel finish.",
   "barista_note": "Pantry shortcut: 2.5 oz Chobani Caramel Macchiato or Sweet Cream creamer can replace both the milk and caramel syrup. Add a tiny pinch of flaky sea salt on top to cut through the sweetness.",
@@ -8,7 +18,7 @@
   "featured": true,
   "promoter_tag": "TEST KITCHEN TOP 10",
   "review": {
-    "score": 9.0,
+    "score": 9,
     "verdict": "The pinch of flaky sea salt is mandatory — it cuts through the rich caramel and highlights the chocolate undertones of the espresso.",
     "tested_date": "2026-09-17",
     "tester": "StickyMilk Test Kitchen",
@@ -30,12 +40,18 @@
     "quick-fix"
   ],
   "sweetness_level": "rich_sweet",
+  "source": {
+    "type": "creator",
+    "name": "CoffeeGal",
+    "handle": "@coffeegal",
+    "platform": "TikTok"
+  },
   "preparations": [
     {
       "channel": "cometeer",
-      "tested_with": "Equator Mocha Java",
       "roast_recommendation": "medium",
       "roast_note": "Balanced medium roast with caramel and toasted nut notes that complement salted caramel syrup.",
+      "tested_with": "Equator Mocha Java",
       "capsule_count": 1,
       "caffeine_level": "full",
       "servings": 1,
@@ -87,9 +103,10 @@
     },
     {
       "channel": "nespresso",
-      "tested_with": "Nespresso Double Espresso Chiaro (Vertuo 80ml)",
+      "nespresso_system": "vertuo",
       "roast_recommendation": "medium",
       "roast_note": "Balanced medium roast with toasted biscuit and caramel notes that complement salted caramel syrup.",
+      "tested_with": "Nespresso Double Espresso Chiaro (Vertuo 80ml)",
       "caffeine_level": "full",
       "servings": 1,
       "yield_unit": "drink",
@@ -136,14 +153,13 @@
       ],
       "difficulty": "easy",
       "prep_time_minutes": 3,
-      "provenance": "original",
-      "nespresso_system": "vertuo"
+      "provenance": "original"
     },
     {
       "channel": "instant",
-      "tested_with": "Nescafé Gold Espresso or Medaglia d'Oro",
       "roast_recommendation": "medium",
       "roast_note": "A smooth, balanced instant espresso that dissolves cleanly without harsh bitter edges.",
+      "tested_with": "Nescafé Gold Espresso or Medaglia d'Oro",
       "caffeine_level": "full",
       "servings": 1,
       "yield_unit": "drink",
@@ -198,11 +214,5 @@
       "prep_time_minutes": 4,
       "provenance": "adapted"
     }
-  ],
-  "source": {
-    "type": "creator",
-    "name": "CoffeeGal",
-    "handle": "@coffeegal",
-    "platform": "TikTok"
-  }
+  ]
 }
