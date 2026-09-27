@@ -43,14 +43,20 @@ function isKnownCode(code: unknown): code is VideoExtractionErrorCode {
 
 /** Runs reel_extractor.py and returns its stdout JSON, or a typed failure. */
 async function runExtractor(
-  videoUrl: string
+  videoUrl: string,
+  caption?: string
 ): Promise<{ ok: true; parsed: Record<string, unknown> } | { ok: false; failure: VideoExtractionResult }> {
   const scriptPath = path.join(process.cwd(), "lib", "translator", "reel_extractor.py");
-  const pythonBin = process.env.PYTHON_BIN || "python3";
+  const pythonBin = process.env.PYTHON_BIN || (process.platform === "win32" ? "python" : "python3");
+
+  const args = [scriptPath, videoUrl];
+  if (caption && caption.trim()) {
+    args.push(caption.trim());
+  }
 
   let stdout: string;
   try {
-    ({ stdout } = await execFileAsync(pythonBin, [scriptPath, videoUrl], {
+    ({ stdout } = await execFileAsync(pythonBin, args, {
       maxBuffer: 20 * 1024 * 1024,
       timeout: EXTRACTOR_TIMEOUT_MS,
     }));
@@ -89,7 +95,8 @@ async function runExtractor(
 }
 
 export async function extractRecipeWithGeminiVideo(
-  videoUrl: string
+  videoUrl: string,
+  caption?: string
 ): Promise<VideoExtractionResult> {
   if (!process.env.GEMINI_API_KEY) {
     return failure("NOT_CONFIGURED", "GEMINI_API_KEY not set");
@@ -97,7 +104,7 @@ export async function extractRecipeWithGeminiVideo(
 
   try {
     console.log(`[VideoAI] Running high-temporal 2 FPS reel extraction for: ${videoUrl}`);
-    const run = await runExtractor(videoUrl);
+    const run = await runExtractor(videoUrl, caption);
     if (!run.ok) return run.failure;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -25,9 +25,12 @@ export default async function SubmissionsPage() {
     );
   }
 
-  // Only what the review card needs goes to the client
   const submissions: SubmissionView[] = pending.map((s) => {
     const { recipe, ir, warnings } = s.result;
+    const image = ir.hero_frame_base64
+      ? `data:image/jpeg;base64,${ir.hero_frame_base64}`
+      : ir.thumbnail_url;
+
     return {
       id: s.id,
       url: s.url,
@@ -35,7 +38,7 @@ export default async function SubmissionsPage() {
       submittedAt: s.createdAt.toISOString(),
       creator: recipe.source?.handle || recipe.source?.name,
       platform: recipe.source?.platform,
-      image: ir.hero_frame_base64 ? `data:image/jpeg;base64,${ir.hero_frame_base64}` : ir.thumbnail_url,
+      image,
       format: recipe.format,
       preparations: recipe.preparations.map((p) => ({
         channel: p.channel,
@@ -44,6 +47,10 @@ export default async function SubmissionsPage() {
         ),
       })),
       warnings,
+      recipe: {
+        ...recipe,
+        image: recipe.image || image,
+      },
     };
   });
 

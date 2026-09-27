@@ -159,7 +159,7 @@ export async function translateRecipeAction(payload: {
       }
 
       console.log(`[Action] Triggering Gemini multimodal video extraction for: ${rawUrl}`);
-      const extraction = await extractRecipeWithGeminiVideo(rawUrl);
+      const extraction = await extractRecipeWithGeminiVideo(rawUrl, payload.caption);
       if (extraction.ok) {
         ir = extraction.ir;
       } else if (extraction.code === "NOT_BEVERAGE") {

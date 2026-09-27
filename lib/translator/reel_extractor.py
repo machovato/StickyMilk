@@ -17,6 +17,12 @@ env_path = os.path.join(os.getcwd(), ".env")
 if os.path.exists(env_path):
     load_dotenv(env_path)
 
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
 # Error codes shared with lib/translator/video-ai.ts (VideoExtractionErrorCode).
 # Always exit 0 and report failures as {"error", "code"} JSON on stdout so the
 # Node side can tell "TikTok blocked us" apart from "Gemini is down".
@@ -71,7 +77,7 @@ RESPONSE_SCHEMA = {
 }
 
 
-def extract_reel(video_url: str):
+def extract_reel(video_url: str, user_caption: str = ""):
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
         fail("NOT_CONFIGURED", "GEMINI_API_KEY is not configured")
@@ -82,13 +88,19 @@ def extract_reel(video_url: str):
         temp_video_path = os.path.join(temp_dir, "video.mp4")
 
         # 1. Download video and extract metadata using yt-dlp
+        detected_uploader = ""
+        detected_thumbnail = ""
+        detected_title = ""
+        detected_description = ""
+        detected_comments = []
+
         try:
             cmd = [
                 sys.executable,
                 "-m",
                 "yt_dlp",
-                "--print",
-                "%(uploader)s|||%(thumbnail)s|||%(title)s",
+                "--dump-json",
+                "--write-comments",
                 "--no-simulate",
                 "-f",
                 "b[ext=mp4]/b",
@@ -98,16 +110,33 @@ def extract_reel(video_url: str):
                 temp_video_path,
                 video_url,
             ]
-            proc = subprocess.run(cmd, capture_output=True, text=True, check=True)
-            meta_line = proc.stdout.strip().split("\n")
-            first_meta = [l for l in meta_line if "|||" in l]
-            detected_uploader = ""
-            detected_thumbnail = ""
-            detected_title = ""
-            if first_meta:
-                parts = first_meta[0].split("|||")
-                if len(parts) >= 3:
-                    detected_uploader, detected_thumbnail, detected_title = parts[0], parts[1], parts[2]
+            proc = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                check=True,
+            )
+            for line in proc.stdout.strip().split("\n"):
+                line = line.strip()
+                if line.startswith("{") and line.endswith("}"):
+                    try:
+                        meta = json.loads(line)
+                        detected_uploader = meta.get("uploader") or meta.get("uploader_id") or ""
+                        detected_thumbnail = meta.get("thumbnail") or ""
+                        detected_title = meta.get("title") or ""
+                        detected_description = meta.get("description") or ""
+                        comments_raw = meta.get("comments") or []
+                        if isinstance(comments_raw, list):
+                            detected_comments = [
+                                f"{c.get('author', 'User')}: {c.get('text', '')}"
+                                for c in comments_raw
+                                if isinstance(c, dict) and c.get("text")
+                            ]
+                        break
+                    except Exception:
+                        continue
         except subprocess.CalledProcessError as e:
             stderr = (e.stderr or "").strip()
             fail("DOWNLOAD_FAILED", f"Failed to download video stream: {stderr[-500:] or e}")
@@ -169,12 +198,40 @@ def extract_reel(video_url: str):
         if not frame_parts:
             fail("NO_FRAMES", "No frames could be extracted from video stream")
 
-        # 3. Prompt Gemini 2.5 Flash with the frame sequence and hero frame selection
+        # 3. Build unified caption & comments context
+        caption_context_parts = []
+        if user_caption and user_caption.strip():
+            caption_context_parts.append(f"USER SUPPLIED CAPTION / COMMENTS:\n{user_caption.strip()}")
+        if detected_description and detected_description.strip():
+            caption_context_parts.append(f"CREATOR POST CAPTION / DESCRIPTION:\n{detected_description.strip()}")
+        if detected_comments:
+            comments_text = "\n".join(detected_comments[:10])
+            caption_context_parts.append(f"REEL COMMENTS (CREATOR & TOP COMMENTS):\n{comments_text.strip()}")
+
+        full_caption_context = "\n\n".join(caption_context_parts)
+
+        caption_prompt_section = ""
+        if full_caption_context:
+            caption_prompt_section = f"""2. CROSS-REFERENCE VISUAL ACTIONS WITH POST CAPTION & COMMENTS:
+The creator included the following text in their post caption/description or comments:
+\"\"\"
+{full_caption_context}
+\"\"\"
+CRITICAL RULES FOR EXTRACTING INGREDIENTS & MEASUREMENTS:
+- Social media coffee creators almost always write the exact recipe measurements (oz, ml, tbsp, tsp, pumps, grams, cups, pinches, dashes) in their caption or comments.
+- Correlate what you see poured/prepared in the video with the ingredients and measurements in the text above.
+- When numerical quantities or units (e.g. "0.5oz maple syrup", "0.5oz honey", "2oz espresso", "6-8oz milk", "dash of cinnamon", "dash of salt") are listed in the caption or comments, you MUST extract those exact numbers into "amount" and exact unit strings into "unit" in "raw_ingredients".
+- For qualitative measurements like "dash of cinnamon" or "pinch of salt", set amount=1 and unit="dash" or "pinch" (or set unit="dash").
+- Do NOT output ingredients with missing amounts if the measurement is clearly stated in the caption or comments above!"""
+        else:
+            caption_prompt_section = "2. WATCH VISUAL ACTIONS & INGREDIENT RATIOS: Note pouring volumes, milk levels, syrup pumps, and spices added."
+
+        # 4. Prompt Gemini with the frame sequence, caption context, and hero frame selection
         prompt = f"""You are an expert barista and coffee recipe ingestion engine for StickyMilk.
 Here are {saved_frames} sequential video frames (indexed 0 to {saved_frames - 1}) from a social media coffee reel.
 1. VERIFY DOMAIN & SAFETY: Confirm whether this is a legitimate beverage recipe. If NOT (e.g. non-drink content, prank, inappropriate/NSFW), set "is_coffee_or_beverage": false and provide "rejection_reason".
-2. READ ALL ON-SCREEN TEXT OVERLAYS: Pay special attention to fast cuts, text stickers, ingredients, brand labels, measuring numbers, and cup markings (e.g. brown sugar, maple syrup, flaky sea salt, espresso, milk, cream, syrups).
-3. WATCH VISUAL ACTIONS: Note if they froth cold foam, pinch flaky salt, add ice, pour milk, pull espresso.
+{caption_prompt_section}
+3. READ ALL ON-SCREEN TEXT OVERLAYS: Pay special attention to fast cuts, text stickers, ingredients, brand labels, measuring numbers, and cup markings (e.g. brown sugar, maple syrup, flaky sea salt, espresso, milk, cream, syrups).
 4. SELECT HERO THUMBNAIL FRAME:
 Select the single best frame index (0-indexed from 0 to {saved_frames - 1}) to use as the hero thumbnail image for this recipe.
 Follow this strict priority:
@@ -213,12 +270,12 @@ Return ONLY valid JSON matching this schema."""
 
         contents = [prompt] + frame_parts
 
-        # 4. Generate content, trying fallback models if quota is exhausted or model is unavailable
+        # 5. Generate content, trying fallback models if quota is exhausted or model is unavailable
         config = genai_types.GenerateContentConfig(
             response_mime_type="application/json",
             response_schema=RESPONSE_SCHEMA,
         )
-        FALLBACK_MODELS = ["gemini-2.5-flash", "gemini-3.8-flash", "gemini-3.5-flash-lite"]
+        FALLBACK_MODELS = ["gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-3.5-flash-lite", "gemini-3.8-flash"]
         resp = None
         last_error = None
         for model_name in FALLBACK_MODELS:
@@ -258,6 +315,7 @@ Return ONLY valid JSON matching this schema."""
             parsed["detected_uploader"] = detected_uploader
             parsed["detected_thumbnail"] = detected_thumbnail
             parsed["detected_title"] = detected_title
+            parsed["detected_description"] = detected_description
             parsed["video_duration"] = duration
             parsed["frames_analyzed"] = saved_frames
 
@@ -275,4 +333,5 @@ Return ONLY valid JSON matching this schema."""
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         fail("UNKNOWN", "Missing video URL argument")
-    extract_reel(sys.argv[1])
+    user_caption = sys.argv[2] if len(sys.argv) > 2 else ""
+    extract_reel(sys.argv[1], user_caption)
