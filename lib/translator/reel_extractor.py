@@ -213,37 +213,40 @@ Return ONLY valid JSON matching this schema."""
 
         contents = [prompt] + frame_parts
 
-        # 4. Generate content, retrying only transient failures (429/5xx)
+        # 4. Generate content, trying fallback models if quota is exhausted or model is unavailable
         config = genai_types.GenerateContentConfig(
             response_mime_type="application/json",
             response_schema=RESPONSE_SCHEMA,
         )
+        FALLBACK_MODELS = ["gemini-2.5-flash", "gemini-3.8-flash", "gemini-3.5-flash-lite"]
         resp = None
         last_error = None
-        max_attempts = 3
-        for attempt in range(max_attempts):
-            try:
-                resp = client.models.generate_content(
-                    model="gemini-2.5-flash",
-                    contents=contents,
-                    config=config,
-                )
-                if resp and resp.text:
-                    break
-            except genai_errors.APIError as e:
-                last_error = e
-                if e.code not in RETRYABLE_STATUS:
-                    break
-                if attempt < max_attempts - 1:
+        for model_name in FALLBACK_MODELS:
+            for attempt in range(2):
+                try:
+                    resp = client.models.generate_content(
+                        model=model_name,
+                        contents=contents,
+                        config=config,
+                    )
+                    if resp and resp.text:
+                        break
+                except genai_errors.APIError as e:
+                    last_error = e
+                    # If quota exhausted (429) or not found (404), break immediately to next model
+                    if e.code in (429, 404):
+                        break
+                    if e.code not in RETRYABLE_STATUS:
+                        break
                     time.sleep(2 * (attempt + 1))
-            except Exception as e:
-                # Network-level failure (connection reset, DNS): transient
-                last_error = e
-                if attempt < max_attempts - 1:
+                except Exception as e:
+                    last_error = e
                     time.sleep(2 * (attempt + 1))
+            if resp and resp.text:
+                break
 
         if not resp or not resp.text:
-            fail("MODEL_UNAVAILABLE", f"Gemini multimodal extraction failed: {last_error}")
+            fail("MODEL_UNAVAILABLE", f"Gemini multimodal extraction failed across fallback models: {last_error}")
 
         raw_text = resp.text
         json_match = re.search(r"\{[\s\S]*\}", raw_text)

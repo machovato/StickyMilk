@@ -339,32 +339,36 @@ async function extractWithGemini(
   source: string
 ): Promise<{ ok: true; recipe: PageRecipe } | { ok: false; code: "NO_RECIPE" | "MODEL_FAILED"; message: string }> {
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+  const FALLBACK_MODELS = ["gemini-2.5-flash", "gemini-3.8-flash", "gemini-3.5-flash-lite"];
   let lastError = "";
-  for (let attempt = 0; attempt < 3; attempt++) {
-    try {
-      const resp = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: buildPrompt(vendor, site, source),
-        config: {
-          responseMimeType: "application/json",
-          responseJsonSchema: PAGE_RECIPE_SCHEMA,
-        },
-      });
-      const recipe = JSON.parse(resp.text || "") as PageRecipe;
-      if (!recipe.is_coffee_drink || recipe.ingredients.length === 0) {
-        return {
-          ok: false,
-          code: "NO_RECIPE",
-          message: "That page doesn't look like a coffee drink recipe. StickyMilk translates coffee drinks only.",
-        };
+  for (const model of FALLBACK_MODELS) {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const resp = await ai.models.generateContent({
+          model,
+          contents: buildPrompt(vendor, site, source),
+          config: {
+            responseMimeType: "application/json",
+            responseJsonSchema: PAGE_RECIPE_SCHEMA,
+          },
+        });
+        const recipe = JSON.parse(resp.text || "") as PageRecipe;
+        if (!recipe.is_coffee_drink || recipe.ingredients.length === 0) {
+          return {
+            ok: false,
+            code: "NO_RECIPE",
+            message: "That page doesn't look like a coffee drink recipe. StickyMilk translates coffee drinks only.",
+          };
+        }
+        return { ok: true, recipe };
+      } catch (err) {
+        lastError = err instanceof Error ? err.message : String(err);
+        const status = (err as { status?: number }).status;
+        // If quota exhausted (429) or not found, try next model immediately
+        if (status === 429 || status === 404 || lastError.includes("RESOURCE_EXHAUSTED")) break;
+        if (status && ![500, 502, 503, 504].includes(status)) break;
+        await new Promise((r) => setTimeout(r, 2000 * (attempt + 1)));
       }
-      return { ok: true, recipe };
-    } catch (err) {
-      lastError = err instanceof Error ? err.message : String(err);
-      const status = (err as { status?: number }).status;
-      // Only transient failures are worth another attempt
-      if (status && ![429, 500, 502, 503, 504].includes(status)) break;
-      await new Promise((r) => setTimeout(r, 2000 * (attempt + 1)));
     }
   }
   return { ok: false, code: "MODEL_FAILED", message: `Couldn't read the recipe: ${lastError}` };
