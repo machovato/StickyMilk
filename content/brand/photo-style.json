@@ -1,0 +1,203 @@
+{
+  "_about": "StickyMilk recipe photo style: 'home kitchen plus'. Every generated photo = house_style + one vessel + one money-shot moment + a fresh mix of background staging. Tune the words here; no code changes needed. Anchor photos in content/brand/anchors/ are sent with every request as the style reference.",
+  "house_style": [
+    "A real but tidy home kitchen photographed on a bright morning, as if by the same food photographer in the same kitchen for a whole series.",
+    "The drink sits on a light oak butcher-block counter; behind it, softly out of focus, a warm off-white wall (#FEF8F4 cream) and a hint of white tile backsplash.",
+    "Soft natural window light from the left, gentle shadows falling to the right. Warm, bright and airy. No flash, no spotlighting, no dramatic contrast.",
+    "Eye-level three-quarter angle (about 20 degrees above the drink), 50mm lens look, shallow depth of field: the drink is tack sharp, the background soft.",
+    "Square 1:1 composition, drink as the clear hero near the center with breathing room around it.",
+    "Warm natural colors: cream, oak, espresso brown, milk white. A folded cobalt-blue (#001EC0) striped linen towel may appear at the edge of the frame.",
+    "Real texture (condensation on cold glass, microfoam bubbles, a few specks of spice on the counter) but never messy."
+  ],
+  "never": [
+    "text, labels, logos or brand packaging",
+    "coffee machines, espresso machines, portafilters, grinders or coffee beans",
+    "hands or people",
+    "cafe counters, chalkboards or menu boards",
+    "dark or moody backgrounds, heavy vignettes, oversaturated colors",
+    "more than three background props"
+  ],
+  "vessels": {
+    "hot_milk": "a matte white ceramic cup (about 8 oz) on a matching saucer",
+    "hot_black": "a plain white ceramic mug",
+    "iced": "a tall clear faceted glass (about 14 oz) with clear ice cubes",
+    "short": "a short clear rocks glass",
+    "dessert": "a small clear glass tumbler"
+  },
+  "moments": {
+    "pour_swirl": "The money shot: the coffee has just been poured over the cold milk and is cascading down through it, dark ribbons of espresso swirling into the white milk around the ice, caught mid-swirl.",
+    "cold_foam": "A thick, glossy cold foam cap sits on top, just starting to cascade at the edges into the coffee below.",
+    "latte_art": "Glossy microfoam with a simple latte art heart or rosetta on top.",
+    "cappuccino": "A tall, thick cap of foam on top.",
+    "layered_tonic": "Distinct layers: clear sparkling tonic with visible bubbles over ice below, dark espresso floating on top.",
+    "affogato": "Hot espresso just poured over a scoop of ice cream, melting into it at the edges.",
+    "condensed_milk": "A thick, creamy band of sweetened condensed milk visible at the bottom of the glass beneath the coffee.",
+    "black_coffee": "Rich dark coffee with a faint light-brown crema at the edge.",
+    "iced_layers": "Coffee and cold milk over ice in soft marbled layers, the coffee darker toward the top."
+  },
+  "compositions": [
+    "drink slightly left of center, staging to the right and behind it",
+    "drink slightly right of center, staging to the left and behind it",
+    "drink centered, staging softly behind it on both sides",
+    "drink in the front-left third, a prop close by in the front-right, soft background behind",
+    "drink centered and a little closer to the camera, one prop just behind its shoulder"
+  ],
+  "ingredient_props": [
+    {
+      "match": [
+        "honey"
+      ],
+      "prop": "a small glass jar of honey with a wooden honey dipper"
+    },
+    {
+      "match": [
+        "maple"
+      ],
+      "prop": "a small glass bottle of amber maple syrup"
+    },
+    {
+      "match": [
+        "cinnamon"
+      ],
+      "prop": "a few cinnamon sticks on a small plate"
+    },
+    {
+      "match": [
+        "cookie butter",
+        "biscoff",
+        "speculoos"
+      ],
+      "prop": "a few crisp caramelized spice cookies on a small plate"
+    },
+    {
+      "match": [
+        "cocoa",
+        "chocolate"
+      ],
+      "prop": "a small ceramic bowl of cocoa powder with a little spoon"
+    },
+    {
+      "match": [
+        "vanilla"
+      ],
+      "prop": "two vanilla bean pods on a small dish"
+    },
+    {
+      "match": [
+        "brown sugar"
+      ],
+      "prop": "a small ceramic dish of brown sugar"
+    },
+    {
+      "match": [
+        "caramel"
+      ],
+      "prop": "a small glass jar of caramel sauce"
+    },
+    {
+      "match": [
+        "pumpkin"
+      ],
+      "prop": "a small decorative pumpkin"
+    },
+    {
+      "match": [
+        "lavender"
+      ],
+      "prop": "a small sprig of dried lavender"
+    },
+    {
+      "match": [
+        "mint"
+      ],
+      "prop": "a sprig of fresh mint"
+    },
+    {
+      "match": [
+        "pistachio"
+      ],
+      "prop": "a small bowl of shelled pistachios"
+    },
+    {
+      "match": [
+        "strawberr"
+      ],
+      "prop": "a few fresh strawberries on a small plate"
+    },
+    {
+      "match": [
+        "banana"
+      ],
+      "prop": "a ripe banana resting on the counter"
+    },
+    {
+      "match": [
+        "grapefruit"
+      ],
+      "prop": "half a pink grapefruit, cut side up"
+    },
+    {
+      "match": [
+        "lemon"
+      ],
+      "prop": "half a lemon, cut side up"
+    },
+    {
+      "match": [
+        "orange"
+      ],
+      "prop": "half an orange, cut side up"
+    },
+    {
+      "match": [
+        "coconut"
+      ],
+      "prop": "half a coconut shell"
+    },
+    {
+      "match": [
+        "hazelnut"
+      ],
+      "prop": "a small bowl of hazelnuts"
+    },
+    {
+      "match": [
+        "ladyfinger",
+        "tiramisu"
+      ],
+      "prop": "two ladyfinger cookies on a small plate"
+    },
+    {
+      "match": [
+        "mascarpone"
+      ],
+      "prop": "a small ramekin of mascarpone cream"
+    },
+    {
+      "match": [
+        "oat milk"
+      ],
+      "prop": "a small glass pitcher of oat milk"
+    },
+    {
+      "match": [
+        "salt"
+      ],
+      "prop": "a small dish of flaky sea salt"
+    }
+  ],
+  "background_pool": [
+    "a small potted basil plant on the counter behind",
+    "a cream stoneware crock holding wooden spoons",
+    "a stack of two linen napkins in oatmeal and cream",
+    "a wooden cutting board leaning against the backsplash",
+    "an open cookbook lying flat, its pages blurred",
+    "a small vase with a few sprigs of eucalyptus",
+    "a glass storage jar of sugar cubes",
+    "a woven rattan trivet",
+    "a ceramic milk pitcher in soft white",
+    "a small copper measuring cup set",
+    "a sunny windowsill edge with a trailing pothos plant",
+    "a folded cobalt-blue striped linen towel"
+  ]
+}

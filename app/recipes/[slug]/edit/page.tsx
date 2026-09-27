@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { RecipeForm } from "@/components/RecipeForm";
+import { PhotoStudio } from "@/components/PhotoStudio";
 import { getAllRecipes, getRecipeBySlug } from "@/lib/recipes";
 import { getIngredientTaxonomy } from "@/lib/taxonomy";
 import { recipeToDraft } from "@/lib/recipe-draft";
@@ -54,6 +55,8 @@ export default async function EditRecipePage(props: {
           Updates <code className="font-mono text-xs bg-[#f3ede9] px-1.5 py-0.5 text-[#1a130e]">content/recipes/{recipe.slug}.json</code>.
         </p>
       </div>
+
+      <PhotoStudio slug={recipe.slug} currentImage={recipe.image} imageSource={recipe.image_source} />
 
       <RecipeForm
         existingSlugs={existingSlugs}

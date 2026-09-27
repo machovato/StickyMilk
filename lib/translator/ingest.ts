@@ -61,7 +61,11 @@ export async function ingestTranslation(
   result.recipe.slug = slug;
 
   const image = await saveHeroImage(slug, result.ir);
-  if (image) result.recipe.image = image;
+  if (image) {
+    result.recipe.image = image;
+    // A frame (or thumbnail) taken from the source video, not a photo of ours
+    result.recipe.image_source = "video_frame";
+  }
 
   result.recipe.status = "needs_testing";
   result.recipe.review = undefined;

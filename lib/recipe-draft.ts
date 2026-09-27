@@ -133,6 +133,9 @@ export interface RecipeDraft {
    *  name stops overwriting it. */
   slugTouched: boolean;
   image: string;
+  /** image_source of the loaded recipe, kept only while `image` is unchanged */
+  image_source?: Recipe["image_source"];
+  image_source_for?: string;
   format: RecipeFormat | "";
   flavor_notes: string;
   barista_note: string;
@@ -326,6 +329,8 @@ export function draftToCandidate(draft: RecipeDraft): unknown {
     slug: draft.slug.trim(),
     name: draft.name.trim(),
     image: undefinedIfBlank(draft.image),
+    // If the image path was edited by hand, we no longer know where it came from
+    image_source: draft.image_source && draft.image === draft.image_source_for ? draft.image_source : undefined,
     format: draft.format === "" ? undefined : draft.format,
     flavor_notes: draft.flavor_notes.trim(),
     barista_note: undefinedIfBlank(draft.barista_note),
@@ -416,6 +421,8 @@ export function recipeToDraft(recipe: Recipe): RecipeDraft {
     slug: recipe.slug,
     slugTouched: true,
     image: recipe.image ?? "",
+    image_source: recipe.image_source,
+    image_source_for: recipe.image ?? "",
     format: recipe.format,
     flavor_notes: recipe.flavor_notes,
     barista_note: recipe.barista_note ?? "",
