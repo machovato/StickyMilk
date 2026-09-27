@@ -122,3 +122,31 @@ test("synthesis: a 2-double reel becomes 2 capsules, 2 Double pods, 4 tsp, and c
   // No water added to a milk drink on any machine
   assert.ok(!r.recipe.preparations.some((p) => p.ingredients.some((i) => /water/.test(i.item) && !/bloom/.test(i.secondary_unit ?? ""))));
 });
+
+test("imports: clean units, real description, drink-type tag, vendor tag", async () => {
+  const { synthesizeRecipe } = await import("../lib/translator/synthesis");
+  const ir: RecipeIR = {
+    source_type: "nespresso",
+    source_url: "https://www.nespresso.com/us/en/coffee-recipes/details/tiramisu-cappuccino",
+    source_creator: { name: "Nespresso", handle: "@nespresso", platform: "Nespresso" },
+    generated_slug: "nespresso-tiramisu-cappuccino",
+    raw_title: "Tiramisu Cappuccino",
+    stated_coffee: { raw_name: "Double Espresso Chiaro", system: "vertuo", capsule_count: 1, serving_size_ml: 80 },
+    raw_ingredients: [
+      { amount: 2, unit: "TSPS.", item: "Chocolate Sauce", group: "Latte Base" },
+      { amount: 4, unit: "oz.", item: "Milk", group: "Latte Base" },
+    ],
+    raw_steps: ["Brew the coffee into a cup.", "Froth the milk and pour."],
+    metadata: { temperature: "hot", description: "Tiramisu in a mug.", drink_style: "cappuccino" },
+  };
+  const r = synthesizeRecipe(ir);
+  const units = r.recipe.preparations[0].ingredients.map((i) => i.unit);
+  assert.ok(units.includes("tsp") && units.includes("oz") && !units.includes("TSPS."));
+  assert.equal(r.recipe.flavor_notes, "Tiramisu in a mug.");
+  assert.ok(r.recipe.tags.includes("cappuccino") && !r.recipe.tags.includes("latte"));
+  assert.ok(r.recipe.tags.includes("nespresso-official"));
+  // Hot + milk on Cometeer: melted, no added water
+  const com = r.recipe.preparations.find((p) => p.channel === "cometeer")!;
+  assert.equal(com.ingredients.find((i) => i.item_id === "cometeer_capsule")?.item, "Cometeer capsule, melted");
+  assert.ok(!com.steps.join(" ").match(/just-off-boil|chill/));
+});

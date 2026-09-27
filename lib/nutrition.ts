@@ -87,7 +87,8 @@ const VOLUME_IN_OZ: Record<string, number> = {
 /** Canonical form of a unit: lowercase, and "teaspoons" -> "tsp" etc. */
 export function normalizeUnit(unit: string | undefined): string | undefined {
   if (!unit) return undefined;
-  const u = unit.toLowerCase().trim().replace(/\s+/g, " ");
+  // Lowercase, drop trailing periods ("TSPS." -> "tsps", "oz." -> "oz"), then map spellings
+  const u = unit.toLowerCase().trim().replace(/\.+$/, "").replace(/\s+/g, " ");
   return UNIT_ALIASES[u] ?? u;
 }
 

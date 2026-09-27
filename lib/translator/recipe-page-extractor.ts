@@ -266,6 +266,10 @@ interface PageRecipe {
   steps_in_our_words: string[];
   prep_time_minutes?: number;
   sweetness: SweetnessLevel;
+  /** One sentence in our own words describing how the drink tastes */
+  description?: string;
+  /** What kind of drink it is, e.g. "cappuccino", "iced latte", "shaken espresso" */
+  drink_style?: string;
 }
 
 const PAGE_RECIPE_SCHEMA = {
@@ -305,6 +309,8 @@ const PAGE_RECIPE_SCHEMA = {
     steps_in_our_words: { type: "array", items: { type: "string" } },
     prep_time_minutes: { type: "number" },
     sweetness: { type: "string", enum: ["none", "subtle", "rich_sweet", "dessert"] },
+    description: { type: "string" },
+    drink_style: { type: "string" },
   },
   required: ["is_coffee_drink", "title", "temperature", "coffee", "ingredients", "steps_in_our_words", "sweetness"],
 };
@@ -320,6 +326,7 @@ Extract the recipe facts from the source below.
 Rules:
 - "coffee": the coffee base the drink is built on.
   - Nespresso capsule: exact capsule name (e.g. "Melozio", "Double Espresso Scuro"), system "vertuo" or "original", count = capsules, volume_ml = brewed volume if stated (Vertuo sizes: 40 espresso, 80 double espresso, 150 gran lungo, 230 mug, 355 alto).
+  - If the page offers BOTH a Vertuo and an Original version, always extract the VERTUO version (its capsule, count and volume). Use "original" only when the page offers nothing else.
   - Cometeer: system "cometeer", the roast name, count = capsules.
   - Espresso shots: system "espresso", count = number of shots.
   - Instant coffee or instant espresso powder: system "instant", count = teaspoons.
@@ -328,6 +335,8 @@ Rules:
 - "ingredients": everything EXCEPT the coffee base. Keep the published amounts and units exactly; omit "amount" if none is given. Group milk foams as "Cold Foam" (iced) or "Latte Base" (hot milk), toppings as "Garnish", everything else "Latte Base".
 - "steps_in_our_words": the method as short imperative steps REWRITTEN IN YOUR OWN WORDS. Do not copy the source's sentences; keep every technique detail (temperatures, order of operations, frothing, timing).
 - "sweetness": how sweet the finished drink is.
+- "description": ONE sentence, in your own words, on how this drink tastes and what makes it special (e.g. "A cocoa-dusted cappuccino with a mascarpone cream that tastes like tiramisu in a mug."). No marketing fluff.
+- "drink_style": the kind of drink in 1–3 lowercase words, e.g. "cappuccino", "latte", "iced latte", "macchiato", "shaken espresso", "cold brew", "americano", "mocha", "coffee tonic".
 - "is_coffee_drink": false if the recipe is not a drink (including coffee-flavored desserts and baked goods), or is a drink with no coffee in it.
 
 ${source}`;
@@ -433,6 +442,8 @@ function buildIR(url: string, vendor: Vendor | null, a: Attribution, r: PageReci
       temperature: r.temperature,
       prep_time_minutes: r.prep_time_minutes || 5,
       sweetness_hint: r.sweetness,
+      description: r.description?.trim() || undefined,
+      drink_style: r.drink_style?.trim().toLowerCase() || undefined,
     },
     extraction_mode: "recipe_page",
   };

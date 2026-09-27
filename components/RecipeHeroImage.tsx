@@ -4,7 +4,7 @@ import { getRecipeImage } from "@/lib/recipe-images";
 export function RecipeHeroImage({ recipe }: { recipe: Recipe }) {
   const photo = recipe.image
     ? { imageUrl: recipe.image, imageAlt: recipe.name }
-    : getRecipeImage(recipe.slug);
+    : getRecipeImage(recipe.slug, recipe.format);
 
   return (
     <div className="h-64 sm:h-80 md:h-96 w-full overflow-hidden border border-[#1a130e]/10 bg-[#221a15]">

@@ -7,8 +7,8 @@
   "status": "needs_testing",
   "tags": [
     "hot",
-    "latte",
-    "nespresso-original",
+    "cappuccino",
+    "nespresso-official",
     "quick-fix"
   ],
   "sweetness_level": "dessert",
@@ -41,20 +41,22 @@
         },
         {
           "amount": 2,
-          "unit": "TSPS.",
+          "unit": "tsp",
           "item": "Chocolate Sauce or Syrup",
           "group": "Latte Base"
         },
         {
           "amount": 2,
-          "unit": "TBS.",
+          "unit": "tbsp",
           "item": "Mascarpone Cheese",
+          "item_id": "mascarpone",
           "group": "Latte Base"
         },
         {
           "amount": 4,
-          "unit": "oz.",
+          "unit": "oz",
           "item": "Milk",
+          "item_id": "milk",
           "group": "Latte Base"
         },
         {
@@ -98,20 +100,22 @@
         },
         {
           "amount": 2,
-          "unit": "TSPS.",
+          "unit": "tsp",
           "item": "Chocolate Sauce or Syrup",
           "group": "Latte Base"
         },
         {
           "amount": 2,
-          "unit": "TBS.",
+          "unit": "tbsp",
           "item": "Mascarpone Cheese",
+          "item_id": "mascarpone",
           "group": "Latte Base"
         },
         {
           "amount": 4,
-          "unit": "oz.",
+          "unit": "oz",
           "item": "Milk",
+          "item_id": "milk",
           "group": "Latte Base"
         },
         {
@@ -151,20 +155,22 @@
         },
         {
           "amount": 2,
-          "unit": "TSPS.",
+          "unit": "tsp",
           "item": "Chocolate Sauce or Syrup",
           "group": "Latte Base"
         },
         {
           "amount": 2,
-          "unit": "TBS.",
+          "unit": "tbsp",
           "item": "Mascarpone Cheese",
+          "item_id": "mascarpone",
           "group": "Latte Base"
         },
         {
           "amount": 4,
-          "unit": "oz.",
+          "unit": "oz",
           "item": "Milk",
+          "item_id": "milk",
           "group": "Latte Base"
         },
         {

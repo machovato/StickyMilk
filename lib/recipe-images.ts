@@ -107,6 +107,17 @@ const RECIPE_IMAGES: Record<string, RecipeImage> = {
   },
 };
 
-export function getRecipeImage(slug: string): RecipeImage {
-  return RECIPE_IMAGES[slug] ?? DEFAULT_FALLBACK_IMAGE;
+/** Generic stand-in for hot drinks without their own photo (a steaming mug, not an iced glass). */
+const HOT_FALLBACK_IMAGE: RecipeImage = {
+  imageUrl: RECIPE_IMAGES["classic-hot-latte"]?.imageUrl ?? DEFAULT_FALLBACK_IMAGE.imageUrl,
+  imageAlt: "Steaming hot milk coffee in a mug",
+};
+
+/**
+ * The recipe's registered photo, or a generic stand-in that at least matches
+ * the drink: a hot recipe must never show an iced glass. Pass `format` so the
+ * fallback can pick the right one.
+ */
+export function getRecipeImage(slug: string, format?: string): RecipeImage {
+  return RECIPE_IMAGES[slug] ?? (format === "hot" ? HOT_FALLBACK_IMAGE : DEFAULT_FALLBACK_IMAGE);
 }

@@ -66,7 +66,7 @@ export function HomePortal({ recipes }: HomePortalProps) {
     );
   }, [heroRecipe, defaultChannel]);
 
-  const heroImage = heroRecipe ? getRecipeImage(heroRecipe.slug) : null;
+  const heroImage = heroRecipe ? getRecipeImage(heroRecipe.slug, heroRecipe.format) : null;
 
   // Hero review data
   const heroScore =
@@ -431,7 +431,7 @@ export function HomePortal({ recipes }: HomePortalProps) {
               ? recipe.preparations.find((p) => p.channel === defaultChannel)
               : recipe.preparations.find((p) => p.provenance === "original") ||
                 recipe.preparations[0];
-            const img = getRecipeImage(recipe.slug);
+            const img = getRecipeImage(recipe.slug, recipe.format);
             const score =
               (defaultChannel && recipe.review?.channel_scores?.[defaultChannel]) ??
               recipe.review?.score ??
@@ -558,7 +558,7 @@ export function HomePortal({ recipes }: HomePortalProps) {
                 const prep = defaultChannel
                   ? recipe.preparations.find((p) => p.channel === defaultChannel) || recipe.preparations[0]
                   : recipe.preparations[0];
-                const img = getRecipeImage(recipe.slug);
+                const img = getRecipeImage(recipe.slug, recipe.format);
 
                 return (
                   <div

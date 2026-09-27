@@ -6,7 +6,7 @@ import type {
   SweetnessLevel,
 } from "@/lib/types";
 import { getIngredientTaxonomy, ingredientTaxonomyIds } from "@/lib/taxonomy";
-import { calculateNutrition, convertAmount } from "@/lib/nutrition";
+import { calculateNutrition, convertAmount, normalizeUnit } from "@/lib/nutrition";
 import { validateRecipeCandidate } from "@/lib/recipe-schema";
 import type {
   RecipeIR,
@@ -20,6 +20,17 @@ import { cometeerFor, doseFromStated, instantFor, nespressoFor } from "./brew-ma
 
 function findTaxonomyMatch(item: string): TaxonomyMatchResult {
   return matchTaxonomy(item, getIngredientTaxonomy());
+}
+
+/** Drink-type tag from the extractor's drink_style, else the title; "coffee" if unknown. */
+const DRINK_TYPES = [
+  "shaken espresso", "flat white", "cold brew", "coffee tonic", "cappuccino", "macchiato", "americano",
+  "affogato", "cortado", "frappe", "mocha", "latte", "espresso",
+];
+function drinkTypeTag(ir: RecipeIR): string {
+  const text = `${ir.metadata.drink_style ?? ""} ${ir.raw_title}`.toLowerCase();
+  const found = DRINK_TYPES.find((t) => text.includes(t));
+  return found ? found.replace(/\s+/g, "-") : "coffee";
 }
 
 function getRoastNote(roast: RoastRecommendation): string {
@@ -97,7 +108,8 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
 
     nonCoffeeIngredients.push({
       amount: raw.amount,
-      unit: raw.unit,
+      // Store clean units ("TSPS." -> "tsp", "TBS." -> "tbsp") so pages read well and nutrition can convert them
+      unit: normalizeUnit(raw.unit),
       item: raw.item,
       item_id: assignedItemId,
       group: raw.group || "Latte Base",
@@ -537,7 +549,10 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
     slug: cleanSlug,
     name: ir.raw_title.replace(/\s+/g, " ").trim(),
     format: isHot ? "hot" : "iced",
-    flavor_notes: `Rich espresso layered with smooth ${hasColdFoam ? "velvety cold foam" : isHot ? "steamed milk" : "cold milk"} and balanced sweetness.`,
+    // Prefer the extractor's own one-line description; the template is only a fallback
+    flavor_notes:
+      ir.metadata.description ||
+      `Rich espresso layered with smooth ${hasColdFoam ? "velvety cold foam" : isHot ? "steamed milk" : "cold milk"} and balanced sweetness.`,
     barista_note: hasColdFoam
       ? "Whip the cold foam first so it forms a stable, airy head before pouring espresso over ice."
       : isHot
@@ -546,8 +561,11 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
     status: "needs_testing",
     tags: [
       ir.metadata.temperature,
-      hasColdFoam ? "cold-foam" : "latte",
-      vendorChannel ? `${vendorChannel}-original` : ir.source_type === "web" ? "web-find" : "viral-trend",
+      // What kind of drink it is (a cappuccino isn't tagged "latte")
+      drinkTypeTag(ir),
+      ...(hasColdFoam ? ["cold-foam"] : []),
+      // "-official" (not "-original", which reads as Nespresso's Original capsule line)
+      vendorChannel ? `${vendorChannel}-official` : ir.source_type === "web" ? "web-find" : "viral-trend",
       "quick-fix",
     ],
     sweetness_level: ir.metadata.sweetness_hint || "rich_sweet",

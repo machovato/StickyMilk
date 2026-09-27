@@ -15,7 +15,7 @@ export function RecipeCard({ recipe, channel }: RecipeCardProps) {
   const prep = channel
     ? recipe.preparations.find((p) => p.channel === channel)
     : (recipe.preparations.find((p) => p.provenance === "original") || recipe.preparations[0]);
-  const image = getRecipeImage(recipe.slug);
+  const image = getRecipeImage(recipe.slug, recipe.format);
 
   // Category badge styling variant
   const getBadgeClass = (format: string) => {

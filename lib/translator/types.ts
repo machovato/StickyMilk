@@ -59,6 +59,10 @@ export interface RecipeIR {
     temperature: "iced" | "hot" | "blended";
     prep_time_minutes?: number;
     sweetness_hint?: SweetnessLevel;
+    /** One-sentence tasting description written by the extractor (replaces template text) */
+    description?: string;
+    /** Kind of drink, e.g. "cappuccino", "iced latte"; used for the drink-type tag */
+    drink_style?: string;
   };
   extraction_mode?: ExtractionMode;
   text_overlays?: string[];
