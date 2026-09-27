@@ -15,87 +15,10 @@ import type {
   TranslationSuperpowers,
 } from "./types";
 import { slugify } from "@/lib/slugify";
+import { matchTaxonomy, type TaxonomyMatchResult } from "./taxonomy-match";
 
-function findTaxonomyMatch(
-  item: string
-): { id?: string; name?: string; is_novel: boolean } {
-  const taxonomy = getIngredientTaxonomy();
-  const lower = item.trim().toLowerCase();
-
-  // 1. Exact ID match
-  const byId = taxonomy.find((e) => e.id.toLowerCase() === lower);
-  if (byId) return { id: byId.id, name: byId.name, is_novel: false };
-
-  // 2. Exact Name match
-  const byName = taxonomy.find((e) => e.name.toLowerCase() === lower);
-  if (byName) return { id: byName.id, name: byName.name, is_novel: false };
-
-  // 3. Exact Alias match
-  const byAlias = taxonomy.find((e) =>
-    e.aliases.some((a) => a.toLowerCase() === lower)
-  );
-  if (byAlias) return { id: byAlias.id, name: byAlias.name, is_novel: false };
-
-  // 4. Heuristic / partial match
-  for (const entry of taxonomy) {
-    if (lower.includes(entry.name.toLowerCase())) {
-      return { id: entry.id, name: entry.name, is_novel: false };
-    }
-    for (const alias of entry.aliases) {
-      if (lower.includes(alias.toLowerCase())) {
-        return { id: entry.id, name: entry.name, is_novel: false };
-      }
-    }
-  }
-
-  // Keywords heuristics
-  if (lower.includes("cream") && !lower.includes("ice cream")) {
-    const heavyCream = taxonomy.find((e) => e.id === "heavy_cream");
-    if (heavyCream) return { id: heavyCream.id, name: heavyCream.name, is_novel: false };
-  }
-  if (lower.includes("cookie butter") || lower.includes("biscoff spread") || lower.includes("speculoos")) {
-    const cb = taxonomy.find((e) => e.id === "cookie_butter");
-    if (cb) return { id: cb.id, name: cb.name, is_novel: false };
-  }
-  if (lower.includes("oat milk")) {
-    const oat = taxonomy.find((e) => e.id === "oat_milk");
-    if (oat) return { id: oat.id, name: oat.name, is_novel: false };
-  }
-  if (lower.includes("milk") && !lower.includes("condensed") && !lower.includes("oat")) {
-    const milk = taxonomy.find((e) => e.id === "milk");
-    if (milk) return { id: milk.id, name: milk.name, is_novel: false };
-  }
-  if (lower.includes("vanilla syrup")) {
-    const vs = taxonomy.find((e) => e.id === "vanilla_syrup");
-    if (vs) return { id: vs.id, name: vs.name, is_novel: false };
-  }
-  if (lower.includes("caramel syrup") || lower.includes("salted caramel syrup")) {
-    const sc = taxonomy.find((e) => e.id === "salted_caramel_syrup");
-    if (sc) return { id: sc.id, name: sc.name, is_novel: false };
-  }
-  if (lower.includes("caramel sauce") || lower.includes("caramel drizzle")) {
-    const cs = taxonomy.find((e) => e.id === "caramel_sauce");
-    if (cs) return { id: cs.id, name: cs.name, is_novel: false };
-  }
-  if (lower.includes("cinnamon")) {
-    const cin = taxonomy.find((e) => e.id === "ground_cinnamon");
-    if (cin) return { id: cin.id, name: cin.name, is_novel: false };
-  }
-  if (lower.includes("protein shake") || lower.includes("fairlife")) {
-    const ps = taxonomy.find((e) => e.id === "vanilla_protein_shake");
-    if (ps) return { id: ps.id, name: ps.name, is_novel: false };
-  }
-  if (lower.includes("salt")) {
-    const fs = taxonomy.find((e) => e.id === "flaky_salt") || taxonomy.find((e) => e.id === "pinch_of_salt");
-    if (fs) return { id: fs.id, name: fs.name, is_novel: false };
-  }
-  if (lower.includes("ice")) {
-    const ice = taxonomy.find((e) => e.id === "ice");
-    if (ice) return { id: ice.id, name: ice.name, is_novel: false };
-  }
-
-  // Novel ingredient fallback
-  return { is_novel: true };
+function findTaxonomyMatch(item: string): TaxonomyMatchResult {
+  return matchTaxonomy(item, getIngredientTaxonomy());
 }
 
 function getRoastNote(roast: RoastRecommendation): string {

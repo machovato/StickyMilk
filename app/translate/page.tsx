@@ -7,8 +7,6 @@ import {
 } from "@phosphor-icons/react/dist/ssr";
 import { isAdminAuthenticated } from "@/lib/auth";
 import { TranslatorHUD } from "@/components/TranslatorHUD";
-import { translateRecipeAction } from "@/lib/actions/translate-recipe";
-import type { TranslationResult } from "@/lib/translator/types";
 
 export const metadata = {
   title: "The Coffee Translator Engine // StickyMilk",
@@ -24,17 +22,9 @@ export default async function TranslatePage({ searchParams }: TranslatePageProps
   const { url } = await searchParams;
   const isAuth = await isAdminAuthenticated();
 
-  let initialResult: TranslationResult | undefined = undefined;
-  if (url) {
-    try {
-      const res = await translateRecipeAction({ url });
-      if (res.success && res.result) {
-        initialResult = res.result;
-      }
-    } catch {
-      // Ignored for initial server render; handled gracefully on client
-    }
-  }
+  // Translation is NOT run during this GET render: it costs a Gemini call and
+  // (for admins) writes to the vault, so link previews, crawlers, and
+  // prefetches must not trigger it. The HUD submits `url` from the client.
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex flex-col gap-10 text-left">
@@ -80,7 +70,6 @@ export default async function TranslatePage({ searchParams }: TranslatePageProps
       <TranslatorHUD
         initialUrl={url}
         isAdmin={isAuth}
-        initialResult={initialResult}
       />
 
       {/* How The Translator Works: The 3 Superpowers */}

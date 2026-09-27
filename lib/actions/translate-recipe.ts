@@ -9,12 +9,17 @@ import { getAllRecipes, invalidateRecipeCache, recipeSlugExists } from "@/lib/re
 import { ingredientTaxonomyIds } from "@/lib/taxonomy";
 import { toRecipeFileContents } from "@/lib/write-recipe";
 import { isAdminAuthenticated } from "@/lib/auth";
+import { checkRateLimit, clientIp } from "@/lib/rate-limit";
 import { extractRecipeIR, DEMO_PRESETS } from "@/lib/translator/extractor";
 import { synthesizeRecipe } from "@/lib/translator/synthesis";
 import { extractRecipeWithGeminiVideo } from "@/lib/translator/video-ai";
 import type { RecipeIR, TranslationResult } from "@/lib/translator/types";
 
 const CONTENT_DIR = path.join(process.cwd(), "content", "recipes");
+
+/** Non-admin visitors: uncached translations (each one a paid Gemini call) per IP. */
+const PUBLIC_TRANSLATIONS_PER_WINDOW = 5;
+const PUBLIC_TRANSLATION_WINDOW_MS = 10 * 60 * 1000;
 
 function recipeToRecipeIR(recipe: Recipe): RecipeIR {
   const prep = recipe.preparations[0];
@@ -69,6 +74,9 @@ export async function translateRecipeAction(payload: {
   error?: string;
 }> {
   try {
+    // Only an authenticated admin may write to the vault (content/ + public/).
+    // Everyone else gets a read-only preview of the translation.
+    const isAdmin = await isAdminAuthenticated();
     const rawUrl = (payload.url || "").trim();
     const cleanUrl = rawUrl.split("?")[0].replace(/\/+$/, "");
 
@@ -103,7 +111,8 @@ export async function translateRecipeAction(payload: {
       (p) => rawUrl && p.url.toLowerCase() === rawUrl.toLowerCase()
     );
 
-    let ir = null;
+    let ir: RecipeIR | null = null;
+    let videoError: string | undefined;
 
     // 2. If it's a social video link and GEMINI_API_KEY is present, watch video with Gemini
     if (
@@ -115,8 +124,31 @@ export async function translateRecipeAction(payload: {
         rawUrl.includes("youtu.be")) &&
       process.env.GEMINI_API_KEY
     ) {
+      if (!isAdmin) {
+        const limit = checkRateLimit(
+          `translate:${await clientIp()}`,
+          PUBLIC_TRANSLATIONS_PER_WINDOW,
+          PUBLIC_TRANSLATION_WINDOW_MS
+        );
+        if (!limit.ok) {
+          const minutes = Math.ceil(limit.retryAfterSeconds / 60);
+          return {
+            success: false,
+            error: `You've translated a lot of videos in a short time. Please try again in ${minutes} minute${minutes === 1 ? "" : "s"}.`,
+          };
+        }
+      }
+
       console.log(`[Action] Triggering Gemini multimodal video extraction for: ${rawUrl}`);
-      ir = await extractRecipeWithGeminiVideo(rawUrl);
+      const extraction = await extractRecipeWithGeminiVideo(rawUrl);
+      if (extraction.ok) {
+        ir = extraction.ir;
+      } else if (extraction.code === "NOT_BEVERAGE") {
+        // A definitive "this isn't a drink" — don't paper over it with the caption fallback.
+        return { success: false, error: extraction.message };
+      } else {
+        videoError = extraction.message;
+      }
     }
 
     // Fallback to text caption / heuristic extractor if caption/preset provided, otherwise fail loudly
@@ -130,12 +162,18 @@ export async function translateRecipeAction(payload: {
         return {
           success: false,
           error:
+            videoError ||
             "Could not process or extract ingredients from this video reel. Please verify the URL or paste the video caption.",
         };
       }
     }
 
     const result = synthesizeRecipe(ir);
+
+    // Public visitors get the translation as a preview; nothing is written.
+    if (!isAdmin) {
+      return { success: true, result };
+    }
 
     // 3. Resolve slug uniqueness
     let finalSlug = result.recipe.slug;

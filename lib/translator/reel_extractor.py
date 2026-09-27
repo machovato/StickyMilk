@@ -3,8 +3,13 @@ import os
 import json
 import base64
 import tempfile
+import re
+import subprocess
+import time
 import cv2
 from google import genai
+from google.genai import errors as genai_errors
+from google.genai import types as genai_types
 from dotenv import load_dotenv
 
 # Ensure environment variables are loaded
@@ -12,11 +17,64 @@ env_path = os.path.join(os.getcwd(), ".env")
 if os.path.exists(env_path):
     load_dotenv(env_path)
 
+# Error codes shared with lib/translator/video-ai.ts (VideoExtractionErrorCode).
+# Always exit 0 and report failures as {"error", "code"} JSON on stdout so the
+# Node side can tell "TikTok blocked us" apart from "Gemini is down".
+def fail(code: str, message: str):
+    print(json.dumps({"error": message, "code": code}))
+    sys.exit(0)
+
+
+# HTTP statuses worth retrying. 4xx other than 429 (bad request, auth, payload
+# rejected) will fail the same way every time, so retrying only adds latency.
+RETRYABLE_STATUS = {429, 500, 502, 503, 504}
+
+# Structured-output schema: Gemini is constrained to return exactly this shape,
+# so no regex-scraping of JSON out of free text.
+RESPONSE_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {
+        "is_coffee_or_beverage": {"type": "BOOLEAN"},
+        "rejection_reason": {"type": "STRING"},
+        "raw_title": {"type": "STRING"},
+        "hero_frame_index": {"type": "INTEGER"},
+        "hero_frame_reason": {"type": "STRING"},
+        "creator_handle": {"type": "STRING"},
+        "creator_name": {"type": "STRING"},
+        "stated_coffee": {
+            "type": "OBJECT",
+            "properties": {
+                "raw_name": {"type": "STRING"},
+                "system": {"type": "STRING", "enum": ["vertuo", "original", "capsule", "instant"]},
+                "shots": {"type": "NUMBER"},
+                "roast_profile": {"type": "STRING", "enum": ["light", "medium", "dark"]},
+            },
+        },
+        "raw_ingredients": {
+            "type": "ARRAY",
+            "items": {
+                "type": "OBJECT",
+                "properties": {
+                    "amount": {"type": "NUMBER"},
+                    "unit": {"type": "STRING"},
+                    "item": {"type": "STRING"},
+                    "group": {"type": "STRING", "enum": ["Cold Foam", "Latte Base", "Garnish"]},
+                    "optional": {"type": "BOOLEAN"},
+                },
+                "required": ["item"],
+            },
+        },
+        "raw_steps": {"type": "ARRAY", "items": {"type": "STRING"}},
+        "text_overlays_found": {"type": "ARRAY", "items": {"type": "STRING"}},
+    },
+    "required": ["is_coffee_or_beverage", "raw_ingredients", "raw_steps"],
+}
+
+
 def extract_reel(video_url: str):
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
-        print(json.dumps({"error": "GEMINI_API_KEY is not configured"}))
-        sys.exit(1)
+        fail("NOT_CONFIGURED", "GEMINI_API_KEY is not configured")
 
     client = genai.Client(api_key=api_key)
 
@@ -24,10 +82,9 @@ def extract_reel(video_url: str):
         temp_video_path = os.path.join(temp_dir, "video.mp4")
 
         # 1. Download video and extract metadata using yt-dlp
-        import subprocess
         try:
             cmd = [
-                "python",
+                sys.executable,
                 "-m",
                 "yt_dlp",
                 "--print",
@@ -51,13 +108,18 @@ def extract_reel(video_url: str):
                 parts = first_meta[0].split("|||")
                 if len(parts) >= 3:
                     detected_uploader, detected_thumbnail, detected_title = parts[0], parts[1], parts[2]
+        except subprocess.CalledProcessError as e:
+            stderr = (e.stderr or "").strip()
+            fail("DOWNLOAD_FAILED", f"Failed to download video stream: {stderr[-500:] or e}")
         except Exception as e:
-            print(json.dumps({"error": f"Failed to download video stream: {str(e)}"}))
-            sys.exit(1)
+            fail("DOWNLOAD_FAILED", f"Failed to download video stream: {e}")
 
         if not os.path.exists(temp_video_path):
-            print(json.dumps({"error": "Downloaded video file not found"}))
-            sys.exit(1)
+            # yt-dlp exits 0 but skips the download when --max-filesize is exceeded
+            output = f"{proc.stdout}\n{proc.stderr}"
+            if "max-filesize" in output or "larger than max" in output:
+                fail("TOO_LARGE", "Video is larger than the 25 MB limit")
+            fail("DOWNLOAD_FAILED", "Downloaded video file not found")
 
         # 2. Extract frames at high temporal resolution (2 FPS = every 0.5s) to catch fast micro-cuts
         cap = cv2.VideoCapture(temp_video_path)
@@ -105,8 +167,7 @@ def extract_reel(video_url: str):
         cap.release()
 
         if not frame_parts:
-            print(json.dumps({"error": "No frames could be extracted from video stream"}))
-            sys.exit(1)
+            fail("NO_FRAMES", "No frames could be extracted from video stream")
 
         # 3. Prompt Gemini 2.5 Flash with the frame sequence and hero frame selection
         prompt = f"""You are an expert barista and coffee recipe ingestion engine for StickyMilk.
@@ -152,33 +213,42 @@ Return ONLY valid JSON matching this schema."""
 
         contents = [prompt] + frame_parts
 
-        # 4. Generate content with automatic retries and exponential backoff
-        import time
-        import re
-
+        # 4. Generate content, retrying only transient failures (429/5xx)
+        config = genai_types.GenerateContentConfig(
+            response_mime_type="application/json",
+            response_schema=RESPONSE_SCHEMA,
+        )
         resp = None
         last_error = None
-        for attempt in range(3):
+        max_attempts = 3
+        for attempt in range(max_attempts):
             try:
                 resp = client.models.generate_content(
                     model="gemini-2.5-flash",
                     contents=contents,
+                    config=config,
                 )
                 if resp and resp.text:
                     break
-            except Exception as e:
+            except genai_errors.APIError as e:
                 last_error = e
-                time.sleep(2 * (attempt + 1))
+                if e.code not in RETRYABLE_STATUS:
+                    break
+                if attempt < max_attempts - 1:
+                    time.sleep(2 * (attempt + 1))
+            except Exception as e:
+                # Network-level failure (connection reset, DNS): transient
+                last_error = e
+                if attempt < max_attempts - 1:
+                    time.sleep(2 * (attempt + 1))
 
         if not resp or not resp.text:
-            print(json.dumps({"error": f"Gemini multimodal extraction failed: {str(last_error)}"}))
-            sys.exit(1)
+            fail("MODEL_UNAVAILABLE", f"Gemini multimodal extraction failed: {last_error}")
 
         raw_text = resp.text
         json_match = re.search(r"\{[\s\S]*\}", raw_text)
         if not json_match:
-            print(json.dumps({"error": "Failed to parse JSON from Gemini response"}))
-            sys.exit(1)
+            fail("PARSE_FAILED", "Failed to parse JSON from Gemini response")
 
         try:
             parsed = json.loads(json_match.group(0))
@@ -197,11 +267,9 @@ Return ONLY valid JSON matching this schema."""
 
             print(json.dumps(parsed))
         except Exception as e:
-            print(json.dumps({"error": f"Failed to format extraction JSON: {str(e)}"}))
-            sys.exit(1)
+            fail("PARSE_FAILED", f"Failed to format extraction JSON: {e}")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print(json.dumps({"error": "Missing video URL argument"}))
-        sys.exit(1)
+        fail("UNKNOWN", "Missing video URL argument")
     extract_reel(sys.argv[1])

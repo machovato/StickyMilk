@@ -118,3 +118,19 @@ export interface TranslationResult {
   text_overlays?: string[];
   is_cached_hit?: boolean;
 }
+
+/** Failure codes emitted by reel_extractor.py (plus Node-side TIMEOUT). */
+export type VideoExtractionErrorCode =
+  | "NOT_CONFIGURED"
+  | "DOWNLOAD_FAILED"
+  | "TOO_LARGE"
+  | "NO_FRAMES"
+  | "MODEL_UNAVAILABLE"
+  | "PARSE_FAILED"
+  | "NOT_BEVERAGE"
+  | "TIMEOUT"
+  | "UNKNOWN";
+
+export type VideoExtractionResult =
+  | { ok: true; ir: RecipeIR }
+  | { ok: false; code: VideoExtractionErrorCode; message: string };
