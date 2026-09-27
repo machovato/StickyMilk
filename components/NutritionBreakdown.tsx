@@ -72,7 +72,7 @@ export function NutritionBreakdown({ prep, scale }: NutritionBreakdownProps) {
                 Caffeine
               </span>
             </div>
-            <span className="font-syne text-xl font-bold text-white">
+            <span className="font-mono text-base font-bold text-white">
               ~{perServingCaffeine} mg
             </span>
           </div>
@@ -105,7 +105,7 @@ export function NutritionBreakdown({ prep, scale }: NutritionBreakdownProps) {
                 Sugar
               </span>
             </div>
-            <span className="font-syne text-xl font-bold text-[#1a130e]">
+            <span className="font-mono text-base font-bold text-[#1a130e]">
               {perServingSugar}g
             </span>
           </div>
@@ -126,7 +126,7 @@ export function NutritionBreakdown({ prep, scale }: NutritionBreakdownProps) {
           <span className="font-mono text-[10px] uppercase text-[#7f756f]">
             Calories
           </span>
-          <span className="font-syne text-base font-bold text-[#1a130e] mt-0.5">
+          <span className="font-mono text-sm font-bold text-[#1a130e] mt-0.5">
             ~{perServingCalories}
           </span>
           <span className="font-mono text-[9px] text-[#a89e97]">kcal / serving</span>
@@ -136,7 +136,7 @@ export function NutritionBreakdown({ prep, scale }: NutritionBreakdownProps) {
           <span className="font-mono text-[10px] uppercase text-[#7f756f]">
             Fat
           </span>
-          <span className="font-syne text-base font-bold text-[#1a130e] mt-0.5">
+          <span className="font-mono text-sm font-bold text-[#1a130e] mt-0.5">
             {perServingFat}g
           </span>
           <span className="font-mono text-[9px] text-[#a89e97]">from dairy / milk</span>
@@ -146,7 +146,7 @@ export function NutritionBreakdown({ prep, scale }: NutritionBreakdownProps) {
           <span className="font-mono text-[10px] uppercase text-[#7f756f]">
             Protein
           </span>
-          <span className="font-syne text-base font-bold text-[#1a130e] mt-0.5">
+          <span className="font-mono text-sm font-bold text-[#1a130e] mt-0.5">
             {perServingProtein}g
           </span>
           <span className="font-mono text-[9px] text-[#a89e97]">milk solids</span>
