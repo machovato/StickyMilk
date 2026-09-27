@@ -72,6 +72,10 @@ RESPONSE_SCHEMA = {
         },
         "raw_steps": {"type": "ARRAY", "items": {"type": "STRING"}},
         "text_overlays_found": {"type": "ARRAY", "items": {"type": "STRING"}},
+        # Hot vs iced, a one-line tasting description, and the kind of drink
+        "temperature": {"type": "STRING", "enum": ["iced", "hot", "blended"]},
+        "description": {"type": "STRING"},
+        "drink_style": {"type": "STRING"},
     },
     "required": ["is_coffee_or_beverage", "raw_ingredients", "raw_steps"],
 }
@@ -270,7 +274,10 @@ Set "raw_name" to the specific coffee used (e.g. "Instant Coffee", "Nescafé Gol
     }}
   ],
   "raw_steps": [ string ],
-  "text_overlays_found": [ string ]
+  "text_overlays_found": [ string ],
+  "temperature": "iced" | "hot" | "blended",
+  "description": string,   // ONE sentence in your own words on how the drink tastes; no marketing fluff
+  "drink_style": string    // 1-3 lowercase words, e.g. "iced latte", "cappuccino", "shaken espresso", "cold brew"
 }}
 Return ONLY valid JSON matching this schema."""
 

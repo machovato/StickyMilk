@@ -16,7 +16,9 @@
     "test:import": "tsx --test scripts/test-recipe-page.ts",
     "test:nutrition": "tsx --test scripts/test-nutrition.ts",
     "test:queue": "tsx scripts/test-ingestion-queue.ts",
-    "backfill:item-ids": "tsx scripts/backfill-item-ids.ts"
+    "backfill:item-ids": "tsx scripts/backfill-item-ids.ts",
+    "test:brew-math": "tsx --test scripts/test-brew-math.ts",
+    "test:review-form": "tsx --test scripts/test-review-form.ts"
   },
   "dependencies": {
     "@google/genai": "^2.24.0",

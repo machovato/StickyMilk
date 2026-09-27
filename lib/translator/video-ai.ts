@@ -276,9 +276,12 @@ export async function extractRecipeWithGeminiVideo(
       raw_steps: parsed.raw_steps || [],
       sub_assemblies: subAssemblies,
       metadata: {
-        temperature: "iced",
+        // Use what the video shows; fall back to iced (most viral reels are)
+        temperature: ["iced", "hot", "blended"].includes(parsed.temperature) ? parsed.temperature : "iced",
         prep_time_minutes: 4,
         sweetness_hint: "rich_sweet",
+        description: typeof parsed.description === "string" ? parsed.description.trim() || undefined : undefined,
+        drink_style: typeof parsed.drink_style === "string" ? parsed.drink_style.trim().toLowerCase() || undefined : undefined,
       },
       extraction_mode: "video_multimodal_ai",
       text_overlays: parsed.text_overlays_found || [],

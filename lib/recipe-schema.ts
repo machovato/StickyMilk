@@ -418,9 +418,24 @@ export function validateRecipeCandidate(
       }
       if (candidate.review.channel_scores !== undefined && !isRecord(candidate.review.channel_scores)) {
         errors.push({ path: "review.channel_scores", message: "must be an object when present" });
+      } else if (isRecord(candidate.review.channel_scores)) {
+        // Each machine's score: a known machine, 0 to 10
+        for (const [ch, v] of Object.entries(candidate.review.channel_scores)) {
+          if (!["cometeer", "nespresso", "instant"].includes(ch)) {
+            errors.push({ path: `review.channel_scores.${ch}`, message: "unknown machine" });
+          } else if (typeof v !== "number" || v < 0 || v > 10) {
+            errors.push({ path: `review.channel_scores.${ch}`, message: "score must be a number from 0 to 10" });
+          }
+        }
       }
       if (candidate.review.channel_verdicts !== undefined && !isRecord(candidate.review.channel_verdicts)) {
         errors.push({ path: "review.channel_verdicts", message: "must be an object when present" });
+      } else if (isRecord(candidate.review.channel_verdicts)) {
+        for (const [ch, v] of Object.entries(candidate.review.channel_verdicts)) {
+          if (!["cometeer", "nespresso", "instant"].includes(ch) || typeof v !== "string") {
+            errors.push({ path: `review.channel_verdicts.${ch}`, message: "must be text for a known machine" });
+          }
+        }
       }
     }
   }

@@ -50,7 +50,7 @@ export function RecipeDetail({
   const [copied, setCopied] = useState(false);
 
   const prep = recipe.preparations.find((p) => p.channel === channel);
-  const image = getRecipeImage(recipe.slug);
+  const image = getRecipeImage(recipe.slug, recipe.format);
 
   // Format badge variant
   const getBadgeClass = (format: string) => {

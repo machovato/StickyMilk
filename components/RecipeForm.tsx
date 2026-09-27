@@ -641,6 +641,56 @@ export function RecipeForm({
             />
           </div>
         </div>
+
+        {/* Per-machine ratings: the same recipe can shine on Nespresso and fall flat on instant.
+            Only machines that have a preparation are shown; leave a row blank if you didn't taste it. */}
+        <div className="flex flex-col gap-2 pt-2 border-t border-[#1a130e]/10">
+          <span className="font-mono text-xs font-bold uppercase text-[#1a130e]">
+            Rating per machine
+          </span>
+          <p className="font-mono text-[11px] text-[#7f756f]">
+            Score each version you actually brewed. Blank means not tested on that machine.
+          </p>
+          {(["nespresso", "cometeer", "instant"] as Channel[])
+            .filter((ch) => draft.preparations[ch])
+            .map((ch) => (
+              <div key={ch} className="grid grid-cols-1 sm:grid-cols-[140px_110px_1fr] gap-2 items-center">
+                <span className="font-mono text-xs font-bold uppercase text-[#4d4540]">{CHANNEL_LABELS[ch]}</span>
+                <input
+                  type="number"
+                  step="0.1"
+                  min="1"
+                  max="10"
+                  placeholder="Score"
+                  aria-label={`${CHANNEL_LABELS[ch]} score`}
+                  value={draft.review.channel_scores[ch]}
+                  onChange={(e) =>
+                    setDraft((d) => ({
+                      ...d,
+                      review: { ...d.review, channel_scores: { ...d.review.channel_scores, [ch]: e.target.value } },
+                    }))
+                  }
+                  className="bg-[#f8f2ee] p-2.5 font-mono text-xs text-[#1a130e] border border-[#1a130e]/20 focus:border-[#001ec0] focus:bg-white focus:outline-none"
+                />
+                <input
+                  type="text"
+                  placeholder={ch === "instant" ? 'e.g. "Needs 3 tsp, not 2; froth longer."' : "One-line verdict for this machine"}
+                  aria-label={`${CHANNEL_LABELS[ch]} verdict`}
+                  value={draft.review.channel_verdicts[ch]}
+                  onChange={(e) =>
+                    setDraft((d) => ({
+                      ...d,
+                      review: { ...d.review, channel_verdicts: { ...d.review.channel_verdicts, [ch]: e.target.value } },
+                    }))
+                  }
+                  className="bg-[#f8f2ee] p-2.5 font-mono text-xs text-[#1a130e] border border-[#1a130e]/20 focus:border-[#001ec0] focus:bg-white focus:outline-none"
+                />
+              </div>
+            ))}
+          <p className="font-mono text-[11px] text-[#7f756f]">
+            The overall score and verdict above are still required to save a review.
+          </p>
+        </div>
       </section>
 
       {/* Preparations Section */}
