@@ -107,7 +107,12 @@ export interface ReviewDraft {
   notes: string;
   tester: string;
   tested_date: string;
+  /** Per-machine tasting: a recipe can be a 9 on Nespresso and a 6 on instant */
+  channel_scores: Record<Channel, string>;
+  channel_verdicts: Record<Channel, string>;
 }
+
+const emptyPerChannel = (): Record<Channel, string> => ({ cometeer: "", nespresso: "", instant: "" });
 
 export function emptyReviewDraft(): ReviewDraft {
   return {
@@ -116,6 +121,8 @@ export function emptyReviewDraft(): ReviewDraft {
     notes: "",
     tester: "StickyMilk Test Kitchen",
     tested_date: new Date().toISOString().split("T")[0],
+    channel_scores: emptyPerChannel(),
+    channel_verdicts: emptyPerChannel(),
   };
 }
 
@@ -213,6 +220,12 @@ export function emptyRecipeDraft(): RecipeDraft {
   };
 }
 
+/** Keeps only the machines with a filled-in value; undefined when none were tasted. */
+function perChannel<T>(values: Record<Channel, string> | undefined, parse: (v: string) => T): Partial<Record<Channel, T>> | undefined {
+  const entries = Object.entries(values ?? {}).filter(([, v]) => v.trim() !== "");
+  return entries.length ? (Object.fromEntries(entries.map(([ch, v]) => [ch, parse(v.trim())])) as Partial<Record<Channel, T>>) : undefined;
+}
+
 /** Parses a form-field string into a number when it looks like one, the
  *  original string when it doesn't (so schema validation reports a clear
  *  "must be a number" instead of the value silently becoming `null` via
@@ -303,6 +316,9 @@ export function draftToCandidate(draft: RecipeDraft): unknown {
           notes: undefinedIfBlank(draft.review.notes),
           tester: undefinedIfBlank(draft.review.tester),
           tested_date: undefinedIfBlank(draft.review.tested_date),
+          // Only the machines that were actually tasted are saved
+          channel_scores: perChannel(draft.review.channel_scores, numOrRaw),
+          channel_verdicts: perChannel(draft.review.channel_verdicts, (v) => v),
         }
       : undefined;
 
@@ -385,6 +401,13 @@ export function recipeToDraft(recipe: Recipe): RecipeDraft {
         notes: recipe.review.notes ?? "",
         tester: recipe.review.tester ?? "StickyMilk Test Kitchen",
         tested_date: recipe.review.tested_date ?? "",
+        channel_scores: {
+          ...emptyPerChannel(),
+          ...Object.fromEntries(
+            Object.entries(recipe.review.channel_scores ?? {}).map(([ch, v]) => [ch, v != null ? String(v) : ""])
+          ),
+        },
+        channel_verdicts: { ...emptyPerChannel(), ...(recipe.review.channel_verdicts ?? {}) },
       }
     : emptyReviewDraft();
 
