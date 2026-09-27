@@ -364,14 +364,14 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
     tags: [
       ir.metadata.temperature,
       hasColdFoam ? "cold-foam" : "latte",
-      vendorChannel ? `${vendorChannel}-original` : "viral-trend",
+      vendorChannel ? `${vendorChannel}-original` : ir.source_type === "web" ? "web-find" : "viral-trend",
       "quick-fix",
     ],
     sweetness_level: ir.metadata.sweetness_hint || "rich_sweet",
     source: {
       type: vendorChannel ? "vendor" : "creator",
       name: ir.source_creator?.name || "Coffee Creator",
-      handle: ir.source_creator?.handle,
+      handle: ir.source_creator?.handle || undefined,
       platform: ir.source_creator?.platform,
       url: ir.source_url,
       avatar: ir.source_creator?.avatar,

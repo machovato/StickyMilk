@@ -9,7 +9,7 @@ import type { RecipeIR, TranslationResult } from "./types";
 
 /**
  * Writes a translated recipe (and its hero image) into the Git-backed vault.
- * Shared by the admin translate action and scripts/import-vendor.ts. No
+ * Shared by the admin translate action and scripts/import-recipes.ts. No
  * Next.js APIs in here — callers revalidate paths themselves.
  */
 

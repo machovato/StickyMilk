@@ -10,9 +10,10 @@
     "postinstall": "prisma generate",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "import:vendor": "tsx scripts/import-vendor.ts",
     "scout": "tsx scripts/trend-scout.ts",
-    "test:taxonomy": "node --experimental-strip-types --test scripts/test-taxonomy-match.mjs"
+    "test:taxonomy": "node --experimental-strip-types --test scripts/test-taxonomy-match.mjs",
+    "import:recipes": "tsx scripts/import-recipes.ts",
+    "test:import": "tsx --test scripts/test-recipe-page.ts"
   },
   "dependencies": {
     "@google/genai": "^2.24.0",

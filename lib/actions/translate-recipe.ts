@@ -13,7 +13,7 @@ import { checkRateLimit, clientIp } from "@/lib/rate-limit";
 import { extractRecipeIR, DEMO_PRESETS } from "@/lib/translator/extractor";
 import { synthesizeRecipe } from "@/lib/translator/synthesis";
 import { ingestTranslation } from "@/lib/translator/ingest";
-import { detectVendor, extractVendorRecipe } from "@/lib/translator/vendor-extractor";
+import { extractRecipePage, isRecipePageUrl } from "@/lib/translator/recipe-page-extractor";
 import { extractRecipeWithGeminiVideo } from "@/lib/translator/video-ai";
 import type { RecipeIR, TranslationResult } from "@/lib/translator/types";
 
@@ -128,16 +128,17 @@ export async function translateRecipeAction(payload: {
     let ir: RecipeIR | null = null;
     let videoError: string | undefined;
 
-    // 2a. Vendor recipe page (Nespresso / Cometeer). The caption box doubles as
-    // "paste the page text" for vendors that block server-side fetches.
-    if (rawUrl && detectVendor(rawUrl)) {
+    // 2a. Recipe web page: a vendor (Nespresso / Cometeer) or any recipe site.
+    // The caption box doubles as "paste the page text" for sites that block
+    // server-side fetches.
+    if (rawUrl && !isPreset && isRecipePageUrl(rawUrl)) {
       if (!isAdmin) {
         const limited = await publicRateLimitError();
         if (limited) return { success: false, error: limited };
       }
-      const vendor = await extractVendorRecipe(rawUrl, payload.caption);
-      if (!vendor.ok) return { success: false, error: vendor.message };
-      ir = vendor.ir;
+      const page = await extractRecipePage(rawUrl, payload.caption);
+      if (!page.ok) return { success: false, error: page.message };
+      ir = page.ir;
     }
 
     // 2b. If it's a social video link and GEMINI_API_KEY is present, watch video with Gemini

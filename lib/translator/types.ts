@@ -8,11 +8,12 @@ export type IRSourceType =
   | "social_tiktok"
   | "social_instagram"
   | "social_youtube"
+  | "web"
   | "editorial";
 
 export interface IRStatedCoffee {
   raw_name: string;
-  system?: "vertuo" | "original" | "capsule" | "instant";
+  system?: "vertuo" | "original" | "capsule" | "instant" | "espresso" | "brewed" | "cold_brew";
   intensity?: number;
   serving_size_ml?: number;
   shots?: number;
@@ -21,7 +22,7 @@ export interface IRStatedCoffee {
   roast_profile?: "light" | "medium" | "dark";
 }
 
-export type ExtractionMode = "video_multimodal_ai" | "caption_heuristic" | "vendor_import";
+export type ExtractionMode = "video_multimodal_ai" | "caption_heuristic" | "recipe_page";
 
 export interface IRRawIngredient {
   amount?: number;
