@@ -282,7 +282,17 @@ export function TranslatorHUD({
         )}
       </div>
 
-      {/* Translation Result HUD */}
+      {result?.queued_for_review && (
+        <div className="p-4 bg-[#fef8f4] border-2 border-[#1a130e] text-[#1a130e] font-mono text-xs flex items-center gap-2">
+          <CheckCircle size={20} weight="fill" className="text-[#001ec0] flex-shrink-0" />
+          <span>
+            Here&apos;s your recipe. We&apos;ve also sent it to the StickyMilk test kitchen. If it&apos;s a keeper,
+            it joins the library.
+          </span>
+        </div>
+      )}
+
+            {/* Translation Result HUD */}
       {result && (
         <div ref={resultRef} className="flex flex-col gap-8 animate-fadeIn scroll-mt-6">
           {/* Result Header Bar */}

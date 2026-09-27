@@ -13,6 +13,7 @@ import { checkRateLimit, clientIp } from "@/lib/rate-limit";
 import { extractRecipeIR, DEMO_PRESETS } from "@/lib/translator/extractor";
 import { synthesizeRecipe } from "@/lib/translator/synthesis";
 import { ingestTranslation } from "@/lib/translator/ingest";
+import { queueSubmission } from "@/lib/submissions";
 import { extractRecipePage, isRecipePageUrl } from "@/lib/translator/recipe-page-extractor";
 import { extractRecipeWithGeminiVideo } from "@/lib/translator/video-ai";
 import type { RecipeIR, TranslationResult } from "@/lib/translator/types";
@@ -188,8 +189,18 @@ export async function translateRecipeAction(payload: {
 
     const result = synthesizeRecipe(ir);
 
-    // Public visitors get the translation as a preview; nothing is written.
+    // Visitors get the translation as a preview, and it goes to the admin
+    // review queue (/admin/submissions). Nothing touches the vault until the
+    // admin approves it. A queue failure must not cost the visitor their recipe.
     if (!isAdmin) {
+      // Demo presets and caption-only pastes aren't real submissions
+      if (!rawUrl || isPreset) return { success: true, result };
+      try {
+        await queueSubmission(rawUrl, result);
+        result.queued_for_review = true;
+      } catch (queueErr) {
+        console.error("[Action] Failed to queue submission for review:", queueErr);
+      }
       return { success: true, result };
     }
 

@@ -45,3 +45,26 @@ model Rating {
 
   @@index([recipeId])
 }
+
+/// A visitor's translation waiting for the admin to review. Visitors never
+/// write to the vault directly: their translation lands here, and approving
+/// it writes it to content/recipes/ exactly as if the admin had translated
+/// the link (lib/translator/ingest.ts). See lib/submissions.ts.
+model Submission {
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  /// The link the visitor pasted (reel, recipe page)
+  url       String
+  /// Recipe name, for the review list
+  name      String
+  /// The full TranslationResult as JSON (recipe, IR incl. hero frame, warnings).
+  /// Stored whole so approving needs no second Gemini call.
+  result    String
+  /// "pending" | "approved" | "rejected"
+  status    String    @default("pending")
+  reviewedAt DateTime?
+  /// Vault slug written on approval
+  slug      String?
+
+  @@index([status, createdAt])
+}
