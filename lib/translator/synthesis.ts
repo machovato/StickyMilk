@@ -277,6 +277,11 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
   }
 
   // Determine original channel from creator source, stated coffee, and recipe signals
+  const isSocialReel =
+    ir.source_type.includes("tiktok") ||
+    ir.source_type.includes("instagram") ||
+    ir.source_type.includes("youtube");
+
   const textEvidence = [
     ir.raw_title,
     ir.stated_coffee?.raw_name,
@@ -286,7 +291,7 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
     ir.source_url,
   ].join(" ").toLowerCase();
 
-  let originalChannel: Channel = "nespresso";
+  let originalChannel: Channel | null = null;
   if (vendorChannel) {
     originalChannel = vendorChannel;
   } else if (
@@ -302,6 +307,8 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
   } else if (
     /\b(nespresso|vertuo|chiaro|scuro|voltesso|diavolitto|altissio|orafio)\b/i.test(textEvidence)
   ) {
+    originalChannel = "nespresso";
+  } else if (isSocialReel) {
     originalChannel = "nespresso";
   }
 
