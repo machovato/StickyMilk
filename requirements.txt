@@ -1,0 +1,10 @@
+# Python deps for lib/translator/reel_extractor.py (spawned by lib/translator/video-ai.ts).
+# Install: pip install -r requirements.txt
+# yt-dlp is pinned on purpose: platform extractors break and get fixed often,
+# so bump it deliberately and re-test the sample reels rather than floating.
+# The [curl-cffi] extra pulls the curl-cffi range this yt-dlp release supports
+# (browser TLS impersonation for TikTok).
+yt-dlp[curl-cffi]==2026.8.19
+opencv-python-headless>=4.10,<6
+google-genai>=2.20,<3
+python-dotenv>=1.0,<2

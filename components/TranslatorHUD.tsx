@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition, useRef } from "react";
+import { useEffect, useState, useTransition, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -32,13 +32,11 @@ import {
 interface TranslatorHUDProps {
   initialUrl?: string;
   isAdmin: boolean;
-  initialResult?: TranslationResult;
 }
 
 export function TranslatorHUD({
   initialUrl = "",
   isAdmin,
-  initialResult,
 }: TranslatorHUDProps) {
   const router = useRouter();
   const resultRef = useRef<HTMLDivElement>(null);
@@ -52,7 +50,7 @@ export function TranslatorHUD({
   const [isTranslating, startTranslating] = useTransition();
   const [isSaving, startSaving] = useTransition();
 
-  const [result, setResult] = useState<TranslationResult | null>(initialResult || null);
+  const [result, setResult] = useState<TranslationResult | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [savedSlug, setSavedSlug] = useState<string | null>(null);
   const [copiedJson, setCopiedJson] = useState(false);
@@ -87,19 +85,14 @@ export function TranslatorHUD({
     });
   };
 
-  const handleTranslate = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!url.trim() && !caption.trim()) {
-      setErrorMessage("Please paste a video URL or recipe caption.");
-      return;
-    }
+  const runTranslate = (urlValue: string, captionValue: string) => {
     setErrorMessage(null);
     setSavedSlug(null);
 
     startTranslating(async () => {
       const res = await translateRecipeAction({
-        url: url.trim(),
-        caption: caption.trim() || undefined,
+        url: urlValue.trim(),
+        caption: captionValue.trim() || undefined,
       });
       if (res.success && res.result) {
         setResult(res.result);
@@ -111,6 +104,25 @@ export function TranslatorHUD({
       }
     });
   };
+
+  const handleTranslate = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!url.trim() && !caption.trim()) {
+      setErrorMessage("Please paste a video URL or recipe caption.");
+      return;
+    }
+    runTranslate(url, caption);
+  };
+
+  // Arriving from the home page's translator box (/translate?url=...): start
+  // translating on mount. This runs in the browser, not during the server
+  // render, so crawlers and link previews don't trigger a paid extraction.
+  const autoStarted = useRef(false);
+  useEffect(() => {
+    if (autoStarted.current || !initialUrl.trim()) return;
+    autoStarted.current = true;
+    runTranslate(initialUrl, "");
+  }, [initialUrl]);
 
   const handleSaveToVault = () => {
     if (!result || !isAdmin) return;

@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { ADMIN_COOKIE_NAME, getExpectedToken } from "@/lib/auth";
+import { ADMIN_COOKIE_NAME, getAdminPassword, getExpectedToken } from "@/lib/auth";
 
 export interface LoginActionState {
   error?: string;
@@ -14,7 +14,7 @@ export async function loginAction(
 ): Promise<LoginActionState> {
   const password = formData.get("password")?.toString() ?? "";
   const next = formData.get("next")?.toString() || "/";
-  const expectedPassword = process.env.ADMIN_PASSWORD || "stickymilk-lab-admin";
+  const expectedPassword = getAdminPassword();
 
   if (!password || password !== expectedPassword) {
     return { error: "Invalid admin authorization key. Access denied." };

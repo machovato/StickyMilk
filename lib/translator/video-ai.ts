@@ -1,43 +1,115 @@
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import path from "node:path";
-import type { RecipeIR } from "./types";
+import type {
+  RecipeIR,
+  VideoExtractionErrorCode,
+  VideoExtractionResult,
+} from "./types";
 import { slugify } from "@/lib/slugify";
 import { parseVideoUrl } from "./extractor";
 
 const execFileAsync = promisify(execFile);
 
+/** Download + frame sampling + Gemini (with its own retries) must finish in this window. */
+const EXTRACTOR_TIMEOUT_MS = 120_000;
+
+/** User-facing copy per failure. Raw extractor messages stay in server logs. */
+const USER_MESSAGES: Record<VideoExtractionErrorCode, string> = {
+  NOT_CONFIGURED: "Video translation isn't configured on this server. Paste the video caption instead.",
+  DOWNLOAD_FAILED:
+    "We couldn't download that video. The platform may be blocking us or the post may be private. Paste the video caption instead.",
+  TOO_LARGE: "That video is too long to translate. Try a shorter reel, or paste the video caption.",
+  NO_FRAMES: "We downloaded the video but couldn't read any frames from it. Try another link.",
+  MODEL_UNAVAILABLE: "Our recipe reader is busy right now. Please try again in a minute.",
+  PARSE_FAILED: "We watched the video but couldn't turn it into a recipe. Try again, or paste the caption.",
+  NOT_BEVERAGE: "StickyMilk only translates coffee and specialty beverage recipes.",
+  TIMEOUT: "Translating that video took too long. Please try again, or paste the video caption.",
+  UNKNOWN: "Something went wrong translating that video. Please try again, or paste the video caption.",
+};
+
+function failure(
+  code: VideoExtractionErrorCode,
+  detail?: string,
+  userMessage?: string
+): VideoExtractionResult {
+  console.warn(`[VideoAI] ${code}${detail ? `: ${detail}` : ""}`);
+  return { ok: false, code, message: userMessage || USER_MESSAGES[code] };
+}
+
+function isKnownCode(code: unknown): code is VideoExtractionErrorCode {
+  return typeof code === "string" && code in USER_MESSAGES;
+}
+
+/** Runs reel_extractor.py and returns its stdout JSON, or a typed failure. */
+async function runExtractor(
+  videoUrl: string
+): Promise<{ ok: true; parsed: Record<string, unknown> } | { ok: false; failure: VideoExtractionResult }> {
+  const scriptPath = path.join(process.cwd(), "lib", "translator", "reel_extractor.py");
+  const pythonBin = process.env.PYTHON_BIN || "python3";
+
+  let stdout: string;
+  try {
+    ({ stdout } = await execFileAsync(pythonBin, [scriptPath, videoUrl], {
+      maxBuffer: 20 * 1024 * 1024,
+      timeout: EXTRACTOR_TIMEOUT_MS,
+    }));
+  } catch (err: unknown) {
+    const e = err as { killed?: boolean; signal?: string; stdout?: string; stderr?: string; code?: unknown };
+    if (e.killed || e.signal === "SIGTERM") {
+      return { ok: false, failure: failure("TIMEOUT", `extractor exceeded ${EXTRACTOR_TIMEOUT_MS}ms`) };
+    }
+    // The script may still have printed a structured error before exiting non-zero
+    // (e.g. an uncaught crash after partial output). Prefer that over the generic case.
+    stdout = e.stdout || "";
+    if (!stdout.trim().startsWith("{")) {
+      const detail = e.code === "ENOENT" ? `${pythonBin} not found (set PYTHON_BIN)` : e.stderr?.slice(-500);
+      return { ok: false, failure: failure("UNKNOWN", detail) };
+    }
+  }
+
+  const cleanJson = stdout.trim();
+  if (!cleanJson.startsWith("{")) {
+    return { ok: false, failure: failure("PARSE_FAILED", `non-JSON extractor output: ${cleanJson.slice(0, 200)}`) };
+  }
+
+  let parsed: Record<string, unknown>;
+  try {
+    parsed = JSON.parse(cleanJson);
+  } catch {
+    return { ok: false, failure: failure("PARSE_FAILED", "extractor output was not valid JSON") };
+  }
+
+  if (parsed.error) {
+    const code = isKnownCode(parsed.code) ? parsed.code : "UNKNOWN";
+    return { ok: false, failure: failure(code, String(parsed.error)) };
+  }
+
+  return { ok: true, parsed };
+}
+
 export async function extractRecipeWithGeminiVideo(
   videoUrl: string
-): Promise<RecipeIR | null> {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    console.warn("GEMINI_API_KEY not configured, skipping AI video analysis");
-    return null;
+): Promise<VideoExtractionResult> {
+  if (!process.env.GEMINI_API_KEY) {
+    return failure("NOT_CONFIGURED", "GEMINI_API_KEY not set");
   }
 
   try {
     console.log(`[VideoAI] Running high-temporal 2 FPS reel extraction for: ${videoUrl}`);
-    const scriptPath = path.join(process.cwd(), "lib", "translator", "reel_extractor.py");
-    const { stdout } = await execFileAsync("python", [scriptPath, videoUrl], {
-      maxBuffer: 20 * 1024 * 1024,
-    });
+    const run = await runExtractor(videoUrl);
+    if (!run.ok) return run.failure;
 
-    const cleanJson = stdout.trim();
-    if (!cleanJson.startsWith("{")) {
-      console.warn("[VideoAI] Non-JSON output from reel extractor:", cleanJson);
-      return null;
-    }
-
-    const parsed = JSON.parse(cleanJson);
-    if (parsed.error) {
-      console.warn(`[VideoAI] Extraction error: ${parsed.error}`);
-      return null;
-    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const parsed = run.parsed as any;
 
     if (parsed.is_coffee_or_beverage === false) {
-      console.warn(`[VideoAI] Content rejected by domain safety check: ${parsed.rejection_reason}`);
-      throw new Error(parsed.rejection_reason || "StickyMilk only translates coffee and specialty beverage recipes.");
+      // Surface the model's own reason — it's written for the user ("this is a cooking video, not a drink").
+      return failure(
+        "NOT_BEVERAGE",
+        parsed.rejection_reason,
+        parsed.rejection_reason || USER_MESSAGES.NOT_BEVERAGE
+      );
     }
 
     const detectedUploader = parsed.detected_uploader || "";
@@ -178,9 +250,9 @@ export async function extractRecipeWithGeminiVideo(
       hero_frame_reason: parsed.hero_frame_reason || undefined,
     };
 
-    return ir;
+    return { ok: true, ir };
   } catch (err: unknown) {
     console.error("[VideoAI] Video multimodal extraction error:", err);
-    return null;
+    return failure("UNKNOWN", err instanceof Error ? err.message : String(err));
   }
 }
