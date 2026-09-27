@@ -1,0 +1,221 @@
+{
+  "slug": "sippin-espresso-iced-teddy-graham-latte",
+  "name": "iced teddy graham latte",
+  "image": "/recipes/sippin-espresso-iced-teddy-graham-latte.jpg",
+  "format": "iced",
+  "flavor_notes": "A comforting iced latte featuring a blend of brown sugar, honey, and cinnamon, topped with oat milk and a double espresso.",
+  "barista_note": "Pour espresso directly over ice to preserve the temperature boundary and prevent watery dilution.",
+  "status": "needs_testing",
+  "tags": [
+    "iced",
+    "latte",
+    "viral-trend",
+    "quick-fix"
+  ],
+  "sweetness_level": "rich_sweet",
+  "source": {
+    "type": "creator",
+    "name": "sippin.espresso",
+    "handle": "@sippin.espresso",
+    "platform": "TikTok",
+    "url": "https://www.tiktok.com/@sippin.espresso/video/7456902220605443359"
+  },
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Counter Culture Big Trouble or Joe Coffee The Daily",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, melted",
+          "item_id": "cometeer_capsule",
+          "notes": "For less caffeine, use Half Caff (~90 mg) or Decaf capsules; same flavor.",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "brown sugar",
+          "item_id": "brown_sugar",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "honey",
+          "item_id": "honey",
+          "group": "Latte Base"
+        },
+        {
+          "item": "cinnamon",
+          "optional": true,
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "oat milk",
+          "item_id": "oat_milk",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Extraction",
+        "In your serving glass, combine 1 tbsp brown sugar, 1 tbsp honey, and cinnamon.",
+        "Melt the Cometeer capsule (about 5 minutes submerged in hot water, or overnight in the fridge). Pour it directly over the syrups and spices; stir or whisk with a handheld frother until completely dissolved.",
+        "## Phase 2: Ice & Milk Pour",
+        "Fill the glass with plenty of ice cubes.",
+        "Pour 6 oz oat milk over the ice; stir gently to combine and watch the layers swirl."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 4,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "nespresso_system": "vertuo",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Nespresso Double Espresso Chiaro (Vertuo 80ml)",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 80,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Double Espresso pod",
+          "item_id": "nespresso_double_pod",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "brown sugar",
+          "item_id": "brown_sugar",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "honey",
+          "item_id": "honey",
+          "group": "Latte Base"
+        },
+        {
+          "item": "cinnamon",
+          "optional": true,
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "oat milk",
+          "item_id": "oat_milk",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Extraction",
+        "In your serving glass, combine 1 tbsp brown sugar, 1 tbsp honey, and cinnamon.",
+        "Brew 1 Double Espresso pod directly into the glass over the syrups and spices. Stir or whisk with a handheld frother for 10 seconds until completely dissolved.",
+        "## Phase 2: Ice & Milk Pour",
+        "Fill the glass with plenty of ice cubes.",
+        "Pour 6 oz oat milk over the ice; stir gently to combine and watch the layers swirl."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 4,
+      "provenance": "original"
+    },
+    {
+      "channel": "instant",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Nescafé Gold Espresso or Mount Hagen Organic",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "secondary_amount": 60,
+          "secondary_unit": "ml hot bloom water",
+          "item": "Instant espresso crystals (e.g. Medaglia d'Oro)",
+          "item_id": "instant_coffee",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "brown sugar",
+          "item_id": "brown_sugar",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "honey",
+          "item_id": "honey",
+          "group": "Latte Base"
+        },
+        {
+          "item": "cinnamon",
+          "optional": true,
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "oat milk",
+          "item_id": "oat_milk",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Extraction",
+        "In your serving glass, combine 1 tbsp brown sugar, 1 tbsp honey, and cinnamon.",
+        "Dissolve 2 tsp instant espresso in 2 oz (60 ml) hot water directly over the syrups and spices; stir until completely dissolved.",
+        "## Phase 2: Ice & Milk Pour",
+        "Fill the glass with plenty of ice cubes.",
+        "Pour 6 oz oat milk over the ice; stir gently to combine and watch the layers swirl."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 4,
+      "provenance": "adapted"
+    }
+  ]
+}
