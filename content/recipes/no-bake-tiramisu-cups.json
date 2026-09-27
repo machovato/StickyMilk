@@ -53,6 +53,7 @@
         {
           "amount": 10,
           "item": "ladyfingers or graham crackers",
+          "item_id": "ladyfingers",
           "notes": "8–12"
         },
         {
@@ -64,7 +65,8 @@
         {
           "amount": 4,
           "unit": "oz",
-          "item": "mascarpone or cream cheese, softened"
+          "item": "mascarpone or cream cheese, softened",
+          "item_id": "mascarpone"
         },
         {
           "amount": 2,
@@ -114,7 +116,8 @@
         {
           "amount": 6,
           "unit": "piece",
-          "item": "ladyfinger cookies"
+          "item": "ladyfinger cookies",
+          "item_id": "ladyfingers"
         },
         {
           "amount": 4,
@@ -131,7 +134,8 @@
         {
           "amount": 2,
           "unit": "tbsp",
-          "item": "powdered sugar"
+          "item": "powdered sugar",
+          "item_id": "powdered_sugar"
         },
         {
           "amount": 1,
@@ -171,7 +175,8 @@
         {
           "amount": 6,
           "unit": "piece",
-          "item": "ladyfinger cookies"
+          "item": "ladyfinger cookies",
+          "item_id": "ladyfingers"
         },
         {
           "amount": 4,
@@ -188,7 +193,8 @@
         {
           "amount": 2,
           "unit": "tbsp",
-          "item": "powdered sugar"
+          "item": "powdered sugar",
+          "item_id": "powdered_sugar"
         },
         {
           "amount": 1,

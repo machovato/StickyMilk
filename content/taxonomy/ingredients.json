@@ -8,7 +8,19 @@
       "Cometeer Decaf Black Cat Espresso capsule, melted",
       "Cometeer Decaf Black Cat Espresso, melted"
     ],
-    "default_unit": "capsule"
+    "default_unit": "capsule",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "capsule"
+      },
+      "calories": 5,
+      "sugar_g": 0,
+      "fat_g": 0,
+      "protein_g": 0.5,
+      "caffeine_mg": 4,
+      "source": "label"
+    }
   },
   {
     "id": "cometeer_capsule",
@@ -22,9 +34,22 @@
       "Cometeer capsule, melted",
       "Cometeer capsule, melted and chilled",
       "Cometeer capsules, still frozen (Half Caff)",
-      "frozen Cometeer capsule"
+      "frozen Cometeer capsule",
+      "Cometeer"
     ],
-    "default_unit": "capsule"
+    "default_unit": "capsule",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "capsule"
+      },
+      "calories": 5,
+      "sugar_g": 0,
+      "fat_g": 0,
+      "protein_g": 0.5,
+      "caffeine_mg": 180,
+      "source": "label"
+    }
   },
   {
     "id": "instant_coffee",
@@ -34,7 +59,19 @@
     "aliases": [
       "instant coffee"
     ],
-    "default_unit": "tsp"
+    "default_unit": "tsp",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tsp"
+      },
+      "calories": 4,
+      "sugar_g": 0,
+      "fat_g": 0,
+      "protein_g": 0.3,
+      "caffeine_mg": 40,
+      "source": "label"
+    }
   },
   {
     "id": "nespresso_pod",
@@ -45,7 +82,19 @@
       "Nespresso Original espresso",
       "Nespresso Original pod, brewed as a normal shot"
     ],
-    "default_unit": "pod"
+    "default_unit": "pod",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "pod"
+      },
+      "calories": 2,
+      "sugar_g": 0,
+      "fat_g": 0,
+      "protein_g": 0.2,
+      "caffeine_mg": 65,
+      "source": "label"
+    }
   },
   {
     "id": "nespresso_double_pod",
@@ -58,7 +107,19 @@
       "Nespresso Vertuo Double Espresso pod (Chiaro or Scuro)",
       "Nespresso Vertuo Double Espresso pod"
     ],
-    "default_unit": "pod"
+    "default_unit": "pod",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "pod"
+      },
+      "calories": 4,
+      "sugar_g": 0,
+      "fat_g": 0,
+      "protein_g": 0.4,
+      "caffeine_mg": 150,
+      "source": "label"
+    }
   },
   {
     "id": "butter",
@@ -70,7 +131,19 @@
     "aliases": [
       "butter, melted"
     ],
-    "default_unit": "tbsp"
+    "default_unit": "tbsp",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tbsp"
+      },
+      "calories": 102,
+      "sugar_g": 0,
+      "fat_g": 11.5,
+      "protein_g": 0.1,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "half_and_half",
@@ -82,7 +155,19 @@
     "aliases": [
       "half-and-half"
     ],
-    "default_unit": "oz"
+    "default_unit": "oz",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "oz"
+      },
+      "calories": 40,
+      "sugar_g": 1.3,
+      "fat_g": 3.5,
+      "protein_g": 0.9,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "heavy_cream",
@@ -94,7 +179,19 @@
     "aliases": [
       "heavy cream"
     ],
-    "default_unit": "cup"
+    "default_unit": "cup",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tbsp"
+      },
+      "calories": 50,
+      "sugar_g": 0.4,
+      "fat_g": 5.4,
+      "protein_g": 0.4,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "mascarpone",
@@ -106,7 +203,19 @@
     "aliases": [
       "mascarpone"
     ],
-    "default_unit": "oz"
+    "default_unit": "oz",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "oz"
+      },
+      "calories": 120,
+      "sugar_g": 1,
+      "fat_g": 12,
+      "protein_g": 2,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "milk",
@@ -121,7 +230,19 @@
       "whole milk",
       "cold whole milk"
     ],
-    "default_unit": "oz"
+    "default_unit": "oz",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "oz"
+      },
+      "calories": 18.5,
+      "sugar_g": 1.5,
+      "fat_g": 1,
+      "protein_g": 1,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "sweetened_condensed_milk",
@@ -133,7 +254,19 @@
     "aliases": [
       "sweetened condensed milk"
     ],
-    "default_unit": "tbsp"
+    "default_unit": "tbsp",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tbsp"
+      },
+      "calories": 65,
+      "sugar_g": 11,
+      "fat_g": 1.7,
+      "protein_g": 1.5,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "vanilla_ice_cream",
@@ -145,7 +278,19 @@
     "aliases": [
       "vanilla ice cream"
     ],
-    "default_unit": "scoop"
+    "default_unit": "scoop",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "scoop"
+      },
+      "calories": 140,
+      "sugar_g": 16,
+      "fat_g": 7,
+      "protein_g": 2.5,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "oat_milk",
@@ -155,7 +300,19 @@
     "aliases": [
       "oat milk"
     ],
-    "default_unit": "oz"
+    "default_unit": "oz",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "oz"
+      },
+      "calories": 16,
+      "sugar_g": 0.9,
+      "fat_g": 0.6,
+      "protein_g": 0.4,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "brown_sugar",
@@ -165,7 +322,19 @@
     "aliases": [
       "brown sugar"
     ],
-    "default_unit": "cup"
+    "default_unit": "cup",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tbsp"
+      },
+      "calories": 48,
+      "sugar_g": 12,
+      "fat_g": 0,
+      "protein_g": 0,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "maple_syrup",
@@ -175,7 +344,68 @@
     "aliases": [
       "maple syrup"
     ],
-    "default_unit": "tbsp"
+    "default_unit": "tbsp",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tbsp"
+      },
+      "calories": 52,
+      "sugar_g": 13.5,
+      "fat_g": 0,
+      "protein_g": 0,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
+  },
+  {
+    "id": "honey",
+    "name": "Honey",
+    "category": "sweetener",
+    "allergens": [],
+    "aliases": [
+      "honey",
+      "raw honey",
+      "clover honey",
+      "wildflower honey"
+    ],
+    "default_unit": "tbsp",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tbsp"
+      },
+      "calories": 64,
+      "sugar_g": 17.2,
+      "fat_g": 0,
+      "protein_g": 0.1,
+      "caffeine_mg": 0,
+      "source": "approx"
+    }
+  },
+  {
+    "id": "agave",
+    "name": "Agave syrup",
+    "category": "sweetener",
+    "allergens": [],
+    "aliases": [
+      "agave",
+      "agave nectar",
+      "agave syrup"
+    ],
+    "default_unit": "tbsp",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tbsp"
+      },
+      "calories": 65,
+      "sugar_g": 14.3,
+      "fat_g": 0.1,
+      "protein_g": 0,
+      "caffeine_mg": 0,
+      "source": "approx"
+    }
   },
   {
     "id": "powdered_sugar",
@@ -185,7 +415,19 @@
     "aliases": [
       "powdered sugar"
     ],
-    "default_unit": "tbsp"
+    "default_unit": "tbsp",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tbsp"
+      },
+      "calories": 30,
+      "sugar_g": 7.5,
+      "fat_g": 0,
+      "protein_g": 0,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "simple_syrup",
@@ -195,7 +437,19 @@
     "aliases": [
       "simple syrup"
     ],
-    "default_unit": "oz"
+    "default_unit": "oz",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tsp"
+      },
+      "calories": 17,
+      "sugar_g": 4.3,
+      "fat_g": 0,
+      "protein_g": 0,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "sugar",
@@ -205,7 +459,19 @@
     "aliases": [
       "sugar"
     ],
-    "default_unit": "tbsp"
+    "default_unit": "tbsp",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tbsp"
+      },
+      "calories": 48,
+      "sugar_g": 12,
+      "fat_g": 0,
+      "protein_g": 0,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "chocolate_chips",
@@ -215,7 +481,19 @@
     "aliases": [
       "chocolate chips"
     ],
-    "default_unit": "cup"
+    "default_unit": "cup",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tbsp"
+      },
+      "calories": 70,
+      "sugar_g": 8,
+      "fat_g": 4,
+      "protein_g": 0.8,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "chocolate_syrup",
@@ -225,7 +503,19 @@
     "aliases": [
       "chocolate syrup"
     ],
-    "default_unit": "tbsp"
+    "default_unit": "tbsp",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tsp"
+      },
+      "calories": 20,
+      "sugar_g": 4.5,
+      "fat_g": 0.3,
+      "protein_g": 0.2,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "cocoa_powder",
@@ -236,7 +526,19 @@
       "Unsweetened cocoa powder",
       "cocoa powder"
     ],
-    "default_unit": "tbsp"
+    "default_unit": "tbsp",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tbsp"
+      },
+      "calories": 12,
+      "sugar_g": 0.1,
+      "fat_g": 0.7,
+      "protein_g": 1.1,
+      "caffeine_mg": 12,
+      "source": "approx"
+    }
   },
   {
     "id": "vanilla",
@@ -246,7 +548,19 @@
     "aliases": [
       "vanilla"
     ],
-    "default_unit": "tsp"
+    "default_unit": "tsp",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tsp"
+      },
+      "calories": 12,
+      "sugar_g": 0.5,
+      "fat_g": 0,
+      "protein_g": 0,
+      "caffeine_mg": 0,
+      "source": "approx"
+    }
   },
   {
     "id": "vanilla_extract",
@@ -256,7 +570,19 @@
     "aliases": [
       "vanilla extract"
     ],
-    "default_unit": "tsp"
+    "default_unit": "tsp",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tsp"
+      },
+      "calories": 12,
+      "sugar_g": 0.5,
+      "fat_g": 0,
+      "protein_g": 0,
+      "caffeine_mg": 0,
+      "source": "approx"
+    }
   },
   {
     "id": "vanilla_syrup",
@@ -266,7 +592,19 @@
     "aliases": [
       "vanilla syrup"
     ],
-    "default_unit": "tbsp"
+    "default_unit": "tbsp",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tsp"
+      },
+      "calories": 17,
+      "sugar_g": 4.3,
+      "fat_g": 0,
+      "protein_g": 0,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "coffee_liqueur",
@@ -276,7 +614,19 @@
     "aliases": [
       "coffee liqueur"
     ],
-    "default_unit": "oz"
+    "default_unit": "oz",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "oz"
+      },
+      "calories": 113,
+      "sugar_g": 16.3,
+      "fat_g": 0.1,
+      "protein_g": 0,
+      "caffeine_mg": 3,
+      "source": "approx"
+    }
   },
   {
     "id": "vodka",
@@ -286,7 +636,19 @@
     "aliases": [
       "vodka"
     ],
-    "default_unit": "oz"
+    "default_unit": "oz",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "oz"
+      },
+      "calories": 64,
+      "sugar_g": 0,
+      "fat_g": 0,
+      "protein_g": 0,
+      "caffeine_mg": 0,
+      "source": "approx"
+    }
   },
   {
     "id": "grapefruit_juice",
@@ -296,28 +658,46 @@
     "aliases": [
       "grapefruit juice"
     ],
-    "default_unit": "oz"
+    "default_unit": "oz",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "oz"
+      },
+      "calories": 12,
+      "sugar_g": 2.3,
+      "fat_g": 0,
+      "protein_g": 0.2,
+      "caffeine_mg": 0,
+      "source": "approx"
+    }
   },
   {
     "id": "grapefruit_wedge",
     "name": "Grapefruit wedge",
     "category": "produce",
     "allergens": [],
-    "aliases": []
+    "aliases": [],
+    "nutrition": null,
+    "nutrition_note": "garnish; negligible"
   },
   {
     "id": "lemon_peel",
     "name": "Lemon peel",
     "category": "produce",
     "allergens": [],
-    "aliases": []
+    "aliases": [],
+    "nutrition": null,
+    "nutrition_note": "garnish; negligible"
   },
   {
     "id": "lime_wedge",
     "name": "Lime wedge",
     "category": "produce",
     "allergens": [],
-    "aliases": []
+    "aliases": [],
+    "nutrition": null,
+    "nutrition_note": "garnish; negligible"
   },
   {
     "id": "all_purpose_flour",
@@ -327,9 +707,22 @@
       "gluten"
     ],
     "aliases": [
-      "all-purpose flour"
+      "all-purpose flour",
+      "flour"
     ],
-    "default_unit": "cup"
+    "default_unit": "cup",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "cup"
+      },
+      "calories": 455,
+      "sugar_g": 0.3,
+      "fat_g": 1.2,
+      "protein_g": 12.9,
+      "caffeine_mg": 0,
+      "source": "approx"
+    }
   },
   {
     "id": "baking_soda",
@@ -339,7 +732,9 @@
     "aliases": [
       "baking soda"
     ],
-    "default_unit": "tsp"
+    "default_unit": "tsp",
+    "nutrition": null,
+    "nutrition_note": "no calories"
   },
   {
     "id": "egg_yolk",
@@ -350,7 +745,19 @@
     ],
     "aliases": [
       "egg yolk"
-    ]
+    ],
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "yolk"
+      },
+      "calories": 55,
+      "sugar_g": 0.1,
+      "fat_g": 4.5,
+      "protein_g": 2.7,
+      "caffeine_mg": 0,
+      "source": "approx"
+    }
   },
   {
     "id": "ladyfingers",
@@ -361,8 +768,22 @@
       "egg"
     ],
     "aliases": [
-      "small ladyfingers"
-    ]
+      "small ladyfingers",
+      "ladyfinger cookies",
+      "ladyfingers"
+    ],
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "cookie"
+      },
+      "calories": 40,
+      "sugar_g": 3.3,
+      "fat_g": 1,
+      "protein_g": 1,
+      "caffeine_mg": 0,
+      "source": "approx"
+    }
   },
   {
     "id": "flaky_salt",
@@ -370,22 +791,29 @@
     "category": "pantry",
     "allergens": [],
     "aliases": [
-      "Pinch of flaky salt"
-    ]
+      "Pinch of flaky salt",
+      "flaky sea salt",
+      "maldon salt",
+      "flaky salt"
+    ],
+    "nutrition": null,
+    "nutrition_note": "no calories (sodium isn't tracked)"
   },
   {
-    "id": "pinch_of_cinnamon",
-    "name": "Pinch of cinnamon",
+    "id": "salt",
+    "name": "Salt",
     "category": "pantry",
     "allergens": [],
-    "aliases": []
-  },
-  {
-    "id": "pinch_of_salt",
-    "name": "Pinch of salt",
-    "category": "pantry",
-    "allergens": [],
-    "aliases": []
+    "aliases": [
+      "salt",
+      "table salt",
+      "sea salt",
+      "kosher salt",
+      "fine salt"
+    ],
+    "default_unit": "pinch",
+    "nutrition": null,
+    "nutrition_note": "no calories (sodium isn't tracked)"
   },
   {
     "id": "boiling_water",
@@ -395,7 +823,9 @@
     "aliases": [
       "boiling water"
     ],
-    "default_unit": "g"
+    "default_unit": "g",
+    "nutrition": null,
+    "nutrition_note": "no calories"
   },
   {
     "id": "tonic_water",
@@ -405,7 +835,19 @@
     "aliases": [
       "chilled tonic water"
     ],
-    "default_unit": "oz"
+    "default_unit": "oz",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "oz"
+      },
+      "calories": 10,
+      "sugar_g": 2.7,
+      "fat_g": 0,
+      "protein_g": 0,
+      "caffeine_mg": 0,
+      "source": "approx"
+    }
   },
   {
     "id": "hot_water",
@@ -415,7 +857,9 @@
     "aliases": [
       "hot water"
     ],
-    "default_unit": "oz"
+    "default_unit": "oz",
+    "nutrition": null,
+    "nutrition_note": "no calories"
   },
   {
     "id": "just_off_boil_water",
@@ -425,7 +869,9 @@
     "aliases": [
       "just-off-boil water"
     ],
-    "default_unit": "oz"
+    "default_unit": "oz",
+    "nutrition": null,
+    "nutrition_note": "no calories"
   },
   {
     "id": "sparkling_water",
@@ -433,9 +879,13 @@
     "category": "water",
     "allergens": [],
     "aliases": [
-      "sparkling water"
+      "sparkling water",
+      "club soda",
+      "soda water"
     ],
-    "default_unit": "oz"
+    "default_unit": "oz",
+    "nutrition": null,
+    "nutrition_note": "no calories"
   },
   {
     "id": "water",
@@ -445,14 +895,28 @@
     "aliases": [
       "water"
     ],
-    "default_unit": "oz"
+    "default_unit": "oz",
+    "nutrition": null,
+    "nutrition_note": "no calories"
   },
   {
     "id": "shaved_dark_chocolate",
     "name": "Shaved dark chocolate",
     "category": "topping",
     "allergens": [],
-    "aliases": []
+    "aliases": [],
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tbsp"
+      },
+      "calories": 30,
+      "sugar_g": 1.2,
+      "fat_g": 2.1,
+      "protein_g": 0.4,
+      "caffeine_mg": 4,
+      "source": "approx"
+    }
   },
   {
     "id": "ice",
@@ -461,7 +925,9 @@
     "allergens": [],
     "aliases": [
       "ice"
-    ]
+    ],
+    "nutrition": null,
+    "nutrition_note": "no calories"
   },
   {
     "id": "salted_caramel_syrup",
@@ -472,7 +938,19 @@
       "caramel syrup",
       "salted caramel syrup"
     ],
-    "default_unit": "tsp"
+    "default_unit": "tsp",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tsp"
+      },
+      "calories": 17,
+      "sugar_g": 4.3,
+      "fat_g": 0,
+      "protein_g": 0,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "caramel_sauce",
@@ -485,7 +963,19 @@
       "caramel drizzle",
       "caramel sauce"
     ],
-    "default_unit": "tsp"
+    "default_unit": "tsp",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tsp"
+      },
+      "calories": 20,
+      "sugar_g": 4.5,
+      "fat_g": 0.3,
+      "protein_g": 0.2,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "cookie_butter",
@@ -501,7 +991,19 @@
       "cookie butter",
       "Lotus Biscoff cookie butter"
     ],
-    "default_unit": "tbsp"
+    "default_unit": "tbsp",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tbsp"
+      },
+      "calories": 88,
+      "sugar_g": 5.5,
+      "fat_g": 5.9,
+      "protein_g": 0.6,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "biscoff_cookie",
@@ -516,7 +1018,19 @@
       "Biscoff cookie",
       "Lotus Biscoff cookie"
     ],
-    "default_unit": "cookie"
+    "default_unit": "cookie",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "cookie"
+      },
+      "calories": 38,
+      "sugar_g": 2.7,
+      "fat_g": 1.5,
+      "protein_g": 0.4,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   },
   {
     "id": "ground_cinnamon",
@@ -528,7 +1042,19 @@
       "cinnamon",
       "cinnamon dust"
     ],
-    "default_unit": "pinch"
+    "default_unit": "pinch",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "tsp"
+      },
+      "calories": 6,
+      "sugar_g": 0.1,
+      "fat_g": 0,
+      "protein_g": 0.1,
+      "caffeine_mg": 0,
+      "source": "approx"
+    }
   },
   {
     "id": "vanilla_protein_shake",
@@ -545,6 +1071,18 @@
       "RTD protein shake",
       "vanilla RTD protein shake"
     ],
-    "default_unit": "oz"
+    "default_unit": "oz",
+    "nutrition": {
+      "per": {
+        "amount": 1,
+        "unit": "oz"
+      },
+      "calories": 12.5,
+      "sugar_g": 0.2,
+      "fat_g": 0.25,
+      "protein_g": 2.3,
+      "caffeine_mg": 0,
+      "source": "label"
+    }
   }
 ]

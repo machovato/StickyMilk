@@ -72,8 +72,10 @@
           "item_id": "baking_soda"
         },
         {
-          "item": "Pinch of salt",
-          "item_id": "pinch_of_salt"
+          "amount": 1,
+          "unit": "pinch",
+          "item": "salt",
+          "item_id": "salt"
         },
         {
           "amount": 0.333,
@@ -120,7 +122,8 @@
         {
           "amount": 0.5,
           "unit": "cup",
-          "item": "brown sugar"
+          "item": "brown sugar",
+          "item_id": "brown_sugar"
         },
         {
           "amount": 1,
@@ -130,12 +133,14 @@
         {
           "amount": 1,
           "unit": "cup",
-          "item": "flour"
+          "item": "flour",
+          "item_id": "all_purpose_flour"
         },
         {
           "amount": 0.5,
           "unit": "cup",
-          "item": "chocolate chips"
+          "item": "chocolate chips",
+          "item_id": "chocolate_chips"
         }
       ],
       "steps": [
@@ -170,7 +175,8 @@
         {
           "amount": 0.5,
           "unit": "cup",
-          "item": "brown sugar"
+          "item": "brown sugar",
+          "item_id": "brown_sugar"
         },
         {
           "amount": 1,
@@ -180,12 +186,14 @@
         {
           "amount": 1,
           "unit": "cup",
-          "item": "flour"
+          "item": "flour",
+          "item_id": "all_purpose_flour"
         },
         {
           "amount": 0.5,
           "unit": "cup",
-          "item": "chocolate chips"
+          "item": "chocolate chips",
+          "item_id": "chocolate_chips"
         }
       ],
       "steps": [

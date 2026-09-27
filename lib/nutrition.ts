@@ -1,4 +1,38 @@
 import type { Preparation } from "./types";
+// Nutrition lives with the ingredient taxonomy (one source of truth). Imported
+// statically so this calculator also runs in client components
+// (NutritionBreakdown); lib/taxonomy.ts reads the same file on the server.
+import taxonomyData from "../content/taxonomy/ingredients.json";
+
+/**
+ * Macros for one taxonomy ingredient, per `per.amount` `per.unit`.
+ * `source`: "usda" (checked against USDA FoodData Central), "label" (package
+ * label), "stickymilk" (measured in our test kitchen), or "approx"
+ * (reference-level estimate, not yet checked against USDA or a label).
+ */
+export interface IngredientNutrition {
+  per: { amount: number; unit: string };
+  calories: number;
+  sugar_g: number;
+  fat_g: number;
+  protein_g: number;
+  caffeine_mg: number;
+  source: "usda" | "label" | "stickymilk" | "approx";
+}
+
+export interface ExcludedIngredient {
+  item: string;
+  reason: "not in taxonomy" | "no amount" | "unit not convertible";
+}
+
+export interface NutritionCoverage {
+  /** Ingredients that count toward the totals (including ones that are
+   *  intentionally zero, like water and ice) */
+  counted: number;
+  total: number;
+  /** Ingredients left out of the totals, and why. Non-empty means the totals are a floor. */
+  excluded: ExcludedIngredient[];
+}
 
 export interface NutritionBreakdown {
   calories: number;
@@ -6,274 +40,133 @@ export interface NutritionBreakdown {
   fat_g: number;
   protein_g: number;
   caffeine_mg: number;
+  coverage: NutritionCoverage;
 }
 
-interface MacroItem {
-  baseUnit: "tbsp" | "tsp" | "oz" | "cup" | "scoop" | "capsule" | "pod" | "cookie" | "pinch";
-  calories: number;
-  sugar_g: number;
-  fat_g: number;
-  protein_g: number;
-  caffeine_mg?: number;
-}
+type TaxonomyNutritionRow = { id: string; nutrition?: IngredientNutrition | null };
 
-/**
- * Practical nutritional estimates based on standard ingredient package labels
- * (whole milk, sweetened condensed milk, and coffee formats).
- */
-const INGREDIENT_BENCHMARKS: Record<string, MacroItem> = {
-  sweetened_condensed_milk: {
-    baseUnit: "tbsp",
-    calories: 65,
-    sugar_g: 11,
-    fat_g: 1.7,
-    protein_g: 1.5,
-  },
-  milk: {
-    baseUnit: "oz",
-    calories: 18.5,
-    sugar_g: 1.5,
-    fat_g: 1.0,
-    protein_g: 1.0,
-  },
-  oat_milk: {
-    baseUnit: "oz",
-    calories: 16,
-    sugar_g: 0.9,
-    fat_g: 0.6,
-    protein_g: 0.4,
-  },
-  half_and_half: {
-    baseUnit: "oz",
-    calories: 40,
-    sugar_g: 1.3,
-    fat_g: 3.5,
-    protein_g: 0.9,
-  },
-  heavy_cream: {
-    baseUnit: "tbsp",
-    calories: 50,
-    sugar_g: 0.4,
-    fat_g: 5.4,
-    protein_g: 0.4,
-  },
-  butter: {
-    baseUnit: "tbsp",
-    calories: 102,
-    sugar_g: 0,
-    fat_g: 11.5,
-    protein_g: 0.1,
-  },
-  mascarpone: {
-    baseUnit: "oz",
-    calories: 120,
-    sugar_g: 1.0,
-    fat_g: 12.0,
-    protein_g: 2.0,
-  },
-  vanilla_ice_cream: {
-    baseUnit: "scoop",
-    calories: 140,
-    sugar_g: 16,
-    fat_g: 7.0,
-    protein_g: 2.5,
-  },
-  salted_caramel_syrup: {
-    baseUnit: "tsp",
-    calories: 17,
-    sugar_g: 4.3,
-    fat_g: 0,
-    protein_g: 0,
-  },
-  vanilla_syrup: {
-    baseUnit: "tsp",
-    calories: 17,
-    sugar_g: 4.3,
-    fat_g: 0,
-    protein_g: 0,
-  },
-  simple_syrup: {
-    baseUnit: "tsp",
-    calories: 17,
-    sugar_g: 4.3,
-    fat_g: 0,
-    protein_g: 0,
-  },
-  caramel_sauce: {
-    baseUnit: "tsp",
-    calories: 20,
-    sugar_g: 4.5,
-    fat_g: 0.3,
-    protein_g: 0.2,
-  },
-  chocolate_syrup: {
-    baseUnit: "tsp",
-    calories: 20,
-    sugar_g: 4.5,
-    fat_g: 0.3,
-    protein_g: 0.2,
-  },
-  maple_syrup: {
-    baseUnit: "tbsp",
-    calories: 52,
-    sugar_g: 13.5,
-    fat_g: 0,
-    protein_g: 0,
-  },
-  brown_sugar: {
-    baseUnit: "tbsp",
-    calories: 48,
-    sugar_g: 12,
-    fat_g: 0,
-    protein_g: 0,
-  },
-  sugar: {
-    baseUnit: "tbsp",
-    calories: 48,
-    sugar_g: 12,
-    fat_g: 0,
-    protein_g: 0,
-  },
-  powdered_sugar: {
-    baseUnit: "tbsp",
-    calories: 30,
-    sugar_g: 7.5,
-    fat_g: 0,
-    protein_g: 0,
-  },
-  chocolate_chips: {
-    baseUnit: "tbsp",
-    calories: 70,
-    sugar_g: 8,
-    fat_g: 4,
-    protein_g: 0.8,
-  },
-  cometeer_capsule: {
-    baseUnit: "capsule",
-    calories: 5,
-    sugar_g: 0,
-    fat_g: 0,
-    protein_g: 0.5,
-    caffeine_mg: 180,
-  },
-  cometeer_decaf_capsule: {
-    baseUnit: "capsule",
-    calories: 5,
-    sugar_g: 0,
-    fat_g: 0,
-    protein_g: 0.5,
-    caffeine_mg: 4,
-  },
-  nespresso_pod: {
-    baseUnit: "pod",
-    calories: 2,
-    sugar_g: 0,
-    fat_g: 0,
-    protein_g: 0.2,
-    caffeine_mg: 65,
-  },
-  nespresso_double_pod: {
-    baseUnit: "pod",
-    calories: 4,
-    sugar_g: 0,
-    fat_g: 0,
-    protein_g: 0.4,
-    caffeine_mg: 150,
-  },
-  instant_coffee: {
-    baseUnit: "tsp",
-    calories: 4,
-    sugar_g: 0,
-    fat_g: 0,
-    protein_g: 0.3,
-    caffeine_mg: 40,
-  },
-  cookie_butter: {
-    baseUnit: "tbsp",
-    calories: 88,
-    sugar_g: 5.5,
-    fat_g: 5.9,
-    protein_g: 0.6,
-  },
-  biscoff_cookie: {
-    baseUnit: "cookie",
-    calories: 38,
-    sugar_g: 2.7,
-    fat_g: 1.5,
-    protein_g: 0.4,
-  },
-  ground_cinnamon: {
-    baseUnit: "pinch",
-    calories: 2,
-    sugar_g: 0.1,
-    fat_g: 0.02,
-    protein_g: 0.05,
-  },
-  vanilla_protein_shake: {
-    baseUnit: "oz",
-    calories: 12.5,
-    sugar_g: 0.2,
-    fat_g: 0.25,
-    protein_g: 2.3,
-  },
+/** item_id -> nutrition, or null for ingredients that are intentionally zero (water, ice). */
+const NUTRITION = new Map<string, IngredientNutrition | null>(
+  (taxonomyData as TaxonomyNutritionRow[]).map((e) => [e.id, e.nutrition ?? null])
+);
+
+// ---------------------------------------------------------------------------
+// Units
+
+/** Spelled-out and plural units recipes actually use -> the canonical unit. */
+const UNIT_ALIASES: Record<string, string> = {
+  teaspoon: "tsp", teaspoons: "tsp", tsps: "tsp",
+  tablespoon: "tbsp", tablespoons: "tbsp", tbsps: "tbsp", tbs: "tbsp",
+  ounce: "oz", ounces: "oz", "fl oz": "oz", "fl. oz": "oz", "fluid ounce": "oz", "fluid ounces": "oz",
+  cups: "cup",
+  milliliter: "ml", milliliters: "ml", millilitre: "ml", millilitres: "ml",
+  gram: "g", grams: "g",
+  pinches: "pinch",
+  dashes: "dash",
+  capsules: "capsule",
+  pods: "pod",
+  cookies: "cookie",
+  scoops: "scoop",
+  yolks: "yolk",
 };
 
-/** Normalizes ingredient units to the benchmark's base unit. */
-function getUnitMultiplier(fromUnit: string | undefined, toUnit: string): number {
-  if (!fromUnit || fromUnit === toUnit) return 1;
+/** Generic count words: "16 piece ladyfingers" means 16 of the item's own count unit. */
+const GENERIC_COUNT = new Set(["piece", "pieces", "each", "whole", "count"]);
 
-  const from = fromUnit.toLowerCase().trim();
-  const to = toUnit.toLowerCase().trim();
+/** Volume units in fluid ounces. A dash is 1/8 tsp; a pinch is 1/16 tsp. */
+const VOLUME_IN_OZ: Record<string, number> = {
+  oz: 1,
+  tbsp: 1 / 2,
+  tsp: 1 / 6,
+  cup: 8,
+  ml: 1 / 29.5735,
+  dash: 1 / 48,
+  pinch: 1 / 96,
+};
 
-  // Volume conversions in fluid ounces
-  const ozFactors: Record<string, number> = {
-    oz: 1,
-    tbsp: 0.5,
-    tsp: 1 / 6,
-    cup: 8,
-    ml: 1 / 29.5735,
-    pinch: 1 / 48,
-  };
-
-  if (ozFactors[from] !== undefined && ozFactors[to] !== undefined) {
-    return ozFactors[from] / ozFactors[to];
-  }
-
-  // Count/discrete fallback
-  return 1;
+/** Canonical form of a unit: lowercase, and "teaspoons" -> "tsp" etc. */
+export function normalizeUnit(unit: string | undefined): string | undefined {
+  if (!unit) return undefined;
+  const u = unit.toLowerCase().trim().replace(/\s+/g, " ");
+  return UNIT_ALIASES[u] ?? u;
 }
 
 /**
- * Estimates macros and caffeine for a preparation.
- * Scales dynamically with the portion multiplier (1x, 2x, 4x).
+ * How many `toUnit`s are in `amount` `fromUnit`s, or null when the units
+ * can't be converted. Never guesses: an unknown conversion returns null so
+ * the ingredient is reported as excluded instead of silently counted 1:1.
+ * Grams only convert to grams — spoons to grams needs a per-ingredient
+ * density, so a gram amount counts only when that ingredient's nutrition is
+ * itself stated per gram.
  */
-export function calculateNutrition(
-  prep: Preparation,
-  scale = 1
-): NutritionBreakdown {
+export function convertAmount(amount: number, fromUnit: string | undefined, toUnit: string): number | null {
+  const from = normalizeUnit(fromUnit);
+  const to = normalizeUnit(toUnit)!;
+  if (from === to) return amount;
+  // A bare or generic count ("1 egg yolk", "16 piece ladyfingers") means the
+  // nutrition's own count unit (cookie, yolk, capsule), never a volume or weight
+  const toIsCount = VOLUME_IN_OZ[to] === undefined && to !== "g";
+  if (from === undefined || GENERIC_COUNT.has(from)) return toIsCount ? amount : null;
+  if (VOLUME_IN_OZ[from] !== undefined && VOLUME_IN_OZ[to] !== undefined) {
+    return (amount * VOLUME_IN_OZ[from]) / VOLUME_IN_OZ[to];
+  }
+  return null;
+}
+
+/** Units allowed as a nutrition `per.unit` (checked by scripts/test-nutrition.ts). */
+export function isKnownUnit(unit: string): boolean {
+  const u = normalizeUnit(unit)!;
+  return VOLUME_IN_OZ[u] !== undefined || u === "g" || Object.values(UNIT_ALIASES).includes(u);
+}
+
+// ---------------------------------------------------------------------------
+// Calculator
+
+/**
+ * Estimates macros and caffeine for a preparation from the taxonomy's
+ * nutrition data. Ingredients that can't be counted (free text, no amount,
+ * unconvertible unit) are listed in `coverage.excluded` rather than counted
+ * as zero, so the UI can say "≈ 210 cal · excludes 1 item".
+ */
+export function calculateNutrition(prep: Preparation, scale = 1): NutritionBreakdown {
   let calories = 0;
   let sugar = 0;
   let fat = 0;
   let protein = 0;
   let caffeine = 0;
+  let counted = 0;
+  const excluded: ExcludedIngredient[] = [];
 
   for (const ing of prep.ingredients) {
-    if (ing.amount == null || !ing.item_id) continue;
-
-    const benchmark = INGREDIENT_BENCHMARKS[ing.item_id];
-    if (!benchmark) continue;
-
-    const unitRatio = getUnitMultiplier(ing.unit, benchmark.baseUnit);
-    const scaledAmount = ing.amount * scale * unitRatio;
-
-    calories += benchmark.calories * scaledAmount;
-    sugar += benchmark.sugar_g * scaledAmount;
-    fat += benchmark.fat_g * scaledAmount;
-    protein += benchmark.protein_g * scaledAmount;
-
-    if (benchmark.caffeine_mg) {
-      caffeine += benchmark.caffeine_mg * scale * unitRatio;
+    const n = ing.item_id ? NUTRITION.get(ing.item_id) : undefined;
+    if (n === undefined) {
+      excluded.push({ item: ing.item, reason: "not in taxonomy" });
+      continue;
     }
+    if (n === null) {
+      counted++; // intentionally zero (water, ice, salt, garnish wedges)
+      continue;
+    }
+    // "a dash of cinnamon" / "a pinch of salt" with no number means one
+    const amount = ing.amount ?? (/^(dash|pinch)$/.test(normalizeUnit(ing.unit) ?? "") ? 1 : undefined);
+    if (amount === undefined) {
+      excluded.push({ item: ing.item, reason: "no amount" });
+      continue;
+    }
+    const inPerUnits = convertAmount(amount, ing.unit, n.per.unit);
+    if (inPerUnits === null) {
+      excluded.push({ item: ing.item, reason: "unit not convertible" });
+      continue;
+    }
+
+    const portions = (inPerUnits / n.per.amount) * scale;
+    calories += n.calories * portions;
+    sugar += n.sugar_g * portions;
+    fat += n.fat_g * portions;
+    protein += n.protein_g * portions;
+    // Caffeine scales with the amount too: two capsules are twice the caffeine
+    caffeine += n.caffeine_mg * portions;
+    counted++;
   }
 
   // If the recipe has an explicitly benchmarked/tested caffeine_mg, prioritize it
@@ -289,5 +182,6 @@ export function calculateNutrition(
     fat_g: Math.round(fat * 10) / 10,
     protein_g: Math.round(protein * 10) / 10,
     caffeine_mg: Math.round(caffeine),
+    coverage: { counted, total: prep.ingredients.length, excluded },
   };
 }

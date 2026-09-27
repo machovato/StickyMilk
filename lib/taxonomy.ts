@@ -1,6 +1,7 @@
 import "server-only";
 import { readFileSync } from "node:fs";
 import path from "node:path";
+import { isKnownUnit, type IngredientNutrition } from "./nutrition";
 
 const TAXONOMY_PATH = path.join(process.cwd(), "content", "taxonomy", "ingredients.json");
 
@@ -24,6 +25,11 @@ export interface IngredientTaxonomyEntry {
    *  where usage doesn't settle on one (e.g. "ice", sometimes "cup",
    *  sometimes unitless). */
   default_unit?: string;
+  /** Macros per `per.amount` `per.unit`, or null when the ingredient is
+   *  intentionally zero (water, ice) — then `nutrition_note` says why.
+   *  Required: a missing value would silently count as zero. */
+  nutrition: IngredientNutrition | null;
+  nutrition_note?: string;
 }
 
 let cache: IngredientTaxonomyEntry[] | null = null;
@@ -40,6 +46,21 @@ function validateEntry(v: unknown, index: number): asserts v is IngredientTaxono
   if (!Array.isArray(e.allergens) || e.allergens.some((a) => typeof a !== "string")) bad.push("`allergens`");
   if (!Array.isArray(e.aliases) || e.aliases.some((a) => typeof a !== "string")) bad.push("`aliases`");
   if (e.default_unit !== undefined && typeof e.default_unit !== "string") bad.push("`default_unit`");
+  if (e.nutrition === undefined) {
+    bad.push("`nutrition` (required; use null plus `nutrition_note` for zero-calorie items)");
+  } else if (e.nutrition === null) {
+    if (typeof e.nutrition_note !== "string" || !e.nutrition_note.trim()) bad.push("`nutrition_note` (required when nutrition is null)");
+  } else {
+    const n = e.nutrition as Record<string, unknown>;
+    const per = n.per as { amount?: unknown; unit?: unknown } | undefined;
+    if (!per || typeof per.amount !== "number" || per.amount <= 0 || typeof per.unit !== "string" || !isKnownUnit(per.unit)) {
+      bad.push("`nutrition.per` (positive amount and a known unit)");
+    }
+    for (const k of ["calories", "sugar_g", "fat_g", "protein_g", "caffeine_mg"]) {
+      if (typeof n[k] !== "number" || (n[k] as number) < 0) bad.push(`\`nutrition.${k}\``);
+    }
+    if (!["usda", "label", "stickymilk", "approx"].includes(n.source as string)) bad.push("`nutrition.source`");
+  }
   if (bad.length > 0) {
     throw new Error(`content/taxonomy/ingredients.json[${index}] is invalid: ${bad.join(", ")}`);
   }

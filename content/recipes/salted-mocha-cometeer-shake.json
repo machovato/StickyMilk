@@ -95,12 +95,14 @@
         {
           "amount": 0.25,
           "unit": "cup",
-          "item": "whole milk"
+          "item": "whole milk",
+          "item_id": "milk"
         },
         {
           "amount": 1,
           "unit": "pinch",
-          "item": "flaky sea salt"
+          "item": "flaky sea salt",
+          "item_id": "flaky_salt"
         }
       ],
       "steps": [
@@ -141,12 +143,14 @@
         {
           "amount": 0.25,
           "unit": "cup",
-          "item": "whole milk"
+          "item": "whole milk",
+          "item_id": "milk"
         },
         {
           "amount": 1,
           "unit": "pinch",
-          "item": "flaky sea salt"
+          "item": "flaky sea salt",
+          "item_id": "flaky_salt"
         }
       ],
       "steps": [
