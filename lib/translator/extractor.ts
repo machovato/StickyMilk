@@ -208,11 +208,27 @@ const UNIT_MAP: Record<string, string> = {
   bottle: "bottle",
 };
 
+const UNICODE_FRACTIONS: Record<string, string> = {
+  "½": "1/2", "⅓": "1/3", "⅔": "2/3", "¼": "1/4", "¾": "3/4",
+  "⅛": "1/8", "⅜": "3/8", "⅝": "5/8", "⅞": "7/8",
+};
+
+/** "1½ cups" -> "1 1/2 cups", "½ tsp" -> "1/2 tsp" (common in recipe blogs and captions). */
+function normalizeFractions(line: string): string {
+  return line.replace(/(\d)?\s*([½⅓⅔¼¾⅛⅜⅝⅞])/g, (_, whole: string | undefined, frac: string) =>
+    whole ? `${whole} ${UNICODE_FRACTIONS[frac]}` : UNICODE_FRACTIONS[frac]
+  );
+}
+
 export function parseIngredientLine(
   rawLine: string,
   currentGroup?: string
 ): IRRawIngredient | null {
-  let line = rawLine.trim().replace(/^[-*•\d.]+\s*/, "").trim();
+  // Strip list markers ("- ", "• ", "1. ", "2) ") but not a leading quantity:
+  // "3 oz half and half" must keep its 3.
+  let line = normalizeFractions(rawLine.trim())
+    .replace(/^(?:[-*•]+\s*|\d+[.)]\s+)/, "")
+    .trim();
   if (!line || line.startsWith("#")) return null;
 
   const isOptional = /optional|to taste|if desired/i.test(line);
@@ -234,7 +250,7 @@ export function parseIngredientLine(
 
     if (!unit && rawUnit) {
       // If rawUnit isn't a known unit, it's probably part of item
-      item = `${rawUnit} ${item}`;
+      item = `${match[2]} ${item}`;
     }
 
     return {

@@ -104,5 +104,6 @@ export function matchTaxonomy(
 }
 
 function normalize(s: string): string {
-  return s.toLowerCase().replace(/\s+/g, " ").trim();
+  // Hyphens as spaces: "half and half" should find "Half-and-half"
+  return s.toLowerCase().replace(/-/g, " ").replace(/\s+/g, " ").trim();
 }

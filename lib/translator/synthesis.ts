@@ -99,6 +99,10 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
     (ing) => ing.group?.toLowerCase().includes("foam") || /heavy cream/i.test(ing.item)
   );
 
+  const isHot = ir.metadata.temperature === "hot";
+  const vendorChannel: Channel | null =
+    ir.source_type === "nespresso" ? "nespresso" : ir.source_type === "cometeer" ? "cometeer" : null;
+
   // Superpower 3: Kitchen Mise en Place Steps Generator
   function buildStagedSteps(channel: Channel): string[] {
     const steps: string[] = [];
@@ -110,13 +114,33 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
       );
     }
 
-    steps.push(`## Phase ${hasColdFoam ? 2 : 1}: Glass Staging & Ice Base`);
-    steps.push(
-      "Fill your serving glass with ice cubes, then pour in milk and syrups; stir gently to combine."
-    );
+    if (isHot) {
+      steps.push(`## Phase ${hasColdFoam ? 2 : 1}: Mug Staging & Warm Milk`);
+      steps.push(
+        "Warm the milk to about 140°F (60°C) and froth it; stir the syrups into your mug."
+      );
+    } else {
+      steps.push(`## Phase ${hasColdFoam ? 2 : 1}: Glass Staging & Ice Base`);
+      steps.push(
+        "Fill your serving glass with ice cubes, then pour in milk and syrups; stir gently to combine."
+      );
+    }
 
     steps.push(`## Phase ${hasColdFoam ? 3 : 2}: Coffee Extraction & Pour`);
-    if (channel === "cometeer") {
+    if (isHot) {
+      if (channel === "cometeer") {
+        steps.push(
+          "Pour 2–4 oz of just-off-boil water into the mug and empty the frozen Cometeer capsule into it; stir until fully melted."
+        );
+      } else if (channel === "nespresso") {
+        steps.push("Brew the Nespresso pod directly into the mug over the syrups.");
+      } else {
+        steps.push(
+          "Dissolve 1.5–2 tsp instant espresso crystals in 2 oz (60ml) hot water directly in the mug."
+        );
+      }
+      steps.push("Pour the frothed milk over the coffee, holding back the foam, then spoon the foam on top.");
+    } else if (channel === "cometeer") {
       steps.push(
         "Melt the Cometeer capsule completely and chill before pouring (or run under warm water for 2 minutes to liquefy). Pour the chilled coffee extract directly over the iced milk."
       );
@@ -133,7 +157,7 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
     if (hasColdFoam || nonCoffeeIngredients.some((i) => i.group === "Garnish")) {
       steps.push(`## Phase ${hasColdFoam ? 4 : 3}: Crown & Garnish`);
       if (hasColdFoam) {
-        steps.push("Spoon the prepared cold foam from Phase 1 over the top of the iced latte.");
+        steps.push(`Spoon the prepared cold foam from Phase 1 over the top of the ${isHot ? "latte" : "iced latte"}.`);
       }
       const garnish = nonCoffeeIngredients.find((i) => i.group === "Garnish");
       if (garnish) {
@@ -274,6 +298,53 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
     provenance: "adapted",
   };
 
+  // Vendor imports: the vendor's own channel is the original, as published —
+  // their exact capsule, count, and volume, and their method (rewritten in
+  // our words by the vendor extractor). The other two channels stay adapted.
+  if (vendorChannel) {
+    const stated = ir.stated_coffee;
+    const count = stated.capsule_count || 1;
+    const vendorSteps = ir.raw_steps.length > 0 ? ir.raw_steps : undefined;
+
+    if (vendorChannel === "nespresso") {
+      const system = stated.system === "original" ? "original" : "vertuo";
+      const ml = stated.serving_size_ml;
+      nespressoPrep.nespresso_system = system;
+      nespressoPrep.tested_with = stated.raw_name;
+      nespressoPrep.capsule_count = count;
+      nespressoPrep.provenance = "original";
+      nespressoPrep.ingredients = nespressoPrep.ingredients.map((ing) =>
+        ing.group === "Latte Base" && (ing.item_id === "nespresso_pod" || ing.item_id === "nespresso_double_pod")
+          ? {
+              amount: count,
+              unit: "pod",
+              secondary_amount: ml,
+              secondary_unit: ml ? "ml" : undefined,
+              item: `Nespresso ${system === "original" ? "Original" : "Vertuo"} ${stated.raw_name}${/pod|capsule/i.test(stated.raw_name) ? "" : " pod"}`,
+              item_id: ml && ml <= 45 ? "nespresso_pod" : "nespresso_double_pod",
+              group: "Latte Base",
+            }
+          : ing
+      );
+      if (vendorSteps) nespressoPrep.steps = vendorSteps;
+    } else {
+      cometeerPrep.tested_with = stated.raw_name;
+      cometeerPrep.capsule_count = count;
+      cometeerPrep.provenance = "original";
+      cometeerPrep.ingredients = cometeerPrep.ingredients.map((ing) =>
+        ing.item_id === "cometeer_capsule"
+          ? {
+              ...ing,
+              amount: count,
+              secondary_amount: 26 * count,
+              item: `Cometeer ${stated.raw_name}${/capsule/i.test(stated.raw_name) ? "" : " capsule"}`,
+            }
+          : ing
+      );
+      if (vendorSteps) cometeerPrep.steps = vendorSteps;
+    }
+  }
+
   // Recipe Candidate
   const rawCleanSlug = slugify(ir.generated_slug || `${ir.source_creator?.handle || "creator"}-${ir.raw_title}`);
   // Ensure slug matches pattern lowercase letters, numbers, single dashes
@@ -282,23 +353,25 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
   const candidate: Recipe = {
     slug: cleanSlug,
     name: ir.raw_title.replace(/\s+/g, " ").trim(),
-    format: ir.metadata.temperature === "hot" ? "hot" : "iced",
-    flavor_notes: `Rich espresso layered with smooth ${hasColdFoam ? "velvety cold foam" : "cold milk"} and balanced sweetness.`,
+    format: isHot ? "hot" : "iced",
+    flavor_notes: `Rich espresso layered with smooth ${hasColdFoam ? "velvety cold foam" : isHot ? "steamed milk" : "cold milk"} and balanced sweetness.`,
     barista_note: hasColdFoam
       ? "Whip the cold foam first so it forms a stable, airy head before pouring espresso over ice."
+      : isHot
+      ? "Warm the mug first so the milk and coffee stay hot to the last sip."
       : "Pour espresso directly over ice to preserve the temperature boundary and prevent watery dilution.",
     status: "needs_testing",
     tags: [
       ir.metadata.temperature,
       hasColdFoam ? "cold-foam" : "latte",
-      "viral-trend",
+      vendorChannel ? `${vendorChannel}-original` : ir.source_type === "web" ? "web-find" : "viral-trend",
       "quick-fix",
     ],
     sweetness_level: ir.metadata.sweetness_hint || "rich_sweet",
     source: {
-      type: "creator",
+      type: vendorChannel ? "vendor" : "creator",
       name: ir.source_creator?.name || "Coffee Creator",
-      handle: ir.source_creator?.handle,
+      handle: ir.source_creator?.handle || undefined,
       platform: ir.source_creator?.platform,
       url: ir.source_url,
       avatar: ir.source_creator?.avatar,

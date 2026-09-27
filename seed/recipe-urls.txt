@@ -1,0 +1,17 @@
+# Recipe pages to seed the vault: vendor recipes and coffee drinks from any recipe site.
+# Run: npm run import:recipes -- --file seed/recipe-urls.txt --dry-run   (then without --dry-run)
+# See RECIPE_IMPORT.md.
+#
+# One URL per line. If a site blocks the fetch, save the page from your
+# browser into seed/pages/ and add " | pages/<file>.html" after the URL.
+
+# Nespresso (Vertuo)
+https://www.nespresso.com/recipes/us/en/22687NES-nespresso-vertuo-on-ice.html
+https://www.nespresso.com/recipes/us/en/22684NES-nespresso-vertuo-on-ice-macchiato.html
+https://www.nespresso.com/recipes/int/en/37631ICE-vertuo-iced-pistachio-vanilla-oat-latte.html
+https://www.nespresso.com/us/en/vertuo-coffee-recipe-iced-double-chocolate
+https://www.nespresso.com/us/en/vertuo-coffee-recipe-spiced-iced
+
+# Cometeer: add individual recipe pages from https://cometeer.com/pages/cometeer-recipes
+
+# Recipe blogs: add coffee drink recipe pages here

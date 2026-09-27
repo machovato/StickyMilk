@@ -12,6 +12,8 @@ import { isAdminAuthenticated } from "@/lib/auth";
 import { checkRateLimit, clientIp } from "@/lib/rate-limit";
 import { extractRecipeIR, DEMO_PRESETS } from "@/lib/translator/extractor";
 import { synthesizeRecipe } from "@/lib/translator/synthesis";
+import { ingestTranslation } from "@/lib/translator/ingest";
+import { extractRecipePage, isRecipePageUrl } from "@/lib/translator/recipe-page-extractor";
 import { extractRecipeWithGeminiVideo } from "@/lib/translator/video-ai";
 import type { RecipeIR, TranslationResult } from "@/lib/translator/types";
 
@@ -65,6 +67,18 @@ function recipeToRecipeIR(recipe: Recipe): RecipeIR {
   };
 }
 
+/** Returns an error message when a non-admin has used up their paid translations. */
+async function publicRateLimitError(): Promise<string | null> {
+  const limit = checkRateLimit(
+    `translate:${await clientIp()}`,
+    PUBLIC_TRANSLATIONS_PER_WINDOW,
+    PUBLIC_TRANSLATION_WINDOW_MS
+  );
+  if (limit.ok) return null;
+  const minutes = Math.ceil(limit.retryAfterSeconds / 60);
+  return `You've translated a lot of recipes in a short time. Please try again in ${minutes} minute${minutes === 1 ? "" : "s"}.`;
+}
+
 export async function translateRecipeAction(payload: {
   url?: string;
   caption?: string;
@@ -114,8 +128,22 @@ export async function translateRecipeAction(payload: {
     let ir: RecipeIR | null = null;
     let videoError: string | undefined;
 
-    // 2. If it's a social video link and GEMINI_API_KEY is present, watch video with Gemini
+    // 2a. Recipe web page: a vendor (Nespresso / Cometeer) or any recipe site.
+    // The caption box doubles as "paste the page text" for sites that block
+    // server-side fetches.
+    if (rawUrl && !isPreset && isRecipePageUrl(rawUrl)) {
+      if (!isAdmin) {
+        const limited = await publicRateLimitError();
+        if (limited) return { success: false, error: limited };
+      }
+      const page = await extractRecipePage(rawUrl, payload.caption);
+      if (!page.ok) return { success: false, error: page.message };
+      ir = page.ir;
+    }
+
+    // 2b. If it's a social video link and GEMINI_API_KEY is present, watch video with Gemini
     if (
+      !ir &&
       rawUrl &&
       !isPreset &&
       (rawUrl.includes("instagram.com") ||
@@ -125,18 +153,8 @@ export async function translateRecipeAction(payload: {
       process.env.GEMINI_API_KEY
     ) {
       if (!isAdmin) {
-        const limit = checkRateLimit(
-          `translate:${await clientIp()}`,
-          PUBLIC_TRANSLATIONS_PER_WINDOW,
-          PUBLIC_TRANSLATION_WINDOW_MS
-        );
-        if (!limit.ok) {
-          const minutes = Math.ceil(limit.retryAfterSeconds / 60);
-          return {
-            success: false,
-            error: `You've translated a lot of videos in a short time. Please try again in ${minutes} minute${minutes === 1 ? "" : "s"}.`,
-          };
-        }
+        const limited = await publicRateLimitError();
+        if (limited) return { success: false, error: limited };
       }
 
       console.log(`[Action] Triggering Gemini multimodal video extraction for: ${rawUrl}`);
@@ -175,79 +193,16 @@ export async function translateRecipeAction(payload: {
       return { success: true, result };
     }
 
-    // 3. Resolve slug uniqueness
-    let finalSlug = result.recipe.slug;
-    if (recipeSlugExists(finalSlug)) {
-      let counter = 2;
-      while (recipeSlugExists(`${finalSlug}-${counter}`)) {
-        counter++;
-      }
-      finalSlug = `${finalSlug}-${counter}`;
-      result.recipe.slug = finalSlug;
-    }
-
-    // 4. Save hero thumbnail image to public/recipes (prioritize smart title frame over generic CDN thumbnail)
-    const imageDir = path.join(process.cwd(), "public", "recipes");
-    mkdirSync(imageDir, { recursive: true });
-    const imageFileName = `${finalSlug}.jpg`;
-    const imagePath = path.join(imageDir, imageFileName);
-
-    if (ir.hero_frame_base64) {
-      try {
-        const buffer = Buffer.from(ir.hero_frame_base64, "base64");
-        writeFileSync(imagePath, buffer);
-        result.recipe.image = `/recipes/${imageFileName}`;
-        console.log(
-          `[Action] Saved smart hero thumbnail to: /recipes/${imageFileName} (${ir.hero_frame_reason || "selected hero frame"})`
-        );
-      } catch (heroErr) {
-        console.warn("[Action] Failed to save hero frame thumbnail:", heroErr);
-      }
-    } else if (ir.thumbnail_url) {
-      try {
-        const imgRes = await fetch(ir.thumbnail_url);
-        if (imgRes.ok) {
-          const buffer = Buffer.from(await imgRes.arrayBuffer());
-          writeFileSync(imagePath, buffer);
-          result.recipe.image = `/recipes/${imageFileName}`;
-          console.log(`[Action] Saved video thumbnail to: /recipes/${imageFileName}`);
-        }
-      } catch (imgErr) {
-        console.warn("[Action] Thumbnail download failed:", imgErr);
-      }
-    }
-
-    // 5. Auto-seed into the vault as needs_testing
-    result.recipe.status = "needs_testing";
-    result.recipe.review = undefined;
-    result.recipe.created_at = new Date().toISOString();
-
-    const validationErrors = validateRecipeCandidate(
-      result.recipe,
-      ingredientTaxonomyIds()
-    );
-
-    if (validationErrors.length === 0) {
-      const validated = asValidatedRecipe(result.recipe);
-      const filePath = path.join(CONTENT_DIR, `${finalSlug}.json`);
-      mkdirSync(CONTENT_DIR, { recursive: true });
-      writeFileSync(filePath, toRecipeFileContents(validated), "utf-8");
-      invalidateRecipeCache();
+    // 3. Admin: write recipe + hero image to the vault as needs_testing
+    const ingest = await ingestTranslation(result);
+    if (ingest.written) {
       try {
         revalidatePath("/");
         revalidatePath("/recipes");
         revalidatePath("/translate");
-      } catch (revErr) {
+      } catch {
         // Safe to ignore in SSR render contexts
       }
-      console.log(
-        `[Action] Successfully auto-ingested community recipe into vault: content/recipes/${finalSlug}.json`
-      );
-    } else {
-      console.warn(
-        `[Action] Recipe candidate had validation errors, skipped auto-write:`,
-        validationErrors
-      );
     }
 
     return {

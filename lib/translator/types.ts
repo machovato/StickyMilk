@@ -8,16 +8,21 @@ export type IRSourceType =
   | "social_tiktok"
   | "social_instagram"
   | "social_youtube"
+  | "web"
   | "editorial";
 
 export interface IRStatedCoffee {
   raw_name: string;
-  system?: "vertuo" | "original" | "capsule" | "instant";
+  system?: "vertuo" | "original" | "capsule" | "instant" | "espresso" | "brewed" | "cold_brew";
   intensity?: number;
   serving_size_ml?: number;
   shots?: number;
+  /** How many capsules/pods the source uses (vendor imports). */
+  capsule_count?: number;
   roast_profile?: "light" | "medium" | "dark";
 }
+
+export type ExtractionMode = "video_multimodal_ai" | "caption_heuristic" | "recipe_page";
 
 export interface IRRawIngredient {
   amount?: number;
@@ -55,7 +60,7 @@ export interface RecipeIR {
     prep_time_minutes?: number;
     sweetness_hint?: SweetnessLevel;
   };
-  extraction_mode?: "video_multimodal_ai" | "caption_heuristic";
+  extraction_mode?: ExtractionMode;
   text_overlays?: string[];
   thumbnail_url?: string;
   hero_frame_base64?: string;
@@ -114,7 +119,7 @@ export interface TranslationResult {
   taxonomy_matches: TaxonomyMatch[];
   validation_errors: FieldError[];
   warnings: string[];
-  extraction_mode?: "video_multimodal_ai" | "caption_heuristic";
+  extraction_mode?: ExtractionMode;
   text_overlays?: string[];
   is_cached_hit?: boolean;
 }

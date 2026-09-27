@@ -52,6 +52,7 @@ const cases = [
   ["mascarpone cheese", "mascarpone"],
   ["chocolate ice cream", undefined],
   ["Chobani Cookie Butter creamer", undefined],
+  ["half and half", "half_and_half"],
   // Cinnamon sugar is mostly sugar; matching the head noun is the right call for nutrition.
   ["cinnamon sugar", "sugar"],
 ];
