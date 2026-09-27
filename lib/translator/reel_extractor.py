@@ -238,8 +238,14 @@ Follow this strict priority:
 - Priority 1: Pick a frame that clearly features the on-screen drink title, hook text, or recipe name overlay (e.g. 'French Toast Latte', 'the iced coffee that ruined all other iced coffees for me', etc.), ideally while also showing the drink or glass.
 - Priority 2: If no frame contains the drink name or title text overlay, pick the most appetizing, clear hero shot of the completed drink (e.g. beautiful crema, swirling milk/espresso layers, cold foam crown, garnish).
 Avoid blurry mid-action shots, pouring streams obstructing the glass, or plain ingredient packages without the drink.
-Provide "hero_frame_index": number (0 to {saved_frames - 1}) and "hero_frame_reason": string explaining why it was chosen.
-5. Extract the recipe into strict JSON with this exact schema:
+5. IDENTIFY COFFEE PREPARATION METHOD & SYSTEM:
+Accurately identify the original coffee preparation method:
+- "instant": If the video or caption uses instant coffee powder, crystals, or granules (e.g. Nescafé, Medaglia d'Oro, instant espresso, granules dissolved in hot water).
+- "capsule": If the creator uses a frozen liquid coffee extract capsule (e.g. Cometeer).
+- "vertuo": If the creator brews a Nespresso Vertuo dome-shaped pod.
+- "original": If the creator uses a standard espresso machine (portafilter shot, Breville, De'Longhi, moka pot, or small Nespresso Original capsule).
+Set "raw_name" to the specific coffee used (e.g. "Instant Coffee", "Nescafé Gold", "Double Espresso Chiaro", "Espresso").
+6. Extract the recipe into strict JSON with this exact schema:
 {{
   "is_coffee_or_beverage": boolean,
   "rejection_reason": string,

@@ -1,0 +1,244 @@
+{
+  "slug": "gobbleacoffee-salted-honey-spanish-latte",
+  "name": "Salted Honey Spanish Latte",
+  "image": "/recipes/gobbleacoffee-salted-honey-spanish-latte.jpg",
+  "format": "iced",
+  "flavor_notes": "Rich espresso layered with smooth cold milk and balanced sweetness.",
+  "barista_note": "Pour espresso directly over ice to preserve the temperature boundary and prevent watery dilution.",
+  "status": "needs_testing",
+  "tags": [
+    "iced",
+    "latte",
+    "viral-trend",
+    "quick-fix"
+  ],
+  "sweetness_level": "rich_sweet",
+  "source": {
+    "type": "creator",
+    "name": "Ty",
+    "handle": "@gobbleacoffee",
+    "platform": "Instagram",
+    "url": "https://www.instagram.com/p/Db9HuHNvMcP/"
+  },
+  "preparations": [
+    {
+      "channel": "cometeer",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Counter Culture Big Trouble or Joe Coffee The Daily",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "capsule",
+          "secondary_amount": 26,
+          "secondary_unit": "g extract",
+          "item": "Cometeer capsule, melted and chilled",
+          "item_id": "cometeer_capsule",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "drizzle",
+          "item": "honey",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "pinch",
+          "item": "flaky sea salt",
+          "item_id": "flaky_salt",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "sweetened condensed milk",
+          "item_id": "sweetened_condensed_milk",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "dash",
+          "item": "cinnamon",
+          "item_id": "ground_cinnamon",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "oat milk",
+          "item_id": "oat_milk",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Extraction",
+        "In your serving glass, combine 1 drizzle honey, 1 pinch flaky sea salt, 1 tbsp sweetened condensed milk, and 1 dash cinnamon.",
+        "Melt the Cometeer capsule completely (run under warm tap water for 2 minutes to liquefy). Pour the concentrated coffee extract directly over the syrups and spices; stir or whisk with a handheld frother until completely dissolved.",
+        "## Phase 2: Ice & Milk Pour",
+        "Fill the glass with plenty of ice cubes.",
+        "Pour 6 oz oat milk over the ice; stir gently to combine and watch the layers swirl."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 4,
+      "provenance": "adapted"
+    },
+    {
+      "channel": "nespresso",
+      "nespresso_system": "vertuo",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Nespresso Double Espresso Chiaro (Vertuo 80ml)",
+      "capsule_count": 1,
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 1,
+          "unit": "pod",
+          "secondary_amount": 80,
+          "secondary_unit": "ml",
+          "item": "Nespresso Vertuo Double Espresso pod",
+          "item_id": "nespresso_double_pod",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "drizzle",
+          "item": "honey",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "pinch",
+          "item": "flaky sea salt",
+          "item_id": "flaky_salt",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "sweetened condensed milk",
+          "item_id": "sweetened_condensed_milk",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "dash",
+          "item": "cinnamon",
+          "item_id": "ground_cinnamon",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "oat milk",
+          "item_id": "oat_milk",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Extraction",
+        "In your serving glass, combine 1 drizzle honey, 1 pinch flaky sea salt, 1 tbsp sweetened condensed milk, and 1 dash cinnamon.",
+        "Brew the Nespresso Vertuo pod directly into the glass over the syrups and spices. Stir or whisk with a handheld frother for 10 seconds until completely dissolved.",
+        "## Phase 2: Ice & Milk Pour",
+        "Fill the glass with plenty of ice cubes.",
+        "Pour 6 oz oat milk over the ice; stir gently to combine and watch the layers swirl."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 4,
+      "provenance": "original"
+    },
+    {
+      "channel": "instant",
+      "roast_recommendation": "medium",
+      "roast_note": "Balanced profile with caramel and toasted nut notes suited for flavored milks and syrups.",
+      "tested_with": "Nescafé Gold Espresso or Mount Hagen Organic",
+      "caffeine_level": "full",
+      "servings": 1,
+      "yield_unit": "drink",
+      "ingredients": [
+        {
+          "amount": 2,
+          "unit": "tsp",
+          "secondary_amount": 60,
+          "secondary_unit": "ml hot bloom water",
+          "item": "Instant espresso crystals (e.g. Medaglia d'Oro)",
+          "item_id": "instant_coffee",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "drizzle",
+          "item": "honey",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "pinch",
+          "item": "flaky sea salt",
+          "item_id": "flaky_salt",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "tbsp",
+          "item": "sweetened condensed milk",
+          "item_id": "sweetened_condensed_milk",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "cup",
+          "item": "ice",
+          "item_id": "ice",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 1,
+          "unit": "dash",
+          "item": "cinnamon",
+          "item_id": "ground_cinnamon",
+          "group": "Latte Base"
+        },
+        {
+          "amount": 6,
+          "unit": "oz",
+          "item": "oat milk",
+          "item_id": "oat_milk",
+          "group": "Latte Base"
+        }
+      ],
+      "steps": [
+        "## Phase 1: Flavor Base & Extraction",
+        "In your serving glass, combine 1 drizzle honey, 1 pinch flaky sea salt, 1 tbsp sweetened condensed milk, and 1 dash cinnamon.",
+        "Dissolve 1.5–2 tsp instant espresso crystals in 2 oz (60ml) hot water directly over the syrups and spices; stir until completely dissolved.",
+        "## Phase 2: Ice & Milk Pour",
+        "Fill the glass with plenty of ice cubes.",
+        "Pour 6 oz oat milk over the ice; stir gently to combine and watch the layers swirl."
+      ],
+      "difficulty": "easy",
+      "prep_time_minutes": 4,
+      "provenance": "adapted"
+    }
+  ]
+}

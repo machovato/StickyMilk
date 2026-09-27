@@ -9,6 +9,7 @@ import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { matchTaxonomy } from "../lib/translator/taxonomy-match";
 import type { IngredientTaxonomyEntry } from "../lib/taxonomy";
+import { convertAmount } from "../lib/nutrition";
 
 const root = process.cwd();
 const apply = process.argv.includes("--apply");
@@ -29,6 +30,10 @@ for (const file of readdirSync(dir).filter((f) => f.endsWith(".json"))) {
       if (ing.item_id) continue;
       const m = matchTaxonomy(ing.item, taxonomy);
       if (!m.id) continue;
+      const entry = taxonomy.find((e) => e.id === m.id);
+      if (entry?.nutrition && convertAmount(ing.amount ?? 1, ing.unit, entry.nutrition.per.unit) === null) {
+        continue;
+      }
       console.log(`${file} [${prep.channel}]  "${ing.item}"  ->  ${m.id}`);
       // Keep the vault's key order: item_id right after item
       const ordered: Record<string, unknown> = {};

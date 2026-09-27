@@ -55,6 +55,8 @@ const cases = [
   ["Fairlife vanilla protein shake", "vanilla_protein_shake"],
   ["vanilla ice cream", "vanilla_ice_cream"],
   ["sweetened condensed milk", "sweetened_condensed_milk"],
+  ["condensed milk", "sweetened_condensed_milk"],
+  ["evaporated milk", "evaporated_milk"],
   ["cinnamon", "ground_cinnamon"],
   ["a dash of cinnamon", "ground_cinnamon"],
   ["sugar or honey", "sugar"],

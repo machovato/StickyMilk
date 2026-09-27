@@ -414,10 +414,26 @@ export function extractRecipeIR(params: {
       itemLower.includes("instant") ||
       itemLower.includes("coffee")
     ) {
+      const isInstant =
+        itemLower.includes("instant") ||
+        itemLower.includes("crystals") ||
+        itemLower.includes("granules") ||
+        itemLower.includes("nescaf");
+      const isCometeer = itemLower.includes("cometeer");
+      const isOriginalLine =
+        itemLower.includes("original") && (itemLower.includes("pod") || itemLower.includes("line"));
+      const system = isInstant
+        ? "instant"
+        : isCometeer
+        ? "capsule"
+        : isOriginalLine
+        ? "original"
+        : "vertuo";
+
       if (itemLower.includes("dark") || itemLower.includes("scuro") || itemLower.includes("diavolitto")) {
         statedCoffee = {
           raw_name: ing.item,
-          system: "vertuo",
+          system,
           shots: 2,
           roast_profile: "dark",
           intensity: 10,
@@ -425,7 +441,7 @@ export function extractRecipeIR(params: {
       } else if (itemLower.includes("chiaro") || itemLower.includes("medium")) {
         statedCoffee = {
           raw_name: ing.item,
-          system: "vertuo",
+          system,
           shots: 2,
           roast_profile: "medium",
           intensity: 6,
@@ -433,7 +449,7 @@ export function extractRecipeIR(params: {
       } else if (itemLower.includes("voltesso") || itemLower.includes("light") || itemLower.includes("blonde")) {
         statedCoffee = {
           raw_name: ing.item,
-          system: "vertuo",
+          system,
           shots: 1,
           roast_profile: "light",
           intensity: 4,
@@ -441,13 +457,23 @@ export function extractRecipeIR(params: {
       } else {
         statedCoffee = {
           raw_name: ing.item,
-          system: "vertuo",
+          system,
           shots: itemLower.includes("double") ? 2 : 1,
           roast_profile: "medium",
         };
       }
       break;
     }
+  }
+
+  // Cross-reference caption & steps text if ingredients did not explicitly name the system
+  const contextForCoffee = (effectiveCaption + " " + rawSteps.join(" ")).toLowerCase();
+  if (/\b(instant|crystals|granules|nescaf[eé]|dissolve.*water)\b/i.test(contextForCoffee)) {
+    statedCoffee.system = "instant";
+    if (statedCoffee.raw_name === "Espresso") statedCoffee.raw_name = "Instant Coffee";
+  } else if (/\b(cometeer|frozen capsule)\b/i.test(contextForCoffee)) {
+    statedCoffee.system = "capsule";
+    if (statedCoffee.raw_name === "Espresso") statedCoffee.raw_name = "Cometeer Capsule";
   }
 
   // Detect sub assemblies

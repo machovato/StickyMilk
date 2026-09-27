@@ -252,7 +252,8 @@
       "dairy"
     ],
     "aliases": [
-      "sweetened condensed milk"
+      "sweetened condensed milk",
+      "condensed milk"
     ],
     "default_unit": "tbsp",
     "nutrition": {
@@ -266,6 +267,31 @@
       "protein_g": 1.5,
       "caffeine_mg": 0,
       "source": "label"
+    }
+  },
+  {
+    "id": "evaporated_milk",
+    "name": "Evaporated milk",
+    "category": "dairy",
+    "allergens": [
+      "dairy"
+    ],
+    "aliases": [
+      "evaporated milk",
+      "unsweetened evaporated milk"
+    ],
+    "default_unit": "tbsp",
+    "nutrition": {
+      "per": {
+        "amount": 2,
+        "unit": "tbsp"
+      },
+      "calories": 40,
+      "sugar_g": 3,
+      "fat_g": 2.4,
+      "protein_g": 2,
+      "caffeine_mg": 0,
+      "source": "approx"
     }
   },
   {

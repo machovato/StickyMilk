@@ -6,7 +6,7 @@ import type {
   SweetnessLevel,
 } from "@/lib/types";
 import { getIngredientTaxonomy, ingredientTaxonomyIds } from "@/lib/taxonomy";
-import { calculateNutrition } from "@/lib/nutrition";
+import { calculateNutrition, convertAmount } from "@/lib/nutrition";
 import { validateRecipeCandidate } from "@/lib/recipe-schema";
 import type {
   RecipeIR,
@@ -67,7 +67,8 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
       itemLower.includes("pod") ||
       itemLower.includes("cometeer") ||
       itemLower.includes("nespresso") ||
-      itemLower.includes("instant coffee");
+      itemLower.includes("instant") ||
+      /\bcoffee\b/.test(itemLower);
 
     if (isCoffeeItem) continue;
 
@@ -83,11 +84,21 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
       warnings.push(`Novel ingredient detected: "${raw.item}". Taxonomy ID omitted.`);
     }
 
+    // Only assign item_id if unit converts cleanly to the taxonomy entry's per.unit
+    let assignedItemId: string | undefined = undefined;
+    if (match.id) {
+      const taxonomy = getIngredientTaxonomy();
+      const entry = taxonomy.find((e) => e.id === match.id);
+      if (!entry?.nutrition || convertAmount(raw.amount ?? 1, raw.unit, entry.nutrition.per.unit) !== null) {
+        assignedItemId = match.id;
+      }
+    }
+
     nonCoffeeIngredients.push({
       amount: raw.amount,
       unit: raw.unit,
       item: raw.item,
-      item_id: match.id,
+      item_id: assignedItemId,
       group: raw.group || "Latte Base",
       optional: raw.optional,
       notes: raw.notes,
@@ -103,20 +114,42 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
   const vendorChannel: Channel | null =
     ir.source_type === "nespresso" ? "nespresso" : ir.source_type === "cometeer" ? "cometeer" : null;
 
-  // Barista Heuristic: Separate Flavor Base (syrups, sauces, honey, sugars, spices) from Milk & Ice
+  // Helper to detect plain bloom water (used to bloom/dissolve instant coffee)
+  const isBloomWater = (name: string) => {
+    const l = name.toLowerCase();
+    return (
+      (l.includes("water") || l.includes("hot water") || l.includes("bloom water") || l.includes("boiling water")) &&
+      !l.includes("tonic") &&
+      !l.includes("sparkling") &&
+      !l.includes("soda") &&
+      !l.includes("rose")
+    );
+  };
+
+  // Extract bloom water amount in ml if specified in raw ingredients
+  const rawBloomWater = nonCoffeeIngredients.find((i) => isBloomWater(i.item));
+  const bloomWaterMl = rawBloomWater?.amount
+    ? Math.round(convertAmount(rawBloomWater.amount, rawBloomWater.unit, "ml") ?? 60)
+    : 60;
+
+  // Barista Heuristic: Separate Flavor Base (syrups, sauces, honey, sugars, spices, condensed milk) from Milk & Ice
+  const isCondensedMilk = (name: string) => /\b(condensed|dulce de leche)\b/i.test(name);
+
   const baseFlavorItems = nonCoffeeIngredients.filter((i) => {
     const grp = (i.group || "").toLowerCase();
     if (grp.includes("foam") || grp === "garnish") return false;
     const name = i.item.toLowerCase();
-    if (name.includes("ice")) return false;
+    if (name.includes("ice") || isBloomWater(name)) return false;
+    if (isCondensedMilk(name)) return true; // Condensed milk is a sweet flavor base that dissolves in hot espresso
     if (/\b(milk|oat milk|almond milk|soy milk|dairy|half and half|cream|creamer|protein shake)\b/i.test(name)) return false;
     return true;
   });
 
-  const baseMilkItem = nonCoffeeIngredients.find((i) => {
+  const baseMilkItems = nonCoffeeIngredients.filter((i) => {
     const grp = (i.group || "").toLowerCase();
     if (grp.includes("foam") || grp === "garnish") return false;
     const name = i.item.toLowerCase();
+    if (isCondensedMilk(name) || isBloomWater(name) || name.includes("ice")) return false;
     return /\b(milk|oat milk|almond milk|soy milk|dairy|half and half|cream|creamer|protein shake)\b/i.test(name);
   });
 
@@ -202,9 +235,12 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
 
         steps.push(`## Phase ${phaseNum++}: Ice & Milk Pour`);
         steps.push("Fill the glass with plenty of ice cubes.");
-        const milkDesc = baseMilkItem
-          ? [baseMilkItem.amount, baseMilkItem.unit, baseMilkItem.item].filter(Boolean).join(" ")
-          : "cold milk";
+        const milkDesc =
+          baseMilkItems.length > 0
+            ? baseMilkItems
+                .map((i) => [i.amount, i.unit, i.item].filter(Boolean).join(" "))
+                .join(" and ")
+            : "cold milk";
         steps.push(`Pour ${milkDesc} over the ice; stir gently to combine and watch the layers swirl.`);
       } else {
         steps.push(`## Phase ${phaseNum++}: Glass Staging & Ice Base`);
@@ -240,9 +276,38 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
     return steps;
   }
 
+  // Determine original channel from creator source, stated coffee, and recipe signals
+  const textEvidence = [
+    ir.raw_title,
+    ir.stated_coffee?.raw_name,
+    ir.stated_coffee?.system,
+    ...(ir.raw_ingredients || []).map((i) => `${i.item} ${i.notes || ""}`),
+    ...(ir.raw_steps || []),
+    ir.source_url,
+  ].join(" ").toLowerCase();
+
+  let originalChannel: Channel = "nespresso";
+  if (vendorChannel) {
+    originalChannel = vendorChannel;
+  } else if (
+    ir.stated_coffee?.system === "instant" ||
+    /\b(instant|crystals|granules|nescaf[eé]|dissolve.*water|instant coffee|instant espresso)\b/i.test(textEvidence)
+  ) {
+    originalChannel = "instant";
+  } else if (
+    ir.stated_coffee?.system === "capsule" ||
+    /\b(cometeer|frozen capsule)\b/i.test(textEvidence)
+  ) {
+    originalChannel = "cometeer";
+  } else if (
+    /\b(nespresso|vertuo|chiaro|scuro|voltesso|diavolitto|altissio|orafio)\b/i.test(textEvidence)
+  ) {
+    originalChannel = "nespresso";
+  }
+
   // Channel 1: Cometeer Preparation
   const cometeerIngredients = [
-    ...nonCoffeeIngredients.filter((i) => i.group?.toLowerCase().includes("foam")),
+    ...nonCoffeeIngredients.filter((i) => i.group?.toLowerCase().includes("foam") && !isBloomWater(i.item)),
     {
       amount: 1,
       unit: "capsule",
@@ -253,9 +318,9 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
       group: "Latte Base",
     },
     ...nonCoffeeIngredients.filter(
-      (i) => !i.group?.toLowerCase().includes("foam") && i.group !== "Garnish"
+      (i) => !i.group?.toLowerCase().includes("foam") && i.group !== "Garnish" && !isBloomWater(i.item)
     ),
-    ...nonCoffeeIngredients.filter((i) => i.group === "Garnish"),
+    ...nonCoffeeIngredients.filter((i) => i.group === "Garnish" && !isBloomWater(i.item)),
   ];
 
   const cometeerTestedWith =
@@ -279,13 +344,13 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
     equipment: hasColdFoam ? ["handheld milk frother"] : undefined,
     ingredients: cometeerIngredients,
     steps: buildStagedSteps("cometeer"),
-    provenance: "adapted",
+    provenance: originalChannel === "cometeer" ? "original" : "adapted",
   };
 
   // Channel 2: Nespresso Vertuo Preparation
   const isDoubleShot = (ir.stated_coffee.shots || 2) >= 2;
   const nespressoIngredients = [
-    ...nonCoffeeIngredients.filter((i) => i.group?.toLowerCase().includes("foam")),
+    ...nonCoffeeIngredients.filter((i) => i.group?.toLowerCase().includes("foam") && !isBloomWater(i.item)),
     {
       amount: 1,
       unit: "pod",
@@ -298,9 +363,9 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
       group: "Latte Base",
     },
     ...nonCoffeeIngredients.filter(
-      (i) => !i.group?.toLowerCase().includes("foam") && i.group !== "Garnish"
+      (i) => !i.group?.toLowerCase().includes("foam") && i.group !== "Garnish" && !isBloomWater(i.item)
     ),
-    ...nonCoffeeIngredients.filter((i) => i.group === "Garnish"),
+    ...nonCoffeeIngredients.filter((i) => i.group === "Garnish" && !isBloomWater(i.item)),
   ];
 
   const nespressoTestedWith = isDoubleShot
@@ -328,25 +393,25 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
     equipment: hasColdFoam ? ["handheld milk frother"] : undefined,
     ingredients: nespressoIngredients,
     steps: buildStagedSteps("nespresso"),
-    provenance: ir.source_type.includes("tiktok") || ir.source_type.includes("instagram") ? "original" : "adapted",
+    provenance: originalChannel === "nespresso" ? "original" : "adapted",
   };
 
   // Channel 3: Instant Preparation
   const instantIngredients = [
-    ...nonCoffeeIngredients.filter((i) => i.group?.toLowerCase().includes("foam")),
+    ...nonCoffeeIngredients.filter((i) => i.group?.toLowerCase().includes("foam") && !isBloomWater(i.item)),
     {
       amount: 2,
       unit: "tsp",
-      secondary_amount: 60,
+      secondary_amount: bloomWaterMl,
       secondary_unit: "ml hot bloom water",
       item: "Instant espresso crystals (e.g. Medaglia d'Oro)",
       item_id: "instant_coffee",
       group: "Latte Base",
     },
     ...nonCoffeeIngredients.filter(
-      (i) => !i.group?.toLowerCase().includes("foam") && i.group !== "Garnish"
+      (i) => !i.group?.toLowerCase().includes("foam") && i.group !== "Garnish" && !isBloomWater(i.item)
     ),
-    ...nonCoffeeIngredients.filter((i) => i.group === "Garnish"),
+    ...nonCoffeeIngredients.filter((i) => i.group === "Garnish" && !isBloomWater(i.item)),
   ];
 
   const instantTestedWith =
@@ -367,7 +432,7 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
     equipment: hasColdFoam ? ["handheld milk frother"] : undefined,
     ingredients: instantIngredients,
     steps: buildStagedSteps("instant"),
-    provenance: "adapted",
+    provenance: originalChannel === "instant" ? "original" : "adapted",
   };
 
   // Vendor imports: the vendor's own channel is the original, as published —
@@ -459,7 +524,12 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
   const nespressoMacros = calculateNutrition(nespressoPrep);
   const instantMacros = calculateNutrition(instantPrep);
 
-  const primaryMacros = nespressoMacros;
+  const primaryMacros =
+    originalChannel === "instant"
+      ? instantMacros
+      : originalChannel === "cometeer"
+      ? cometeerMacros
+      : nespressoMacros;
   const humanCaffeine = `~${(primaryMacros.caffeine_mg / 95).toFixed(1)} cups of coffee`;
   const humanSugar = `~${primaryMacros.sugar_g}g (${Math.round(primaryMacros.sugar_g / 4)} tsp sugar)`;
 

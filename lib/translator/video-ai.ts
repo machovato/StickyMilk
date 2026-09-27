@@ -226,6 +226,36 @@ export async function extractRecipeWithGeminiVideo(
     const recipeSlug = slugify(rawTitle);
     const generatedSlug = `${creatorSlug}-${recipeSlug}`;
 
+    let detectedSystem = parsed.stated_coffee?.system;
+    let coffeeRawName = parsed.stated_coffee?.raw_name || "Espresso";
+
+    const allContextText = [
+      rawTitle,
+      coffeeRawName,
+      ...(rawIngredients || []).map((i: { item: string }) => i.item),
+      ...(parsed.raw_steps || []),
+      ...(parsed.text_overlays_found || []),
+      parsed.detected_description || "",
+      detectedTitle,
+      caption || "",
+    ].join(" ").toLowerCase();
+
+    if (/\b(instant|crystals|granules|nescaf[eé]|dissolve.*water)\b/i.test(allContextText)) {
+      detectedSystem = "instant";
+      if (!coffeeRawName || coffeeRawName.toLowerCase() === "espresso") {
+        coffeeRawName = "Instant Coffee";
+      }
+    } else if (/\b(cometeer|frozen capsule)\b/i.test(allContextText)) {
+      detectedSystem = "capsule";
+      if (!coffeeRawName || coffeeRawName.toLowerCase() === "espresso") {
+        coffeeRawName = "Cometeer Capsule";
+      }
+    } else if (/\b(vertuo)\b/i.test(allContextText)) {
+      detectedSystem = "vertuo";
+    } else if (!detectedSystem) {
+      detectedSystem = "vertuo";
+    }
+
     const ir: RecipeIR = {
       source_type: urlInfo.sourceType,
       source_url: videoUrl,
@@ -237,8 +267,8 @@ export async function extractRecipeWithGeminiVideo(
       generated_slug: generatedSlug,
       raw_title: rawTitle,
       stated_coffee: {
-        raw_name: parsed.stated_coffee?.raw_name || "Espresso",
-        system: parsed.stated_coffee?.system || "vertuo",
+        raw_name: coffeeRawName,
+        system: detectedSystem,
         shots: parsed.stated_coffee?.shots || 2,
         roast_profile: parsed.stated_coffee?.roast_profile || "medium",
       },
