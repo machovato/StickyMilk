@@ -18,7 +18,8 @@
     "test:queue": "tsx scripts/test-ingestion-queue.ts",
     "backfill:item-ids": "tsx scripts/backfill-item-ids.ts",
     "test:brew-math": "tsx --test scripts/test-brew-math.ts",
-    "test:review-form": "tsx --test scripts/test-review-form.ts"
+    "test:review-form": "tsx --test scripts/test-review-form.ts",
+    "test:photo": "tsx --test scripts/test-photo-prompt.ts"
   },
   "dependencies": {
     "@google/genai": "^2.24.0",
@@ -28,7 +29,8 @@
     "next": "16.3.5",
     "react": "19.2.8",
     "react-dom": "19.2.8",
-    "server-only": "^0.0.1"
+    "server-only": "^0.0.1",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

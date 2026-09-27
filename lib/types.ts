@@ -229,6 +229,9 @@ export interface Recipe {
   name: string;
   /** Path under /public, e.g. "/recipes/ca-phe-sua-da.jpg". Omit to fall back to a stylized placeholder. */
   image?: string;
+  /** Where the photo came from: "ai" (generated; replace with a real photo once tested),
+   *  "photo" (a real photo), "video_frame" (a frame from the source reel). */
+  image_source?: "ai" | "photo" | "video_frame";
   format: RecipeFormat;
   /** Shared across all channels — this is "the drink," independent of how it's made. */
   flavor_notes: string;

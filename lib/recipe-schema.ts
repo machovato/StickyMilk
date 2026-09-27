@@ -279,6 +279,9 @@ export function validateRecipeCandidate(
   if (candidate.image !== undefined && typeof candidate.image !== "string") {
     errors.push({ path: "image", message: "must be a string when present" });
   }
+  if (candidate.image_source !== undefined && !["ai", "photo", "video_frame"].includes(candidate.image_source as string)) {
+    errors.push({ path: "image_source", message: 'must be "ai", "photo" or "video_frame" when present' });
+  }
   if (!VALID_FORMATS.includes(candidate.format as RecipeFormat)) {
     errors.push({ path: "format", message: `missing or invalid format (got ${JSON.stringify(candidate.format)})` });
   }
