@@ -15,6 +15,7 @@
     "import:recipes": "tsx scripts/import-recipes.ts",
     "test:import": "tsx --test scripts/test-recipe-page.ts",
     "test:nutrition": "tsx --test scripts/test-nutrition.ts",
+    "test:queue": "tsx scripts/test-ingestion-queue.ts",
     "backfill:item-ids": "tsx scripts/backfill-item-ids.ts"
   },
   "dependencies": {

@@ -156,7 +156,14 @@ export function parseVideoUrl(url: string): {
 }
 
 function parseFraction(str: string): number | null {
-  const parts = str.trim().split(/\s+/);
+  const trimmed = str.trim();
+  const rangeMatch = trimmed.match(/^(\d+(?:\.\d+)?)\s*(?:[-–—]|to)\s*(\d+(?:\.\d+)?)$/i);
+  if (rangeMatch) {
+    const low = parseFloat(rangeMatch[1]);
+    if (!isNaN(low)) return low;
+  }
+
+  const parts = trimmed.split(/\s+/);
   if (parts.length === 2) {
     const whole = parseFloat(parts[0]);
     const fracParts = parts[1].split("/");
@@ -173,7 +180,7 @@ function parseFraction(str: string): number | null {
       if (den !== 0) return num / den;
     }
   }
-  const parsed = parseFloat(str);
+  const parsed = parseFloat(trimmed);
   return isNaN(parsed) ? null : parsed;
 }
 
@@ -235,9 +242,9 @@ export function parseIngredientLine(
   line = line.replace(/\((?:optional|to taste|if desired)\)/i, "").trim();
 
   // Pattern: [amount] [unit] [item name]
-  // e.g. "1 1/2 tbsp vanilla syrup" or "2 tbsp heavy cream" or "1 cup ice"
+  // e.g. "1 1/2 tbsp vanilla syrup" or "2 tbsp heavy cream" or "1 cup ice" or "6-8oz milk"
   const match = line.match(
-    /^((?:\d+\s+)?\d+\/\d+|\d+(?:\.\d+)?)\s*([a-zA-Z]+)?\s+(.*)$/
+    /^((?:\d+\s+)?\d+\/\d+|\d+(?:\.\d+)?(?:\s*(?:[-–—]|to)\s*\d+(?:\.\d+)?)?)\s*([a-zA-Z]+)?\s+(.*)$/i
   );
 
   if (match) {
@@ -256,6 +263,20 @@ export function parseIngredientLine(
     return {
       amount,
       unit: unit || undefined,
+      item,
+      group: currentGroup,
+      optional: isOptional || undefined,
+    };
+  }
+
+  // Qualitative measurement like "dash of cinnamon", "pinch of salt", "a dash of salt"
+  const qualitativeMatch = line.match(/^(?:a\s+)?(pinch|dash)\s+(?:of\s+)?(.*)$/i);
+  if (qualitativeMatch) {
+    const rawUnit = qualitativeMatch[1].toLowerCase();
+    const item = qualitativeMatch[2].trim();
+    return {
+      amount: 1,
+      unit: UNIT_MAP[rawUnit] || "pinch",
       item,
       group: currentGroup,
       optional: isOptional || undefined,
@@ -351,10 +372,21 @@ export function extractRecipeIR(params: {
     if (inSteps) {
       const stepText = line.replace(/^\d+[\.\)]\s*/, "").trim();
       if (stepText) rawSteps.push(stepText);
-    } else {
+    } else if (inIngredients) {
       const parsedIng = parseIngredientLine(line, currentGroup);
       if (parsedIng) {
         rawIngredients.push(parsedIng);
+      }
+    } else {
+      // Not yet in an explicit ingredients section. Only treat as ingredient if it has a list marker (•, -, *)
+      // or starts with a measurement (number/fraction/pinch/dash). Otherwise it's caption intro text!
+      const isListItem = /^[-*•]/.test(line);
+      const startsWithQuantity = /^((?:\d+\s+)?\d+\/\d+|\d+(?:\.\d+)?|(?:a\s+)?(?:pinch|dash))\b/i.test(line);
+      if (isListItem || startsWithQuantity) {
+        const parsedIng = parseIngredientLine(line, currentGroup);
+        if (parsedIng) {
+          rawIngredients.push(parsedIng);
+        }
       }
     }
   }
