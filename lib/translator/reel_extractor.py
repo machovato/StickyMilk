@@ -65,11 +65,11 @@ def extract_reel(video_url: str):
         total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT)) or 0
         duration = total_frames / fps if fps else 0
 
-        # Calculate sampling interval: default to 2 FPS (every 0.5s)
-        # Cap total frames at 60 to stay fast and within model limits
+        # Calculate sampling interval: default to 2 FPS (every 0.5s) for short reels
+        # For longer videos (>20s), dynamically scale so total frames stay around 40-45
         step_seconds = 0.5
-        if duration > 30:
-            step_seconds = max(0.5, duration / 60.0)
+        if duration > 20:
+            step_seconds = max(0.5, duration / 45.0)
 
         step_frames = max(1, int(fps * step_seconds))
 
@@ -78,18 +78,18 @@ def extract_reel(video_url: str):
         frame_idx = 0
         saved_frames = 0
 
-        while cap.isOpened() and saved_frames < 70:
+        while cap.isOpened() and saved_frames < 48:
             ret, frame = cap.read()
             if not ret:
                 break
             if frame_idx % step_frames == 0:
-                # Resize large frames to max width 720 to keep upload lightning fast
+                # Resize large frames to max width 540 to keep Gemini payload compact and fast
                 h, w = frame.shape[:2]
-                if w > 720:
-                    scale = 720.0 / w
-                    frame = cv2.resize(frame, (720, int(h * scale)))
+                if w > 540:
+                    scale = 540.0 / w
+                    frame = cv2.resize(frame, (540, int(h * scale)))
 
-                success, enc = cv2.imencode(".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 85])
+                success, enc = cv2.imencode(".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 80])
                 if success:
                     b64_str = base64.b64encode(enc.tobytes()).decode("utf-8")
                     raw_frame_data.append(b64_str)
@@ -108,16 +108,16 @@ def extract_reel(video_url: str):
             print(json.dumps({"error": "No frames could be extracted from video stream"}))
             sys.exit(1)
 
-        # 3. Prompt Gemini 2.5 Flash with the full 2 FPS frame sequence and hero frame selection
+        # 3. Prompt Gemini 2.5 Flash with the frame sequence and hero frame selection
         prompt = f"""You are an expert barista and coffee recipe ingestion engine for StickyMilk.
-Here are {saved_frames} sequential video frames (captured at 2 FPS, indexed 0 to {saved_frames - 1}) from a social media coffee reel.
+Here are {saved_frames} sequential video frames (indexed 0 to {saved_frames - 1}) from a social media coffee reel.
 1. VERIFY DOMAIN & SAFETY: Confirm whether this is a legitimate beverage recipe. If NOT (e.g. non-drink content, prank, inappropriate/NSFW), set "is_coffee_or_beverage": false and provide "rejection_reason".
-2. READ ALL ON-SCREEN TEXT OVERLAYS: Pay special attention to fast 0.5-second cuts, text stickers, ingredients, brand labels, measuring numbers, and cup markings (e.g. brown sugar, maple syrup, flaky sea salt, espresso, milk, cream, syrups).
+2. READ ALL ON-SCREEN TEXT OVERLAYS: Pay special attention to fast cuts, text stickers, ingredients, brand labels, measuring numbers, and cup markings (e.g. brown sugar, maple syrup, flaky sea salt, espresso, milk, cream, syrups).
 3. WATCH VISUAL ACTIONS: Note if they froth cold foam, pinch flaky salt, add ice, pour milk, pull espresso.
 4. SELECT HERO THUMBNAIL FRAME:
 Select the single best frame index (0-indexed from 0 to {saved_frames - 1}) to use as the hero thumbnail image for this recipe.
 Follow this strict priority:
-- Priority 1: Pick a frame that clearly features the on-screen drink title, hook text, or recipe name overlay (e.g. 'the iced coffee that ruined all other iced coffees for me', 'Pumpkin Banana Bread Iced Latte', etc.), ideally while also showing the drink or glass.
+- Priority 1: Pick a frame that clearly features the on-screen drink title, hook text, or recipe name overlay (e.g. 'French Toast Latte', 'the iced coffee that ruined all other iced coffees for me', etc.), ideally while also showing the drink or glass.
 - Priority 2: If no frame contains the drink name or title text overlay, pick the most appetizing, clear hero shot of the completed drink (e.g. beautiful crema, swirling milk/espresso layers, cold foam crown, garnish).
 Avoid blurry mid-action shots, pouring streams obstructing the glass, or plain ingredient packages without the drink.
 Provide "hero_frame_index": number (0 to {saved_frames - 1}) and "hero_frame_reason": string explaining why it was chosen.
@@ -152,18 +152,35 @@ Return ONLY valid JSON matching this schema."""
 
         contents = [prompt] + frame_parts
 
-        try:
-            resp = client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=contents,
-            )
-            raw_text = resp.text or ""
-            import re
-            json_match = re.search(r"\{[\s\S]*\}", raw_text)
-            if not json_match:
-                print(json.dumps({"error": "Failed to parse JSON from Gemini response"}))
-                sys.exit(1)
+        # 4. Generate content with automatic retries and exponential backoff
+        import time
+        import re
 
+        resp = None
+        last_error = None
+        for attempt in range(3):
+            try:
+                resp = client.models.generate_content(
+                    model="gemini-2.5-flash",
+                    contents=contents,
+                )
+                if resp and resp.text:
+                    break
+            except Exception as e:
+                last_error = e
+                time.sleep(2 * (attempt + 1))
+
+        if not resp or not resp.text:
+            print(json.dumps({"error": f"Gemini multimodal extraction failed: {str(last_error)}"}))
+            sys.exit(1)
+
+        raw_text = resp.text
+        json_match = re.search(r"\{[\s\S]*\}", raw_text)
+        if not json_match:
+            print(json.dumps({"error": "Failed to parse JSON from Gemini response"}))
+            sys.exit(1)
+
+        try:
             parsed = json.loads(json_match.group(0))
             parsed["detected_uploader"] = detected_uploader
             parsed["detected_thumbnail"] = detected_thumbnail
@@ -180,7 +197,7 @@ Return ONLY valid JSON matching this schema."""
 
             print(json.dumps(parsed))
         except Exception as e:
-            print(json.dumps({"error": f"Gemini multimodal extraction failed: {str(e)}"}))
+            print(json.dumps({"error": f"Failed to format extraction JSON: {str(e)}"}))
             sys.exit(1)
 
 if __name__ == "__main__":
