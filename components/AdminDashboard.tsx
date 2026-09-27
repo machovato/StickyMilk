@@ -13,6 +13,7 @@ import {
   Plus,
   Star,
   Trash,
+  Tray,
   VideoCamera,
   Warning,
 } from "@phosphor-icons/react";
@@ -22,9 +23,11 @@ import { deleteRecipeAction } from "@/lib/actions/delete-recipe";
 
 interface AdminDashboardProps {
   initialRecipes: Recipe[];
+  /** Visitor translations waiting in /admin/submissions */
+  pendingSubmissions: number;
 }
 
-export function AdminDashboard({ initialRecipes }: AdminDashboardProps) {
+export function AdminDashboard({ initialRecipes, pendingSubmissions }: AdminDashboardProps) {
   const router = useRouter();
   const [recipes, setRecipes] = useState<Recipe[]>(initialRecipes);
   const [activeTab, setActiveTab] = useState<"all" | "needs_testing" | "verified">("all");
@@ -97,6 +100,14 @@ export function AdminDashboard({ initialRecipes }: AdminDashboardProps) {
 
         {/* Quick Actions */}
         <div className="flex items-center gap-2.5 flex-wrap">
+          <Link
+            href="/admin/submissions"
+            className="px-4 py-2.5 bg-[#1a130e] hover:bg-white hover:text-[#1a130e] text-white font-mono text-xs font-bold uppercase tracking-wider border border-white/20 transition-colors flex items-center gap-1.5 shadow-sm"
+          >
+            <Tray size={16} weight="fill" />
+            <span>Review Queue ({pendingSubmissions})</span>
+          </Link>
+
           <Link
             href="/translate"
             className="px-4 py-2.5 bg-[#001ec0] hover:bg-white hover:text-[#001ec0] text-white font-mono text-xs font-bold uppercase tracking-wider border border-white/20 transition-colors flex items-center gap-1.5 shadow-sm"

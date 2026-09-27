@@ -122,6 +122,8 @@ export interface TranslationResult {
   extraction_mode?: ExtractionMode;
   text_overlays?: string[];
   is_cached_hit?: boolean;
+  /** A visitor's translation was saved to the admin review queue */
+  queued_for_review?: boolean;
 }
 
 /** Failure codes emitted by reel_extractor.py (plus Node-side TIMEOUT). */
