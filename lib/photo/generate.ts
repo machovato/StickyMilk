@@ -15,7 +15,13 @@ import sharp from "sharp";
  * - Every result gets the same finish: 1200x1200 JPEG, quality 85.
  */
 
-const DEFAULT_MODELS = ["gemini-2.5-flash-image", "gemini-3-pro-image-preview", "imagen-4.0-generate-001"];
+const DEFAULT_MODELS = [
+  "gemini-3.1-flash-image",
+  "gemini-3-pro-image",
+  "gemini-2.5-flash-image",
+  "gemini-3-pro-image-preview",
+  "imagen-4.0-generate-001",
+];
 const OUTPUT_SIZE = 1200;
 const ANCHOR_DIR = path.join(process.cwd(), "content", "brand", "anchors");
 
