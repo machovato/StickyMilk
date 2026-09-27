@@ -60,8 +60,10 @@
           "item_id": "ice"
         },
         {
-          "item": "Pinch of salt",
-          "item_id": "pinch_of_salt"
+          "amount": 1,
+          "unit": "pinch",
+          "item": "salt",
+          "item_id": "salt"
         }
       ],
       "steps": [

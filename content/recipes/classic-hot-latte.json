@@ -29,17 +29,20 @@
           "unit": "capsule",
           "secondary_amount": 26,
           "secondary_unit": "g extract",
-          "item": "Cometeer"
+          "item": "Cometeer",
+          "item_id": "cometeer_capsule"
         },
         {
           "amount": 6,
           "unit": "oz",
-          "item": "whole milk"
+          "item": "whole milk",
+          "item_id": "milk"
         },
         {
           "amount": 1,
           "unit": "tsp",
           "item": "sugar or honey",
+          "item_id": "sugar",
           "notes": "optional"
         }
       ],
@@ -73,12 +76,14 @@
         {
           "amount": 6,
           "unit": "oz",
-          "item": "whole milk"
+          "item": "whole milk",
+          "item_id": "milk"
         },
         {
           "amount": 1,
           "unit": "tsp",
           "item": "sugar or honey",
+          "item_id": "sugar",
           "notes": "optional"
         }
       ],
@@ -105,7 +110,8 @@
         {
           "amount": 1.5,
           "unit": "tsp",
-          "item": "freeze-dried instant coffee"
+          "item": "freeze-dried instant coffee",
+          "item_id": "instant_coffee"
         },
         {
           "amount": 1.5,
@@ -116,12 +122,14 @@
         {
           "amount": 6,
           "unit": "oz",
-          "item": "whole milk"
+          "item": "whole milk",
+          "item_id": "milk"
         },
         {
           "amount": 1,
           "unit": "tsp",
           "item": "sugar or honey",
+          "item_id": "sugar",
           "notes": "optional"
         }
       ],

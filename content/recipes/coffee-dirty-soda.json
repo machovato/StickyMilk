@@ -44,7 +44,8 @@
         {
           "amount": 1,
           "unit": "tsp",
-          "item": "vanilla syrup or honey"
+          "item": "vanilla syrup or honey",
+          "item_id": "vanilla_syrup"
         },
         {
           "item": "Ice",

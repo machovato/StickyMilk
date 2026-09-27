@@ -122,7 +122,8 @@
         {
           "amount": 16,
           "unit": "piece",
-          "item": "ladyfinger cookies"
+          "item": "ladyfinger cookies",
+          "item_id": "ladyfingers"
         },
         {
           "amount": 8,
@@ -139,7 +140,8 @@
         {
           "amount": 3,
           "unit": "tbsp",
-          "item": "powdered sugar"
+          "item": "powdered sugar",
+          "item_id": "powdered_sugar"
         },
         {
           "amount": 1,
@@ -187,7 +189,8 @@
         {
           "amount": 16,
           "unit": "piece",
-          "item": "ladyfinger cookies"
+          "item": "ladyfinger cookies",
+          "item_id": "ladyfingers"
         },
         {
           "amount": 8,
@@ -204,7 +207,8 @@
         {
           "amount": 3,
           "unit": "tbsp",
-          "item": "powdered sugar"
+          "item": "powdered sugar",
+          "item_id": "powdered_sugar"
         },
         {
           "amount": 1,

@@ -44,8 +44,10 @@
           "item_id": "vanilla_syrup"
         },
         {
-          "item": "Pinch of cinnamon",
-          "item_id": "pinch_of_cinnamon"
+          "amount": 1,
+          "unit": "pinch",
+          "item": "cinnamon",
+          "item_id": "ground_cinnamon"
         }
       ],
       "steps": [
@@ -88,8 +90,10 @@
           "item_id": "vanilla_syrup"
         },
         {
-          "item": "Pinch of cinnamon",
-          "item_id": "pinch_of_cinnamon"
+          "amount": 1,
+          "unit": "pinch",
+          "item": "cinnamon",
+          "item_id": "ground_cinnamon"
         }
       ],
       "steps": [
@@ -137,8 +141,10 @@
           "item_id": "vanilla_syrup"
         },
         {
-          "item": "Pinch of cinnamon",
-          "item_id": "pinch_of_cinnamon"
+          "amount": 1,
+          "unit": "pinch",
+          "item": "cinnamon",
+          "item_id": "ground_cinnamon"
         }
       ],
       "steps": [

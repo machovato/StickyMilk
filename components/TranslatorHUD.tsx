@@ -536,6 +536,13 @@ export function TranslatorHUD({
                   </div>
                 </div>
               )}
+              {activeMacros?.coverage && activeMacros.coverage.excluded.length > 0 && (
+                <p className="font-mono text-[11px] text-[#8a5a00]">
+                  ≈ Totals exclude {activeMacros.coverage.excluded.length} item
+                  {activeMacros.coverage.excluded.length === 1 ? "" : "s"}:{" "}
+                  {[...new Set(activeMacros.coverage.excluded.map((e) => e.item))].join(", ")}
+                </p>
+              )}
               <p className="font-body text-xs text-[#7f756f] italic">
                 Viral videos ignore syrups and creamer macros. StickyMilk benchmarks actual nutrition facts for honest energy tracking.
               </p>

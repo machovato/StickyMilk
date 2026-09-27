@@ -92,11 +92,12 @@ export function matchTaxonomy(
   if (/\bmilk$/.test(core) && !/\b(condensed|evaporated|coconut|almond|soy|oat)\b/.test(core)) {
     return byId("milk") ?? { is_novel: true };
   }
-  if (/\bcream$/.test(core) && !/\b(ice|coconut|sour|cheese)\b/.test(core)) {
+  if (/\bcream$/.test(core) && !/\b(ice|coconut|sour|cheese|sweet)\b/.test(core)) {
     return byId("heavy_cream") ?? { is_novel: true };
   }
   if (/\bsalt$/.test(core)) {
-    return byId("flaky_salt") ?? byId("pinch_of_salt") ?? { is_novel: true };
+    // Flaky/finishing salt is a garnish; a pinch in a syrup or foam is plain salt
+    return (/\b(flaky|maldon|finishing)\b/.test(core) ? byId("flaky_salt") : byId("salt")) ?? { is_novel: true };
   }
   if (/\bcinnamon$/.test(core)) return byId("ground_cinnamon") ?? { is_novel: true };
 

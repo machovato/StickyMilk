@@ -53,8 +53,10 @@
           "item_id": "ice"
         },
         {
-          "item": "Pinch of salt",
-          "item_id": "pinch_of_salt"
+          "amount": 1,
+          "unit": "pinch",
+          "item": "salt",
+          "item_id": "salt"
         }
       ],
       "steps": [
@@ -94,7 +96,8 @@
         {
           "amount": 5,
           "unit": "oz",
-          "item": "club soda"
+          "item": "club soda",
+          "item_id": "sparkling_water"
         },
         {
           "amount": 2,
@@ -145,7 +148,8 @@
         {
           "amount": 5,
           "unit": "oz",
-          "item": "club soda"
+          "item": "club soda",
+          "item_id": "sparkling_water"
         },
         {
           "amount": 2,

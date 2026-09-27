@@ -29,6 +29,7 @@ function getSugarReference(grams: number): string {
 
 export function NutritionBreakdown({ prep, scale }: NutritionBreakdownProps) {
   const nutrition = calculateNutrition(prep, scale);
+  const excludedItems = [...new Set(nutrition.coverage.excluded.map((e) => e.item))];
   const totalServings = Math.max(1, prep.servings * scale);
 
   const perServingCaffeine = Math.round(nutrition.caffeine_mg / totalServings);
@@ -152,9 +153,17 @@ export function NutritionBreakdown({ prep, scale }: NutritionBreakdownProps) {
         </div>
       </div>
 
+      {/* Honest coverage: what the totals leave out */}
+      {excludedItems.length > 0 && (
+        <p className="font-mono text-[11px] text-[#8a5a00] leading-snug">
+          ≈ Totals exclude {excludedItems.length} item{excludedItems.length === 1 ? "" : "s"}:{" "}
+          {excludedItems.join(", ")}. Real numbers are a little higher.
+        </p>
+      )}
+
       {/* Honest Footnote */}
       <p className="font-body text-[11px] text-[#7f756f] leading-tight">
-        *Nutritional estimate based on standard package labels (whole milk &amp; sweetened condensed milk). Actual caffeine varies slightly by bean roast and extraction.
+        *Estimates from standard package labels and USDA reference values. Actual caffeine varies by bean, roast and extraction.
       </p>
     </div>
   );

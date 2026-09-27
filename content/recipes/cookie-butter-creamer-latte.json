@@ -15,7 +15,7 @@
     "tester": "StickyMilk Test Kitchen",
     "channel_scores": {
       "cometeer": 8.2,
-      "nespresso": 8.0,
+      "nespresso": 8,
       "instant": 7.2
     },
     "channel_verdicts": {
@@ -114,6 +114,7 @@
           "amount": 1,
           "unit": "tsp",
           "item": "Speculoos / Biscoff cookie butter (for lining cup)",
+          "item_id": "cookie_butter",
           "optional": true
         }
       ],
@@ -172,6 +173,7 @@
           "amount": 1,
           "unit": "tsp",
           "item": "Speculoos / Biscoff cookie butter (for lining cup)",
+          "item_id": "cookie_butter",
           "optional": true
         }
       ],
@@ -235,6 +237,7 @@
           "amount": 1,
           "unit": "tsp",
           "item": "Speculoos / Biscoff cookie butter (for lining cup)",
+          "item_id": "cookie_butter",
           "optional": true
         }
       ],

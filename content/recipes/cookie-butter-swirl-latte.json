@@ -77,12 +77,14 @@
         {
           "amount": 1,
           "unit": "tbsp",
-          "item": "Speculoos / Lotus Biscoff cookie butter (for espresso melt)"
+          "item": "Speculoos / Lotus Biscoff cookie butter (for espresso melt)",
+          "item_id": "cookie_butter"
         },
         {
           "amount": 1,
           "unit": "tbsp",
           "item": "Speculoos / Lotus Biscoff cookie butter (for cup swirl)",
+          "item_id": "cookie_butter",
           "optional": true
         },
         {
@@ -95,6 +97,7 @@
           "amount": 1,
           "unit": "cookie",
           "item": "crushed Biscoff cookie",
+          "item_id": "biscoff_cookie",
           "optional": true
         }
       ],
@@ -135,12 +138,14 @@
         {
           "amount": 1,
           "unit": "tbsp",
-          "item": "Speculoos / Lotus Biscoff cookie butter (for espresso melt)"
+          "item": "Speculoos / Lotus Biscoff cookie butter (for espresso melt)",
+          "item_id": "cookie_butter"
         },
         {
           "amount": 1,
           "unit": "tbsp",
           "item": "Speculoos / Lotus Biscoff cookie butter (for cup swirl)",
+          "item_id": "cookie_butter",
           "optional": true
         },
         {
@@ -153,6 +158,7 @@
           "amount": 1,
           "unit": "cookie",
           "item": "crushed Biscoff cookie",
+          "item_id": "biscoff_cookie",
           "optional": true
         }
       ],
@@ -192,12 +198,14 @@
         {
           "amount": 1,
           "unit": "tbsp",
-          "item": "Speculoos / Lotus Biscoff cookie butter (for espresso melt)"
+          "item": "Speculoos / Lotus Biscoff cookie butter (for espresso melt)",
+          "item_id": "cookie_butter"
         },
         {
           "amount": 1,
           "unit": "tbsp",
           "item": "Speculoos / Lotus Biscoff cookie butter (for cup swirl)",
+          "item_id": "cookie_butter",
           "optional": true
         },
         {
@@ -216,6 +224,7 @@
           "amount": 1,
           "unit": "cookie",
           "item": "crushed Biscoff cookie",
+          "item_id": "biscoff_cookie",
           "optional": true
         }
       ],
