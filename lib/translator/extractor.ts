@@ -212,7 +212,9 @@ export function parseIngredientLine(
   rawLine: string,
   currentGroup?: string
 ): IRRawIngredient | null {
-  let line = rawLine.trim().replace(/^[-*•\d.]+\s*/, "").trim();
+  // Strip list markers ("- ", "• ", "1. ", "2) ") but not a leading quantity:
+  // "3 oz half and half" must keep its 3.
+  let line = rawLine.trim().replace(/^(?:[-*•]+\s*|\d+[.)]\s+)/, "").trim();
   if (!line || line.startsWith("#")) return null;
 
   const isOptional = /optional|to taste|if desired/i.test(line);
@@ -234,7 +236,7 @@ export function parseIngredientLine(
 
     if (!unit && rawUnit) {
       // If rawUnit isn't a known unit, it's probably part of item
-      item = `${rawUnit} ${item}`;
+      item = `${match[2]} ${item}`;
     }
 
     return {

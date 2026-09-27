@@ -199,7 +199,7 @@ export function TranslatorHUD({
               type="text"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
-              placeholder="https://www.tiktok.com/@creator/video/... or https://www.instagram.com/reel/..."
+              placeholder="TikTok, Instagram, or YouTube link — or a Nespresso / Cometeer recipe page"
               className="flex-1 px-4 py-3.5 bg-[#fef8f4] text-[#1a130e] placeholder-[#a89e97] font-mono text-xs sm:text-sm border-2 border-[#1a130e]/30 focus:border-[#1a130e] focus:outline-none"
             />
             <button
@@ -233,7 +233,7 @@ export function TranslatorHUD({
               className="inline-flex items-center gap-1.5 font-mono text-xs text-[#001ec0] hover:text-[#1a130e] self-start font-bold cursor-pointer"
             >
               {showCaptionInput ? <CaretUp size={14} weight="bold" /> : <CaretDown size={14} weight="bold" />}
-              <span>{showCaptionInput ? "Hide video transcript / caption" : "Paste video transcript or caption (optional)"}</span>
+              <span>{showCaptionInput ? "Hide video transcript / caption" : "Paste video caption or recipe page text (optional)"}</span>
             </button>
 
             {showCaptionInput && (
@@ -241,7 +241,7 @@ export function TranslatorHUD({
                 value={caption}
                 onChange={(e) => setCaption(e.target.value)}
                 rows={6}
-                placeholder="Paste video caption or ingredient transcript here (e.g. 'Cold foam: 2 tbsp heavy cream, 1 tbsp milk...')"
+                placeholder="Paste the video caption (e.g. 'Cold foam: 2 tbsp heavy cream, 1 tbsp milk...'). For a Nespresso or Cometeer page that won't load, paste the whole page text here."
                 className="w-full p-3 bg-[#fef8f4] text-[#1a130e] placeholder-[#a89e97] font-mono text-xs border border-[#1a130e]/30 focus:border-[#1a130e] focus:outline-none resize-y"
               />
             )}
