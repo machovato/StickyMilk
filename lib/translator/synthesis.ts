@@ -103,59 +103,131 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
   const vendorChannel: Channel | null =
     ir.source_type === "nespresso" ? "nespresso" : ir.source_type === "cometeer" ? "cometeer" : null;
 
+  // Barista Heuristic: Separate Flavor Base (syrups, sauces, honey, sugars, spices) from Milk & Ice
+  const baseFlavorItems = nonCoffeeIngredients.filter((i) => {
+    const grp = (i.group || "").toLowerCase();
+    if (grp.includes("foam") || grp === "garnish") return false;
+    const name = i.item.toLowerCase();
+    if (name.includes("ice")) return false;
+    if (/\b(milk|oat milk|almond milk|soy milk|dairy|half and half|cream|creamer|protein shake)\b/i.test(name)) return false;
+    return true;
+  });
+
+  const baseMilkItem = nonCoffeeIngredients.find((i) => {
+    const grp = (i.group || "").toLowerCase();
+    if (grp.includes("foam") || grp === "garnish") return false;
+    const name = i.item.toLowerCase();
+    return /\b(milk|oat milk|almond milk|soy milk|dairy|half and half|cream|creamer|protein shake)\b/i.test(name);
+  });
+
+  const hasFlavorBase = baseFlavorItems.length > 0;
+
+  function formatFlavorItems(items: typeof baseFlavorItems): string {
+    if (items.length === 0) return "syrups and seasonings";
+    const phrases = items.map((i) => {
+      const amtStr = i.amount !== undefined ? `${i.amount} ` : "";
+      const unitStr = i.unit ? `${i.unit} ` : "";
+      return `${amtStr}${unitStr}${i.item}`.trim();
+    });
+    if (phrases.length === 1) return phrases[0];
+    if (phrases.length === 2) return `${phrases[0]} and ${phrases[1]}`;
+    return `${phrases.slice(0, -1).join(", ")}, and ${phrases[phrases.length - 1]}`;
+  }
+
   // Superpower 3: Kitchen Mise en Place Steps Generator
   function buildStagedSteps(channel: Channel): string[] {
     const steps: string[] = [];
+    let phaseNum = 1;
 
+    // Phase: Cold Foam (if present)
     if (hasColdFoam) {
-      steps.push("## Phase 1: Cold Foam Preparation");
+      steps.push(`## Phase ${phaseNum++}: Cold Foam Preparation`);
       steps.push(
         "In a small frothing cup, combine the cold foam ingredients and froth with a handheld milk frother for 20–30 seconds until thick and airy. Set aside."
       );
     }
 
     if (isHot) {
-      steps.push(`## Phase ${hasColdFoam ? 2 : 1}: Mug Staging & Warm Milk`);
-      steps.push(
-        "Warm the milk to about 140°F (60°C) and froth it; stir the syrups into your mug."
-      );
-    } else {
-      steps.push(`## Phase ${hasColdFoam ? 2 : 1}: Glass Staging & Ice Base`);
-      steps.push(
-        "Fill your serving glass with ice cubes, then pour in milk and syrups; stir gently to combine."
-      );
-    }
-
-    steps.push(`## Phase ${hasColdFoam ? 3 : 2}: Coffee Extraction & Pour`);
-    if (isHot) {
-      if (channel === "cometeer") {
-        steps.push(
-          "Pour 2–4 oz of just-off-boil water into the mug and empty the frozen Cometeer capsule into it; stir until fully melted."
-        );
-      } else if (channel === "nespresso") {
-        steps.push("Brew the Nespresso pod directly into the mug over the syrups.");
+      if (hasFlavorBase) {
+        steps.push(`## Phase ${phaseNum++}: Flavor Base & Hot Extraction`);
+        steps.push(`In your serving mug, combine ${formatFlavorItems(baseFlavorItems)}.`);
+        if (channel === "cometeer") {
+          steps.push(
+            "Pour 2–4 oz of just-off-boil water into the mug and empty the frozen Cometeer capsule into it; stir until the syrups and coffee are fully integrated."
+          );
+        } else if (channel === "nespresso") {
+          steps.push("Brew the Nespresso pod directly into the mug over the syrups and spices; stir until fully dissolved.");
+        } else {
+          steps.push(
+            "Dissolve 1.5–2 tsp instant espresso crystals in 2 oz (60ml) hot water directly in the mug over the syrups and spices; stir until completely dissolved."
+          );
+        }
+        steps.push(`## Phase ${phaseNum++}: Steamed Milk & Pour`);
+        steps.push("Warm and froth milk to about 140°F (60°C). Pour the frothed milk over the coffee, holding back the foam, then spoon the velvety foam on top.");
       } else {
-        steps.push(
-          "Dissolve 1.5–2 tsp instant espresso crystals in 2 oz (60ml) hot water directly in the mug."
-        );
+        steps.push(`## Phase ${phaseNum++}: Mug Staging & Warm Milk`);
+        steps.push("Warm the milk to about 140°F (60°C) and froth it.");
+        steps.push(`## Phase ${phaseNum++}: Coffee Extraction & Pour`);
+        if (channel === "cometeer") {
+          steps.push(
+            "Pour 2–4 oz of just-off-boil water into the mug and empty the frozen Cometeer capsule into it; stir until fully melted."
+          );
+        } else if (channel === "nespresso") {
+          steps.push("Brew the Nespresso pod directly into the mug.");
+        } else {
+          steps.push(
+            "Dissolve 1.5–2 tsp instant espresso crystals in 2 oz (60ml) hot water directly in the mug."
+          );
+        }
+        steps.push("Pour the frothed milk over the coffee, holding back the foam, then spoon the foam on top.");
       }
-      steps.push("Pour the frothed milk over the coffee, holding back the foam, then spoon the foam on top.");
-    } else if (channel === "cometeer") {
-      steps.push(
-        "Melt the Cometeer capsule completely and chill before pouring (or run under warm water for 2 minutes to liquefy). Pour the chilled coffee extract directly over the iced milk."
-      );
-    } else if (channel === "nespresso") {
-      steps.push(
-        "Brew the Nespresso Vertuo pod directly into a small cup or over ice to chill quickly, then pour gently over the iced milk."
-      );
     } else {
-      steps.push(
-        "Dissolve 1.5–2 tsp instant espresso crystals in 2 oz (60ml) hot water to fully bloom the coffee. Chill the concentrate, then pour directly over the iced milk."
-      );
+      // Iced drink: Barista heuristic: Syrups & spices must dissolve in coffee BEFORE ice is added
+      if (hasFlavorBase) {
+        steps.push(`## Phase ${phaseNum++}: Flavor Base & Extraction`);
+        steps.push(`In your serving glass, combine ${formatFlavorItems(baseFlavorItems)}.`);
+        if (channel === "cometeer") {
+          steps.push(
+            "Melt the Cometeer capsule completely (run under warm tap water for 2 minutes to liquefy). Pour the concentrated coffee extract directly over the syrups and spices; stir or whisk with a handheld frother until completely dissolved."
+          );
+        } else if (channel === "nespresso") {
+          steps.push(
+            "Brew the Nespresso Vertuo pod directly into the glass over the syrups and spices. Stir or whisk with a handheld frother for 10 seconds until completely dissolved."
+          );
+        } else {
+          steps.push(
+            "Dissolve 1.5–2 tsp instant espresso crystals in 2 oz (60ml) hot water directly over the syrups and spices; stir until completely dissolved."
+          );
+        }
+
+        steps.push(`## Phase ${phaseNum++}: Ice & Milk Pour`);
+        steps.push("Fill the glass with plenty of ice cubes.");
+        const milkDesc = baseMilkItem
+          ? [baseMilkItem.amount, baseMilkItem.unit, baseMilkItem.item].filter(Boolean).join(" ")
+          : "cold milk";
+        steps.push(`Pour ${milkDesc} over the ice; stir gently to combine and watch the layers swirl.`);
+      } else {
+        steps.push(`## Phase ${phaseNum++}: Glass Staging & Ice Base`);
+        steps.push("Fill your serving glass with ice cubes, then pour in cold milk.");
+        steps.push(`## Phase ${phaseNum++}: Coffee Extraction & Pour`);
+        if (channel === "cometeer") {
+          steps.push(
+            "Melt the Cometeer capsule completely and chill before pouring (or run under warm water for 2 minutes to liquefy). Pour the chilled coffee extract directly over the iced milk."
+          );
+        } else if (channel === "nespresso") {
+          steps.push(
+            "Brew the Nespresso Vertuo pod directly into a small cup or over ice to chill quickly, then pour gently over the iced milk."
+          );
+        } else {
+          steps.push(
+            "Dissolve 1.5–2 tsp instant espresso crystals in 2 oz (60ml) hot water to fully bloom the coffee. Chill the concentrate, then pour directly over the iced milk."
+          );
+        }
+      }
     }
 
     if (hasColdFoam || nonCoffeeIngredients.some((i) => i.group === "Garnish")) {
-      steps.push(`## Phase ${hasColdFoam ? 4 : 3}: Crown & Garnish`);
+      steps.push(`## Phase ${phaseNum++}: Crown & Garnish`);
       if (hasColdFoam) {
         steps.push(`Spoon the prepared cold foam from Phase 1 over the top of the ${isHot ? "latte" : "iced latte"}.`);
       }
@@ -434,30 +506,55 @@ export function synthesizeRecipe(ir: RecipeIR): TranslationResult {
               },
             ]
           : []),
-        {
-          phaseNumber: hasColdFoam ? 2 : 1,
-          name: "Iced Milk Base",
-          steps: [
-            "Fill glass with ice cubes.",
-            "Pour cold milk and syrups; stir gently.",
-          ],
-        },
-        {
-          phaseNumber: hasColdFoam ? 3 : 2,
-          name: "Coffee Pour",
-          steps: [
-            "Pour melted or freshly pulled espresso directly over iced milk.",
-          ],
-        },
-        {
-          phaseNumber: hasColdFoam ? 4 : 3,
-          name: "Crown & Garnish",
-          steps: [
-            hasColdFoam
-              ? "Spoon cold foam over top and garnish."
-              : "Stir once and garnish.",
-          ],
-        },
+        ...(hasFlavorBase
+          ? [
+              {
+                phaseNumber: hasColdFoam ? 2 : 1,
+                name: "Flavor Base & Extraction",
+                steps: [
+                  "Add syrups, sweeteners, and seasonings directly to the serving glass.",
+                  "Pour espresso over the flavor base and stir or froth to dissolve completely before adding ice.",
+                ],
+              },
+              {
+                phaseNumber: hasColdFoam ? 3 : 2,
+                name: "Ice & Milk Pour",
+                steps: [
+                  "Fill glass with ice cubes over the dissolved coffee base.",
+                  "Pour cold milk over the ice; stir gently.",
+                ],
+              },
+            ]
+          : [
+              {
+                phaseNumber: hasColdFoam ? 2 : 1,
+                name: "Iced Milk Base",
+                steps: [
+                  "Fill glass with ice cubes.",
+                  "Pour cold milk into the glass.",
+                ],
+              },
+              {
+                phaseNumber: hasColdFoam ? 3 : 2,
+                name: "Coffee Pour",
+                steps: [
+                  "Pour chilled espresso directly over iced milk.",
+                ],
+              },
+            ]),
+        ...(hasColdFoam || nonCoffeeIngredients.some((i) => i.group === "Garnish")
+          ? [
+              {
+                phaseNumber: (hasColdFoam ? 1 : 0) + (hasFlavorBase ? 2 : 2) + 1,
+                name: "Crown & Garnish",
+                steps: [
+                  hasColdFoam
+                    ? "Spoon cold foam over top and garnish."
+                    : "Finish with garnish dusting.",
+                ],
+              },
+            ]
+          : []),
       ],
     },
   };
