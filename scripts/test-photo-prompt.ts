@@ -78,7 +78,9 @@ test("never more than 3 props, and the house style and exclusions are always in 
     assert.ok(plan.ingredientProps.length + plan.background.length <= 3);
     assert.match(plan.prompt, /light oak butcher-block counter/);
     assert.match(plan.prompt, /NEVER INCLUDE:.*coffee machines/);
-    assert.match(plan.prompt, /reference photos/);
+    // References set the style only; composition comes before the house style
+    assert.match(plan.prompt, /Do NOT copy their layout/);
+    assert.ok(plan.prompt.indexOf("COMPOSITION FOR THIS SHOT") < plan.prompt.indexOf("HOUSE STYLE"));
   }
 });
 
@@ -126,4 +128,23 @@ test("generator end to end with a simulated Gemini: sends the anchors, returns a
     delete process.env.PHOTO_MODELS;
     Module.prototype.require = orig;
   }
+});
+
+test("Ca Phe Sua Da: condensed-milk money shot and a condensed-milk prop", () => {
+  const r = load("ca-phe-sua-da");
+  assert.equal(chooseMoment(r), "condensed_milk");
+  assert.match(ingredientProps(r)[0] ?? "", /condensed milk/);
+});
+
+test("candidates shown side by side always get different compositions", () => {
+  const r = load("ca-phe-sua-da");
+  const a = buildPhotoPlan(r, 1, { composition: 3 });
+  const b = buildPhotoPlan(r, 2, { composition: 4 });
+  assert.notEqual(a.composition, b.composition);
+});
+
+test("the towel is no longer in every shot", () => {
+  const r = load("ca-phe-sua-da");
+  const withTowel = Array.from({ length: 20 }, (_, i) => buildPhotoPlan(r, 900 + i * 131)).filter((p) => /towel/.test(p.prompt)).length;
+  assert.ok(withTowel < 20, "towel appears in every render");
 });

@@ -39,9 +39,14 @@ export async function generateRecipePhotosAction(
   const recipe = getRecipeBySlug(slug);
   if (!recipe) return { success: false, error: "Recipe not found." };
 
-  // A different seed per candidate, so each one gets a different background mix
+  // A different seed per candidate (different background mix), and a
+  // guaranteed-different composition for each, so the candidates side by side
+  // are genuinely different shots, not the same photo with new props.
   const base = Date.now();
-  const plans = Array.from({ length: Math.min(Math.max(count, 1), 4) }, (_, i) => buildPhotoPlan(recipe, base + i * 7919));
+  const firstComposition = base % 97;
+  const plans = Array.from({ length: Math.min(Math.max(count, 1), 4) }, (_, i) =>
+    buildPhotoPlan(recipe, base + i * 7919, { composition: firstComposition + i })
+  );
   const results = await Promise.all(plans.map((plan) => generatePhoto(plan.prompt)));
 
   const candidates: PhotoCandidate[] = [];

@@ -121,7 +121,8 @@ function drinkDescription(recipe: Recipe): string {
   const garnish = (prep?.ingredients ?? []).filter((i) => i.group === "Garnish").map((i) => i.item.toLowerCase());
   const temp = recipe.format === "hot" ? "hot" : recipe.format === "affogato" ? "" : "iced";
   return [
-    `${temp ? `A ${temp} ` : "A "}${recipe.name}.`,
+    // "An iced ...", "A hot ..."
+    `${temp ? `${/^[aeiou]/i.test(temp) ? "An" : "A"} ${temp} ` : "A "}${recipe.name}.`,
     recipe.flavor_notes,
     garnish.length ? `Topped with ${garnish.join(" and ")}.` : "",
   ]
@@ -133,7 +134,12 @@ function drinkDescription(recipe: Recipe): string {
  * The full plan and prompt for one render. Pass a different `seed` for each
  * render so the background staging changes every time.
  */
-export function buildPhotoPlan(recipe: Recipe, seed: number): PhotoPlan {
+export function buildPhotoPlan(
+  recipe: Recipe,
+  seed: number,
+  /** Force a specific composition (index into style.compositions), so candidates shown side by side differ */
+  opts: { composition?: number } = {}
+): PhotoPlan {
   const vessel = chooseVessel(recipe);
   const moment = chooseMoment(recipe);
   const props = ingredientProps(recipe);
@@ -144,26 +150,39 @@ export function buildPhotoPlan(recipe: Recipe, seed: number): PhotoPlan {
   const rand = seededRandom(seed);
   const room = Math.max(1, MAX_PROPS - props.length);
   const background = shuffle(style.background_pool, rand).slice(0, Math.min(room, 1 + Math.floor(rand() * 2)));
-  const composition = style.compositions[Math.floor(rand() * style.compositions.length)];
+  const pick = Math.floor(rand() * style.compositions.length);
+  const composition = style.compositions[(opts.composition ?? pick) % style.compositions.length];
+
+  // A close-up only has room for one prop; keep the most on-story one (ingredient props come first)
+  const isCloseUp = /^close-up/i.test(composition);
+  const staging = [...props, ...background].slice(0, isCloseUp ? 1 : MAX_PROPS);
+  const shownProps = staging.filter((p) => props.includes(p));
+  const shownBackground = staging.filter((p) => background.includes(p));
 
   const prompt = [
-    "Photograph for a home-coffee recipe app. Match the look of the attached reference photos exactly: same kitchen, same light, same angle, same color grade, as if shot the same morning by the same photographer.",
+    "Photograph for a home-coffee recipe app.",
     "",
-    "HOUSE STYLE:",
-    ...style.house_style.map((l) => `- ${l}`),
+    // The references set the STYLE only. Without this the model copies their
+    // layout (same corner, same towel, same framing) and every photo looks alike.
+    "STYLE REFERENCE: The attached photos show the house style. Match their light, color grade, surfaces and overall mood, as if shot the same morning in the same kitchen. Do NOT copy their layout, framing, props or the position of the drink: this shot has its own composition and staging, described below.",
+    "",
+    // Composition first, so it isn't drowned out by everything else
+    `COMPOSITION FOR THIS SHOT: ${composition}`,
     "",
     `THE DRINK: ${drinkDescription(recipe)}`,
     `Served in ${style.vessels[vessel]}.`,
-    `Composition: ${composition}`,
     moment ? style.moments[moment] : "",
     "",
-    "STAGING FOR THIS SHOT (keep it tidy, softly out of focus behind or beside the drink):",
-    ...[...props, ...background].map((p) => `- ${p}`),
+    "STAGING FOR THIS SHOT (these props, and no others; tidy, arranged to fit the composition):",
+    ...staging.map((p) => `- ${p}`),
+    "",
+    "HOUSE STYLE:",
+    ...style.house_style.map((l) => `- ${l}`),
     "",
     `NEVER INCLUDE: ${style.never.join("; ")}.`,
   ]
     .filter((line, i, all) => !(line === "" && all[i - 1] === ""))
     .join("\n");
 
-  return { vessel, moment, ingredientProps: props, background, composition, prompt };
+  return { vessel, moment, ingredientProps: shownProps, background: shownBackground, composition, prompt };
 }

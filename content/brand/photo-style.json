@@ -4,10 +4,9 @@
     "A real but tidy home kitchen photographed on a bright morning, as if by the same food photographer in the same kitchen for a whole series.",
     "The drink sits on a light oak butcher-block counter; behind it, softly out of focus, a warm off-white wall (#FEF8F4 cream) and a hint of white tile backsplash.",
     "Soft natural window light from the left, gentle shadows falling to the right. Warm, bright and airy. No flash, no spotlighting, no dramatic contrast.",
-    "Eye-level three-quarter angle (about 20 degrees above the drink), 50mm lens look, shallow depth of field: the drink is tack sharp, the background soft.",
-    "Square 1:1 composition, drink as the clear hero near the center with breathing room around it.",
-    "Warm natural colors: cream, oak, espresso brown, milk white. A folded cobalt-blue (#001EC0) striped linen towel may appear at the edge of the frame.",
-    "Real texture (condensation on cold glass, microfoam bubbles, a few specks of spice on the counter) but never messy."
+    "Camera slightly above the drink (about 15-25 degrees), 50mm lens look, shallow depth of field: the drink is tack sharp, the background soft.",
+    "Warm natural colors: cream, oak, espresso brown, milk white, with at most one small cobalt-blue (#001EC0) accent.",
+    "Real texture (condensation on cold glass, microfoam bubbles, clear ice) but never messy."
   ],
   "never": [
     "text, labels, logos or brand packaging",
@@ -36,13 +35,91 @@
     "iced_layers": "Coffee and cold milk over ice in soft marbled layers, the coffee darker toward the top."
   },
   "compositions": [
-    "drink slightly left of center, staging to the right and behind it",
-    "drink slightly right of center, staging to the left and behind it",
-    "drink centered, staging softly behind it on both sides",
-    "drink in the front-left third, a prop close by in the front-right, soft background behind",
-    "drink centered and a little closer to the camera, one prop just behind its shoulder"
+    "Medium shot. Drink slightly left of center on the counter; staging to the right and behind it.",
+    "Medium shot. Drink slightly right of center; staging to the left and behind it.",
+    "Close-up: the drink fills most of the frame, cropped just above the rim and below the base; only a hint of one prop at the edge.",
+    "Wider shot showing more of the kitchen: the drink in the front-left third, staging spread across the back of the counter.",
+    "Drink placed a little further back on the counter, with one prop in the soft-focus foreground at the frame's edge.",
+    "Straight-on at counter height, the drink centered, props low on either side, the backsplash visible behind."
   ],
   "ingredient_props": [
+    {
+      "match": [
+        "condensed milk"
+      ],
+      "prop": "a small open can of sweetened condensed milk, its label turned away from the camera, a spoon resting beside it"
+    },
+    {
+      "match": [
+        "coconut milk",
+        "coconut cream"
+      ],
+      "prop": "half a coconut shell"
+    },
+    {
+      "match": [
+        "ube"
+      ],
+      "prop": "a small bowl of purple ube jam"
+    },
+    {
+      "match": [
+        "matcha"
+      ],
+      "prop": "a small bowl of bright green matcha powder with a bamboo whisk"
+    },
+    {
+      "match": [
+        "nutella",
+        "hazelnut spread"
+      ],
+      "prop": "a small open jar of chocolate hazelnut spread, label turned away"
+    },
+    {
+      "match": [
+        "graham",
+        "teddy"
+      ],
+      "prop": "a few graham crackers on a small plate"
+    },
+    {
+      "match": [
+        "oreo",
+        "cookies and cream"
+      ],
+      "prop": "a few chocolate sandwich cookies on a small plate"
+    },
+    {
+      "match": [
+        "peanut butter"
+      ],
+      "prop": "a small open jar of peanut butter, label turned away"
+    },
+    {
+      "match": [
+        "cardamom"
+      ],
+      "prop": "a small dish of green cardamom pods"
+    },
+    {
+      "match": [
+        "nutmeg"
+      ],
+      "prop": "a whole nutmeg and a small grater"
+    },
+    {
+      "match": [
+        "whipped cream"
+      ],
+      "prop": "a small bowl of whipped cream"
+    },
+    {
+      "match": [
+        "ice cream",
+        "gelato"
+      ],
+      "prop": "a small bowl with a scoop of ice cream"
+    },
     {
       "match": [
         "honey"
@@ -150,12 +227,6 @@
     },
     {
       "match": [
-        "coconut"
-      ],
-      "prop": "half a coconut shell"
-    },
-    {
-      "match": [
         "hazelnut"
       ],
       "prop": "a small bowl of hazelnuts"
@@ -184,6 +255,16 @@
         "salt"
       ],
       "prop": "a small dish of flaky sea salt"
+    },
+    {
+      "match": [
+        "cocoa",
+        "cinnamon",
+        "nutmeg",
+        "cardamom",
+        "powder"
+      ],
+      "prop": "a light dusting of the spice or powder on the counter beside the drink"
     }
   ],
   "background_pool": [
@@ -198,6 +279,6 @@
     "a ceramic milk pitcher in soft white",
     "a small copper measuring cup set",
     "a sunny windowsill edge with a trailing pothos plant",
-    "a folded cobalt-blue striped linen towel"
+    "a folded cobalt-blue striped linen towel at the edge of the frame"
   ]
 }

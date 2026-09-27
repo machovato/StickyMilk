@@ -25,8 +25,8 @@ the drink's **money shot** + **staging** that changes every render:
 | Vessel (white cup, faceted iced glass, rocks glass...) | drink type |
 | Money shot | e.g. coffee poured over milk → swirl; cold foam → foam cap; hot → latte art |
 | Ingredient props (up to 2) | the recipe's ingredients: honey → honey jar, cinnamon → sticks... |
-| Background items (1–2) + composition | random per render from the pools in the style file |
-| Style reference | the photos in `content/brand/anchors/` are sent with every request |
+| Background items (1–2) + composition | random per render from the pools in the style file; candidates shown side by side always get different compositions (close-up, medium, wide, straight-on...) |
+| Style reference | the photos in `content/brand/anchors/` are sent with every request, for light, color and mood only (the prompt tells the model not to copy their layout) |
 
 ## Tuning
 - Change the look: edit `content/brand/photo-style.json` (no code changes).
