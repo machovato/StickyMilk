@@ -105,6 +105,11 @@ def extract_reel(video_url: str, user_caption: str = ""):
                 "yt_dlp",
                 "--dump-json",
                 "--write-comments",
+                "--extractor-args",
+                "tiktok:max_comments=20;instagram:max_comments=20",
+                "--socket-timeout",
+                "20",
+                "--no-playlist",
                 "--no-simulate",
                 "-f",
                 "b[ext=mp4]/b",
@@ -288,7 +293,7 @@ Return ONLY valid JSON matching this schema."""
             response_mime_type="application/json",
             response_schema=RESPONSE_SCHEMA,
         )
-        FALLBACK_MODELS = ["gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-3.5-flash-lite", "gemini-3.8-flash"]
+        FALLBACK_MODELS = ["gemini-2.5-flash", "gemini-2.5-flash-lite"]
         resp = None
         last_error = None
         for model_name in FALLBACK_MODELS:

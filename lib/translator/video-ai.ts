@@ -12,7 +12,7 @@ import { parseVideoUrl } from "./extractor";
 const execFileAsync = promisify(execFile);
 
 /** Download + frame sampling + Gemini (with its own retries) must finish in this window. */
-const EXTRACTOR_TIMEOUT_MS = 120_000;
+const EXTRACTOR_TIMEOUT_MS = 180_000;
 
 /** User-facing copy per failure. Raw extractor messages stay in server logs. */
 const USER_MESSAGES: Record<VideoExtractionErrorCode, string> = {
