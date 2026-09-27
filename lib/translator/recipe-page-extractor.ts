@@ -348,7 +348,7 @@ async function extractWithGemini(
   source: string
 ): Promise<{ ok: true; recipe: PageRecipe } | { ok: false; code: "NO_RECIPE" | "MODEL_FAILED"; message: string }> {
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-  const FALLBACK_MODELS = ["gemini-2.5-flash", "gemini-3.8-flash", "gemini-3.5-flash-lite"];
+  const FALLBACK_MODELS = ["gemini-2.5-flash", "gemini-2.5-flash-lite"];
   let lastError = "";
   for (const model of FALLBACK_MODELS) {
     for (let attempt = 0; attempt < 2; attempt++) {
