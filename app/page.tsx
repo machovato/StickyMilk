@@ -1,5 +1,6 @@
 import { getAllRecipes } from "@/lib/recipes";
 import { HomePortal } from "@/components/HomePortal";
+import { getSiteSettings } from "@/lib/site-settings";
 
 export const metadata = {
   title: "StickyMilk // Coffee Recipes for the Systems You Own",
@@ -9,5 +10,6 @@ export const metadata = {
 
 export default function HomePage() {
   const recipes = getAllRecipes();
-  return <HomePortal recipes={recipes} />;
+  // The hero recipe is chosen on the Edit page ("Make Current Obsession")
+  return <HomePortal recipes={recipes} obsessionSlug={getSiteSettings().current_obsession} />;
 }

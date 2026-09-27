@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { RecipeForm } from "@/components/RecipeForm";
 import { PhotoStudio } from "@/components/PhotoStudio";
+import { ObsessionToggle } from "@/components/ObsessionToggle";
+import { getSiteSettings } from "@/lib/site-settings";
 import { getRecipeImage, hasRegisteredImage } from "@/lib/recipe-images";
 import { getAllRecipes, getRecipeBySlug } from "@/lib/recipes";
 import { getIngredientTaxonomy } from "@/lib/taxonomy";
@@ -55,6 +57,8 @@ export default async function EditRecipePage(props: {
         <p className="font-body text-sm text-[#4d4540]">
           Updates <code className="font-mono text-xs bg-[#f3ede9] px-1.5 py-0.5 text-[#1a130e]">content/recipes/{recipe.slug}.json</code>.
         </p>
+        {/* Feature this recipe in the homepage hero */}
+        <ObsessionToggle slug={recipe.slug} isCurrent={getSiteSettings().current_obsession === recipe.slug} />
       </div>
 
       {/* The recipe's own photo, or the stand-in pages show when it has none */}

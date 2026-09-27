@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Plus, SignOut } from "@phosphor-icons/react/dist/ssr";
+import { Gauge, SignOut } from "@phosphor-icons/react/dist/ssr";
 import { isAdminAuthenticated } from "@/lib/auth";
 import { logoutAction } from "@/lib/actions/admin-auth";
 
@@ -9,13 +9,13 @@ export async function AdminHeaderControls() {
 
   return (
     <div className="flex items-center gap-2">
+      {/* Recipes are added through the translator; "New Recipe" lives on the Admin page */}
       <Link
-        href="/recipes/new"
+        href="/admin"
         className="flex items-center gap-1.5 bg-[#001ec0] hover:bg-[#1a130e] text-white px-3 sm:px-3.5 py-2 font-mono text-xs uppercase tracking-wider font-semibold transition-all shadow-[0_2px_0_#1A130E] active:translate-y-0.5"
       >
-        <Plus size={16} weight="bold" />
-        <span className="hidden sm:inline">New Recipe</span>
-        <span className="sm:hidden">New</span>
+        <Gauge size={16} weight="bold" />
+        <span>Admin</span>
       </Link>
       <form action={logoutAction}>
         <button

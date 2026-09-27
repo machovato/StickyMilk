@@ -73,12 +73,6 @@ export async function Footer() {
               </Link>
               {isAuth && (
                 <>
-                  <Link
-                    href="/recipes/new"
-                    className="text-[#001ec0] font-bold hover:text-[#1a130e] transition-colors"
-                  >
-                    + New Recipe
-                  </Link>
                   <form action={logoutAction}>
                     <button
                       type="submit"

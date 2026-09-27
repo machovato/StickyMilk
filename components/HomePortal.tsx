@@ -18,18 +18,30 @@ import { getRecipeImage } from "@/lib/recipe-images";
 
 interface HomePortalProps {
   recipes: Recipe[];
+  /** Slug picked on the Edit page ("Make Current Obsession"); content/site/settings.json */
+  obsessionSlug?: string;
 }
 
-export function HomePortal({ recipes }: HomePortalProps) {
+/** Recipes that really came from a social video (TikTok, Instagram, YouTube...), judged by the source link. */
+const SOCIAL_HOSTS = /(^|\.)(tiktok\.com|instagram\.com|youtube\.com|youtu\.be|facebook\.com|fb\.watch|threads\.net|x\.com|twitter\.com)$/i;
+function isFromSocial(r: Recipe): boolean {
+  try {
+    return SOCIAL_HOSTS.test(new URL(r.source?.url ?? "").hostname);
+  } catch {
+    return false; // no link, or not a valid URL
+  }
+}
+
+export function HomePortal({ recipes, obsessionSlug }: HomePortalProps) {
   const { defaultChannel } = useChannel();
   const [translatorUrl, setTranslatorUrl] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
 
-  // Hero Lead Drink is anchored on the Black Cat Affogato as the prime proof-of-life,
-  // or adapts to the highest scored drink for an active channel.
+  // Hero Lead Drink: the editor's Current Obsession when one is set; otherwise
+  // adapts to the highest scored drink for an active channel.
   const heroRecipe = useMemo(() => {
-    const affogato = recipes.find((r) => r.slug === "black-cat-affogato");
-    if (affogato) return affogato;
+    const obsession = obsessionSlug && recipes.find((r) => r.slug === obsessionSlug);
+    if (obsession) return obsession;
 
     if (defaultChannel) {
       const candidates = [...recipes].filter((r) =>
@@ -49,7 +61,7 @@ export function HomePortal({ recipes }: HomePortalProps) {
     }
 
     return recipes[0];
-  }, [recipes, defaultChannel]);
+  }, [recipes, defaultChannel, obsessionSlug]);
 
   // Lead preparation for the hero drink
   const leadPrep = useMemo(() => {
@@ -71,8 +83,7 @@ export function HomePortal({ recipes }: HomePortalProps) {
   // Hero review data
   const heroScore =
     (defaultChannel && heroRecipe?.review?.channel_scores?.[defaultChannel]) ??
-    heroRecipe?.review?.score ??
-    9.4;
+    heroRecipe?.review?.score;
   const heroVerdict =
     (defaultChannel &&
       heroRecipe?.review?.channel_verdicts?.[defaultChannel]) ||
@@ -131,13 +142,13 @@ export function HomePortal({ recipes }: HomePortalProps) {
     return list.slice(0, 3);
   }, [recipes, heroRecipe?.slug, defaultChannel]);
 
+  // "Fresh From Social Media": only recipes whose source link is a social
+  // video, newest first (vendor pages and editorial recipes don't belong here)
   const communityTranslations = useMemo(() => {
-    return recipes.filter(
-      (r) =>
-        r.status === "needs_testing" ||
-        (r.source?.type === "creator" && !r.review)
-    );
-  }, [recipes]);
+    return recipes
+      .filter((r) => isFromSocial(r) && r.slug !== heroRecipe?.slug)
+      .sort((a, b) => (b.created_at ?? "").localeCompare(a.created_at ?? ""));
+  }, [recipes, heroRecipe?.slug]);
 
   const handleTranslatorSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -260,10 +271,13 @@ export function HomePortal({ recipes }: HomePortalProps) {
                 <span className="px-2 py-0.5 font-mono text-[10px] font-bold uppercase tracking-widest bg-[#b8f600] text-[#141f00]">
                   {FORMAT_LABELS[heroRecipe.format]}
                 </span>
-                <span className="px-2 py-0.5 font-mono text-xs font-extrabold bg-[#1a130e] text-[#b8f600] border border-white/20 flex items-center gap-1 shadow-sm">
-                  <Star size={13} weight="fill" className="text-[#b8f600]" />
-                  <span>{heroScore.toFixed(1)} / 10</span>
-                </span>
+                {/* Only real Test Kitchen scores; an untested obsession shows none */}
+                {heroScore != null && (
+                  <span className="px-2 py-0.5 font-mono text-xs font-extrabold bg-[#1a130e] text-[#b8f600] border border-white/20 flex items-center gap-1 shadow-sm">
+                    <Star size={13} weight="fill" className="text-[#b8f600]" />
+                    <span>{heroScore.toFixed(1)} / 10</span>
+                  </span>
+                )}
               </div>
 
               {/* Bottom Image HUD */}
