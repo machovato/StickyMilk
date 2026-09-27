@@ -15,6 +15,21 @@ render so no two photos are the same shot with a different drink.
 Replace AI photos with real ones as you kitchen-test recipes; `image_source`
 tells you which are which (`ai`, `photo`, `video_frame`).
 
+## The art director brief (`lib/photo/brief.ts`)
+On the first render for a recipe, one quick Gemini text call writes a brief:
+how this drink is **expected** to look. Its *tell* (what makes it instantly
+recognizable), glass (from our vessel list only), liquid colors layer by
+layer, a hero detail, one story prop, and, for drinks with two looks
+(layered, then stirred), a before and an after; the two candidates then show
+one each. It's saved on the recipe (`photo_brief`), shown in the studio, and
+can be rewritten with **Regenerate brief**. Brand rules are enforced in code
+too: no brewing gear (phin, moka pot, machines, beans), no labels, no clichés.
+
+## One-off notes
+The **Note for this render** box ("put it in a tall 8-ball glass", "overhead
+shot") is added to that render's prompt as art direction. It overrides the
+automatic choices, never the "never" list, and isn't saved.
+
 ## How a photo is built (`lib/photo/prompt.ts`)
 Every prompt = **house style** (fixed) + **vessel** for the drink type +
 the drink's **money shot** + **staging** that changes every render:
@@ -41,3 +56,9 @@ Uses `GEMINI_API_KEY`. Tries image models in order until one works:
 (comma-separated). Every result is finished as a 1200×1200 JPEG.
 
 Tests: `npm run test:photo`.
+
+## Before hosting
+Next.js only serves files that were in `public/` at build time, so photos
+saved while the site is running show up in `npm run dev` but not after a
+production build until the next build. Before going live on Railway, serve
+saved photos through a small route or object storage (same as hero frames).

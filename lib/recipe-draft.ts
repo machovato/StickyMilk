@@ -136,6 +136,8 @@ export interface RecipeDraft {
   /** image_source of the loaded recipe, kept only while `image` is unchanged */
   image_source?: Recipe["image_source"];
   image_source_for?: string;
+  /** Not edited in the form; carried through so saving doesn't drop it */
+  photo_brief?: Recipe["photo_brief"];
   format: RecipeFormat | "";
   flavor_notes: string;
   barista_note: string;
@@ -331,6 +333,7 @@ export function draftToCandidate(draft: RecipeDraft): unknown {
     image: undefinedIfBlank(draft.image),
     // If the image path was edited by hand, we no longer know where it came from
     image_source: draft.image_source && draft.image === draft.image_source_for ? draft.image_source : undefined,
+    photo_brief: draft.photo_brief,
     format: draft.format === "" ? undefined : draft.format,
     flavor_notes: draft.flavor_notes.trim(),
     barista_note: undefinedIfBlank(draft.barista_note),
@@ -423,6 +426,7 @@ export function recipeToDraft(recipe: Recipe): RecipeDraft {
     image: recipe.image ?? "",
     image_source: recipe.image_source,
     image_source_for: recipe.image ?? "",
+    photo_brief: recipe.photo_brief,
     format: recipe.format,
     flavor_notes: recipe.flavor_notes,
     barista_note: recipe.barista_note ?? "",

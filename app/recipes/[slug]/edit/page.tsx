@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { RecipeForm } from "@/components/RecipeForm";
 import { PhotoStudio } from "@/components/PhotoStudio";
+import { getRecipeImage, hasRegisteredImage } from "@/lib/recipe-images";
 import { getAllRecipes, getRecipeBySlug } from "@/lib/recipes";
 import { getIngredientTaxonomy } from "@/lib/taxonomy";
 import { recipeToDraft } from "@/lib/recipe-draft";
@@ -56,7 +57,14 @@ export default async function EditRecipePage(props: {
         </p>
       </div>
 
-      <PhotoStudio slug={recipe.slug} currentImage={recipe.image} imageSource={recipe.image_source} />
+      {/* The recipe's own photo, or the stand-in pages show when it has none */}
+      <PhotoStudio
+        slug={recipe.slug}
+        currentImage={recipe.image || getRecipeImage(recipe.slug, recipe.format).imageUrl}
+        isStandIn={!recipe.image && !hasRegisteredImage(recipe.slug)}
+        imageSource={recipe.image_source}
+        brief={recipe.photo_brief}
+      />
 
       <RecipeForm
         existingSlugs={existingSlugs}

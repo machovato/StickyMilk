@@ -9,6 +9,8 @@ import { asValidatedRecipe } from "@/lib/recipe-schema";
 import { toRecipeFileContents } from "@/lib/write-recipe";
 import { buildPhotoPlan } from "@/lib/photo/prompt";
 import { generatePhoto } from "@/lib/photo/generate";
+import { generatePhotoBrief } from "@/lib/photo/brief";
+import type { PhotoBrief, Recipe } from "@/lib/types";
 
 /**
  * Admin photo studio actions for the recipe edit page.
@@ -17,6 +19,7 @@ import { generatePhoto } from "@/lib/photo/generate";
  *           and returns them for preview. Nothing is saved.
  * save:     writes the chosen candidate to public/recipes/ and points the
  *           recipe at it, marked image_source: "ai".
+ * brief:    (re)writes the art-director brief saved on the recipe.
  */
 
 const CONTENT_DIR = path.join(process.cwd(), "content", "recipes");
@@ -31,26 +34,62 @@ export interface PhotoCandidate {
   moment: string | null;
 }
 
+/** Writes a recipe back to the vault and refreshes the pages that show it. */
+function writeRecipe(recipe: Recipe): Recipe {
+  const validated = asValidatedRecipe(recipe);
+  writeFileSync(path.join(CONTENT_DIR, `${recipe.slug}.json`), toRecipeFileContents(validated), "utf-8");
+  invalidateRecipeCache();
+  try {
+    revalidatePath("/");
+    revalidatePath("/recipes");
+    revalidatePath(`/recipes/${recipe.slug}`);
+  } catch {
+    // Safe to ignore outside a revalidation context
+  }
+  return validated;
+}
+
 export async function generateRecipePhotosAction(
   slug: string,
-  count = 2
-): Promise<{ success: true; candidates: PhotoCandidate[]; errors: string[] } | { success: false; error: string }> {
+  count = 2,
+  /** One-off art direction for this render only (not saved) */
+  note?: string
+): Promise<
+  | { success: true; candidates: PhotoCandidate[]; errors: string[]; brief?: PhotoBrief }
+  | { success: false; error: string }
+> {
   if (!(await isAdminAuthenticated())) return { success: false, error: "Admin sign-in required." };
-  const recipe = getRecipeBySlug(slug);
+  let recipe = getRecipeBySlug(slug);
   if (!recipe) return { success: false, error: "Recipe not found." };
+
+  // First render for this recipe: ask the art director how the drink should
+  // look, and save it so later renders stay consistent. If that fails we still
+  // render, using the keyword rules.
+  const errors: string[] = [];
+  if (!recipe.photo_brief) {
+    const b = await generatePhotoBrief(recipe);
+    if (b.ok) recipe = writeRecipe({ ...recipe, photo_brief: b.brief });
+    else errors.push(b.error);
+  }
+  const brief = recipe.photo_brief;
 
   // A different seed per candidate (different background mix), and a
   // guaranteed-different composition for each, so the candidates side by side
   // are genuinely different shots, not the same photo with new props.
   const base = Date.now();
   const firstComposition = base % 97;
+  // Drinks with a before/after look (layered, then stirred) show one of each
   const plans = Array.from({ length: Math.min(Math.max(count, 1), 4) }, (_, i) =>
-    buildPhotoPlan(recipe, base + i * 7919, { composition: firstComposition + i })
+    buildPhotoPlan(recipe!, base + i * 7919, {
+      composition: firstComposition + i,
+      brief,
+      stage: brief?.stages ? (i % 2 === 0 ? "before" : "after") : undefined,
+      note,
+    })
   );
   const results = await Promise.all(plans.map((plan) => generatePhoto(plan.prompt)));
 
   const candidates: PhotoCandidate[] = [];
-  const errors: string[] = [];
   results.forEach((r, i) => {
     if (r.ok) {
       candidates.push({
@@ -64,8 +103,21 @@ export async function generateRecipePhotosAction(
       errors.push(r.error);
     }
   });
-  if (candidates.length === 0) return { success: false, error: errors[0] ?? "Image generation failed." };
-  return { success: true, candidates, errors };
+  if (candidates.length === 0) return { success: false, error: errors[errors.length - 1] ?? "Image generation failed." };
+  return { success: true, candidates, errors, brief };
+}
+
+/** Rewrites the art-director brief (e.g. when it misjudged the drink). */
+export async function regeneratePhotoBriefAction(
+  slug: string
+): Promise<{ success: true; brief: PhotoBrief } | { success: false; error: string }> {
+  if (!(await isAdminAuthenticated())) return { success: false, error: "Admin sign-in required." };
+  const recipe = getRecipeBySlug(slug);
+  if (!recipe) return { success: false, error: "Recipe not found." };
+  const b = await generatePhotoBrief(recipe);
+  if (!b.ok) return { success: false, error: b.error };
+  writeRecipe({ ...recipe, photo_brief: b.brief });
+  return { success: true, brief: b.brief };
 }
 
 export async function saveRecipePhotoAction(
@@ -97,15 +149,6 @@ export async function saveRecipePhotoAction(
     }
   }
 
-  const updated = asValidatedRecipe({ ...recipe, image: `/recipes/${fileName}`, image_source: "ai" });
-  writeFileSync(path.join(CONTENT_DIR, `${slug}.json`), toRecipeFileContents(updated), "utf-8");
-  invalidateRecipeCache();
-  try {
-    revalidatePath("/");
-    revalidatePath("/recipes");
-    revalidatePath(`/recipes/${slug}`);
-  } catch {
-    // Safe to ignore outside a revalidation context
-  }
+  const updated = writeRecipe({ ...recipe, image: `/recipes/${fileName}`, image_source: "ai" });
   return { success: true, image: updated.image! };
 }

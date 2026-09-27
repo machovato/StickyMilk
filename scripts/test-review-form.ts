@@ -52,3 +52,19 @@ test("out-of-range or unknown-machine scores are rejected", async () => {
   assert.ok(errors.includes("review.channel_scores.nespresso"));
   assert.ok(errors.includes("review.channel_scores.moka"));
 });
+
+test("saving the edit form keeps the photo brief and the AI-photo marker", () => {
+  const withPhoto = {
+    ...recipe,
+    image: "/recipes/x-ai-1.jpg",
+    image_source: "ai" as const,
+    photo_brief: { tell: "t", vessel: "iced", colors: "c", hero_detail: "h", created_at: "2026-09-28" },
+  };
+  const saved = draftToCandidate(recipeToDraft(withPhoto)) as Recipe;
+  assert.deepEqual(saved.photo_brief, withPhoto.photo_brief);
+  assert.equal(saved.image_source, "ai");
+  // Change the image path by hand: we no longer know where it came from
+  const draft = recipeToDraft(withPhoto);
+  draft.image = "/recipes/my-own-photo.jpg";
+  assert.equal((draftToCandidate(draft) as Recipe).image_source, undefined);
+});

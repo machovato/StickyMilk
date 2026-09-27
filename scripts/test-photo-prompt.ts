@@ -148,3 +148,87 @@ test("the towel is no longer in every shot", () => {
   const withTowel = Array.from({ length: 20 }, (_, i) => buildPhotoPlan(r, 900 + i * 131)).filter((p) => /towel/.test(p.prompt)).length;
   assert.ok(withTowel < 20, "towel appears in every render");
 });
+
+// A brief like the art director would write for Ca Phe Sua Da
+const CPSD_BRIEF = {
+  tell: "Jet-black coffee floating on a thick white layer of condensed milk over ice.",
+  vessel: "short_faceted",
+  colors: "jet-black coffee over ivory condensed milk; stirred: light caramel tan",
+  hero_detail: "a long spoon standing in the glass, ready to stir",
+  story_prop: "a small glass jar of condensed milk with a spoon in it",
+  stages: { before: "Unstirred: black coffee over a white condensed-milk layer.", after: "Stirred: light caramel tan throughout." },
+  created_at: "2026-09-28T00:00:00Z",
+};
+
+test("with a brief: its glass, tell, colors and story prop drive the prompt", () => {
+  const r = load("ca-phe-sua-da");
+  const plan = buildPhotoPlan(r, 7, { composition: 0, brief: CPSD_BRIEF });
+  assert.equal(plan.vessel, "short_faceted");
+  assert.match(plan.prompt, /short, chunky clear faceted tumbler/);
+  assert.match(plan.prompt, /THE TELL: Jet-black coffee floating/);
+  assert.match(plan.prompt, /COLORS: jet-black coffee over ivory/);
+  assert.equal(plan.ingredientProps[0], CPSD_BRIEF.story_prop);
+  assert.match(plan.prompt, /version people picture/);
+});
+
+test("before/after stages give each candidate its own look", () => {
+  const r = load("ca-phe-sua-da");
+  const before = buildPhotoPlan(r, 7, { brief: CPSD_BRIEF, stage: "before" });
+  const after = buildPhotoPlan(r, 8, { brief: CPSD_BRIEF, stage: "after" });
+  assert.match(before.prompt, /THE TELL: Unstirred/);
+  assert.match(after.prompt, /THE TELL: Stirred: light caramel tan/);
+  assert.equal(before.moment, "brief: before");
+});
+
+test("the editor's note is added for that render, after the staging, and never overrides NEVER", () => {
+  const r = load("ca-phe-sua-da");
+  const plan = buildPhotoPlan(r, 7, { brief: CPSD_BRIEF, note: "put it in a tall 8-ball glass" });
+  assert.match(plan.prompt, /ART DIRECTION FOR THIS RENDER.*never break the NEVER INCLUDE list\): put it in a tall 8-ball glass/);
+  assert.ok(plan.prompt.indexOf("ART DIRECTION") > plan.prompt.indexOf("STAGING FOR THIS SHOT"));
+  assert.ok(plan.prompt.indexOf("NEVER INCLUDE") > plan.prompt.indexOf("ART DIRECTION"));
+  // No note, no art-direction section
+  assert.doesNotMatch(buildPhotoPlan(r, 7).prompt, /ART DIRECTION/);
+  // Long notes are capped
+  const long = buildPhotoPlan(r, 7, { note: "x".repeat(1000) }).prompt;
+  assert.ok(!long.includes("x".repeat(301)));
+});
+
+test("art director: brand guardrails are enforced on its answer, and it runs end to end", async () => {
+  const Module = (await import("node:module")).default as unknown as { prototype: { require: (id: string) => unknown } };
+  const orig = Module.prototype.require;
+  Module.prototype.require = function (this: unknown, id: string) {
+    return id === "server-only" ? {} : orig.call(this, id);
+  } as typeof orig;
+  try {
+    const { sanitizeBrief, generatePhotoBrief } = await import("../lib/photo/brief");
+    // Brewing gear, labels and clichés are dropped as props; unknown vessels fall back
+    const b = sanitizeBrief({ tell: "t", vessel: "martini_glass", colors: "c", hero_detail: "h", story_prop: "a Vietnamese phin filter on top", has_stages: false });
+    assert.equal(b.story_prop, undefined);
+    assert.equal(b.vessel, "iced");
+    assert.equal(b.stages, undefined);
+
+    // Simulated Gemini text response
+    const realFetch = globalThis.fetch;
+    globalThis.fetch = (async () =>
+      new Response(
+        JSON.stringify({
+          candidates: [{ content: { parts: [{ text: JSON.stringify({ ...CPSD_BRIEF, has_stages: true, stage_before: "layered", stage_after: "stirred" }) }] } }],
+        }),
+        { status: 200, headers: { "content-type": "application/json" } }
+      )) as typeof fetch;
+    process.env.GEMINI_API_KEY = "test-key";
+    try {
+      const res = await generatePhotoBrief(load("ca-phe-sua-da"));
+      assert.ok(res.ok, JSON.stringify(res));
+      if (res.ok) {
+        assert.equal(res.brief.vessel, "short_faceted");
+        assert.deepEqual(res.brief.stages, { before: "layered", after: "stirred" });
+      }
+    } finally {
+      globalThis.fetch = realFetch;
+      delete process.env.GEMINI_API_KEY;
+    }
+  } finally {
+    Module.prototype.require = orig;
+  }
+});

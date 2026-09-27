@@ -1,4 +1,4 @@
-import type { Recipe } from "../types";
+import type { PhotoBrief, Recipe } from "../types";
 // The tunable style lives in content/brand/photo-style.json (see its _about note).
 import style from "../../content/brand/photo-style.json";
 
@@ -10,6 +10,11 @@ import style from "../../content/brand/photo-style.json";
  * MONEY-SHOT moment + a fresh mix of BACKGROUND STAGING (so no two photos
  * are the same shot with a different drink). Ingredient props (honey jar
  * for honey, cinnamon sticks for cinnamon...) come from the recipe itself.
+ *
+ * When the recipe has an art-director brief (lib/photo/brief.ts), the brief's
+ * tell, vessel, colors and story prop replace the keyword-based guesses. An
+ * optional one-off note from the editor ("put it in an 8-ball glass") is
+ * added as art direction for that render only.
  */
 
 export type Vessel = keyof typeof style.vessels;
@@ -17,7 +22,8 @@ export type Moment = keyof typeof style.moments;
 
 export interface PhotoPlan {
   vessel: Vessel;
-  moment: Moment | null;
+  /** The money-shot rule used, or "brief" / "brief: before" / "brief: after" */
+  moment: Moment | string | null;
   /** Props suggested by the recipe's own ingredients (max 2) */
   ingredientProps: string[];
   /** Generic kitchen staging, picked fresh per render (fills up to 3 props total) */
@@ -138,11 +144,26 @@ export function buildPhotoPlan(
   recipe: Recipe,
   seed: number,
   /** Force a specific composition (index into style.compositions), so candidates shown side by side differ */
-  opts: { composition?: number } = {}
+  opts: {
+    composition?: number;
+    /** Art-director brief; replaces the keyword-based vessel/moment/props */
+    brief?: PhotoBrief;
+    /** For briefs with a before/after look: which one this render shows */
+    stage?: "before" | "after";
+    /** One-off art direction from the editor, for this render only */
+    note?: string;
+  } = {}
 ): PhotoPlan {
-  const vessel = chooseVessel(recipe);
-  const moment = chooseMoment(recipe);
-  const props = ingredientProps(recipe);
+  const { brief, stage } = opts;
+  // The brief (when present) decides the glass; otherwise the drink-type rules do
+  const vessel = (brief && brief.vessel in style.vessels ? brief.vessel : chooseVessel(recipe)) as Vessel;
+  const ruleMoment = chooseMoment(recipe);
+  const moment = brief ? (stage && brief.stages ? `brief: ${stage}` : "brief") : ruleMoment;
+  // The brief's story prop leads; ingredient props fill in (max 2, no duplicates)
+  const props = [...new Set([...(brief?.story_prop ? [brief.story_prop] : []), ...ingredientProps(recipe)])].slice(
+    0,
+    MAX_INGREDIENT_PROPS
+  );
 
   // Fresh staging per render: 1-2 random background items (never more than 3
   // props in total) and a varied composition, so no two photos are the same
@@ -171,10 +192,25 @@ export function buildPhotoPlan(
     "",
     `THE DRINK: ${drinkDescription(recipe)}`,
     `Served in ${style.vessels[vessel]}.`,
-    moment ? style.moments[moment] : "",
+    // Show the version people picture, beautifully; its signature must read at thumbnail size
+    "Show the classic, expected presentation of this drink (the version people picture when they hear its name), styled beautifully. Its signature must be obvious even at thumbnail size.",
+    ...(brief
+      ? [
+          `THE TELL: ${stage && brief.stages ? brief.stages[stage] : brief.tell}`,
+          `COLORS: ${brief.colors}`,
+          `HERO DETAIL: ${brief.hero_detail}`,
+        ]
+      : [ruleMoment ? style.moments[ruleMoment as Moment] : ""]),
     "",
     "STAGING FOR THIS SHOT (these props, and no others; tidy, arranged to fit the composition):",
     ...staging.map((p) => `- ${p}`),
+    // The editor's one-off note wins over the automatic choices above, never over the brand rules
+    ...(opts.note?.trim()
+      ? [
+          "",
+          `ART DIRECTION FOR THIS RENDER (from the editor; follow it even where it changes the vessel, props or composition above, but never break the NEVER INCLUDE list): ${opts.note.trim().slice(0, 300)}`,
+        ]
+      : []),
     "",
     "HOUSE STYLE:",
     ...style.house_style.map((l) => `- ${l}`),

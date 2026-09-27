@@ -16,12 +16,23 @@
     "dark or moody backgrounds, heavy vignettes, oversaturated colors",
     "more than three background props"
   ],
+  "art_director_rules": [
+    "Describe the classic, expected presentation of this drink: the version people picture when they hear its name, styled beautifully. Don't reinvent it.",
+    "The tell must be obvious even at thumbnail size.",
+    "Be precise about liquid colors (a stirred latte is light tan, not espresso brown).",
+    "Choose the vessel only from the allowed list.",
+    "The story prop must be an ingredient of the recipe or simple tableware. Never brewing equipment (phin filters, moka pots, pour-overs, espresso or coffee machines, grinders, coffee beans), never text or packaging with visible labels, never cultural clichés (flags, hats, costumes).",
+    "Only use stages (before/after) when the drink is genuinely served or shown in two looks, e.g. layered then stirred."
+  ],
   "vessels": {
     "hot_milk": "a matte white ceramic cup (about 8 oz) on a matching saucer",
     "hot_black": "a plain white ceramic mug",
     "iced": "a tall clear faceted glass (about 14 oz) with clear ice cubes",
     "short": "a short clear rocks glass",
-    "dessert": "a small clear glass tumbler"
+    "dessert": "a small clear glass tumbler",
+    "short_faceted": "a short, chunky clear faceted tumbler (about 8 oz)",
+    "double_wall": "a clear double-wall glass, the drink seeming to float inside",
+    "mug": "a plain white ceramic mug"
   },
   "moments": {
     "pour_swirl": "The money shot: the coffee has just been poured over the cold milk and is cascading down through it, dark ribbons of espresso swirling into the white milk around the ice, caught mid-swirl.",

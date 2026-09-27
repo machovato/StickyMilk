@@ -16,6 +16,7 @@ export function toRecipeFileContents(recipe: Recipe): string {
     name: recipe.name,
     image: recipe.image,
     image_source: recipe.image_source,
+    photo_brief: recipe.photo_brief,
     format: recipe.format,
     flavor_notes: recipe.flavor_notes,
     barista_note: recipe.barista_note,

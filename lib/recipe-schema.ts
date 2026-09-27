@@ -279,6 +279,12 @@ export function validateRecipeCandidate(
   if (candidate.image !== undefined && typeof candidate.image !== "string") {
     errors.push({ path: "image", message: "must be a string when present" });
   }
+  if (candidate.photo_brief !== undefined) {
+    const b = candidate.photo_brief as Record<string, unknown> | null;
+    if (!isRecord(b) || typeof b.tell !== "string" || typeof b.vessel !== "string" || typeof b.colors !== "string") {
+      errors.push({ path: "photo_brief", message: "must have tell, vessel and colors when present" });
+    }
+  }
   if (candidate.image_source !== undefined && !["ai", "photo", "video_frame"].includes(candidate.image_source as string)) {
     errors.push({ path: "image_source", message: 'must be "ai", "photo" or "video_frame" when present' });
   }

@@ -118,6 +118,11 @@ const HOT_FALLBACK_IMAGE: RecipeImage = {
  * the drink: a hot recipe must never show an iced glass. Pass `format` so the
  * fallback can pick the right one.
  */
+/** True when the recipe has its own photo in the registry (not a generic stand-in). */
+export function hasRegisteredImage(slug: string): boolean {
+  return slug in RECIPE_IMAGES;
+}
+
 export function getRecipeImage(slug: string, format?: string): RecipeImage {
   return RECIPE_IMAGES[slug] ?? (format === "hot" ? HOT_FALLBACK_IMAGE : DEFAULT_FALLBACK_IMAGE);
 }

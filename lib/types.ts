@@ -224,6 +224,23 @@ export type PromoterTag =
   | "CREATOR SPOTLIGHT"
   | "TEST KITCHEN TOP 10";
 
+/** How a drink is expected to look, written by the photo "art director" (Gemini). */
+export interface PhotoBrief {
+  /** What makes this drink instantly recognizable, e.g. "black coffee floating on a white condensed-milk layer" */
+  tell: string;
+  /** A key of photo-style.json "vessels" */
+  vessel: string;
+  /** Liquid colors, layer by layer, e.g. "jet-black coffee over ivory condensed milk" */
+  colors: string;
+  /** One small detail that makes the shot, e.g. "a long spoon standing in the glass" */
+  hero_detail: string;
+  /** One prop that tells the drink's story (an ingredient or tableware only) */
+  story_prop?: string;
+  /** For drinks with a distinct before/after look (layered vs. stirred): one per candidate */
+  stages?: { before: string; after: string };
+  created_at: string;
+}
+
 export interface Recipe {
   slug: string;
   name: string;
@@ -232,6 +249,9 @@ export interface Recipe {
   /** Where the photo came from: "ai" (generated; replace with a real photo once tested),
    *  "photo" (a real photo), "video_frame" (a frame from the source reel). */
   image_source?: "ai" | "photo" | "video_frame";
+  /** Art-director brief for photo generation (lib/photo/brief.ts): how this drink is
+   *  expected to look. Generated once, saved so re-renders stay consistent. */
+  photo_brief?: PhotoBrief;
   format: RecipeFormat;
   /** Shared across all channels — this is "the drink," independent of how it's made. */
   flavor_notes: string;
